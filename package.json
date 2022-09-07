@@ -1,0 +1,18 @@
+{
+  "name": "publicline-fb-controller",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "firebase": "^9.9.4",
+    "nodemon": "^2.0.19"
+  }
+}
