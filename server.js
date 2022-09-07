@@ -95,6 +95,7 @@ onSnapshot(collectionRef, (data)=>{
             }
         })
 
+        
         //////calculate the route 
         if(e.downvotes.length+e.upvotes.length == 20)
         if (e.downvotes.length > e.downvotes.length){
