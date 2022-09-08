@@ -12,7 +12,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.0.2",
     "firebase": "^9.9.4",
-    "nodemon": "^2.0.19"
+    "module": "^1.2.5",
+    "nodemon": "^2.0.19",
+    "require": "^2.4.20"
   }
 }
