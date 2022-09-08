@@ -83,7 +83,7 @@ onSnapshot(collectionRef, (data)=>{
 
         //////calculate the route 
         // console.log(e)
-        if(e.downvotes.length+e.upvotes.length == 3){
+        if(e.downvotes.length+e.upvotes.length == 20){
 
             console.log('time to calc')
             if (e.downvotes.length > e.upvotes.length){
