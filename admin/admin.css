@@ -1,0 +1,202 @@
+
+/* basic */
+/* header */
+
+
+/* main */
+main {
+    position: relative;
+}
+main>div, main>button{
+    position: absolute;
+    z-index: 2;
+}
+main button{
+    padding: .4rem;
+    cursor: pointer;
+    font-size: 1.5rem;
+    background: #29D659;
+    border: none;
+    border-radius: .3rem;
+    transition: .1s linear;
+    height: fit-content;
+    width: fit-content;
+}
+main button:hover{
+    background: #51ec7d;
+}
+
+
+        #map {
+            height: 100vh;
+            width: 100vw;
+            /* border: 2px rgb(24, 24, 24) solid; */
+            /* border-radius: .4rem; */
+            z-index: 1;
+        }
+
+        #cards {
+            top: 3rem;
+            right: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: .4rem;
+            font-size: 2.4rem;
+            background: #29D659;
+            /* width: 16vw; */
+            width: 16rem;
+            /* padding: 1rem; */
+
+            min-height: 80vh;
+            max-height: 80vh;
+            box-sizing: border-box;
+            overflow-y: scroll;
+            scroll-behavior: smooth;
+            border-radius: .4rem;
+            overflow-x: hidden;
+            /* position: relative; */
+        }
+        .options{
+            position: sticky;
+            top: 0;
+            /* height: 5rem; */
+            height: fit-content;
+            padding: .6rem;
+            width: 100%;
+            /* background: #C0F9D0; */
+            /* background: #29d65a9a; */
+            background: hsla(133, 41%, 7%, 0.87);
+            /* background: #07c03b; */
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        .options button{
+            height: fit-content;
+            width: fit-content;
+            /* margin: .2rem; */
+        }
+        #pathcards{
+            
+        }
+        #conpathcards{
+            display: none;
+        }
+
+        /* direct edit buttons */
+        #send {
+            right: 21vw;
+            top: 6vh;
+            margin-top: 2rem;
+            background: #1bf057;
+            border: 4px #1F2721 solid; 
+        }
+        #send:hover{
+            color: #1bf057;
+            background: #1F2721;
+        }
+        #deleteCurrent {
+            right: 21vw;
+            top: 21vh;
+        }
+
+        #addpoint1{
+            right: 21vw;
+            top: 34vh;
+
+        }
+        #addpoint2{
+            right: 21vw;
+            top: 41vh;
+
+        }
+        #sendspecial{
+            right: 21vw;
+            top: 51vh;
+
+        }
+
+/* footer */
+
+
+/* elements */
+        body {
+            margin: 0%;
+        }
+
+
+/* shared */
+
+        
+.red {
+    background: rgb(223, 39, 39);
+    /* background: rgb(255, 43, 43); */
+}
+
+.green {
+    background: rgb(41, 168, 77);
+}
+
+.black {
+    background: rgb(10, 10, 10);
+}
+
+.white {
+    background: rgb(245, 245, 245);
+}
+
+
+.logged, .notlogged{
+    display: none;
+}
+
+.en{}
+.ar{}
+
+/* js generated */
+
+        .addbtn {
+            display: inline-block;
+
+            font-size: 1rem;
+            /* background: rgb(97, 250, 97); */
+            background: #1bf057;
+        }
+
+        .dltbtn {
+            display: inline;
+            font-size: 1rem;
+            cursor: pointer;
+            background: rgb(255, 97, 97);
+            /* background: red; */
+        }
+        .dltbtn:hover{
+            background: rgb(223, 39, 39);
+        }
+
+        
+        .card {
+            margin: .2rem;
+            height: 4rem;
+            min-width: 8rem;
+            /* border: 2px black solid; */
+            background: white;
+            border-radius: 1rem;
+            display: flex;
+            justify-content: end;
+            box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+            padding: .3rem;
+            cursor: pointer;
+        }
+        .card:hover{
+            background: rgb(211, 211, 211);
+        }
+
+        #cards button {
+            display: inline-block;
+        }
+
+
+
+

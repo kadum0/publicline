@@ -3,25 +3,13 @@
 import {createRequire} from 'module'
 const require = createRequire(import.meta.url)
 
-
-
-//express tools and configuring
-let express = require("express")
-let app = express()
-let cors = require("cors")
-//express configuration 
-app.set('view engine', 'ejs')
-app.use(express.json())
-app.use(cors())
-
-
-////////// pages to send
-app.use("/",express.static("./public"))
-
 require("dotenv").config()
 
 import { initializeApp } from "firebase/app";
-import {getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signOut, signInWithEmailAndPassword, useDeviceLanguage} from "firebase/auth"
+
+
+import {getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signOut, signInWithEmailAndPassword} from "firebase/auth"
+
 import { getFirestore, onSnapshot,
 	collection, doc, getDocs, getDoc,
 	addDoc, deleteDoc, setDoc,
@@ -30,6 +18,8 @@ import { getFirestore, onSnapshot,
 
 // firebase storage; 
 import {getStorage, ref, uploadBytes, getDownloadURL, listAll, list} from 'firebase/storage'
+
+
 
 const publicLineConfig = {
     apiKey: "AIzaSyAF-kHhmhnZ2z6GDRhX3YK6ZeN1wQifC8M",
@@ -46,20 +36,26 @@ const publicLine = initializeApp(publicLineConfig);
 const publicLineDb = getFirestore(publicLine)
 const publicLineAuth = getAuth(publicLine)
 
+
 // make server account; claim token; 
 
 signInWithEmailAndPassword(publicLineAuth ,process.env.EM, process.env.PW).then((cred)=>{
-    // console.log('registered', cred)
+    console.log('registered', cred)
 
 onAuthStateChanged(publicLineAuth, async (user)=>{
     if(user){
-        // console.log(user, user.uid)
-        // user.getIdTokenResult().then(idTokenResult => {console.log('claims are .',idTokenResult.claims)})
+        console.log(user, user.uid)
+        user.getIdTokenResult().then(idTokenResult => {console.log('claims are .',idTokenResult.claims)})
     }})
 })
 
+
+
+
+
 ///////////on db route change; 
 ///check if the upvote and downvote equal to 10; then if up; null, if down delete
+
 
 let collectionRef = collection(publicLineDb, 'routes')
 onSnapshot(collectionRef, (data)=>{
@@ -96,40 +92,6 @@ onSnapshot(collectionRef, (data)=>{
     console.log('fired')
 })
 
+
 console.log('nice', 'nice')
 
-
-
-
-// dynamic links 
-app.get('/profile/:userName', async (req, res)=>{
-    console.log('get profile page', req.params.userName)
-    
-    let data 
-    let q = query(collection(publicLineDb, 'users'), where('userName', '==',
-    req.params.userName))
-    let found = await getDocs(q).then(data=>{
-
-        // console.log(data)
-        // console.log(data.docs)
-
-        let docs = []
-    data.docs.forEach(doc=>{
-        console.log(doc.data())
-        docs.push({...doc.data(), id: doc.id})
-        data = docs[0]
-        data.subproject = 'publicline'
-    })
-
-
-    // also to give the project name 
-
-    res.render('profile.ejs', {data})
-
-
-    })
-
-    // console.log(found)
-})
-
-app.listen(process.env.PORT || 1000, ()=>console.log("listennig on port 1000..."))
