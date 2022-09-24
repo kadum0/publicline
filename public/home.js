@@ -47,6 +47,7 @@ onAuthStateChanged(publicLineAuth, async (user)=>{
         let userDocRef = doc(publicLinedb, 'users', user.uid)
         let dbUserDoc = await getDoc(userDocRef)
         dbUser = dbUserDoc.data()
+        dbUser.id = dbUserDoc.id
 
         if(dbUser){
             ////registered
@@ -131,10 +132,8 @@ document.querySelector('#signout').addEventListener('click', ()=>{
 const provider = new GoogleAuthProvider()
 document.querySelector('#bygoogle').addEventListener('click', ()=>{
     signInWithPopup(publicLineAuth, provider).then((cred)=>console.log(cred))
-    
+
 })
-
-
 
 
 //////make profile; 
@@ -199,7 +198,6 @@ document.querySelector(".auth").addEventListener("click", (e)=>{
 /////ui, js; fb, map, icons, translate, display the footer
 
 /////ui-js-logged; check if logged to display the logged options 
-document.querySelector('logged')
 
 
 
@@ -268,6 +266,9 @@ document.querySelector('logged')
         //////////get data 
 
         let hoveredRoute 
+        let hoveredPoint1
+        let hoveredPoint2
+
         let routes 
         let currentRouteId
 
@@ -364,7 +365,11 @@ document.querySelector('logged')
 
                     // check what button choosed 
                     if(ev.target.parentElement.parentElement.querySelector('.upvoteBtn').classList.contains('voted')){
-                        updateDoc(doc(publicLinedb, 'routes', currentRouteId), {upvotes: arrayUnion(dbUser.userName)}).then(()=>console.log('voted'))
+                        updateDoc(doc(publicLinedb, 'routes', currentRouteId), {upvotes: arrayUnion(dbUser.userName)}).then(()=>{
+                            console.log('voted')
+                            updateDoc(doc(publicLinedb, 'users', dbUser.id), {votes: arrayUnion(currentRouteId)})
+                            console.log('record the vote')
+                        })
                     }else if(ev.target.parentElement.parentElement.querySelector('.downvoteBtn').classList.contains('voted')){
                         updateDoc(doc(publicLinedb, 'routes', currentRouteId), {downvotes: arrayUnion(dbUser.userName)}).then(()=>console.log('voted'))
                     }
@@ -381,15 +386,17 @@ document.querySelector('logged')
 
                 /////insert
                 voteBtns.append(routeName, upvoteBtn, downvoteBtn, sureDiv)
-                    let routeObject = L.polyline(e.path, {
-                    }).bindPopup(voteBtns).addTo(map)
+                    let routeObject = L.polyline(e.path).bindPopup(voteBtns).addTo(map)
 
                     // routeObject.name = e.name
-                    e.point1?L.circle(e.path._latlngs[0]):null
-                    e.point2?L.circle(e.path._latlngs[e.path._latlngs.length-1]):null  
+                    e.point1?L.circle(e.path[0],{radius: 300}).addTo(map):null
+                    e.point2?L.circle(e.path[e.path.length-1],{radius: 300}).addTo(map):null 
                     
                     routeObject.upvotes = e.upvotes
                     routeObject.downvotes = e.downvotes
+                    routeObject.id = e.id
+                    routeObject.point1 = e.point1
+                    routeObject.point2 = e.point2
                     
                 /////content
                     ////////////if logged then allow to vote; 
@@ -447,9 +454,17 @@ document.querySelector('logged')
                         routesObjects.forEach(e=>{e.setStyle({color: "#3388FF", opacity: .6})})
 
                         hoveredRoute?map.removeLayer(hoveredRoute):null
-                        hoveredRoute = L.polyline(route.target._latlngs, {interactive: false})
-                        hoveredRoute.addTo(map)
-                        hoveredRoute.setStyle({color:"#28a84c", opacity: 1})
+                        hoveredPoint1?map.removeLayer(hoveredPoint1):null
+                        hoveredPoint2?map.removeLayer(hoveredPoint2):null
+
+
+                        hoveredRoute = L.polyline(route.target._latlngs, {color:"#28a84c", opacity: 1,interactive: false}).addTo(map)
+                        // console.log(route.target)
+                        route.target.point1?hoveredPoint1 = L.circle(route.target._latlngs[0],{radius:300 ,color:"#28a84c", opacity: 1,interactive: false}).addTo(map):null
+
+                        route.target.point2?hoveredPoint2 = L.circle(route.target._latlngs[route.target._latlngs.length-1], {radius:300, color:"#28a84c", opacity: 1,interactive: false}).addTo(map):null
+                        // hoveredRoute.addTo(map)
+                        // hoveredRoute.setStyle({color:"#28a84c", opacity: 1})
                         // hoveredRoute.setStyle({color:"red", fillColor: "red"})
                         // routesObjects.push(newRoute)
 
@@ -643,7 +658,7 @@ document.querySelector('logged')
         //////////// test code; 
 
         window.onclick = ()=>{
-            // console.log(dbUser)
+            console.log(dbUser)
             console.log(routesObjects)
         }
 

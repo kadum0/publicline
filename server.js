@@ -26,7 +26,7 @@ import { getFirestore, onSnapshot,
 	collection, doc, getDocs, getDoc,
 	addDoc, deleteDoc, setDoc,
 	query, where, orderBy, serverTimestamp,
-	updateDoc, arrayUnion, arrayRemove} from "firebase/firestore";
+	updateDoc, arrayUnion, arrayRemove, DocumentReference} from "firebase/firestore";
 
 // firebase storage; 
 import {getStorage, ref, uploadBytes, getDownloadURL, listAll, list} from 'firebase/storage'
@@ -104,6 +104,8 @@ console.log('nice', 'nice')
 // dynamic links 
 app.get('/profile/:userName', async (req, res)=>{
     console.log('get profile page', req.params.userName)
+
+    console.log(req)
     
     let data 
     let q = query(collection(publicLineDb, 'users'), where('userName', '==',
@@ -120,13 +122,10 @@ app.get('/profile/:userName', async (req, res)=>{
         data = docs[0]
         data.subproject = 'publicline'
     })
-
-
+    
     // also to give the project name 
 
     res.render('profile.ejs', {data})
-
-
     })
 
     // console.log(found)
