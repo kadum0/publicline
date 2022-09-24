@@ -359,9 +359,7 @@ document.querySelector(".auth").addEventListener("click", (e)=>{
                 sureBtn.setAttribute('disabled', true)
                 sureBtn.addEventListener('click', (ev)=>{
 
-                    console.log(ev.target)
-                    console.log(ev.target.parentElement.parentElement)
-                    console.log(currentRouteId)
+                    console.log(ev.target,ev.target.parentElement.parentElement,currentRouteId)
 
                     // check what button choosed 
                     if(ev.target.parentElement.parentElement.querySelector('.upvoteBtn').classList.contains('voted')){
@@ -377,9 +375,6 @@ document.querySelector(".auth").addEventListener("click", (e)=>{
                     upvoteBtn.setAttribute('disabled', true)
                     downvoteBtn.setAttribute('disabled', true)
                     ev.target.setAttribute('disabled', true)
-                // ev.target.parentElement.parentElement.querySelector('.upvoteBtn').setAttribute('disabled', true)
-                // ev.target.parentElement.parentElement.querySelector('.downvoteBtn').setAttribute('disabled', true)
-
                 })
                 sureDiv.append(sureBtn)
 
@@ -403,6 +398,8 @@ document.querySelector(".auth").addEventListener("click", (e)=>{
                     routeObject.addEventListener('click', (ev)=>{
                         console.log('click on route', ev.target)
 
+                        currentRouteId = e.id
+
                         ////////mobile; change color 
                         routesObjects.forEach(e=>{e.setStyle({color: "#3388FF", opacity: .6})})
                         hoveredRoute?map.removeLayer(hoveredRoute):null
@@ -410,7 +407,6 @@ document.querySelector(".auth").addEventListener("click", (e)=>{
                         hoveredRoute.addTo(map)
                         hoveredRoute.setStyle({color:"#28a84c", opacity: 1})
 
-                        currentRouteId = e.id
 
                         if(dbUser){
                             if(ev.target.upvotes || ev.target.downvotes){ ///temp
@@ -434,8 +430,11 @@ document.querySelector(".auth").addEventListener("click", (e)=>{
 
                         }else{
                             // no account
-                                    ev.target._popup._content.querySelector('.upvoteBtn').setAttribute('disabled', true)
+                                // display; have to login to vote 
+
+                            ev.target._popup._content.querySelector('.upvoteBtn').setAttribute('disabled', true)
                                     ev.target._popup._content.querySelector('.downvoteBtn').setAttribute('disabled', true)
+                                    ev.target._popup._content.append('انشئ حساب للتصويت')
                         }
 
                         e.upvotes?console.log('upvotes', e.upvotes):null
@@ -474,11 +473,11 @@ document.querySelector(".auth").addEventListener("click", (e)=>{
 
                     // routesObjects.forEach(e=>{e.setStyle({opacity: 0.7, weight: 3, color: "#3388FF", fillColor: "#3388FF"})})
                     // route.target.setStyle({opacity: 1, weight: 5, color:"#28a84c", fillColor: "#28a84c"})
-
                 })
             })
-
         }
+
+
 
 
         /////////////send data 
