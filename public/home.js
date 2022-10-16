@@ -15,21 +15,36 @@ import { getFirestore, onSnapshot,
 // firebase storage; 
 import {getStorage, ref, uploadBytes, getDownloadURL, listAll, list} from 'https://www.gstatic.com/firebasejs/9.9.2/firebase-storage.js'
     
-const publicLineConfig = {
-    apiKey: "AIzaSyAF-kHhmhnZ2z6GDRhX3YK6ZeN1wQifC8M",
-    authDomain: "public-line-19206.firebaseapp.com",
-    projectId: "public-line-19206",
-    storageBucket: "public-line-19206.appspot.com",
-    messagingSenderId: "897098333489",
-    appId: "1:897098333489:web:883a9eaff7711d7c4ec410",
-    measurementId: "G-PLWGYD6KBC"
-};
+
+const bygreenConfig = {
+    apiKey: "AIzaSyDqK1z4fd7lO9g2ISbf-NNROMd7xpxcahc",
+    authDomain: "bygreen-453c9.firebaseapp.com",
+    projectId: "bygreen-453c9",
+    storageBucket: "bygreen-453c9.appspot.com",
+    messagingSenderId: "19954598250",
+    appId: "1:19954598250:web:ba57c792bdf65dbc18a513",
+    measurementId: "G-265TN8HGKX"};
+
+const bygreen = initializeApp(bygreenConfig, 'bygreen');
+const bygreenDb = getFirestore(bygreen)
+const bygreenAuth = getAuth(bygreen)
+const bygreenStorage = getStorage(bygreen)
+
+// const publicLineConfig = {
+//     apiKey: "AIzaSyAF-kHhmhnZ2z6GDRhX3YK6ZeN1wQifC8M",
+//     authDomain: "public-line-19206.firebaseapp.com",
+//     projectId: "public-line-19206",
+//     storageBucket: "public-line-19206.appspot.com",
+//     messagingSenderId: "897098333489",
+//     appId: "1:897098333489:web:883a9eaff7711d7c4ec410",
+//     measurementId: "G-PLWGYD6KBC"
+// };
 
 // Initialize Firebase
-const publicLine = initializeApp(publicLineConfig);
-const publicLinedb = getFirestore(publicLine)
-const publicLineAuth = getAuth(publicLine)
-const publicLineStorage = getStorage(publicLine)
+// const publicLine = initializeApp(publicLineConfig);
+// const bygreenDb = getFirestore(publicLine)
+// const bygreenAuth = getAuth(publicLine)
+// const bygreenStorage = getStorage(publicLine)
 
 
 
@@ -39,12 +54,12 @@ let errDiv = document.querySelector('#errors')
 let dbUser ////firestore 
 let authUser ///auth 
 //////display the right controllers; 
-onAuthStateChanged(publicLineAuth, async (user)=>{
+onAuthStateChanged(bygreenAuth, async (user)=>{
     if(user){
         console.log(user, user.uid)
         authUser = user
         user.getIdTokenResult().then(idTokenResult => {console.log(idTokenResult.claims)})
-        let userDocRef = doc(publicLinedb, 'users', user.uid)
+        let userDocRef = doc(bygreenDb, 'users', user.uid)
         let dbUserDoc = await getDoc(userDocRef)
         dbUser = dbUserDoc.data()
         dbUser.id = dbUserDoc.id
@@ -86,7 +101,7 @@ document.querySelector('#registerbtn').addEventListener('click', (ev)=>{
     if(ev.target.parentElement.querySelector(".em").value.length > 0 &&ev.target.parentElement.querySelector(".em").value.length < 20 && ev.target.parentElement.querySelector(".pw").value.length > 0){
 
         console.log('make account')
-        createUserWithEmailAndPassword(publicLineAuth, ev.target.parentElement.querySelector(".em").value, ev.target.parentElement.querySelector(".pw").value).then(cred=>{
+        createUserWithEmailAndPassword(bygreenAuth, ev.target.parentElement.querySelector(".em").value, ev.target.parentElement.querySelector(".pw").value).then(cred=>{
             console.log(cred)
         }).catch(err=>{
             console.log(err.message)
@@ -114,7 +129,7 @@ document.querySelector('#signinbtn').addEventListener('click', (ev)=>{
     // send 
     // if(document.querySelector('#signinUsername').value.length > 0 && document.querySelector('#signinPassword').value.length > 0){
         console.log('make account')
-        signInWithEmailAndPassword(publicLineAuth, ev.target.parentElement.querySelector(".em").value ,ev.target.parentElement.querySelector(".pw").value)
+        signInWithEmailAndPassword(bygreenAuth, ev.target.parentElement.querySelector(".em").value ,ev.target.parentElement.querySelector(".pw").value)
     // }else{
 
     // }
@@ -125,13 +140,13 @@ document.querySelector('#signinbtn').addEventListener('click', (ev)=>{
 
 //////signout 
 document.querySelector('#signout').addEventListener('click', ()=>{
-    signOut(publicLineAuth, (result)=>{console.log(result)})
+    signOut(bygreenAuth, (result)=>{console.log(result)})
 })
 
 // sign with google  
 const provider = new GoogleAuthProvider()
 document.querySelector('#bygoogle').addEventListener('click', ()=>{
-    signInWithPopup(publicLineAuth, provider).then((cred)=>console.log(cred))
+    signInWithPopup(bygreenAuth, provider).then((cred)=>console.log(cred))
 
 })
 
@@ -139,7 +154,7 @@ document.querySelector('#bygoogle').addEventListener('click', ()=>{
 //////make profile; 
 document.querySelector('#makeprofilebtn').addEventListener('click', async (ev)=>{
     //////////set user in the users collection user current user uid 
-    let q = query(collection(publicLinedb, 'users'), where('username', '==', ev.target.parentElement.querySelector('#username').value))
+    let q = query(collection(bygreenDb, 'users'), where('username', '==', ev.target.parentElement.querySelector('#username').value))
     let foundDoc = await getDocs(q)
     let found
 
@@ -151,7 +166,7 @@ document.querySelector('#makeprofilebtn').addEventListener('click', async (ev)=>
     if(!found){
         console.log('no taken')
 
-        let fileRef = ref(publicLineStorage, '/userimgs/' + new Date().toISOString().replace(/:/g, '-') +document.querySelector("#userimg").files[0].name.replaceAll(" ","") )
+        let fileRef = ref(bygreenStorage, '/userimgs/' + new Date().toISOString().replace(/:/g, '-') +document.querySelector("#userimg").files[0].name.replaceAll(" ","") )
 
             uploadBytes(fileRef, document.querySelector("#userimg").files[0]).then(res=>{
                 getDownloadURL(res.ref).then(url=>{
@@ -159,7 +174,7 @@ document.querySelector('#makeprofilebtn').addEventListener('click', async (ev)=>
                     let imgUrl = url
 
         ///addDoc; add document to a collection; 
-        setDoc(doc(publicLinedb, 'users', authUser.uid), {
+        setDoc(doc(bygreenDb, 'users', authUser.uid), {
             userName: ev.target.parentElement.querySelector('#username').value,
             name: ev.target.parentElement.querySelector('#name').value,
             bio: ev.target.parentElement.querySelector('#bio').value,
@@ -171,7 +186,7 @@ document.querySelector('#makeprofilebtn').addEventListener('click', async (ev)=>
 
 
 
-        // setDoc(doc(publicLinedb, 'users', currentUser.uid), {name: ev.target.querySelector('username').value})
+        // setDoc(doc(bygreenDb, 'users', currentUser.uid), {name: ev.target.querySelector('username').value})
     }else{
         //////////make messaga section to display errors 
         console.log('username already taken')
@@ -290,7 +305,7 @@ document.querySelector(".auth").addEventListener("click", (e)=>{
             ///////getting routes 
 
             // let routes 
-            let routesColl = collection(publicLinedb, 'routes')
+            let routesColl = collection(bygreenDb, 'routes')
             await getDocs(routesColl).then((data)=>{
             let docs = []
                 data.docs.forEach(doc=>{
@@ -363,13 +378,13 @@ document.querySelector(".auth").addEventListener("click", (e)=>{
 
                     // check what button choosed 
                     if(ev.target.parentElement.parentElement.querySelector('.upvoteBtn').classList.contains('voted')){
-                        updateDoc(doc(publicLinedb, 'routes', currentRouteId), {upvotes: arrayUnion(dbUser.userName)}).then(()=>{
+                        updateDoc(doc(bygreenDb, 'routes', currentRouteId), {upvotes: arrayUnion(dbUser.userName)}).then(()=>{
                             console.log('voted')
-                            updateDoc(doc(publicLinedb, 'users', dbUser.id), {votes: arrayUnion(currentRouteId)})
+                            updateDoc(doc(bygreenDb, 'users', dbUser.id), {votes: arrayUnion(currentRouteId)})
                             console.log('record the vote')
                         })
                     }else if(ev.target.parentElement.parentElement.querySelector('.downvoteBtn').classList.contains('voted')){
-                        updateDoc(doc(publicLinedb, 'routes', currentRouteId), {downvotes: arrayUnion(dbUser.userName)}).then(()=>console.log('voted'))
+                        updateDoc(doc(bygreenDb, 'routes', currentRouteId), {downvotes: arrayUnion(dbUser.userName)}).then(()=>console.log('voted'))
                     }
 
                     upvoteBtn.setAttribute('disabled', true)
@@ -646,7 +661,7 @@ document.querySelector(".auth").addEventListener("click", (e)=>{
                 console.log(routeToSend, typeof routeToSend.route, typeof notvalidRoute)
 
                 //////send; 
-                let unRoutesColl = collection(publicLinedb, 'unroutes')
+                let unRoutesColl = collection(bygreenDb, 'unroutes')
                 addDoc(unRoutesColl, routeToSend)
             }
     })
