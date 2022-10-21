@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 
-    <link rel="stylesheet" href="./home.css">
+    <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
@@ -31,8 +31,95 @@
         <h2>public line |الخط العام</h2>
     </header> -->
 
-    <main>
+    <header>
+        <!-- logo -->
+        <div class="flex">
+            <div class="logo box">
+                <!-- <a href="https://kadum2.github.io/ivc-2de/"> -->
+                <div class="black"></div>
+                <div class="red"></div>
+                <div class="white"></div>
+                <!-- <div class="green"></div> -->
 
+            </div>
+            <span id="footer-di" class="box">?</span>
+            <button disabled id="displayShops" class="box">shops</button>
+        </div>
+
+        <!-- title -->
+        <h2 id="projectName" class="box"> publicline| الخط العام</h2>
+
+        <!-- auth; auth-di, auth-state -->
+        <div id="auth-di" class="auth box">
+            <div class="logged" style="height: fit-content;">
+                <div class="flex">
+                    <img class="minicuserimg">
+                    <p class="teamEle" style="line-height: none; padding:0;
+                color:white; font-size: .8rem;">team</p>
+                </div>
+            </div>
+            <div class="notlogged">
+                make account
+            </div>
+            <div class="makeprofile">
+                make profile
+            </div>
+        </div>
+
+        <div class="authstate">
+            <div class="logged">
+                <a class="flex box" id="profileLink" href="">
+                    <img class="cuserimg">
+                    <p class="cuserusername" style="line-height: 0;">username</p>
+                </a>
+                <b>
+                    <p class="cusername"></p>
+                </b>
+                <p class="cuserbio">bio</p>
+                <div class="cuserpoints" style="display: inline;">
+                    <span class="addedRoutes">
+                        <img src="./imgs/addroutebtn.png" alt="">
+                        <span></span>
+                    </span>
+                    <span class="votes">
+                        <img src="./imgs/vote.png" alt="">
+                        <span></span>
+                    </span>
+                </div>
+                <button class="box" id="signoutbtn" style="display: inline;">logout</button>
+            </div>
+            <div class="notlogged">
+                <div id="register">
+                    <input type="text" class="em" placeholder="em">
+                    <input type="text" class="pw" placeholder="pw">
+                    <button id="registerbtn">register</button>
+                </div>
+                <div id="signin">
+                    <input type="text" class="em" placeholder="em" id="signinUsername">
+                    <input type="text" class="pw" placeholder="pw" id="signinUsername">
+                    <button id="signinbtn">signin</button>
+                </div>
+                <h3>or</h3>
+                <button id="bygoogle">register with google</button>
+            </div>
+            <div class="makeprofile">
+                <input type="text" id="username" placeholder="username">
+                <input type="text" id="name" placeholder="name">
+                <input type="text" id="bio" placeholder="bio">
+                <input type="file" id="userimg">
+                <button id="makeprofilebtn">submit</button>
+
+                <button id="signoutsebtn">logout</button>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <main>
+        <!-- 
         <div class="auth">
             <div class="logged">
                 <div class="miniprofile">
@@ -48,7 +135,6 @@
             </div>
         </div>
 
-        <!-- more details -->
         <div class="authstate">
             <div class="logged">
                 <img class="cuserimg">
@@ -82,47 +168,143 @@
 
         </div>
 
-        <div id="errors">some thing is wrong</div>
+        <div id="errors">some thing is wrong</div> -->
 
-        <div id="map">
-            <div class="details">
-                <div class="logo ">
-                    <a href="https://kadum2.github.io/ivc-2de/" target="_blank">
-                        <div class="black"></div>
-                        <div class="red"></div>
-                        <div class="white"></div>
-                        <!-- <div class="green"></div> -->
-                    </a>
-                </div>
-                <!-- <button id="en">en</button> -->
-                <!-- <div id="en">en</div> -->
-                <span class="mdetails">?</span>
+        <div id="map"></div>
 
-                <div id="mdetails">
-                </div>
-            </div>
-
-        </div>
-        <!-- collect data -->
+        <!-- collect data; controllers -->
         <div class="btns">
-            <button id="addmode" style="background-image: url('./imgs/addroutebtncut.png');">
+            <button class="box" id="addmode" style="background-image: url('./imgs/addroutebtncut.png');">
                 <!-- <img src="" alt=""style="height: 1rem; width: 1rem ;background-image: url('./imgs/addroutebtncut.png');"> -->
                 اضافة مسار</button>
             <input type="text" name="" id="routeName" placeholder="اسم المسار">
             <div class="deletebtns">
-                <button id="cancel-step">الغاء الخطوة</button>
-                <button id="cancel-route">الغاء المسار</button>
+                <button class="box" id="cancel-step">الغاء الخطوة</button>
+                <button class="box" id="cancel-route">الغاء المسار</button>
             </div>
-            <button id="point1">نقطة 1</button>
-            <button id="point2">نقطة 2</button>
+            <button class="box" id="point1">نقطة 1</button>
+            <button class="box" id="point2">نقطة 2</button>
 
-            <button id="send" disabled="true"> ارسال المسار</button>
+            <button class="box" id="send" disabled="true"> ارسال المسار</button>
         </div>
 
 
     </main>
 
     <footer>
+        <div class="footerflex">
+            <div class="leaderBoard">
+                <span style="margin-bottom: 1rem;">
+                    <p style="color: white; display: inline;">leaderBoard</p>
+                    <!-- leaderBoard -->
+                    <!-- <button id="displayUsersRanking" class="">users</button>
+                    <button id="displayteamsRanking" class="">team</button> -->
+                    <a href="#me">
+                        <button class="box">me</button>
+                    </a>
+                </span>
+                <div class="rankingHeader">
+                    <!-- <span>none</span> -->
+                    <button id="rankingSorting" class="box">ranking</button>
+                    <button id="accountHeader">account</button>
+                    <button class="box" id="greenPinSorting"
+                        style="background-image: url('./imgs/addroutebtn.png');"></button>
+                    <button class="box" id="redToGreenSorting"
+                        style="background-image: url('./imgs/vote.png');"></button>
+                    <button class="box" id="totalSorting">total points</button>
+                </div>
+
+                <div id="usersRanking">
+
+                    <!-- prototyped account -->
+
+                    <div class="rankedAccount">
+                        <span class="ranking">${index+1}</span>
+                        <div class="account flex" style="justify-content: flex-start;">
+                            <img class="accountImg" style="background-image: url('${account.img}');">
+                            <h3 class="accountUsername ranked">${account.userName}</h3>
+                        </div>
+
+                        <h3 class="red">${account.red.length}</h3>
+                        <h3 class="green">${account.green.length}</h3>
+                        <h3 class="makingGreen">not yet</h3>
+                        <h3 class="total">${account.red.length+account.green.length}</h3>
+                    </div>
+                </div>
+
+                <div id="teamsRanking" style="display: none;">
+                    <!-- prototyped account -->
+                    <div class="rankedAccount">
+                        <span class="ranking">${index+1}</span>
+                        <div class="account">
+                            <img class="accountImg" style="background-image: url('${account.img}');">
+                            <h3 class="accountUsername ranked">${account.userName}</h3>
+                        </div>
+
+                        <h3 class="red">${account.red.length}</h3>
+                        <h3 class="green">${account.green.length}</h3>
+                        <h3 class="makingGreen">not yet</h3>
+                        <h3 class="makingGreen">${account.red.length+account.green.length}</h3>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="info">
+                <div class="contact">
+                    <span class="red"></span>
+                    <h2>تواصل معنا</h2>
+                    <span>
+                        <a href="https://www.instagram.com/kadum_0/" target="_blank">
+                            <img src="./imgs/instagramlogo.jpg" alt="">
+                        </a>
+                        <a href="t.me/kadum0" target="_blank">
+                            <img src="./imgs/Telegramlogo.png" alt="">
+                        </a>
+                    </span>
+                    <!-- <p>facebook</p> -->
+                    <p>email; kadum.jawad@gmail.com</p>
+
+                </div>
+                <div class="features">
+                    <span class="black"></span>
+                    <h2>مميزات الموقع: الغرض و الاستخدام </h2>
+                    <div class="box">
+                        توثيق
+                        حملات التشجير المنتهية و القادمة</div>
+                    <div class="box">
+                        <img src="./imgs/addred.png">
+                        <img src="./imgs/addgreen.png">
+                        اضافة علامات </div>
+                    <div class="box">
+                        <img src="./imgs/redtogreen.png">
+                        زراعة مكان محدد
+                    </div>
+
+                </div>
+                <div class="statics">
+                    <span class="green"></span>
+                    <h2>نتائج المشروع</h2>
+                    <li>تم زراعتها <img src="./imgs/greenPin.png" alt=""><b id="greenCounter" style="color: red;">0</b>
+                    </li>
+                    <li>تحتاج الى زراعة <img src="./imgs/redPin.png"> <b id="redCounter" style="color:red;">0</b></li>
+                    <li>الحملات الحالية: <img src="./imgs/yellowPin.png"> <b id="yellowCounter" style="color:red;">0</b>
+                    </li>
+
+                    <li>عدد المستخدمين: <b id="accountsCounter" style="color: red;">0</b></li>
+                    <li>عدد المساهمات: <b id="contriCounter" style="color: red;">0</b></li>
+                    <!-- <img src="./imgs/284807325_340145658273227_1050030653915922194_n.jpg" alt=""> -->
+
+                </div>
+
+            </div>
+        </div>
+        </div>
+
+    </footer>
+
+
+    <!-- <footer>
         <div class="features">
             <span class="black"></span>
             <h2>مميزات الموقع: الغرض و الاستخدام </h2>
@@ -141,21 +323,16 @@
             <div class="contact">
                 <span class="red"></span>
                 <h2>تواصل معنا</h2>
-                <!-- <a href="https://www.instagram.com/kadum_0/"> -->
                 <img src="./imgs/instagram-round-icon-vector-instagram-round-multicolor-icon-white-background-134391805.jpg"
                     alt="">
-                <!-- </a> -->
-                <!-- <a href="t.me/kadum0"> -->
                 <img src="./imgs/telegram-logo.png" alt="">
-                <!-- </a> -->
-                <!-- <p>facebook</p> -->
                 <p>email; groupname@gmail.com</p>
             </div>
         </div>
-    </footer>
+    </footer> -->
 
     <!-- main script  -->
-    <script src="./home.js" type="module"></script>
+    <script src="./script.js" type="module"></script>
 
 </body>
 

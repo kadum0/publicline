@@ -30,56 +30,55 @@ const bygreenDb = getFirestore(bygreen)
 const bygreenAuth = getAuth(bygreen)
 const bygreenStorage = getStorage(bygreen)
 
-// const publicLineConfig = {
-//     apiKey: "AIzaSyAF-kHhmhnZ2z6GDRhX3YK6ZeN1wQifC8M",
-//     authDomain: "public-line-19206.firebaseapp.com",
-//     projectId: "public-line-19206",
-//     storageBucket: "public-line-19206.appspot.com",
-//     messagingSenderId: "897098333489",
-//     appId: "1:897098333489:web:883a9eaff7711d7c4ec410",
-//     measurementId: "G-PLWGYD6KBC"
-// };
-
-// Initialize Firebase
-// const publicLine = initializeApp(publicLineConfig);
-// const bygreenDb = getFirestore(publicLine)
-// const bygreenAuth = getAuth(publicLine)
-// const bygreenStorage = getStorage(publicLine)
-
-
-
 /////////auth state 
 let errDiv = document.querySelector('#errors')
 
 let dbUser ////firestore 
 let authUser ///auth 
-//////display the right controllers; 
-onAuthStateChanged(bygreenAuth, async (user)=>{
+let type
+let accountsList = []
+await onAuthStateChanged(bygreenAuth, async (user)=>{
+    console.log('authstatefun', dbUser)
     if(user){
-        console.log(user, user.uid)
+        console.log('from auth ', user)
         authUser = user
-        user.getIdTokenResult().then(idTokenResult => {console.log(idTokenResult.claims)})
-        let userDocRef = doc(bygreenDb, 'users', user.uid)
-        let dbUserDoc = await getDoc(userDocRef)
+        user.getIdTokenResult().then(idTokenResult => {
+            console.log('claims', idTokenResult.claims)
+            type = idTokenResult.claims
+            // if team 
+            if (idTokenResult.claims.team){
+                document.querySelectorAll('.teamEle').forEach(teamEle=>{
+                    teamEle.style.display = 'inline-block'
+                })
+                // document.querySelector('.addYellow').style.display = 'block'
+            }
+        })
+        let dbUserDoc = await getDoc(doc(bygreenDb, 'users', user.uid))
         dbUser = dbUserDoc.data()
-        dbUser.id = dbUserDoc.id
 
         if(dbUser){
+        dbUser.id = dbUserDoc.id
+
             ////registered
             document.querySelectorAll('.logged').forEach(e=>{e.style.display = 'block'})
             document.querySelectorAll('.makeprofile').forEach(e=>e.style.display = 'none')
-            document.querySelectorAll('.notlogged').forEach(e=>{e.style.display = 'none'})
+            document.querySelectorAll('.notlogged').forEach(e=>e.style.display = 'none')
 
             ///insert the basic info; 
             document.querySelector('.minicuserimg').style.backgroundImage = `url('${dbUser.img}')`
-            document.querySelector(".minicuserusername").textContent = dbUser.userName
+            // document.querySelector(".minicuserusername").textContent = '@'+ dbUser.userName
             document.querySelector('.cuserimg').style.backgroundImage = `url('${dbUser.img}')`
-            document.querySelector(".cuserusername").textContent = dbUser.userName
-            document.querySelector(".cusername").textContent = dbUser.userName
-            document.querySelector(".cuserbio").textContent = dbUser.userName
+            document.querySelector(".cuserusername").textContent = '@'+ dbUser.userName
+            document.querySelector(".cusername").textContent = dbUser.name
+            document.querySelector(".cuserbio").textContent = dbUser.bio
+            document.querySelector("#profileLink").href = window.location.host+'/'+ dbUser.userName
+
+            document.querySelector(".addedRoutes").querySelector('span').textContent = dbUser.addedRoutes.length
+            document.querySelector(".votes").querySelector('span').textContent += dbUser.votes.length
+
 
         }else{
-            /////half registered
+            /////half registered; make profile
             document.querySelectorAll('.makeprofile').forEach(e=>e.style.display = 'block')
             document.querySelectorAll('.logged').forEach(e=>e.style.display = 'none')
             document.querySelectorAll('.notlogged').forEach(e=>e.style.display = 'none')
@@ -90,9 +89,25 @@ onAuthStateChanged(bygreenAuth, async (user)=>{
         document.querySelectorAll('.notlogged').forEach(e=>e.style.display = 'block')
         document.querySelectorAll('.logged').forEach(e=>e.style.display = 'none')
         document.querySelectorAll('.makeprofile').forEach(e=>e.style.display = 'none')
-    }
-})
 
+        dbUser = 'none'
+    }
+
+    getDocs(collection(bygreenDb, 'users')).then((data)=>{
+        let docs = []
+            data.docs.forEach(doc=>{
+                docs.push({...doc.data(), id: doc.id})
+            })
+            accountsList = docs
+            console.log(docs)
+            document.querySelector('#accountsCounter').textContent = accountsList.length
+            if(accountsList){
+                // console.log(accountsList, dbUser)
+                ranking('total', 'de')
+            }
+
+        })
+})
 ///////register 
 document.querySelector('#registerbtn').addEventListener('click', (ev)=>{
     // check if valid data
@@ -139,7 +154,7 @@ document.querySelector('#signinbtn').addEventListener('click', (ev)=>{
 })
 
 //////signout 
-document.querySelector('#signout').addEventListener('click', ()=>{
+document.querySelector('#signoutbtn').addEventListener('click', ()=>{
     signOut(bygreenAuth, (result)=>{console.log(result)})
 })
 
@@ -179,6 +194,12 @@ document.querySelector('#makeprofilebtn').addEventListener('click', async (ev)=>
             name: ev.target.parentElement.querySelector('#name').value,
             bio: ev.target.parentElement.querySelector('#bio').value,
             img: imgUrl,
+            red: [],
+            green: [],
+            yellow:[],
+            addedRoutes: [], 
+            votes: [],
+            type: 'user'
         }).then(()=>{window.location.reload();}) 
         
         })
@@ -203,26 +224,6 @@ document.querySelector(".auth").addEventListener("click", (e)=>{
         document.querySelector(".authstate").style.display = 'none'
     }
 })
-
-
-
-
-
-
-
-/////ui, js; fb, map, icons, translate, display the footer
-
-/////ui-js-logged; check if logged to display the logged options 
-
-
-
-
-////get data; check, deploy 
-////deploy data; make, content, insert 
-
-////collect (get) data; 
-////send data; check, send, empty 
-
 
 
 
@@ -256,7 +257,7 @@ document.querySelector(".auth").addEventListener("click", (e)=>{
 
 
         ///////display the footer 
-        document.querySelector(".mdetails").addEventListener("click", (e)=>{
+        document.querySelector("#footer-di").addEventListener("click", (e)=>{
             e.target.classList.toggle("on")
             if(e.target.classList.contains("on")){
                 document.querySelector("footer").style.display = 'block'
@@ -265,6 +266,96 @@ document.querySelector(".auth").addEventListener("click", (e)=>{
             }
         })
 
+
+        function ranking(based, order){
+
+            // restructure the accounts array
+        //label the current account to be green 
+    
+        let intendedOrder = []
+        let orderedUserElements
+        let orderedteamElements
+    
+        if(based == 'total'){
+            if(order == 'de'){
+                // decending order 
+                intendedOrder = accountsList.sort((a, b) => { return (b.green.length+b.red.length)-(a.green.length +a.red.length)}) 
+            }else{
+                //acending order 
+                intendedOrder = accountsList.sort((a, b) => { return (a.green.length +a.red.length)-(b.green.length+b.red.length)})
+            }
+        }else if(based == 'red'){
+            if(order == 'de'){
+                intendedOrder = accountsList.sort((a,b)=>{return b.red.length - a.red.length})
+            }else{
+                intendedOrder = accountsList.sort((a,b)=>{return a.red.length - b.red.length})
+            }
+    
+        }else if(based == 'green'){
+            if(order == 'de'){
+                intendedOrder = accountsList.sort((a,b)=>{return b.green.length - a.green.length})
+            }else{
+                intendedOrder = accountsList.sort((a,b)=>{return a.green.length - b.green.length})
+            }
+    
+        }else if(based == 'redToGreen'){
+            if(order == 'de'){
+                intendedOrder = accountsList.sort((a,b)=>{return b.redToGreen.length - a.redToGreen.length})
+            }else{
+                intendedOrder = accountsList.sort((a,b)=>{return a.redToGreen.length - b.redToGreen.length})
+            }
+    
+    
+        }
+    
+        // make the dom
+        let currentUserName 
+        dbUser?currentUserName=dbUser.userName:null
+    
+        let userCounter= 1
+        orderedUserElements = `${intendedOrder.map((account, index)=>{
+            if(account.type == 'user'){return`
+    <div class="rankedAccount" ${account.userName == currentUserName?'id="#me" style="background-color: #29D659"':''}>
+        <span class="ranking">${userCounter++}</span>
+            <a href=' http://${window.location.host+'/profile/'+ account.userName} '> <b style='color: white'> 
+        <div class="account">
+            <img class="accountImg" style="background-image: url('${account.img}');">
+            <h3 class="accountUsername ranked">${account.userName}</h3>
+        </div>
+            
+            </b> </a>
+    
+    
+        <h3 class="addedRoutes">${account.addedRoutes.length}</h3>
+        <h3 class="votes">${account.votes.length}</h3>
+        <h3 class="total">${account.addedRoutes.length+account.votes.length}</h3>
+    </div>
+        `}
+    })}`
+    
+    
+            let teamCounter = 1
+        orderedteamElements = `${intendedOrder.map((account, index)=>{
+            if(account.type == 'team'){return`
+    <div class="rankedAccount" ${account.userName == currentUserName?'style="background-color: #29D659"':''}>
+        <span class="ranking">${teamCounter++}</span>
+        <div class="account">
+            <img class="accountImg" style="background-image: url('${account.img}');">
+            <h3 class="accountUsername ranked">${account.userName}</h3>
+        </div>
+    
+        <h3 class="addedRoutes">${account.addedRoutes.length}</h3>
+        <h3 class="votes">${account.votes.length}</h3>
+        <h3 class="total">${account.addedRoutes.length+account.votes.length}</h3>
+    </div>
+        `}
+            })}`
+    
+        console.log('intended order',intendedOrder)
+        document.querySelector('#usersRanking').innerHTML = orderedUserElements.replaceAll(',', '')
+        document.querySelector('#teamsRanking').innerHTML = orderedteamElements.replaceAll(',', '')
+    }
+    
 
 
 
@@ -318,7 +409,7 @@ document.querySelector(".auth").addEventListener("click", (e)=>{
 
             console.log("get routes; ", routes)
 
-            document.querySelector("b").textContent = routes.length
+            // document.querySelector("b").textContent = routes.length
 
             ///deploy them; store
             deployRoutes(routes)

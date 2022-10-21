@@ -1,0 +1,371 @@
+
+
+/* basics */
+/* header */
+
+header{
+    height: 3rem;
+    background: #29D659;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+}
+.logo div {
+    height: 30%;
+    width: 75%;
+    margin-bottom: 10%;
+    transform: rotateZ(-15deg);
+    }
+    .logo {
+        height: 2rem;
+        width: 2rem;
+    }
+
+#footer-di{
+    /* background: red; */
+    z-index: 1003;
+    border: #ff2a2a 2px solid;
+}
+.auth{
+height: 2rem;
+}
+.auth div{
+    pointer-events: none;
+}
+.authstate{
+    position: absolute;
+    /* make it glass form */
+    /* background: #29D659;
+    border-radius: .6rem; */
+    padding: .6rem;
+    top: 3rem;
+    right: 1rem;
+    /* width: 7rem; */
+    width: auto;
+
+    z-index: 1002;
+    display: none;
+
+    /* From https://css.glass */
+background: rgba(255, 255, 255, 0.2);
+background: rgba(149, 255, 193, 0.2);
+
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(5px);
+-webkit-backdrop-filter: blur(5px);
+border: 1px solid rgba(255, 255, 255, 0.3);
+}
+.cuserimg{
+    /* height: 3rem; */
+    width: auto;
+}
+#profileLink{
+    text-decoration: none;
+    color: black;
+}
+.logged, .notlogged, .makeprofile{
+    display: none;
+}
+.logged{
+
+}
+.auth img{
+    height: 3rem;
+    height: 2.3rem;
+    width: 3rem;
+    width: 2.3rem;
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+}
+.cuserimg{
+    height: 3rem;
+    width: 3rem;
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+}
+
+
+/* main */
+#map {
+    height: 100vh;
+    width: 100vw;
+}
+
+#addmode{
+    border: #1F2721 2px solid;
+    z-index: 1002;
+}
+
+#send{
+    /* margin-top: 2rem; */
+    background: #1bf057;
+    border: 4px #1F2721 solid;
+}
+#send:hover{
+    color: #1bf057;
+    background: #1F2721;
+}
+
+.deletebtns {
+    /* padding: .5rem; */
+    border: 2px dashed black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.deletebtns button {
+    display: block;
+    /* margin: .2rem; */
+}
+
+/* controllers */
+.btns {
+    display: flex;
+    flex-direction: column;
+    /* height: 20vh; */
+    width: 10vw;
+    gap: .4rem;
+    font-size: 2.4rem;
+    font-weight: bold;
+    position: absolute;
+    bottom: .1rem;
+    right: .1rem;
+    z-index: 1002;
+    background: #303832;
+    /* background: #2b693d; */
+    border-radius: .5rem;
+        /* From https://css.glass */
+background: rgba(255, 255, 255, 0.2);
+background: rgba(149, 255, 193, 0.2);
+
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(5px);
+-webkit-backdrop-filter: blur(5px);
+border: 1px solid rgba(255, 255, 255, 0.3);
+
+}
+
+
+
+
+/* footer */
+
+footer {
+    height: 100vh;
+    width: 100vw;
+    background: rgba(0, 0, 0, 0.8);
+    position: absolute;
+    top: 0%;
+    right: 0%;
+    z-index: 1002;
+    display: none;
+}
+footer *{
+    box-sizing: border-box;
+}
+.footerflex{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+/* footer; ranking */
+.leaderBoard{
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    padding: 1rem;
+    max-height: 65vh;
+    overflow-y: scroll;
+    background: #242424;
+    border: #27f060 1px solid;
+}
+.leaderBoard>span button{
+    background: #33a353;
+    padding: .2rem;
+    cursor: pointer;
+    border-radius: .2rem;
+}
+.rankingHeader{
+    display: flex;
+    flex-direction: row;
+    background: #0a0a0a;
+}
+.rankingHeader button{
+    width: 10rem;
+    /* flex-grow: 1; */
+}
+#accountHeader{
+    min-width: 5rem;
+}
+
+.usersRanking{
+    max-width: 100%;
+}
+.rankedAccount{
+    border: #0a0a0a 2px solid;
+    display: flex;
+    color: white;
+    background: #242424;
+    gap: 1rem;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+.ranking{
+    display: flex;
+    flex-direction: column;
+    background: #29D659;
+    border: #a0f7b9 2px solid;
+    font-size: 2rem;
+    text-align: center;
+}
+.rankedAccount span, .rankedAccount>h3, .rankedAccount .account{
+    width: 10vw;
+    /* flex-grow: 1; */
+}
+.rankedAccount .account{
+    justify-content: flex-start;
+    /* flex-grow: 2; */
+}
+.rankedAccount>h3{
+    text-align: center;
+}
+.rankedAccount img{
+    min-height: 2rem;
+    min-width: 2rem;
+}
+.leaderBoard button{
+    background-repeat: no-repeat;
+}
+.rankedAccount h3{
+    line-height: 0;
+}
+
+
+/* footer; info */
+
+
+/* elements */
+body{
+    margin: 0;
+}
+
+main div,main p,main h1,main h2,main h3,main h4,main h5,main h6{
+    direction: rtl;
+}
+
+body{
+    overflow-x: hidden;
+    background: #1F2721;
+    margin: 0;
+    overflow: hidden;
+}
+body *{
+    /* box-sizing: border-box; */
+}
+img{
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 2rem;
+}
+input[type=file]{
+    display: none;
+}
+a{
+    text-decoration: none;
+    color: black;
+}
+button{
+    background-position: center;
+    background-size: contain;
+}
+li{
+    background: #C0F9D0;
+    border-radius: .4rem;
+    margin-bottom: .2rem;
+}
+label{
+    background: #54db7b;
+    cursor: pointer;
+    padding: .4rem;
+    transition: .2s linear;
+    border-radius: .2rem;
+}
+label:hover{
+    background: #33a353;
+}
+
+
+/* shared */
+.logged, .makeprofile, .notlogged{
+    display: none;
+}
+.box{
+    background-color: #27f060;
+    padding: .5rem;
+    border-radius: .5rem;
+    transition: .1s linear;
+    cursor: pointer;
+}
+.box:hover{
+    background-color: #33a353;
+    border-radius: .7rem;
+}
+.flex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.account{
+    display: flex;
+    gap: .6rem;
+    justify-content: center;
+    align-items: center;
+    transition: .1s linear;
+    cursor: pointer;
+}
+
+.accountImg{
+    border-radius: 50%;
+    border: #0a0a0a 1px solid;
+}
+
+
+
+.on{
+    background: #1b1b1b;
+    color: white;
+}
+.on:hover{
+    background: #333333;
+}
+
+.red {
+    background: #ff2a2a;
+}
+
+.green {
+    background: #27f060;
+}
+
+.black {
+    background: #0a0a0a;
+}
+
+.white {
+    background: rgb(245, 245, 245);
+}        
+
+
+/* js created */
