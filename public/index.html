@@ -27,10 +27,6 @@
 </head>
 
 <body>
-    <!-- <header class="green">
-        <h2>public line |الخط العام</h2>
-    </header> -->
-
     <header>
         <!-- logo -->
         <div class="flex">
@@ -119,77 +115,37 @@
 
 
     <main>
-        <!-- 
-        <div class="auth">
-            <div class="logged">
-                <div class="miniprofile">
-                    <img class="minicuserimg">
-                    <h3 class="minicuserusername"></h3>
-                </div>
-            </div>
-            <div class="notlogged">
-                <span>make account</span>
-            </div>
-            <div class="makeprofile">
-                make profile
-            </div>
-        </div>
-
-        <div class="authstate">
-            <div class="logged">
-                <img class="cuserimg">
-                <h2 class="cuserusername">username</h2>
-                <h3 class="cusername">name</h3>
-                <h4 class="cuserbio">bio</h4>
-                <button class="viewprofile">view profile</button>
-                <button id="signout">logout</button>
-            </div>
-            <div class="notlogged">
-                <div id="register">
-                    <input type="text" class="em" placeholder="em">
-                    <input type="text" class="pw" placeholder="pw">
-                    <button id="registerbtn">register</button>
-                </div>
-                <div id="signin">
-                    <input type="text" class="em" placeholder="em">
-                    <input type="text" class="pw" placeholder="pw">
-                    <button id="signinbtn">signin</button>
-                </div>
-                <h3>or</h3>
-                <button id="bygoogle">register with google</button>
-            </div>
-            <div class="makeprofile">
-                <input type="text" id="username" placeholder="username">
-                <input type="text" id="name" placeholder="name">
-                <input type="text" id="bio" placeholder="bio">
-                <input type="file" id="userimg" placeholder="img">
-                <button id="makeprofilebtn">submit</button>
-            </div>
-
-        </div>
-
-        <div id="errors">some thing is wrong</div> -->
-
         <div id="map"></div>
 
         <!-- collect data; controllers -->
         <div class="btns">
-            <button class="box" id="addmode" style="background-image: url('./imgs/addroutebtncut.png');">
-                <!-- <img src="" alt=""style="height: 1rem; width: 1rem ;background-image: url('./imgs/addroutebtncut.png');"> -->
-                اضافة مسار</button>
+            <button class="box" id="addmode">
+                <!-- اضافة مسار
+                <img src="./imgs/addroutebtn.png" alt=""> -->
+                <!-- <button class="box" id="addmode" style="background-image: url('./imgs/addroutebtn.png');margine: .2rem;">
+                اضافة مسار</button> -->
+                +
+            </button>
+
             <input type="text" name="" id="routeName" placeholder="اسم المسار">
             <div class="deletebtns">
                 <button class="box" id="cancel-step">الغاء الخطوة</button>
                 <button class="box" id="cancel-route">الغاء المسار</button>
             </div>
-            <button class="box" id="point1">نقطة 1</button>
-            <button class="box" id="point2">نقطة 2</button>
+            <button class="box" id="point1">نقطة البداية</button>
+            <button class="box" id="point2">نقطة النهاية</button>
 
-            <button class="box" id="send" disabled="true"> ارسال المسار</button>
+            <button class="box" id="send"> ارسال المسار</button>
         </div>
 
+        <div id="message">
+            <div id="sendingDataMessage" class="box">loading data</div>
+            <div id="errorMessage" class="box">some thing is wrong</div>
+        </div>
 
     </main>
+
+
 
     <footer>
         <div class="footerflex">
@@ -207,10 +163,10 @@
                     <!-- <span>none</span> -->
                     <button id="rankingSorting" class="box">ranking</button>
                     <button id="accountHeader">account</button>
-                    <button class="box" id="greenPinSorting"
-                        style="background-image: url('./imgs/addroutebtn.png');"></button>
-                    <button class="box" id="redToGreenSorting"
-                        style="background-image: url('./imgs/vote.png');"></button>
+                    <button class="box" id="addedRoutesSorting"
+                        style="background-image: url('./imgs/addroutebtn.png');">
+                    </button>
+                    <button class="box" id="votesSorting" style="background-image: url('./imgs/vote.png');"></button>
                     <button class="box" id="totalSorting">total points</button>
                 </div>
 
@@ -256,13 +212,14 @@
                     <h2>تواصل معنا</h2>
                     <span>
                         <a href="https://www.instagram.com/kadum_0/" target="_blank">
-                            <img src="./imgs/instagramlogo.jpg" alt="">
+                            <img src="./imgs/instagramlogo.png" alt="">
                         </a>
                         <a href="t.me/kadum0" target="_blank">
                             <img src="./imgs/Telegramlogo.png" alt="">
                         </a>
                     </span>
                     <!-- <p>facebook</p> -->
+                    <p>email; makeitgreen002@gmail.com</p>
                     <p>email; kadum.jawad@gmail.com</p>
 
                 </div>
@@ -270,31 +227,24 @@
                     <span class="black"></span>
                     <h2>مميزات الموقع: الغرض و الاستخدام </h2>
                     <div class="box">
-                        توثيق
-                        حملات التشجير المنتهية و القادمة</div>
-                    <div class="box">
-                        <img src="./imgs/addred.png">
-                        <img src="./imgs/addgreen.png">
-                        اضافة علامات </div>
-                    <div class="box">
-                        <img src="./imgs/redtogreen.png">
-                        زراعة مكان محدد
+                        اظهار مسارات النقل العام
                     </div>
+                    <div class="box">
+                        اضافة مسارات
+                        <img src="./imgs/addroutebtn.png" alt="">
+                    </div>
+
 
                 </div>
                 <div class="statics">
                     <span class="green"></span>
                     <h2>نتائج المشروع</h2>
-                    <li>تم زراعتها <img src="./imgs/greenPin.png" alt=""><b id="greenCounter" style="color: red;">0</b>
-                    </li>
-                    <li>تحتاج الى زراعة <img src="./imgs/redPin.png"> <b id="redCounter" style="color:red;">0</b></li>
-                    <li>الحملات الحالية: <img src="./imgs/yellowPin.png"> <b id="yellowCounter" style="color:red;">0</b>
-                    </li>
-
+                    <li>عدد المسارات المضافة <img src="./imgs/addroutebtn.png" alt=""><b id="addedRoutesCounter"
+                            style="color: red;">0</b>
+                    <li>تم التصويت <img src="./imgs/vote.png" alt=""><b id="votesCounter" style="color: red;">0</b>
                     <li>عدد المستخدمين: <b id="accountsCounter" style="color: red;">0</b></li>
-                    <li>عدد المساهمات: <b id="contriCounter" style="color: red;">0</b></li>
-                    <!-- <img src="./imgs/284807325_340145658273227_1050030653915922194_n.jpg" alt=""> -->
 
+                    </li>
                 </div>
 
             </div>
@@ -302,34 +252,6 @@
         </div>
 
     </footer>
-
-
-    <!-- <footer>
-        <div class="features">
-            <span class="black"></span>
-            <h2>مميزات الموقع: الغرض و الاستخدام </h2>
-            <div>
-                <div> <img src="./imgs/لقطة الشاشة 2022-06-21 173036.png" alt=""> اظهار مسارات النقل العام</div>
-                <div> <img src="./imgs/لقطة الشاشة 2022-06-23 125434.png" alt=""> اضافة مسارات النقل العام</div>
-            </div>
-        </div>
-        <div id="info">
-            <div class="achievements">
-                <span class="green"></span>
-                <h2>نتائج المشروع</h2>
-                <li>تم اضافة <b></b> مسار</li>
-                <img src="./imgs/284807325_340145658273227_1050030653915922194_n.jpg" alt="">
-            </div>
-            <div class="contact">
-                <span class="red"></span>
-                <h2>تواصل معنا</h2>
-                <img src="./imgs/instagram-round-icon-vector-instagram-round-multicolor-icon-white-background-134391805.jpg"
-                    alt="">
-                <img src="./imgs/telegram-logo.png" alt="">
-                <p>email; groupname@gmail.com</p>
-            </div>
-        </div>
-    </footer> -->
 
     <!-- main script  -->
     <script src="./script.js" type="module"></script>

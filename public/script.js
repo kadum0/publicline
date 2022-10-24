@@ -37,6 +37,8 @@ let dbUser ////firestore
 let authUser ///auth 
 let type
 let accountsList = []
+
+// getting ???
 await onAuthStateChanged(bygreenAuth, async (user)=>{
     console.log('authstatefun', dbUser)
     if(user){
@@ -229,10 +231,9 @@ document.querySelector(".auth").addEventListener("click", (e)=>{
 
     ////ui-js 
 
-        const map = L.map('map').setView([33.396600, 44.356579], 9); //leaflet basic map
+        const map = L.map('map', { zoomControl: false }).setView([33.396600, 44.356579], 9); //leaflet basic map
         L.Control.geocoder().addTo(map);
 
-        let currentUserLocation
         function getLocation() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(showPosition);
@@ -267,6 +268,11 @@ document.querySelector(".auth").addEventListener("click", (e)=>{
         })
 
 
+
+
+
+    ////// ui-js-data
+    // ranking options
         function ranking(based, order){
 
             // restructure the accounts array
@@ -279,35 +285,26 @@ document.querySelector(".auth").addEventListener("click", (e)=>{
         if(based == 'total'){
             if(order == 'de'){
                 // decending order 
-                intendedOrder = accountsList.sort((a, b) => { return (b.green.length+b.red.length)-(a.green.length +a.red.length)}) 
+                intendedOrder = accountsList.sort((a, b) => { return (b.votes.length+b.addedRoutes.length)-(a.votes.length +a.addedRoutes.length)}) 
             }else{
                 //acending order 
-                intendedOrder = accountsList.sort((a, b) => { return (a.green.length +a.red.length)-(b.green.length+b.red.length)})
+                intendedOrder = accountsList.sort((a, b) => { return (a.votes.length +a.addedRoutes.length)-(b.votes.length+b.addedRoutes.length)})
             }
-        }else if(based == 'red'){
+        }else if(based == 'addedRoutes'){
             if(order == 'de'){
-                intendedOrder = accountsList.sort((a,b)=>{return b.red.length - a.red.length})
+                intendedOrder = accountsList.sort((a,b)=>{return b.addedRoutes.length - a.addedRoutes.length})
             }else{
-                intendedOrder = accountsList.sort((a,b)=>{return a.red.length - b.red.length})
+                intendedOrder = accountsList.sort((a,b)=>{return a.addedRoutes.length - b.addedRoutes.length})
             }
     
-        }else if(based == 'green'){
+        }else if(based == 'votes'){
             if(order == 'de'){
-                intendedOrder = accountsList.sort((a,b)=>{return b.green.length - a.green.length})
+                intendedOrder = accountsList.sort((a,b)=>{return b.votes.length - a.votes.length})
             }else{
-                intendedOrder = accountsList.sort((a,b)=>{return a.green.length - b.green.length})
+                intendedOrder = accountsList.sort((a,b)=>{return a.votes.length - b.votes.length})
             }
-    
-        }else if(based == 'redToGreen'){
-            if(order == 'de'){
-                intendedOrder = accountsList.sort((a,b)=>{return b.redToGreen.length - a.redToGreen.length})
-            }else{
-                intendedOrder = accountsList.sort((a,b)=>{return a.redToGreen.length - b.redToGreen.length})
-            }
-    
     
         }
-    
         // make the dom
         let currentUserName 
         dbUser?currentUserName=dbUser.userName:null
@@ -356,7 +353,18 @@ document.querySelector(".auth").addEventListener("click", (e)=>{
         document.querySelector('#teamsRanking').innerHTML = orderedteamElements.replaceAll(',', '')
     }
     
-
+totalSorting.addEventListener('click', (ev)=>{
+    ev.target.classList.toggle('on')
+    ev.target.classList.contains('on')?ranking('total', 'ac'):ranking('total', 'de')
+})
+addedRoutesSorting.addEventListener('click', (ev)=>{
+    ev.target.classList.toggle('on')
+    ev.target.classList.contains('on')?ranking('addedRoutes', 'ac'):ranking('addedRoutes', 'de')
+})
+votesSorting.addEventListener('click', (ev)=>{
+    ev.target.classList.toggle('on')
+    ev.target.classList.contains('on')?ranking('votes', 'ac'):ranking('votes', 'de')
+})
 
 
 
@@ -396,14 +404,17 @@ document.querySelector(".auth").addEventListener("click", (e)=>{
             ///////getting routes 
 
             // let routes 
-            let routesColl = collection(bygreenDb, 'routes')
-            await getDocs(routesColl).then((data)=>{
+            await getDocs(collection(bygreenDb, 'routes')).then((data)=>{
             let docs = []
                 data.docs.forEach(doc=>{
                     docs.push({...doc.data(), id: doc.id})
                 })
                 routes = docs
                 console.log(docs)
+
+                document.querySelector('#addedRoutesCounter').textContent = routes.length
+
+                document.querySelector('#sendingDataMessage').style.display = 'none'
             }).catch(err=>console.log(err.message))
 
 
@@ -735,8 +746,10 @@ document.querySelector(".auth").addEventListener("click", (e)=>{
             // check if data; may make it only available when data set; 
             // make object; 
             let routeToSend = {}
-            if(currentPath){ /////available data to send; 
+            if(currentPath[0] || document.querySelector('#routeName').value || point1 || point2){ /////available data to send; 
                 // routeToSend.path = currentPath._latlngs 
+                
+                console.log(currentPath)
                 let validRoute = []
                 // let notvalidRoute = []
                 // currentPath._latlngs.forEach(e=>validRoute.push(e))
@@ -752,8 +765,16 @@ document.querySelector(".auth").addEventListener("click", (e)=>{
                 console.log(routeToSend, typeof routeToSend.route, typeof notvalidRoute)
 
                 //////send; 
-                let unRoutesColl = collection(bygreenDb, 'unroutes')
-                addDoc(unRoutesColl, routeToSend)
+                addDoc(collection(bygreenDb, 'unroutes'), routeToSend)
+            }else{
+                console.log('set the rest data')
+                document.querySelector("#errorMessage").textContent = 'اكمل ملئ البيانات و اضافة مسار كامل'
+                document.querySelector("#errorMessage").style.display='block'
+
+                setTimeout(() => {
+                    document.querySelector("#errorMessage").textContent = ''
+                    document.querySelector("#errorMessage").style.display='none'
+                }, 2000);
             }
     })
 
@@ -763,8 +784,8 @@ document.querySelector(".auth").addEventListener("click", (e)=>{
         //////////// test code; 
 
         window.onclick = ()=>{
-            console.log(dbUser)
-            console.log(routesObjects)
+            console.log(currentPath)
+            // console.log(routesObjects)
         }
 
 

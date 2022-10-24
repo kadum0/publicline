@@ -11,21 +11,18 @@ import { getFirestore, onSnapshot,
 	query, where, orderBy, serverTimestamp,
 	updateDoc } from "https://www.gstatic.com/firebasejs/9.9.2/firebase-firestore.js";
 
-
-const publicLineConfig = {
-    apiKey: "AIzaSyAF-kHhmhnZ2z6GDRhX3YK6ZeN1wQifC8M",
-    authDomain: "public-line-19206.firebaseapp.com",
-    projectId: "public-line-19206",
-    storageBucket: "public-line-19206.appspot.com",
-    messagingSenderId: "897098333489",
-    appId: "1:897098333489:web:883a9eaff7711d7c4ec410",
-    measurementId: "G-PLWGYD6KBC"
-};
-
-// Initialize Firebase
-const publicLine = initializeApp(publicLineConfig);
-const publicLinedb = getFirestore(publicLine)
-const publicLineAuth = getAuth(publicLine)
+    const bygreenConfig = {
+        apiKey: "AIzaSyDqK1z4fd7lO9g2ISbf-NNROMd7xpxcahc",
+        authDomain: "bygreen-453c9.firebaseapp.com",
+        projectId: "bygreen-453c9",
+        storageBucket: "bygreen-453c9.appspot.com",
+        messagingSenderId: "19954598250",
+        appId: "1:19954598250:web:ba57c792bdf65dbc18a513",
+        measurementId: "G-265TN8HGKX"};
+    
+    const bygreen = initializeApp(bygreenConfig, 'bygreen');
+    const bygreenDb = getFirestore(bygreen)
+    const bygreenAuth = getAuth(bygreen)
 
 
 ////////////ui-js 
@@ -49,7 +46,7 @@ const publicLineAuth = getAuth(publicLine)
 
         /////////////////authentication 
 
-        onAuthStateChanged(publicLineAuth, async (user)=>{
+        onAuthStateChanged(bygreenAuth, async (user)=>{
             if(user){
                 console.log(user, user.uid)
                 user.getIdTokenResult().then(idTokenResult => {console.log(idTokenResult.claims)})
@@ -72,7 +69,7 @@ const publicLineAuth = getAuth(publicLine)
             // send 
             if(document.querySelector('#em').value.length > 0 && document.querySelector('#pw').value.length > 0){
                 console.log('make account')
-                signInWithEmailAndPassword(publicLineAuth, document.querySelector('#em').value, document.querySelector('#pw').value)
+                signInWithEmailAndPassword(bygreenAuth, document.querySelector('#em').value, document.querySelector('#pw').value)
             }else{
                 console.log('the else of signin')
             }
@@ -81,10 +78,10 @@ const publicLineAuth = getAuth(publicLine)
             document.querySelector('#signinPassword').value = ''
         })
         
-        // //////signout 
-        // document.querySelector('#diSignout').addEventListener('click', ()=>{
-        //     signOut(auth, (result)=>{console.log(result)})
-        // })
+        //////signout 
+        document.querySelector('#diSignout').addEventListener('click', ()=>{
+            signOut(auth, (result)=>{console.log(result)})
+        })
     
 
 
@@ -170,7 +167,7 @@ L.Control.geocoder().addTo(map);
         let unConCardsList = []
         let unConRouteList = []
         let unRoutes 
-        let unRoutesColl = collection(publicLinedb, 'unroutes')
+        let unRoutesColl = collection(bygreenDb, 'unroutes')
 
         await getDocs(unRoutesColl ).then((data)=>{
             let docs = []
@@ -274,7 +271,7 @@ L.Control.geocoder().addTo(map);
         let conRouteList = []
 
         let routes 
-        let routesColl = collection(publicLinedb, 'routes')
+        let routesColl = collection(bygreenDb, 'routes')
 
         await getDocs(routesColl ).then((data)=>{
             let docs = []
