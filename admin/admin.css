@@ -1,6 +1,65 @@
 
 /* basic */
 /* header */
+header{
+    height: 3rem;
+    background: #29D659;
+    /* background: rgba(41, 214, 90, 0.301); */
+    /* background: #21883e; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+    z-index: 1010;
+}
+.logo div {
+    height: 30%;
+    width: 75%;
+    margin-bottom: 10%;
+    transform: rotateZ(-15deg);
+}
+.logo {
+        height: 2rem;
+        width: 2rem;
+}
+
+#footer-di{
+    /* background: red; */
+    z-index: 1003;
+    border: #ff2a2a 2px solid;
+}
+.auth{
+height: 2rem;
+}
+.auth div{
+    pointer-events: none;
+}
+.authstate{
+    position: absolute;
+    padding: .6rem;
+    top: 3rem;
+    right: 1rem;
+    width: auto;
+
+    z-index: 1002;
+    display: none;
+
+
+background: rgba(255, 255, 255, 0.2);
+background: rgba(149, 255, 193, 0.2);
+
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(5px);
+-webkit-backdrop-filter: blur(5px);
+border: 1px solid rgba(255, 255, 255, 0.3);
+}
+.logged, .notlogged{
+    display: none;
+}
+header input{
+    display: block;
+}
 
 
 /* main */
@@ -14,13 +73,15 @@ main>div, main>button{
 main button{
     padding: .4rem;
     cursor: pointer;
-    font-size: 1.5rem;
+    font-size: 1rem;
     background: #29D659;
     border: none;
     border-radius: .3rem;
     transition: .1s linear;
     height: fit-content;
     width: fit-content;
+    font-weight: bold;
+    /* line-height: 0%; */
 }
 main button:hover{
     background: #51ec7d;
@@ -30,26 +91,24 @@ main button:hover{
         #map {
             height: 100vh;
             width: 100vw;
-            /* border: 2px rgb(24, 24, 24) solid; */
-            /* border-radius: .4rem; */
             z-index: 1;
         }
 
         #cards {
-            top: 3rem;
-            right: 1rem;
-            display: flex;
+            top: .1rem;
+            right: .1rem;
+            display: none;
             flex-direction: column;
             align-items: center;
             gap: .4rem;
-            font-size: 2.4rem;
+            font-size: 1.2rem;
             background: #29D659;
             /* width: 16vw; */
-            width: 16rem;
+            width: 12rem;
             /* padding: 1rem; */
 
-            min-height: 80vh;
-            max-height: 80vh;
+            height: 90vh;
+            /* max-height: 80vh; */
             box-sizing: border-box;
             overflow-y: scroll;
             scroll-behavior: smooth;
@@ -82,6 +141,17 @@ main button:hover{
         }
         #conpathcards{
             display: none;
+        }
+        .sectionTitle{
+            position: sticky;
+            top: 0;
+            /* background: red; */
+            padding: .1rem;
+            text-align: center;
+            background: #ff2a2a;
+            background: #1a1a1a;
+            color: white;
+            z-index: 1008;
         }
 
         /* direct edit buttons */
@@ -116,43 +186,280 @@ main button:hover{
             top: 51vh;
 
         }
+        #message{
+            position: absolute;
+            top: 1rem;
+            right: 50vw;
+        }
+        #sendingDataMessage, #errorMessage{
+            display: none;
+            padding: .2rem;
+            text-align: center;
+            border-radius: .2rem;
+        }
+
+
 
 /* footer */
+
+footer {
+    height: 100vh;
+    width: 100vw;
+    background: rgba(0, 0, 0, 0.8);
+    position: absolute;
+    top: 0%;
+    right: 0%;
+    z-index: 1002;
+    display: none;
+}
+footer *{
+    box-sizing: border-box;
+}
+.footerflex{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+
+/* footer; ranking */
+.leaderBoard{
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    padding: 1rem;
+    max-height: 65vh;
+    overflow-y: scroll;
+    background: #242424;
+    border: #27f060 1px solid;
+    max-height: 70vh;
+}
+.leaderBoard>span button{
+    background: #33a353;
+    padding: .2rem;
+    cursor: pointer;
+    border-radius: .2rem;
+}
+.rankingHeader{
+    display: flex;
+    flex-direction: row;
+    background: #0a0a0a;
+}
+.rankingHeader button{
+    width: 10rem;
+    /* flex-grow: 1; */
+}
+#accountHeader{
+    min-width: 5rem;
+}
+
+.usersRanking{
+    max-width: 100%;
+}
+.rankedAccount{
+    border: #0a0a0a 2px solid;
+    display: flex;
+    color: white;
+    background: #242424;
+    gap: 1rem;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+.ranking{
+    display: flex;
+    flex-direction: column;
+    background: #29D659;
+    border: #a0f7b9 2px solid;
+    font-size: 2rem;
+    text-align: center;
+}
+.rankedAccount span, .rankedAccount>h3, .rankedAccount .account{
+    width: 10vw;
+    /* flex-grow: 1; */
+}
+.rankedAccount .account{
+    justify-content: flex-start;
+    /* flex-grow: 2; */
+}
+.rankedAccount>h3{
+    text-align: center;
+}
+.rankedAccount img{
+    min-height: 2rem;
+    min-width: 2rem;
+}
+.leaderBoard button{
+    background-repeat: no-repeat;
+}
+.rankedAccount h3{
+    line-height: 0;
+}
+
+
+
+
+/* footer; info */
+
+.info{
+    min-height: 20vh;
+    background: #0a0a0a;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    width: 100vw;
+}
+
+.contact, .features, .statics{
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
+    min-height: 15vh;
+    width: 20vw;
+    border-radius: .5rem;
+    transition: .1s linear;
+    background: white;
+}
+
+.contact:hover, .features:hover, .statics:hover{
+    box-shadow: 3px 3px 0px 0px  #29D659;
+}
+.features{
+    width: 50vw;
+}
+.features div{
+    background: #1a1a1a;
+    color: white;
+    margin: .1rem;
+}
+.features li{
+    direction: ltr;
+}
+.statics img{
+    height: 1rem;
+}
 
 
 /* elements */
         body {
             margin: 0%;
         }
+        main div,main p,main h1,main h2,main h3,main h4,main h5,main h6{
+            direction: rtl;
+        }
+        
+        body{
+            overflow-x: hidden;
+            background: #1F2721;
+            margin: 0;
+            overflow: hidden;
+        }
+        body *{
+            /* box-sizing: border-box; */
+        }
+        img{
+            background-size: cover;
+            background-position: center;
+            height: 2rem;
+        }
+        input[type=file]{
+            display: none;
+        }
+        a{
+            text-decoration: none;
+            color: black;
+        }
+        button{
+            background-position: center;
+            background-size: contain;
+        }
+        li{
+            background: #C0F9D0;
+            border-radius: .4rem;
+            margin-bottom: .2rem;
+        }
+        label{
+            background: #54db7b;
+            cursor: pointer;
+            padding: .4rem;
+            transition: .2s linear;
+            border-radius: .2rem;
+        }
+        label:hover{
+            background: #33a353;
+        }
+        
+        
 
 
 /* shared */
 
+.box{
+    background-color: #27f060;
+    padding: .5rem;
+    border-radius: .5rem;
+    transition: .1s linear;
+    cursor: pointer;
+}
+.box:hover{
+    background-color: #33a353;
+    border-radius: .7rem;
+
+}
+
+        .logged, .makeprofile, .notlogged{
+            display: none;
+        }
+        /* .flex{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+         */
+        .account{
+            display: flex;
+            gap: .6rem;
+            justify-content: center;
+            align-items: center;
+            transition: .1s linear;
+            cursor: pointer;
+        }
         
-.red {
-    background: rgb(223, 39, 39);
-    /* background: rgb(255, 43, 43); */
-}
+        .accountImg{
+            border-radius: 50%;
+            border: #0a0a0a 1px solid;
+        }
+        
+        
+        
+        .on{
+            background: #1b1b1b;
+            color: white;
+        }
+        .on:hover{
+            background: #333333;
+        }
+        
+        .red {
+            background: #ff2a2a;
+        }
+        
+        .green {
+            background: #27f060;
+        }
+        
+        .black {
+            background: #0a0a0a;
+        }
+        
+        .white {
+            background: rgb(245, 245, 245);
+        }
 
-.green {
-    background: rgb(41, 168, 77);
-}
 
-.black {
-    background: rgb(10, 10, 10);
-}
-
-.white {
-    background: rgb(245, 245, 245);
-}
-
-
-.logged, .notlogged{
-    display: none;
-}
-
-.en{}
-.ar{}
 
 /* js generated */
 
@@ -162,6 +469,11 @@ main button:hover{
             font-size: 1rem;
             /* background: rgb(97, 250, 97); */
             background: #1bf057;
+            /* pointer-events: none; */
+            position: absolute;
+            bottom: 0;
+            right: 0;
+
         }
 
         .dltbtn {
@@ -169,7 +481,12 @@ main button:hover{
             font-size: 1rem;
             cursor: pointer;
             background: rgb(255, 97, 97);
+
             /* background: red; */
+            /* pointer-events: none; */
+            position: absolute;
+            bottom: 0;
+            left: 0;
         }
         .dltbtn:hover{
             background: rgb(223, 39, 39);
@@ -180,14 +497,15 @@ main button:hover{
             margin: .2rem;
             height: 4rem;
             min-width: 8rem;
-            /* border: 2px black solid; */
             background: white;
             border-radius: 1rem;
             display: flex;
+            flex-direction: column;
             justify-content: end;
             box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
             padding: .3rem;
             cursor: pointer;
+            position: relative;
         }
         .card:hover{
             background: rgb(211, 211, 211);
@@ -195,6 +513,12 @@ main button:hover{
 
         #cards button {
             display: inline-block;
+        }
+
+        .routeName{
+            pointer-events: none;
+            position: absolute;
+            top: 0;
         }
 
 

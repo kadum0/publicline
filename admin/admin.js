@@ -18,348 +18,132 @@ import { getFirestore, onSnapshot,
         storageBucket: "bygreen-453c9.appspot.com",
         messagingSenderId: "19954598250",
         appId: "1:19954598250:web:ba57c792bdf65dbc18a513",
-        measurementId: "G-265TN8HGKX"};
+        measurementId: "G-265TN8HGKX"
+    }
     
     const bygreen = initializeApp(bygreenConfig, 'bygreen');
     const bygreenDb = getFirestore(bygreen)
     const bygreenAuth = getAuth(bygreen)
 
 
-////////////ui-js 
-
-    //leaflet basic map
-    const map = L.map('map').setView([33.396600, 44.356579], 10);
-
-    document.querySelector("#unconf").addEventListener("click", ()=>{
-        document.querySelector("#pathcards").style.display = "none"
-
-        document.querySelector("#conpathcards").style.display = "block"
-    })
-    document.querySelector("#conf").addEventListener("click", ()=>{
-        document.querySelector("#pathcards").style.display = "block"
-
-        document.querySelector("#conpathcards").style.display = "none"
-    })
-    
-
-    
-
-        /////////////////authentication 
-
-        onAuthStateChanged(bygreenAuth, async (user)=>{
-            if(user){
-                console.log(user, user.uid)
-                user.getIdTokenResult().then(idTokenResult => {console.log(idTokenResult.claims)})
+    document.querySelector('header').addEventListener('mouseover', (ev)=>{
         
-                // display logged controllers; 
-                /////logout options 
-
-                ////logged available options 
-                document.querySelector('.logged').style.display = 'block'
-            }else{
-                // display login and register
-                console.log('to display not logged and login ')
-                // document.querySelector(".notlogged").style.display = 'block'
-                document.querySelector("#login").style.display = 'block'
-            }
-        })
-        
-        //////signin
-        document.querySelector('#signinBtn').addEventListener('click', async ()=>{
-            // send 
-            if(document.querySelector('#em').value.length > 0 && document.querySelector('#pw').value.length > 0){
-                console.log('make account')
-                signInWithEmailAndPassword(bygreenAuth, document.querySelector('#em').value, document.querySelector('#pw').value)
-            }else{
-                console.log('the else of signin')
-            }
-            // empty 
-            document.querySelector('#signinUsername').value = ''
-            document.querySelector('#signinPassword').value = ''
-        })
-        
-        //////signout 
-        document.querySelector('#diSignout').addEventListener('click', ()=>{
-            signOut(auth, (result)=>{console.log(result)})
-        })
-    
-
-
-
-
-
-
-///////////get data 
-
-
-
-    //////data storing;
-
-    ///linking list; may no need
-    let linkedRoutes = []
-    let linkedLabels = []
-    let linkedRoutes2 = []
-    let linkedLabels2 = []
-
-
-    /////data to send 
-    let confirmed = []
-    let deleted = []
-    let deletedIds = [] /// ids to delete from confirmed collection; need edit 
-
-    let currentObject
-
-    /////delete current object; ????
-    let deleteCurrent = document.querySelector("#deleteCurrent")
-    deleteCurrent.addEventListener("click", (e) => {
-        console.log(linkedLabels)
-
-        if (linkedLabels.filter(i => {
-                i[0] == currentObject;
-                return i
-            }) || linkedRoutes.filter(i => {
-                i[0] == currentObject;
-                return i
-            })) {
-            let ret = clicking(currentObject, linkedLabels)
-            deleted.push(ret[0]._latlng)
-        } else if (linkedLabels2.filter(i => {
-                i[0] == currentObject;
-                return i
-            }) || linkedRoutes2.filter(i => {
-                i[0] == currentObject;
-                return i
-            })) {
-            let ret = clicking(currentObject, linkedLabels)
-            deletedIds.push(ret[2])
-        }
     })
 
-
-    let currentRoute 
-
-    document.querySelector('#addpoint1').addEventListener("click", ()=>{
-
-    })
-
-
-
-    window.onload = async () => {
-
+const map = L.map('map').setView([33.396600, 44.356579], 10);
+//leaflet basic map
     //////get api key 
     // let rApiKey = await fetch("/map-api-key")
     // let apiKey = await rApiKey.json()
-    let apiKey = 'pk.eyJ1IjoiYWxmcmVkMjAxNiIsImEiOiJja2RoMHkyd2wwdnZjMnJ0MTJwbnVmeng5In0.E4QbAFjiWLY8k3AFhDtErA'
 
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
     maxZoom: 18,
     id: 'mapbox/streets-v11',
     tileSize: 512,
     zoomOffset: -1,
-    accessToken: apiKey
+    accessToken: 'pk.eyJ1IjoiYWxmcmVkMjAxNiIsImEiOiJja2RoMHkyd2wwdnZjMnJ0MTJwbnVmeng5In0.E4QbAFjiWLY8k3AFhDtErA'
 }).addTo(map);
-
 L.Control.geocoder().addTo(map);
 
 
 
-    //get data; unconfirmed paths, labels 
-        let unConCardsList = []
-        let unConRouteList = []
-        let unRoutes 
-        let unRoutesColl = collection(bygreenDb, 'unroutes')
-
-        await getDocs(unRoutesColl ).then((data)=>{
-            let docs = []
-                data.docs.forEach(doc=>{
-                    docs.push({...doc.data(), id: doc.id})
-                })
-                unRoutes = docs
-                console.log(unRoutes)
-            }).catch(err=>console.log('err message', err.message))
-            
-
-        unRoutes.forEach(e => {
-
-                console.log("will create routes", e.route)
-
-                ////create the object 
-                // let theObject ////???
-                let unConRoute = L.polyline(e.route).addTo(map)
-
-                if(e.point1){
-                    L.circle(e.route[0], {
-                            fillColor: '#3388FF',
-                            fillOpacity: 0.8,
-                            radius: 10
-                        }).addTo(map)    
-                }
-                if(e.point2){
-                    L.circle(e.route[e.route.length-1], {
-                        fillColor: '#3388FF',
-                        fillOpacity: 0.8,
-                        radius: 10
-                    }).addTo(map)    
-                }
-                unConRouteList.push(unConRoute)
-
-
-                //create card
-
-                // /////template; 
-                // let cardtemp = `
-                // <div class="card">
-                //     <button class="addbtn">confirm</button>
-                //     <button class="dltbtn">delete</button>
-                // </div>
-                // `
-                // document.querySelector("#pathCards").innerHTML += cardtemp
-
-                ////document
-                let card = document.createElement("div")
-
-                card.classList.add("card")
-                let addbtn = document.createElement("button")
-                addbtn.classList.add("addbtn")
-                addbtn.textContent = "confirm"
-                let dlbtn = document.createElement("button")
-                dlbtn.classList.add("dltbtn")
-                dlbtn.textContent = "delete"
-                card.append(addbtn, dlbtn)
-                document.querySelector("#pathcards").append(card)
-                unConCardsList.push(card)
-
-
-                ////insert in the element directly 
-
-                unConRoute.card = card
-
-                // conRoute.addEventListener("click", (e)=>console.log(e.target))
-                unConRoute.addEventListener('mouseover', (e)=>{
-                    console.log(e.target)
-                    unConCardsList.forEach(ee=>ee.style.background = 'white')
-                    unConRouteList.forEach(ee=>ee.setStyle({color: '#3C8EFC', opacity: .4}))
-
-                    e.target.card.style.background = 'rgb(255, 43, 43)'
-                    e.target.setStyle({color: 'rgb(255, 43, 43)', opacity: 1})
-                })
-                card.addEventListener("mouseover", (e)=>{
-                    unConCardsList.forEach(ee=>ee.style.background = 'white')
-                    unConRouteList.forEach(ee=>ee.setStyle({color: '#3C8EFC', opacity: .4}))
-
-                    let filteredunConRoute = unConRouteList.filter(ee=>{return ee.card == e.target})
-                    // console.log(filteredunConRoute)
-                    map.fitBounds(filteredunConRoute[0]._bounds)
-                    
-                    filteredunConRoute[0].setStyle({color: 'rgb(255, 43, 43)', opacity: 1})
-                    e.target.style.background = 'rgb(255, 43, 43)'
-                    // console.log(ununConRouteList.filter(e=>{return e.card == e.target}))
-                    
-                })
-            })
-
-
-
-
-
-
-
-
-
-        ////getting confirmed
-        let conCardsList = []
-        let conRouteList = []
-
-        let routes 
-        let routesColl = collection(bygreenDb, 'routes')
-
-        await getDocs(routesColl ).then((data)=>{
-            let docs = []
-                data.docs.forEach(doc=>{
-                    docs.push({...doc.data(), id: doc.id})
-                })
-                routes = docs
-                console.log(routes)
-            }).catch(err=>console.log('err message', err.message))
-            
-
-
-        console.log("get confirmed", routes)
-
-        Object.values(routes).forEach(e => {
-
-
-                console.log("will create routes", e)
-                
-                //create the object 
-                // let theObject
-                let conRoute = L.polyline(e.path).setStyle({color: "#106328"}).addTo(map)
-                    if(e.point1){
-                        L.circle(e.path[e.path[0]], {
-                            color: "#106328",
-                            fillColor: '#106328',
-                            fillOpacity: 0.8,
-                            // radius: 10
-                            radius: 4
-                        }).addTo(map)
+/////////////////authentication 
+onAuthStateChanged(bygreenAuth, async (user)=>{
+            if(user){
+                console.log(user, user.uid)
+                user.getIdTokenResult().then(idTokenResult => {
+                    console.log(idTokenResult.claims)
+                    if(idTokenResult.claims.admin){
+                        // auth
+                        document.querySelectorAll('.cuserusername').forEach(notlogged=>notlogged.textContent= 'admin')
+                        // main
+                        document.querySelector('.adminEle').style.display = 'block'
+                    }else{
+                        // auth
+                        document.querySelectorAll('.cuserusername').forEach(notlogged=>notlogged.textContent= user.username)
+                        // main
                     }
-
-                    if(e.point2){
-                        L.circle(e.route[e.route.length-1], {
-                            color: "#106328",
-                            fillColor: '#106328',
-                            fillOpacity: 0.8,
-                            // radius: 10
-                            radius: 4
-                        }).addTo(map)
-                    }
-                    
-                    conRouteList.push(conRoute)
-
-                    conRoute.addEventListener("click", (ev)=>{
-                        console.log(ev.target)
-                        selectedRoute 
-                    })
-
-                //create card
-                let card = document.createElement("div")
-                card.classList.add("card")
-                let dlbtn = document.createElement("button")
-                dlbtn.classList.add("dltbtn")
-                dlbtn.textContent = "delete"
-                card.append(dlbtn)
-                document.querySelector("#conpathcards").append(card)
-
-                conCardsList.push(card)
-
-
-                conRoute.card = card
-
-                // conRoute.addEventListener("click", (e)=>console.log(e.target))
-                conRoute.addEventListener('mouseover', (e)=>{
-                    conCardsList.forEach(ee=>ee.style.background = 'white')
-                    conRouteList.forEach(ee=>ee.setStyle({color: '#29D659', opacity: .4}))
-
-                    e.target.card.style.background = 'rgb(255, 43, 43)'
-                    e.target.setStyle({color: 'rgb(255, 43, 43)', opacity: 1})
                 })
-                card.addEventListener("mouseover", (e=>{
-                    conCardsList.forEach(ee=>ee.style.background = 'white')
-                    conRouteList.forEach(ee=>ee.setStyle({color: '#29D659', opacity: .4}))
 
-                    let filteredconRoute = conRouteList.filter(ee=>{return ee.card == e.target})
-                    // console.log(filteredconRoute)
-                    map.fitBounds(filteredconRoute[0]._bounds)
-                    
-                    filteredconRoute[0].setStyle({color: 'rgb(255, 43, 43)', opacity: 1})
-                    e.target.style.background = 'rgb(255, 43, 43)'
-                    // console.log(unConRouteList.filter(e=>{return e.card == e.target}))
-                    
-                }))
+                ////authstate
+                document.querySelectorAll('.logged').forEach(notlogged=>notlogged.style.display = 'block')
+                document.querySelectorAll('.notlogged').forEach(notlogged=>notlogged.style.display = 'none')
+            }else{
+                document.querySelectorAll('.notlogged').forEach(notlogged=>notlogged.style.display = 'block')
+                document.querySelectorAll('.logged').forEach(notlogged=>notlogged.style.display = 'none')
+            }
+})
+
+//////signin
+signinbtn.addEventListener('click', (ev)=>{
+    // send 
+    if(ev.target.parentElement.querySelector('.em').value.length > 0 && ev.target.parentElement.querySelector('.pw').value.length > 0){
+        signInWithEmailAndPassword(bygreenAuth, ev.target.parentElement.querySelector(".em").value ,ev.target.parentElement.querySelector(".pw").value).then().catch(err=>{
+            console.log(err.message)
+            document.querySelector('#errors').textContent = err.message
+            document.querySelector('#errors').style.display = 'block'
+            setTimeout(() => {
+                document.querySelector('#errors').style.display = 'none'
+            }, 10000);
         })
+    }else{
+        document.querySelector('#errors').textContent = 'insert data'
+        document.querySelector('#errors').style.display = 'block'
+        setTimeout(() => {
+            document.querySelector('#errors').style.display = 'none'
+        }, 10000);
     }
+    // empty 
+    ev.target.parentElement.querySelector(".em").value = ''
+    ev.target.parentElement.querySelector(".pw").value = ''
+})
+
+//////signout 
+signoutbtn.addEventListener('click', ()=>{
+    signOut(bygreenAuth, (result)=>{console.log('signed out', result)})
+})
 
 
+
+////////////ui-js 
+document.querySelector(".auth").addEventListener("click", (e)=>{
+    e.target.classList.toggle('on')
+    if(e.target.classList.contains('on')){
+        document.querySelector(".authstate").style.display = 'block'
+    }else{
+        document.querySelector(".authstate").style.display = 'none'
+    }
+})
+
+
+    document.querySelector("#unconf").addEventListener("click", ()=>{
+        // ev.target.classList.toggle('on')
+        document.querySelector('#unconf').classList.add("on")
+        document.querySelector('#conf').classList.remove("on")
+
+        document.querySelector("#pathcards").style.display = "block"
+        document.querySelector("#conpathcards").style.display = "none"
+
+    })
+    document.querySelector("#conf").addEventListener("click", ()=>{
+        document.querySelector('#conf').classList.add("on")
+        document.querySelector('#unconf').classList.remove("on")
+
+        document.querySelector("#pathcards").style.display = "none"
+        document.querySelector("#conpathcards").style.display = "block"
+
+    })
+    
+
+//////////ui-js-data
+
+// display confirmed; toggle
+
+// display unconfirmed; toggle
+
+
+///////////getting data; 
+//////data storing;
     function clicking(target, list) {
         //removing from ui 
         let ret = list.filter(e => {
@@ -374,79 +158,323 @@ L.Control.geocoder().addTo(map);
         return ret[0]
     }
 
+    ///linking list; may no need; change into side prop method
+    let linkedRoutes = []
+    let linkedLabels = []
+    let linkedRoutes2 = []
+    let linkedLabels2 = []
+
+    /////data to send; no need
+    let confirmed = []
+    let deleted = []
+    let deletedIds = [] /// ids to delete from confirmed collection; need edit 
+
+
+    let currentObject
+
+
+    let conRoutes
+    let unRoutes 
+    let currentId
+
+        let unconfirmedRoutesList = []
+        let deleteList = []
+        let confrimList = []
+
+
+
+    window.onload = async () => {
+
+        document.querySelector('#sendingDataMessage').textContent = 'getting data'
+        document.querySelector('#sendingDataMessage').style.display = 'block'
+
+
+    //get data; unconfirmed paths, labels 
+        // unroutes
+        await getDocs(collection(bygreenDb, 'unroutes')).then((data)=>{
+            let docs = []
+                data.docs.forEach(doc=>{
+                    docs.push({...doc.data(), id: doc.id})
+                })
+                unRoutes = docs
+                console.log('unconfirmed routes' ,unRoutes)
+            })
+            unRoutes.forEach(uroute=>{
+                console.log("the uroute; ", uroute)
+
+                let routeObj = L.polyline(uroute.path).addTo(map)
+
+                if(uroute.point1){
+                    routeObj.point1 = L.circle(uroute.path[0], {
+                                fillColor: '#3388FF',
+                                fillOpacity: 0.8,
+                                radius: 10
+                            }).addTo(map)    
+                        }
+                        
+                if(uroute.point2){
+                    routeObj.point2 = L.circle(uroute.path[uroute.path.length-1], {
+                            fillColor: '#3388FF',
+                            fillOpacity: 0.8,
+                            radius: 10
+                            }).addTo(map)    
+                    }
+                    routeObj.id = uroute.id
+
+
+                ////document
+                let card = document.createElement("div")
+                card.classList.add("card")
+
+                let routename = document.createElement('div')
+                routename.classList.add('routeName')
+                routename.textContent = uroute.name
+
+                let addbtn = document.createElement("button")
+                addbtn.classList.add("addbtn")
+                addbtn.textContent = "confirm"
+
+                let dltbtn = document.createElement("button")
+                dltbtn.classList.add("dltbtn")
+                dltbtn.textContent = "delete"
+
+                let btnsDiv = document.createElement('div')
+                btnsDiv.append(addbtn, dltbtn)
+
+                card.append(routename, btnsDiv)
+                document.querySelector("#pathcards").append(card)
+
+                card.addEventListener('mouseover', (ev)=>{
+                    console.log('current hovered card is; ', ev.target)
+                    unconfirmedRoutesList.forEach(route=>{
+                        route.card.style.background = 'white'
+                        route.setStyle({color: '#3C8EFC', opacity: .4})
+                    })
+                    card.style.background = ' #ff2a2a'
+                    unconfirmedRoutesList.filter(route=>route.card == ev.target)[0].setStyle({color: ' #ff2a2a', opacity: 1})
+
+                    map.fitBounds(unconfirmedRoutesList.filter(ee=>{return ee.card == ev.target})[0]._bounds)
+
+                })
+
+                dltbtn.addEventListener('click', (ev)=>{
+                    console.log(ev.target.parentElement.parentElement, unconfirmedRoutesList)
+                    console.log(unconfirmedRoutesList.filter(route=>route.card==ev.target.parentElement.parentElement)[0])
+                    
+                    deleteList.push(unconfirmedRoutesList.filter(route=>route.card==ev.target.parentElement.parentElement)[0].id)
+
+                    document.querySelector('#pathcards').removeChild(ev.target.parentElement.parentElement)
+                    map.removeLayer(unconfirmedRoutesList.filter(route=>route.card == ev.target.parentElement.parentElement)[0])
+                    // no need to remove it from list?
+                    unconfirmedRoutesList
+                    
+                })
+                addbtn.addEventListener('click', (ev)=>{
+                    console.log(ev.target.parentElement)
+                    console.log(unconfirmedRoutesList.filter(route=>route.card==ev.target.parentElement.parentElement)[0].id)
+                    
+                    confrimList.push(unconfirmedRoutesList.filter(route=>route.card==ev.target.parentElement.parentElement)[0].id)
+
+                    document.querySelector('#pathcards').removeChild(ev.target.parentElement.parentElement)
+                    map.removeLayer(unconfirmedRoutesList.filter(route=>route.card == ev.target.parentElement.parentElement)[0])
+
+                })
+
+
+
+                routeObj.addEventListener('mouseover', (ev)=>{
+                    unconfirmedRoutesList.forEach(route=>{
+                        route.card.style.background = 'white'
+                        route.setStyle({color: '#3C8EFC', opacity: .4})
+                    })
+                    ev.target.card.style.background = ' #ff2a2a'
+                    ev.target.setStyle({color: ' #ff2a2a', opacity: 1})
+                })
+                routeObj.addEventListener('click', (ev)=>{
+                    console.log('current object id; ', ev.target.id)
+                    currentId = ev.target.id
+
+                    document.querySelector('#sendingDataMessage').textContent = 'select route'
+                    document.querySelector('#sendingDataMessage').style.display = 'block'
+                    setTimeout(() => {
+                        document.querySelector('#sendingDataMessage').style.display = 'none'
+                        
+                    }, 1000);
+                })
+        // link the objects 
+        routeObj.card = card
+        // the looped list
+        unconfirmedRoutesList.push(routeObj)
+            })
+
+
+            // confirmed routes
+                    // routes
+        await getDocs(collection(bygreenDb, 'routes')).then((data)=>{
+            let docs = []
+                data.docs.forEach(doc=>{
+                    docs.push({...doc.data(), id: doc.id})
+                })
+                conRoutes = docs
+                console.log('unconfirmed routes' ,unRoutes)
+                document.querySelector('#sendingDataMessage').style.display = 'none'
+            })
+
+        let confirmedRoutesList = []
+            conRoutes.forEach(uroute=>{
+                console.log("the uroute; ", uroute)
+
+                let routeObj = L.polyline(uroute.path, {color: `#29D659`}).addTo(map)
+
+                if(uroute.point1){
+                    routeObj.point1 = L.circle(uroute.path[0], {
+                                fillColor: '#29D659',
+                                color: '#29D659',
+                                fillOpacity: 0.8,
+                                radius: 10
+                            }).addTo(map)    
+                        }
+                        
+                if(uroute.point2){
+                    routeObj.point2 = L.circle(uroute.path[uroute.path.length-1], {
+                            fillColor: '#29D659',
+                            color: '#29D659',
+                            fillOpacity: 0.8,
+                            radius: 10
+                            }).addTo(map)    
+                    }
+                    routeObj.id = uroute.id
+
+
+                ////document
+                let card = document.createElement("div")
+                card.classList.add("card")
+
+                let routename = document.createElement('div')
+                routename.classList.add('routeName')
+                routename.textContent = uroute.name
+
+                let dltbtn = document.createElement("button")
+                dltbtn.classList.add("dltbtn")
+                dltbtn.textContent = "delete"
+
+                let btnsDiv = document.createElement('div')
+                btnsDiv.append(dltbtn)
+
+                card.append(routename, btnsDiv)
+                document.querySelector("#conpathcards").append(card)
+
+                card.addEventListener('mouseover', (ev)=>{
+                    console.log('current hovered card is; ', ev.target)
+                    confirmedRoutesList.forEach(route=>{
+                        route.card.style.background = 'white'
+                        route.setStyle({color: 'rgba(41, 214, 90, 0.801)', opacity: .4})
+                    })
+                    card.style.background = '#21883e'
+                    confirmedRoutesList.filter(route=>route.card == ev.target)[0].setStyle({color: '#21883e', opacity: 1})
+
+                    // let filteredconRoute = 
+                    // console.log(filteredconRoute)
+                    map.fitBounds(confirmedRoutesList.filter(ee=>{return ee.card == ev.target})[0]._bounds)
+
+                })
+
+                dltbtn.addEventListener('click', (ev)=>{
+                    console.log(ev.target.parentElement)
+                    console.log(confirmedRoutesList.filter(route=>route.card==ev.target.parentElement.parentElement)[0].id)
+                    
+                    deleteList.push(confirmedRoutesList.filter(route=>route.card==ev.target.parentElement.parentElement)[0].id)
+
+                    
+                    document.querySelector('#conpathcards').removeChild(ev.target.parentElement.parentElement)
+                    map.removeLayer(confirmedRoutesList.filter(route=>route.card == ev.target.parentElement.parentElement)[0])
+
+
+                    
+                })
+
+                routeObj.addEventListener('mouseover', (ev)=>{
+                    confirmedRoutesList.forEach(route=>{
+                        route.card.style.background = 'white'
+                        route.setStyle({color: 'rgba(41, 214, 90, 0.801)', opacity: .4})
+                    })
+                    ev.target.card.style.background = '#21883e'
+                    ev.target.setStyle({color: '#21883e', opacity: 1})
+                })
+
+                routeObj.addEventListener('click', (ev)=>{
+                    console.log('current object id; ', ev.target.id)
+                    currentId = ev.target.id
+
+                    document.querySelector('#sendingDataMessage').textContent = 'select route'
+                    document.querySelector('#sendingDataMessage').style.display = 'block'
+                    setTimeout(() => {
+                        document.querySelector('#sendingDataMessage').style.display = 'none'
+                        
+                    }, 1000);
+                })
+        // link the objects 
+        routeObj.card = card
+        // the looped list
+        confirmedRoutesList.push(routeObj)
+            })
+
+    }
+
+
 
 
     ///////////////////////sending data 
 
+    //////collect data; 
 
-    //////get data to send editing; 
+    document.querySelector("#deleteCurrent").addEventListener("click", (e) => {
+        console.log(currentId)
+        
+        deleteDoc(doc(bygreenDb, 'routes', currentId)).then(()=>console.log("deleted"))
+        deleteDoc(doc(bygreenDb, 'unroutes', currentId)).then(()=>console.log("deleted"))
+
+
+
+
+    })
+
 
 
     let send = document.querySelector("#send")
     send.addEventListener("click", async () => {
-
-        console.log("confirmed",!confirmed[0], "deleted", !deleted[0], "deletedIDs", !deletedIds[0])
-
+        console.log("confirmed",confrimList, "deleted", deleteList, "deletedIDs")
 
 
+        confrimList.forEach(confirmed=>{
+            let routeToAdd = unRoutes.filter(route=>route.id==confirmed)[0]
+            document.querySelector('#sendingDataMessage').textContent = 'sending data'
+            document.querySelector('#sendingDataMessage').style.display = 'block'
 
+            // add 
+            addDoc(collection(bygreenDb, 'routes'), routeToAdd).then(()=>{
+            // delete
+            deleteDoc(doc(bygreenDb, 'unroutes', confirmed)).then(()=>console.log('deleted'))
+            document.querySelector('#sendingDataMessage').textContent = 'sent'
 
-        // //// confirmed labels; 
-        // if(confirmed[0]){
-        //     console.log("will send confiremd; ",confirmed)
+                setTimeout(() => {
+                    document.querySelector('#sendingDataMessage').style.display = 'none'
+                }, 1000);
 
-        //     await fetch("/confirmed", {
-        //         method: "POST",
-        //         headers: {
-        //             'Content-Type': 'application/json'
-        //         },
-        //         body: JSON.stringify(confirmed)
-        //     })
-        //     confirmed = []
-        // }else{
-        //     console.log("will not send confirmed; ", Boolean(confirmed[0]))
-        // }
+            })
+        })
 
-        // //////deleted 
-        // if(deleted[0]){
-        //     await fetch("/deleted", {
-        //         method: "POST",
-        //         headers: {
-        //             'Content-Type': 'application/json'
-        //         },
-        //         body: JSON.stringify(deleted)
-        //     })
-        //     deleted = []
-        // }else{
-        //     console.log("will not send deleted; ", Boolean(deleted[0]))
-        // }
+        deleteList.forEach(toDelete=>{
+            deleteDoc(doc(bygreenDb, 'routes', toDelete)).then(()=>console.log("deleted")).catch(()=>{})
+            deleteDoc(doc(bygreenDb, 'unroutes', toDelete)).then(()=>console.log("deleted")).catch(()=>{})
 
-        // ////deleted ids 
-        // if(deletedIds[0]){
-        //     await fetch("/editconfirmed", {
-        //         method: "POST",
-        //         headers: {
-        //             'Content-Type': 'application/json'
-        //         },
-        //         body: JSON.stringify(deletedIds)
-        //     })
-        //     deletedIds = []
-        // }else{
-        //     console.log("will not send deletedID; ", Boolean(deletedIds[0]))
-        // }
-    })
+        })
 
-    document.querySelector("#sendspecial").addEventListener('click', ()=>{
-        ////
     })
 
 
-
-    /////test code; 
-
+    /////test code;
     window.onclick = () => {
-        console.log("confirmed routes", confirmed)
-        console.log("deleted routes", deleted)
-        // console.log("confirmed labels", confirmedLabels)
+        // console.log("confirmed routes", confirmed)
     }
 

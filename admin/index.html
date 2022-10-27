@@ -23,53 +23,204 @@
 </head>
 
 <body>
-    <!-- <header class="green"> -->
-    <!-- </header> -->
-    <div class="auth">
-        <!-- <div class='logged' id="logout"></div> -->
-        <div class="notlogged" id="login">
-            <input type="text" id="em" placeholder="em">
-            <input type="text" name="" id="pw" placeholder="pw">
-            <button id="signinBtn">login</button>
+    <header>
+        <!-- logo -->
+        <div style="display: flex;">
+            <div class="logo box">
+                <!-- <a href="https://kadum2.github.io/ivc-2de/"> -->
+                <div class="black"></div>
+                <div class="red"></div>
+                <div class="white"></div>
+                <!-- <div class="green"></div> -->
+
+            </div>
+            <span id="footer-di" class="box">?</span>
         </div>
-    </div>
 
-    <main class="logged">
-        <!-- <div class="logo ">
-            <div class="black"></div>
-            <div class="red"></div>
-            <div class="white"></div>
-        </div> -->
+        <!-- title -->
+        <h2 id="projectName" class="box"> publicline; admin</h2>
 
+        <!-- auth; auth-di, auth-state -->
+        <div id="auth-di" class="auth box">
+            <div class="logged" style="height: fit-content;">
+                <p class="cuserusername" style="line-height: 0;">username</p>
+            </div>
+            <div class="notlogged">
+                signin
+            </div>
+        </div>
+
+        <div class="authstate">
+            <div class="logged">
+                <p class="cuserusername" style="line-height: 0;">username</p>
+                <button class="box" id="signoutbtn" style="display: inline;">logout</button>
+            </div>
+            <div class="notlogged">
+                <input type="text" class="em" placeholder="em" id="signinUsername">
+                <input type="text" class="pw" placeholder="pw" id="signinUsername">
+                <button id="signinbtn">signin</button>
+            </div>
+        </div>
+
+    </header>
+
+    <main>
 
         <div id="map"></div>
 
-        <div id="cards">
+        <div id="cards" class="adminEle">
+            <div>
+                <button id="send" class="box">ارسال</button>
+                <button id="deleteCurrent" class="box">حذف المحدد</button>
+            </div>
             <div class="options">
-                <button id="conf">غير مؤكدة</button>
-                <button id="unconf">المؤكدة</button>
+                <button id="conf" class="box"> مؤكدة</button>
+                <button id="unconf" class="box on">غير مؤكدة</button>
             </div>
 
-            <div id="pathcards">غير مؤكدة </div>
-            <div id="conpathcards"> مؤكدة</div>
+            <div id="pathcards">
+                <div class="sectionTitle">
+                    غير مؤكدة
+                </div>
+                <!-- <div class="card">
+                    <div>route name</div>
+                    <div class="btns">
+                        <div class="dltbtn">delete</div>
+                        <div class="addbtn">confirm</div>
+                    </div>
+                </div> -->
+            </div>
+            <div id="conpathcards">
+                <div class="sectionTitle">
+                    مؤكدة
+                </div>
+            </div>
         </div>
 
-        <button id="send">ارسال</button>
-        <button id="deleteCurrent">حذف المحدد</button>
-
-        <!-- for this time editing -->
-        <button id="addpoint1">add p1</button>
-        <button id="addpoint2">add p2</button>
-
-        <button id="sendspecial"> send special edits</button>
+        <div id="message">
+            <div id="sendingDataMessage" class="green">loading data</div>
+            <div id="errorMessage" class="red">some thing is wrong</div>
+        </div>
 
     </main>
+    <!-- 
+    <footer>
+        <div class="footerflex">
+            <div class="leaderBoard">
+                <span style="margin-bottom: 1rem;">
+                    <p style="color: white; display: inline;">leaderBoard</p>
+                    <button id="displayUsersRanking" class="">users</button>
+                    <button id="displayteamsRanking" class="">team</button>
+                    <a href="#me">
+                        <button class="box">me</button>
+                    </a>
+                </span>
+                <div class="rankingHeader">
+                    <button id="rankingSorting" class="box">ranking</button>
+                    <button id="accountHeader">account</button>
+                    <button class="box" id="redPinSorting" style="background-image: url('./imgs/redPin.png');"></button>
+                    <button class="box" id="greenPinSorting"
+                        style="background-image: url('./imgs/greenPin.png');"></button>
+                    <button class="box" id="redToGreenSorting">
+                        <img src="./imgs/arrowright.png" style="pointer-events: none;">
+                        <img src="./imgs/greenPin.png" style="pointer-events: none;">
+                    </button>
+                    <button class="box" id="totalSorting">total points</button>
+                </div>
 
-    <footer></footer>
-    <!-- <div class="card">
-            <button class="addbtn">confirm</button>
-            <button class="dltbtn">delete</button>
-        </div> -->
+                <div id="usersRanking">
+
+                    <div class="rankedAccount">
+                        <span class="ranking">${index+1}</span>
+                        <div class="account flex" style="justify-content: flex-start;">
+                            <img class="accountImg" style="background-image: url('${account.img}');">
+                            <h3 class="accountUsername ranked">${account.userName}</h3>
+                        </div>
+
+                        <h3 class="red">${account.red.length}</h3>
+                        <h3 class="green">${account.green.length}</h3>
+                        <h3 class="makingGreen">not yet</h3>
+                        <h3 class="total">${account.red.length+account.green.length}</h3>
+                    </div>
+                </div>
+
+                <div id="teamsRanking" style="display: none;">
+                    <div class="rankedAccount">
+                        <span class="ranking">${index+1}</span>
+                        <div class="account">
+                            <img class="accountImg" style="background-image: url('${account.img}');">
+                            <h3 class="accountUsername ranked">${account.userName}</h3>
+                        </div>
+
+                        <h3 class="red">${account.red.length}</h3>
+                        <h3 class="green">${account.green.length}</h3>
+                        <h3 class="makingGreen">not yet</h3>
+                        <h3 class="makingGreen">${account.red.length+account.green.length}</h3>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="flex box" style="margin: 1rem;">
+                <p>ملاحظات اماكن الزراعة و كيفية زراعتها</p>
+                <p>
+                    <li>مدرسة, مكان مظلل, مناطق سكنية</li>
+                    <li>...</li>
+                    <li>...</li>
+                </p>
+            </div>
+
+            <div class="info">
+                <div class="contact">
+                    <span class="red"></span>
+                    <h2>تواصل معنا</h2>
+                    <span>
+                        <a href="https://www.instagram.com/kadum_0/" target="_blank">
+                            <img src="./imgs/instagramlogo.jpg" alt="">
+                        </a>
+                        <a href="t.me/kadum0" target="_blank">
+                            <img src="./imgs/Telegramlogo.png" alt="">
+                        </a>
+                    </span>
+                    <p>email; makeitgreen002@gmail.com</p>
+                    <p>email; kadum.jawad@gmail.com</p>
+
+                </div>
+                <div class="features">
+                    <span class="black"></span>
+                    <h2>مميزات الموقع: الغرض و الاستخدام </h2>
+                    <div class="box">
+                        توثيق
+                        حملات التشجير المنتهية و القادمة</div>
+                    <div class="box">
+                        <img src="./imgs/addred.png">
+                        <img src="./imgs/addgreen.png">
+                        اضافة علامات </div>
+                    <div class="box">
+                        <img src="./imgs/redtogreen.png">
+                        زراعة مكان محدد
+                    </div>
+
+                </div>
+                <div class="statics">
+                    <span class="green"></span>
+                    <h2>نتائج المشروع</h2>
+                    <li>تم زراعتها <img src="./imgs/greenPin.png" alt=""><b id="greenCounter" style="color: red;">0</b>
+                    </li>
+                    <li>تحتاج الى زراعة <img src="./imgs/redPin.png"> <b id="redCounter" style="color:red;">0</b></li>
+                    <li>الحملات الحالية: <img src="./imgs/yellowPin.png"> <b id="yellowCounter" style="color:red;">0</b>
+                    </li>
+
+                    <li>عدد المستخدمين: <b id="accountsCounter" style="color: red;">0</b></li>
+                    <li>عدد المساهمات: <b id="contriCounter" style="color: red;">0</b></li>
+
+                </div>
+
+            </div>
+        </div>
+        </div>
+
+    </footer> -->
 
 
 </body>

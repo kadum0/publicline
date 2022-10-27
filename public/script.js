@@ -746,15 +746,17 @@ votesSorting.addEventListener('click', (ev)=>{
             // check if data; may make it only available when data set; 
             // make object; 
             let routeToSend = {}
-            if(currentPath[0] || document.querySelector('#routeName').value || point1 || point2){ /////available data to send; 
+            if(currentPath[0] || document.querySelector('#routeName').value){ /////available data to send; 
                 // routeToSend.path = currentPath._latlngs 
+                document.querySelector('#sendingDataMessage').textContent = 'sending'
+                document.querySelector('#sendingDataMessage').style.display = 'block'
                 
                 console.log(currentPath)
                 let validRoute = []
                 // let notvalidRoute = []
                 // currentPath._latlngs.forEach(e=>validRoute.push(e))
                 Object.values(currentPath._latlngs).forEach(e=>validRoute.push({lng: e.lng,lat: e.lat}))
-                routeToSend.route = validRoute
+                routeToSend.path = validRoute
                 routeToSend.name = document.querySelector("#routeName").value
                 point1?routeToSend.point1 = true:routeToSend.point1 = false
                 point2?routeToSend.point2 = true:routeToSend.point2 = false
@@ -765,7 +767,14 @@ votesSorting.addEventListener('click', (ev)=>{
                 console.log(routeToSend, typeof routeToSend.route, typeof notvalidRoute)
 
                 //////send; 
-                addDoc(collection(bygreenDb, 'unroutes'), routeToSend)
+                addDoc(collection(bygreenDb, 'unroutes'), routeToSend).then(e=>{
+                    document.querySelector('#sendingDataMessage').textContent = 'sent'
+
+                    setTimeout(() => {
+                        document.querySelector('#sendingDataMessage').style.display = 'none'
+                    }, 1000);
+
+                })
             }else{
                 console.log('set the rest data')
                 document.querySelector("#errorMessage").textContent = 'اكمل ملئ البيانات و اضافة مسار كامل'
