@@ -769,6 +769,7 @@ votesSorting.addEventListener('click', (ev)=>{
                 //////send; 
                 addDoc(collection(bygreenDb, 'unroutes'), routeToSend).then(e=>{
                     document.querySelector('#sendingDataMessage').textContent = 'sent'
+                    location.reload()
 
                     setTimeout(() => {
                         document.querySelector('#sendingDataMessage').style.display = 'none'
