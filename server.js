@@ -46,24 +46,6 @@ const bygreenDb = getFirestore(bygreen)
 const bygreenAuth = getAuth(bygreen)
 
 
-
-// const publicLineConfig = {
-//     apiKey: "AIzaSyAF-kHhmhnZ2z6GDRhX3YK6ZeN1wQifC8M",
-//     authDomain: "public-line-19206.firebaseapp.com",
-//     projectId: "public-line-19206",
-//     storageBucket: "public-line-19206.appspot.com",
-//     messagingSenderId: "897098333489",
-//     appId: "1:897098333489:web:883a9eaff7711d7c4ec410",
-//     measurementId: "G-PLWGYD6KBC"
-// };
-
-// // Initialize Firebase
-// const publicLine = initializeApp(publicLineConfig);
-// // const bygreenDb = getFirestore(publicLine)
-// const publicLineAuth = getAuth(publicLine)
-
-// make server account; claim token; 
-
 signInWithEmailAndPassword(bygreenAuth ,process.env.EM, process.env.PW).then((cred)=>{
     // console.log('registered', cred)
 
@@ -77,8 +59,7 @@ onAuthStateChanged(bygreenAuth, async (user)=>{
 ///////////on db route change; 
 ///check if the upvote and downvote equal to 10; then if up; null, if down delete
 
-let collectionRef = collection(bygreenDb, 'routes')
-onSnapshot(collectionRef, (data)=>{
+onSnapshot(collection(bygreenDb, 'routes'), (data)=>{
     let docs = []
     data.docs.forEach(doc=>{
         docs.push({...doc.data(), id: doc.id})
