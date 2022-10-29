@@ -558,6 +558,21 @@ votesSorting.addEventListener('click', (ev)=>{
                         e.downvotes?console.log('downvotes', e.downvotes):null
                     })
 
+                    
+        map.on('zoomend', function () {
+            let currentZoom = map.getZoom();
+            console.log('current zoom;', currentZoom, map.getBounds())
+            // if(currentZoom == 11){
+            //     routeObject.setStyle({weight: 2})
+            // }else if(currentZoom == 12){
+            //     routeObject.setStyle({weight: 3})
+            // }else if(currentZoom == 13){
+            //     routeObject.setStyle({weight: 4})
+            // }else if(currentZoom == 14){
+            //     routeObject.setStyle({weight: 5})
+            // }
+        });
+
                 routesObjects.push(routeObject)
 
                 routeObject.addEventListener("mouseover", (route)=>{
@@ -731,7 +746,6 @@ votesSorting.addEventListener('click', (ev)=>{
             console.log(markers)
 
         })
-
 
 
 
