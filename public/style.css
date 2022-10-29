@@ -103,6 +103,13 @@ border: 1px solid rgba(255, 255, 255, 0.3);
 #addmode{
     border: #1F2721 2px solid;
     z-index: 1002;
+    background-image: url('./imgs/addroutebtn.png');
+    background-repeat: no-repeat;
+    font-size: 1.3rem;
+    font-weight: bold;
+    /* height: 2.2rem; */
+    /* width: 2.2rem; */
+    /* margin: auto; */
 }
 
 #send{
