@@ -10,7 +10,6 @@ let express = require("express")
 let app = express()
 let cors = require("cors")
 //express configuration 
-app.set('view engine', 'ejs')
 app.use(express.json())
 app.use(cors())
 
