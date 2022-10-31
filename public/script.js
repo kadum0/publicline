@@ -610,6 +610,23 @@ votesSorting.addEventListener('click', (ev)=>{
         }
 
 
+        map.on('zoomend', function () {
+            // let currentZoom = map.getZoom();
+            console.log('current zoom;',map.getZoom()  , map.getBounds())
+            routesObjects.forEach(route=>{
+            if(map.getZoom() == 10){
+                route.setStyle({weight: 5})
+            }else if(map.getZoom() == 11){
+                route.setStyle({weight: 10})
+            }else if(map.getZoom() == 12){
+                route.setStyle({weight: 15})
+            }else if(map.getZoom() == 13){
+                route.setStyle({weight: 20})
+            }else if(map.getZoom() == 14){
+                route.setStyle({weight: 25})
+            }
+            })
+        });
 
 
         /////////////send data 
