@@ -24,6 +24,15 @@
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 
     <link rel="stylesheet" href="./style.css">
+    <link rel="manifest" href="./manifest.json">
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js');
+            });
+        }
+    </script>
+
 </head>
 
 <body>
@@ -31,11 +40,11 @@
         <!-- logo -->
         <div class="flex">
             <div class="logo box">
-                <!-- <a href="https://kadum2.github.io/ivc-2de/"> -->
-                <div class="black"></div>
-                <div class="red"></div>
-                <div class="white"></div>
-                <!-- <div class="green"></div> -->
+                <a href="https://kadum2.github.io/ivc-d3/">
+                    <div class="black"></div>
+                    <div class="red"></div>
+                    <div class="white"></div>
+                    <!-- <div class="green"></div> -->
 
             </div>
             <span id="footer-di" class="box">?</span>

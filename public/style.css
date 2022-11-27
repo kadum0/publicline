@@ -190,7 +190,9 @@ border: 1px solid rgba(255, 255, 255, 0.3);
 footer {
     height: 100vh;
     width: 100vw;
-    background: rgba(0, 0, 0, 0.8);
+    /* background: rgba(0, 0, 0, 0.8); */
+    background-image: url('./imgs/footercover.png');
+    background-size: contain;
     position: absolute;
     top: 0%;
     right: 0%;
