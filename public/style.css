@@ -185,6 +185,15 @@ border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 
+
+.removePins{
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    z-index: 1002;
+    
+}
+
 /* footer */
 
 footer {

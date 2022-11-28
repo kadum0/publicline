@@ -92,6 +92,9 @@ onSnapshot(collection(bygreenDb, 'routes'), (data)=>{
     console.log('fired')
 })
 
+
+app.use('/temppin/:coordinates',express.static('public'))
+// to route into ivc
 app.use('/profile/:username',express.static('profile'))
 
 app.listen(process.env.PORT || 1000, ()=>console.log("listennig on port 1000..."))

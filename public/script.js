@@ -38,6 +38,16 @@ let authUser ///auth
 let type
 let accountsList = []
 
+let redPinIcon = L.icon({
+    iconUrl: "./imgs/redpin.png",
+    shadowSize: [50, 64], // size of the shadow
+    shadowAnchor: [4, 62], // the same for the shadow
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [0, -30] 
+});
+
+
 // getting ???
 await onAuthStateChanged(bygreenAuth, async (user)=>{
     console.log('authstatefun', dbUser)
@@ -387,6 +397,22 @@ votesSorting.addEventListener('click', (ev)=>{
         let currentRouteId
 
         window.onload = async () => {
+
+            if(window.location.href.includes('temppin')){
+                console.log('contains temp pin', window.location.href.split('/'))
+
+                // make the pin
+                let currentPin = L.marker({
+            lat: window.location.href.split('/')[window.location.href.split('/').length-2].split(',')[0],
+            lng: window.location.href.split('/')[window.location.href.split('/').length-2].split(',')[1]
+            }, {icon: redPinIcon}).addTo(map)
+
+                // flyto it 
+                console.log(currentPin)
+                map.flyTo(currentPin._latlng, 16)
+
+            }
+
             //////get api key 
             // let rApiKey = await fetch("/map-api-key")
             // let apiKey = await rApiKey.json()
@@ -648,10 +674,11 @@ votesSorting.addEventListener('click', (ev)=>{
             }
         })
 
+        let tempMarker 
+
         // make the main route
         map.addEventListener('click', function (ev) {
             if(addmode.classList.contains("on")){
-
                 /////////disable all routes 
                 routesObjects.forEach(ee=>{ee.setStyle({opacity:0, interactive: false})})
                 console.log(routesObjects)
@@ -676,6 +703,9 @@ votesSorting.addEventListener('click', (ev)=>{
                 currentPath != 0 ? map.removeLayer(currentPath) : null
                 currentPath = L.polyline(path).setStyle({color: "red"}).addTo(map)
             }else{
+                tempMarker?map.removeLayer(tempMarker):console.log('not removed')
+                console.log(map.mouseEventToLatLng(ev.originalEvent))
+                tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent)).bindPopup(`link; <br><a href='${window.location.href+'/temppin/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}'>${window.location.href+'/temppin/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}</a>`).addTo(map)
                 // routesObjects.forEach(ee=>{ee.setStyle({opacity: 1,interactive: true})})
             }
         });
