@@ -93,7 +93,7 @@ onSnapshot(collection(bygreenDb, 'routes'), (data)=>{
 })
 
 
-app.use('/temppin/:coordinates',express.static('public'))
+app.use('/location/:coordinates',express.static('public'))
 // to route into ivc
 app.use('/profile/:username',express.static('profile'))
 

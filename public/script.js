@@ -398,7 +398,7 @@ votesSorting.addEventListener('click', (ev)=>{
 
         window.onload = async () => {
 
-            if(window.location.href.includes('temppin')){
+            if(window.location.href.includes('location')){
                 console.log('contains temp pin', window.location.href.split('/'))
 
                 // make the pin
@@ -705,7 +705,7 @@ votesSorting.addEventListener('click', (ev)=>{
             }else{
                 tempMarker?map.removeLayer(tempMarker):console.log('not removed')
                 console.log(map.mouseEventToLatLng(ev.originalEvent))
-                tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent)).bindPopup(`link; <br><a href='${window.location.href+'/temppin/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}'>${window.location.href+'/temppin/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}</a>`).addTo(map)
+                tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent)).bindPopup(`link; <br><a href='${window.location.href+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}'>${window.location.href+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}</a>`).addTo(map)
                 // routesObjects.forEach(ee=>{ee.setStyle({opacity: 1,interactive: true})})
             }
         });
