@@ -703,9 +703,13 @@ votesSorting.addEventListener('click', (ev)=>{
                 currentPath != 0 ? map.removeLayer(currentPath) : null
                 currentPath = L.polyline(path).setStyle({color: "red"}).addTo(map)
             }else{
+
+                // add direct pin and link to share
                 tempMarker?map.removeLayer(tempMarker):console.log('not removed')
                 console.log(map.mouseEventToLatLng(ev.originalEvent))
-                tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent)).bindPopup(`link; <br><a href='${window.location.href+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}'>${window.location.href+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}</a>`).addTo(map)
+
+                tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent)).bindPopup(`link; <br><a href='${window.location.href+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}'>${window.location.hostname+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}</a>
+                `).addTo(map)
                 // routesObjects.forEach(ee=>{ee.setStyle({opacity: 1,interactive: true})})
             }
         });
