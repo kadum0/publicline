@@ -1627,8 +1627,14 @@ votesSorting.addEventListener('click', (ev)=>{
                 tempMarker?map.removeLayer(tempMarker):console.log('not removed')
                 console.log(map.mouseEventToLatLng(ev.originalEvent))
 
-                tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent)).bindPopup(`link; <br><a href='${window.location.href+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}'>${window.location.hostname+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}</a>
+                if(window.location.hostname.includes('github')){
+                    tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent)).bindPopup(`link; <br><a href='${window.location.hostname+'/publicline/public/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}'>${window.location.hostname+'/publicline/public/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}</a>
+                    `).addTo(map)
+                }else{
+                    tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent)).bindPopup(`link; <br><a href='${window.location.hostname+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}'>${window.location.hostname+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}</a>
                 `).addTo(map)
+
+                }
                 // routesObjects.forEach(ee=>{ee.setStyle({opacity: 1,interactive: true})})
             }
         });
