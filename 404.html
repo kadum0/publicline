@@ -1,0 +1,1777 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>public lines</title>
+
+    <!-- leaflet cdn -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+        crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+        crossorigin=""></script>
+
+    <!-- searh box -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-search/3.0.2/leaflet-search.src.js"
+        integrity="sha512-V+GL/y/SDxveIQvxnw71JKEPqV2N+RYrUlf6os3Ru31Yhnv2giUsPadRuFtgmIipiXFBc+nCGMHPUJQc6uxxOA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+
+    <style>
+        /* basics */
+        /* header */
+
+        header {
+            height: 3rem;
+            background: #29D659;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo div {
+            height: 30%;
+            width: 75%;
+            margin-bottom: 10%;
+            transform: rotateZ(-15deg);
+        }
+
+        .logo {
+            height: 2rem;
+            width: 2rem;
+        }
+
+        #footer-di {
+            /* background: red; */
+            z-index: 1003;
+            border: #ff2a2a 2px solid;
+        }
+
+        .auth {
+            height: 2rem;
+        }
+
+        .auth div {
+            pointer-events: none;
+        }
+
+        .authstate {
+            position: absolute;
+            /* make it glass form */
+            /* background: #29D659;
+    border-radius: .6rem; */
+            padding: .6rem;
+            top: 3rem;
+            right: 1rem;
+            /* width: 7rem; */
+            width: auto;
+
+            z-index: 1002;
+            display: none;
+
+            /* From https://css.glass */
+            background: rgba(255, 255, 255, 0.2);
+            background: rgba(149, 255, 193, 0.2);
+
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .cuserimg {
+            /* height: 3rem; */
+            width: auto;
+        }
+
+        #profileLink {
+            text-decoration: none;
+            color: black;
+        }
+
+        .logged,
+        .notlogged,
+        .makeprofile {
+            display: none;
+        }
+
+        .logged {}
+
+        .auth img {
+            height: 3rem;
+            height: 2.3rem;
+            width: 3rem;
+            width: 2.3rem;
+            background-size: cover;
+            background-position: center;
+            border-radius: 50%;
+        }
+
+        .cuserimg {
+            height: 3rem;
+            width: 3rem;
+            background-size: cover;
+            background-position: center;
+            border-radius: 50%;
+        }
+
+        #bygoogle {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* main */
+        #map {
+            height: 100vh;
+            width: 100vw;
+        }
+
+        #addmode {
+            border: #1F2721 2px solid;
+            z-index: 1002;
+            background-image: url('./imgs/addroutebtn.png');
+            background-repeat: no-repeat;
+            font-size: 1.3rem;
+            font-weight: bold;
+            /* height: 2.2rem; */
+            /* width: 2.2rem; */
+            /* margin: auto; */
+        }
+
+        #send {
+            /* margin-top: 2rem; */
+            background: #1bf057;
+            border: 4px #1F2721 solid;
+        }
+
+        #send:hover {
+            color: #1bf057;
+            background: #1F2721;
+        }
+
+        .deletebtns {
+            /* padding: .5rem; */
+            border: 2px dashed black;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .deletebtns button {
+            display: block;
+            /* margin: .2rem; */
+        }
+
+        /* controllers */
+        .btns {
+            display: flex;
+            flex-direction: column;
+            /* height: 20vh; */
+            width: 10vw;
+            gap: .4rem;
+            font-size: 2.4rem;
+            font-weight: bold;
+            position: absolute;
+            bottom: .1rem;
+            right: .1rem;
+            z-index: 1002;
+            background: #303832;
+            /* background: #2b693d; */
+            border-radius: .5rem;
+            /* From https://css.glass */
+            background: rgba(255, 255, 255, 0.2);
+            background: rgba(149, 255, 193, 0.2);
+
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btns button {
+            font-weight: bold;
+        }
+
+
+        #message {
+            position: absolute;
+            top: 3rem;
+            right: 50vw;
+            transform: translate(50%, 50%);
+            z-index: 1002;
+            /* background: red; */
+            padding: 1rem;
+        }
+
+        #sendingDataMessage {
+            background: #54db7b;
+        }
+
+        #errorMessage {
+            display: none;
+            background: #ff2a2a;
+        }
+
+        /* footer */
+
+        footer {
+            height: 100vh;
+            width: 100vw;
+            /* background: rgba(0, 0, 0, 0.8); */
+            background-image: url('./imgs/footercover.png');
+            background-size: contain;
+            position: absolute;
+            top: 0%;
+            right: 0%;
+            z-index: 1002;
+            display: none;
+        }
+
+        footer * {
+            box-sizing: border-box;
+        }
+
+        .footerflex {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        /* footer; ranking */
+        .leaderBoard {
+            display: flex;
+            flex-direction: column;
+            width: 70%;
+            padding: 1rem;
+            max-height: 65vh;
+            overflow-y: scroll;
+            background: #242424;
+            border: #27f060 1px solid;
+            max-height: 70vh;
+        }
+
+        .leaderBoard>span button {
+            background: #33a353;
+            padding: .2rem;
+            cursor: pointer;
+            border-radius: .2rem;
+        }
+
+        .rankingHeader {
+            display: flex;
+            flex-direction: row;
+            background: #0a0a0a;
+        }
+
+        .rankingHeader button {
+            width: 10rem;
+            /* flex-grow: 1; */
+        }
+
+        #accountHeader {
+            min-width: 5rem;
+        }
+
+        .usersRanking {
+            max-width: 100%;
+        }
+
+        .rankedAccount {
+            border: #0a0a0a 2px solid;
+            display: flex;
+            color: white;
+            background: #242424;
+            gap: 1rem;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+
+        .ranking {
+            display: flex;
+            flex-direction: column;
+            background: #29D659;
+            border: #a0f7b9 2px solid;
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        .rankedAccount span,
+        .rankedAccount>h3,
+        .rankedAccount .account {
+            width: 10vw;
+            /* flex-grow: 1; */
+        }
+
+        .rankedAccount .account {
+            justify-content: flex-start;
+            /* flex-grow: 2; */
+        }
+
+        .rankedAccount>h3 {
+            text-align: center;
+        }
+
+        .rankedAccount img {
+            min-height: 2rem;
+            min-width: 2rem;
+        }
+
+        .leaderBoard button {
+            background-repeat: no-repeat;
+        }
+
+        .rankedAccount h3 {
+            line-height: 0;
+        }
+
+
+        /* footer; info */
+        .info {
+            min-height: 20vh;
+            /* padding: 0% 1rem; */
+            /* background: green; */
+            background: #0a0a0a;
+            display: flex;
+            justify-content: space-between;
+            /* justify-content: center; */
+            align-items: center;
+            padding: 1rem;
+            width: 100vw;
+            /* box-sizing: border-box; */
+        }
+
+        .contact,
+        .features,
+        .statics {
+            display: flex;
+            justify-content: space-around;
+            flex-direction: column;
+            align-items: center;
+            /* background: #29D659; */
+            min-height: 15vh;
+            width: 20vw;
+            border-radius: .5rem;
+            transition: .1s linear;
+            background: white;
+        }
+
+        .contact:hover,
+        .features:hover,
+        .statics:hover {
+            /* background: #29D659; */
+            /* background: #33a353; */
+            /* background: white; */
+            box-shadow: 3px 3px 0px 0px #29D659;
+        }
+
+        .contact img,
+        .features img,
+        .statics img {
+            /* height: 2rem; */
+        }
+
+        .features {
+            width: 50vw;
+        }
+
+        .features div {
+            background: #1a1a1a;
+            color: white;
+            margin: .1rem;
+        }
+
+        .features li {
+            direction: ltr;
+        }
+
+        .statics img {
+            height: 1rem;
+        }
+
+        footer .info p {
+            /* line-height: 0%; */
+            margin: .8rem;
+        }
+
+
+
+        /* elements */
+        body {
+            margin: 0;
+        }
+
+        main div,
+        main p,
+        main h1,
+        main h2,
+        main h3,
+        main h4,
+        main h5,
+        main h6 {
+            direction: rtl;
+        }
+
+        body {
+            overflow-x: hidden;
+            background: #1F2721;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        body * {
+            /* box-sizing: border-box; */
+        }
+
+        img {
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 2rem;
+        }
+
+        input[type=file] {
+            display: none;
+        }
+
+        a {
+            text-decoration: none;
+            color: black;
+        }
+
+        button {
+            background-position: center;
+            background-size: contain;
+        }
+
+        li {
+            background: #C0F9D0;
+            border-radius: .4rem;
+            margin-bottom: .2rem;
+        }
+
+        label {
+            background: #54db7b;
+            cursor: pointer;
+            padding: .4rem;
+            transition: .2s linear;
+            border-radius: .2rem;
+        }
+
+        label:hover {
+            background: #33a353;
+        }
+
+
+        /* shared */
+        .logged,
+        .makeprofile,
+        .notlogged {
+            display: none;
+        }
+
+        .box {
+            background-color: #27f060;
+            padding: .5rem;
+            border-radius: .5rem;
+            transition: .1s linear;
+            cursor: pointer;
+        }
+
+        .box:hover {
+            background-color: #33a353;
+            border-radius: .7rem;
+        }
+
+        .flex {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .account {
+            display: flex;
+            gap: .6rem;
+            justify-content: center;
+            align-items: center;
+            transition: .1s linear;
+            cursor: pointer;
+        }
+
+        .accountImg {
+            border-radius: 50%;
+            border: #0a0a0a 1px solid;
+        }
+
+
+
+        .on {
+            background: #1b1b1b;
+            color: white;
+        }
+
+        .on:hover {
+            background: #333333;
+        }
+
+        .red {
+            background: #ff2a2a;
+        }
+
+        .green {
+            background: #27f060;
+        }
+
+        .black {
+            background: #0a0a0a;
+        }
+
+        .white {
+            background: rgb(245, 245, 245);
+        }
+
+
+        /* js created */
+
+        .upvoteBtn,
+        .downvoteBtn {
+            margin-right: 2px;
+            margin-bottom: 2px;
+            border: none;
+            border-radius: .6rem;
+            cursor: pointer;
+            transition: .1s linear;
+            display: inline;
+            padding: .4rem;
+        }
+
+        .upvoteBtn {
+            background: #1bf057;
+            border: 2px solid #1bf057;
+        }
+
+        .upvoteBtn:hover {
+            background: #29D659;
+        }
+
+        .downvoteBtn {
+            background: #ff2a2a;
+            border: 2px solid #ff2a2a;
+
+        }
+
+        .downvoteBtn:hover {
+            background: #df2727;
+        }
+
+        .voted {
+            border: 2px solid blue;
+        }
+
+        .sureBtn {
+            background: rgb(48, 154, 253);
+            border: none;
+            border-radius: .6rem;
+            transition: .1s linear;
+            padding: .6rem;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        .sureBtn:hover {
+            background: rgb(34, 106, 173);
+        }
+
+
+        /* mobile */
+
+        @media all and (max-width: 500px) {
+            body * {
+                font-size: .6rem;
+            }
+
+            header {
+                padding: 0;
+            }
+
+            img {
+                height: 1.5rem;
+            }
+
+            .btns * {
+                font-size: .7rem;
+            }
+
+            .btns {
+                margin: 0 0 3rem 0;
+                width: 5rem;
+
+            }
+
+            footer {
+                padding-top: 2rem;
+            }
+
+            /* leaderboard */
+            .leaderBoard {
+                /* position: absolute; */
+                /* top: 2rem; */
+                /* transform: translate(0, 2rem); */
+                width: 100vw;
+            }
+
+            .leaderBoard img {
+                height: 1rem;
+            }
+
+            .rankingHeader {
+                height: 2rem;
+                font-size: small;
+            }
+
+            .rankedAccount {
+                /* justify-content: space-evenly; */
+                height: fit-content;
+            }
+
+            .rankedAccount .account {
+                /* min-width: fit-content; */
+
+                width: 5rem;
+                /* width: 3rem; */
+            }
+
+            .rankedAccount span {
+                font-size: small;
+            }
+
+            .rankedAccount>h3,
+            .rankedAccount div {
+                font-size: .7rem;
+            }
+
+            .info {
+                /* flex-direction: column; */
+                gap: 1rem;
+            }
+
+            .info div {
+                width: 100%;
+                padding: .1rem;
+            }
+
+            .features img {
+                height: 1rem;
+            }
+
+            footer .info p {
+                line-height: auto;
+                margin: auto;
+            }
+        }
+    </style>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js');
+            });
+        }
+    </script>
+
+</head>
+
+<body>
+    <header>
+        <!-- logo -->
+        <div class="flex">
+            <div class="logo box">
+                <a href="https://kadum2.github.io/ivc-d3/">
+                    <div class="black"></div>
+                    <div class="red"></div>
+                    <div class="white"></div>
+                    <!-- <div class="green"></div> -->
+
+            </div>
+            <span id="footer-di" class="box">?</span>
+        </div>
+
+        <!-- title -->
+        <h2 id="projectName" class="box"> publicline| الخط العام</h2>
+
+        <!-- auth; auth-di, auth-state -->
+        <div id="auth-di" class="auth box">
+            <div class="logged" style="height: fit-content;">
+                <div class="flex">
+                    <img class="minicuserimg">
+                    <p class="teamEle" style="line-height: none; padding:0;
+                color:white; font-size: .8rem;">team</p>
+                </div>
+            </div>
+            <div class="notlogged">
+                make account
+            </div>
+            <div class="makeprofile">
+                make profile
+            </div>
+        </div>
+
+        <div class="authstate">
+            <div class="logged">
+                <a class="flex box" id="profileLink" href="">
+                    <img class="cuserimg">
+                    <p class="cuserusername" style="line-height: 0;">username</p>
+                </a>
+                <b>
+                    <p class="cusername"></p>
+                </b>
+                <p class="cuserbio">bio</p>
+                <div class="cuserpoints" style="display: inline;">
+                    <span class="addedRoutes">
+                        <img src="./imgs/addroutebtn.png" alt="">
+                        <span></span>
+                    </span>
+                    <span class="votes">
+                        <img src="./imgs/vote.png" alt="">
+                        <span></span>
+                    </span>
+                </div>
+                <button class="box" id="signoutbtn" style="display: inline;">logout</button>
+            </div>
+            <div class="notlogged">
+                <div id="register">
+                    <input type="text" class="em" placeholder="em">
+                    <input type="text" class="pw" placeholder="pw">
+                    <button id="registerbtn" class="box">register</button>
+                </div>
+                <!-- <br> -->
+                <div id="signin">
+                    <input type="text" class="em" placeholder="em" id="signinUsername">
+                    <input type="text" class="pw" placeholder="pw" id="signinUsername">
+                    <button id="signinbtn" class="box">signin</button>
+                </div>
+                <h3>or</h3>
+                <button id="bygoogle" class="box">register with google <img src="./imgs/googlelogo.png" alt="">
+                </button>
+            </div>
+            <div class="makeprofile">
+                <input type="text" id="username" placeholder="username">
+                <input type="text" id="name" placeholder="name">
+                <input type="text" id="bio" placeholder="bio">
+                <input type="file" id="userimg">
+                <button id="makeprofilebtn">submit</button>
+
+                <button id="signoutsebtn">logout</button>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <main>
+        <div id="map"></div>
+
+        <!-- collect data; controllers -->
+        <div class="btns">
+            <button class="box" id="addmode">
+                +
+            </button>
+
+            <input type="text" name="" id="routeName" placeholder="اسم المسار">
+            <div class="deletebtns">
+                <button class="box" id="cancel-step">الغاء الخطوة</button>
+                <button class="box" id="cancel-route">الغاء المسار</button>
+            </div>
+            <button class="box" id="point1">نقطة البداية</button>
+            <button class="box" id="point2">نقطة النهاية</button>
+
+            <button class="box" id="send"> ارسال المسار</button>
+        </div>
+
+        <div id="message">
+            <div id="sendingDataMessage" class="box">loading data</div>
+            <div id="errorMessage" class="box">some thing is wrong</div>
+        </div>
+    </main>
+
+
+
+    <footer>
+        <div class="footerflex">
+            <div class="leaderBoard">
+                <span style="margin-bottom: 1rem;">
+                    <p style="color: white; display: inline;">leaderBoard</p>
+                    <!-- leaderBoard -->
+                    <!-- <button id="displayUsersRanking" class="">users</button>
+                    <button id="displayteamsRanking" class="">team</button> -->
+                    <a href="#me">
+                        <button class="box">me</button>
+                    </a>
+                </span>
+                <div class="rankingHeader">
+                    <!-- <span>none</span> -->
+                    <button id="rankingSorting" class="box">ranking</button>
+                    <button id="accountHeader">account</button>
+                    <button class="box" id="addedRoutesSorting"
+                        style="background-image: url('./imgs/addroutebtn.png');">
+                    </button>
+                    <button class="box" id="votesSorting" style="background-image: url('./imgs/vote.png');"></button>
+                    <button class="box" id="totalSorting">total points</button>
+                </div>
+
+                <div id="usersRanking">
+
+                    <!-- prototyped account -->
+
+                    <div class="rankedAccount">
+                        <span class="ranking">${index+1}</span>
+                        <div class="account flex" style="justify-content: flex-start;">
+                            <img class="accountImg" style="background-image: url('${account.img}');">
+                            <h3 class="accountUsername ranked">${account.userName}</h3>
+                        </div>
+
+                        <h3 class="red">${account.red.length}</h3>
+                        <h3 class="green">${account.green.length}</h3>
+                        <h3 class="makingGreen">not yet</h3>
+                        <h3 class="total">${account.red.length+account.green.length}</h3>
+                    </div>
+                </div>
+
+                <div id="teamsRanking" style="display: none;">
+                    <!-- prototyped account -->
+                    <div class="rankedAccount">
+                        <span class="ranking">${index+1}</span>
+                        <div class="account">
+                            <img class="accountImg" style="background-image: url('${account.img}');">
+                            <h3 class="accountUsername ranked">${account.userName}</h3>
+                        </div>
+
+                        <h3 class="red">${account.red.length}</h3>
+                        <h3 class="green">${account.green.length}</h3>
+                        <h3 class="makingGreen">not yet</h3>
+                        <h3 class="makingGreen">${account.red.length+account.green.length}</h3>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="info">
+                <div class="contact">
+                    <span class="red"></span>
+                    <h2>تواصل معنا</h2>
+                    <span>
+                        <a href="https://www.instagram.com/kadum_0/" target="_blank">
+                            <img src="./imgs/instagramlogo.png" alt="">
+                        </a>
+                        <a href="t.me/kadum0" target="_blank">
+                            <img src="./imgs/Telegramlogo.png" alt="">
+                        </a>
+                    </span>
+                    <!-- <p>facebook</p> -->
+                    <p>email; makeitgreen002@gmail.com</p>
+                    <p>email; kadum.jawad@gmail.com</p>
+
+                </div>
+                <div class="features">
+                    <span class="black"></span>
+                    <h2>مميزات الموقع: الغرض و الاستخدام </h2>
+                    <div class="box">
+                        اظهار مسارات النقل العام
+                    </div>
+                    <div class="box">
+                        اضافة مسارات
+                        <img src="./imgs/addroutebtn.png" alt="">
+                    </div>
+
+
+                </div>
+                <div class="statics">
+                    <span class="green"></span>
+                    <h2>نتائج المشروع</h2>
+                    <li>عدد المسارات المضافة <img src="./imgs/addroutebtn.png" alt=""><b id="addedRoutesCounter"
+                            style="color: red;">0</b>
+                    <li>تم التصويت <img src="./imgs/vote.png" alt=""><b id="votesCounter" style="color: red;">0</b>
+                    <li>عدد المستخدمين: <b id="accountsCounter" style="color: red;">0</b></li>
+
+                    </li>
+                </div>
+
+            </div>
+        </div>
+        </div>
+
+    </footer>
+
+    <!-- main script  -->
+    <script type="module">
+
+
+        // firebase 
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.2/firebase-app.js";
+
+import {getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signOut, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider} from "https://www.gstatic.com/firebasejs/9.9.2/firebase-auth.js"
+
+import { getFirestore, onSnapshot,
+	collection, doc, getDocs, getDoc,
+	addDoc, deleteDoc, setDoc,
+	query, where, orderBy, serverTimestamp,
+	updateDoc, arrayUnion, arrayRemove} from "https://www.gstatic.com/firebasejs/9.9.2/firebase-firestore.js";
+
+// firebase storage; 
+import {getStorage, ref, uploadBytes, getDownloadURL, listAll, list} from 'https://www.gstatic.com/firebasejs/9.9.2/firebase-storage.js'
+    
+
+const bygreenConfig = {
+    apiKey: "AIzaSyDqK1z4fd7lO9g2ISbf-NNROMd7xpxcahc",
+    authDomain: "bygreen-453c9.firebaseapp.com",
+    projectId: "bygreen-453c9",
+    storageBucket: "bygreen-453c9.appspot.com",
+    messagingSenderId: "19954598250",
+    appId: "1:19954598250:web:ba57c792bdf65dbc18a513",
+    measurementId: "G-265TN8HGKX"};
+
+const bygreen = initializeApp(bygreenConfig, 'bygreen');
+const bygreenDb = getFirestore(bygreen)
+const bygreenAuth = getAuth(bygreen)
+const bygreenStorage = getStorage(bygreen)
+
+/////////auth state 
+let errDiv = document.querySelector('#errors')
+
+let dbUser ////firestore 
+let authUser ///auth 
+let type
+let accountsList = []
+
+let redPinIcon = L.icon({
+    iconUrl: "./imgs/redpin.png",
+    shadowSize: [50, 64], // size of the shadow
+    shadowAnchor: [4, 62], // the same for the shadow
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [0, -30] 
+});
+
+
+// getting ???
+await onAuthStateChanged(bygreenAuth, async (user)=>{
+    console.log('authstatefun', dbUser)
+    if(user){
+        console.log('from auth ', user)
+        authUser = user
+        user.getIdTokenResult().then(idTokenResult => {
+            console.log('claims', idTokenResult.claims)
+            type = idTokenResult.claims
+            // if team 
+            if (idTokenResult.claims.team){
+                document.querySelectorAll('.teamEle').forEach(teamEle=>{
+                    teamEle.style.display = 'inline-block'
+                })
+                // document.querySelector('.addYellow').style.display = 'block'
+            }
+        })
+        let dbUserDoc = await getDoc(doc(bygreenDb, 'users', user.uid))
+        dbUser = dbUserDoc.data()
+
+        if(dbUser){
+        dbUser.id = dbUserDoc.id
+
+            ////registered
+            document.querySelectorAll('.logged').forEach(e=>{e.style.display = 'block'})
+            document.querySelectorAll('.makeprofile').forEach(e=>e.style.display = 'none')
+            document.querySelectorAll('.notlogged').forEach(e=>e.style.display = 'none')
+
+            ///insert the basic info; 
+            document.querySelector('.minicuserimg').style.backgroundImage = `url('${dbUser.img}')`
+            // document.querySelector(".minicuserusername").textContent = '@'+ dbUser.userName
+            document.querySelector('.cuserimg').style.backgroundImage = `url('${dbUser.img}')`
+            document.querySelector(".cuserusername").textContent = '@'+ dbUser.userName
+            document.querySelector(".cusername").textContent = dbUser.name
+            document.querySelector(".cuserbio").textContent = dbUser.bio
+            document.querySelector("#profileLink").href = window.location.host+'/'+ dbUser.userName
+
+            document.querySelector(".addedRoutes").querySelector('span').textContent = dbUser.addedRoutes.length
+            document.querySelector(".votes").querySelector('span').textContent += dbUser.votes.length
+
+
+        }else{
+            /////half registered; make profile
+            document.querySelectorAll('.makeprofile').forEach(e=>e.style.display = 'block')
+            document.querySelectorAll('.logged').forEach(e=>e.style.display = 'none')
+            document.querySelectorAll('.notlogged').forEach(e=>e.style.display = 'none')
+        }
+        
+    }else{
+        /////not registered
+        document.querySelectorAll('.notlogged').forEach(e=>e.style.display = 'block')
+        document.querySelectorAll('.logged').forEach(e=>e.style.display = 'none')
+        document.querySelectorAll('.makeprofile').forEach(e=>e.style.display = 'none')
+
+        dbUser = 'none'
+    }
+
+    getDocs(collection(bygreenDb, 'users')).then((data)=>{
+        let docs = []
+            data.docs.forEach(doc=>{
+                docs.push({...doc.data(), id: doc.id})
+            })
+            accountsList = docs
+            console.log(docs)
+            document.querySelector('#accountsCounter').textContent = accountsList.length
+            if(accountsList){
+                // console.log(accountsList, dbUser)
+                ranking('total', 'de')
+            }
+
+        })
+})
+///////register 
+document.querySelector('#registerbtn').addEventListener('click', (ev)=>{
+    // check if valid data
+
+    // send 
+    if(ev.target.parentElement.querySelector(".em").value.length > 0 &&ev.target.parentElement.querySelector(".em").value.length < 20 && ev.target.parentElement.querySelector(".pw").value.length > 0){
+
+        console.log('make account')
+        createUserWithEmailAndPassword(bygreenAuth, ev.target.parentElement.querySelector(".em").value, ev.target.parentElement.querySelector(".pw").value).then(cred=>{
+            console.log(cred)
+        }).catch(err=>{
+            console.log(err.message)
+            errDiv.textContent = err.message
+            errDiv.style.display = 'block'
+            setTimeout(() => {
+                errDiv.style.display = 'none'
+            }, 10000);
+        })
+    }else{
+
+    }
+    // empty 
+    document.querySelector('#registerUsername').value = ''
+    document.querySelector('#registerPassword').value = ''
+})
+
+//////signin
+document.querySelector('#signinbtn').addEventListener('click', (ev)=>{
+    console.log('to sign in')
+    console.log(ev.target.parentElement)
+    // console.log('click signin', document.querySelector('#signinUsername').value.length)
+    // console.log(document.querySelector('#signinUsername').value.length >0)
+
+    // send 
+    // if(document.querySelector('#signinUsername').value.length > 0 && document.querySelector('#signinPassword').value.length > 0){
+        console.log('make account')
+        signInWithEmailAndPassword(bygreenAuth, ev.target.parentElement.querySelector(".em").value ,ev.target.parentElement.querySelector(".pw").value)
+    // }else{
+
+    // }
+    // empty 
+    ev.target.parentElement.querySelector(".em").value = ''
+    ev.target.parentElement.querySelector(".pw").value = ''
+})
+
+//////signout 
+document.querySelector('#signoutbtn').addEventListener('click', ()=>{
+    signOut(bygreenAuth, (result)=>{console.log(result)})
+})
+
+// sign with google  
+const provider = new GoogleAuthProvider()
+document.querySelector('#bygoogle').addEventListener('click', ()=>{
+    signInWithPopup(bygreenAuth, provider).then((cred)=>console.log(cred))
+
+})
+
+
+//////make profile; 
+document.querySelector('#makeprofilebtn').addEventListener('click', async (ev)=>{
+    //////////set user in the users collection user current user uid 
+    let q = query(collection(bygreenDb, 'users'), where('username', '==', ev.target.parentElement.querySelector('#username').value))
+    let foundDoc = await getDocs(q)
+    let found
+
+    foundDoc.forEach(e=>{
+        found = doc.data()
+        console.log(doc.id, doc.data())
+    })
+    console.log(foundDoc, found)
+    if(!found){
+        console.log('no taken')
+
+        let fileRef = ref(bygreenStorage, '/userimgs/' + new Date().toISOString().replace(/:/g, '-') +document.querySelector("#userimg").files[0].name.replaceAll(" ","") )
+
+            uploadBytes(fileRef, document.querySelector("#userimg").files[0]).then(res=>{
+                getDownloadURL(res.ref).then(url=>{
+                    console.log(url)
+                    let imgUrl = url
+
+        ///addDoc; add document to a collection; 
+        setDoc(doc(bygreenDb, 'users', authUser.uid), {
+            userName: ev.target.parentElement.querySelector('#username').value,
+            name: ev.target.parentElement.querySelector('#name').value,
+            bio: ev.target.parentElement.querySelector('#bio').value,
+            img: imgUrl,
+            red: [],
+            green: [],
+            yellow:[],
+            addedRoutes: [], 
+            votes: [],
+            type: 'user'
+        }).then(()=>{window.location.reload();}) 
+        
+        })
+    })
+
+
+
+        // setDoc(doc(bygreenDb, 'users', currentUser.uid), {name: ev.target.querySelector('username').value})
+    }else{
+        //////////make messaga section to display errors 
+        console.log('username already taken')
+    }
+
+})
+
+////authstate
+document.querySelector(".auth").addEventListener("click", (e)=>{
+    e.target.classList.toggle('on')
+    if(e.target.classList.contains('on')){
+        document.querySelector(".authstate").style.display = 'block'
+    }else{
+        document.querySelector(".authstate").style.display = 'none'
+    }
+})
+
+
+
+    ////ui-js 
+
+        const map = L.map('map', { zoomControl: false }).setView([33.396600, 44.356579], 9); //leaflet basic map
+        L.Control.geocoder().addTo(map);
+
+        function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+            console.log('Geolocation is not supported by this browser')
+        }
+        }
+        function showPosition(position) {
+            // map.setView([position.coords.latitude, position.coords.longitude], 16)
+            map.flyTo({lat: position.coords.latitude,lng: position.coords.longitude}, 16)
+        }
+        getLocation()
+
+        ////set icons 
+        let oldIcon = L.icon({
+            iconUrl: "./imgs/marker-icon.png",
+            shadowSize: [50, 64], // size of the shadow
+            shadowAnchor: [4, 62], // the same for the shadow
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+        });
+
+
+        ///////display the footer 
+        document.querySelector("#footer-di").addEventListener("click", (e)=>{
+            e.target.classList.toggle("on")
+            if(e.target.classList.contains("on")){
+                document.querySelector("footer").style.display = 'block'
+            }else{
+                document.querySelector("footer").style.display = 'none'
+            }
+        })
+
+
+
+
+
+    ////// ui-js-data
+    // ranking options
+        function ranking(based, order){
+
+            // restructure the accounts array
+        //label the current account to be green 
+    
+        let intendedOrder = []
+        let orderedUserElements
+        let orderedteamElements
+    
+        if(based == 'total'){
+            if(order == 'de'){
+                // decending order 
+                intendedOrder = accountsList.sort((a, b) => { return (b.votes.length+b.addedRoutes.length)-(a.votes.length +a.addedRoutes.length)}) 
+            }else{
+                //acending order 
+                intendedOrder = accountsList.sort((a, b) => { return (a.votes.length +a.addedRoutes.length)-(b.votes.length+b.addedRoutes.length)})
+            }
+        }else if(based == 'addedRoutes'){
+            if(order == 'de'){
+                intendedOrder = accountsList.sort((a,b)=>{return b.addedRoutes.length - a.addedRoutes.length})
+            }else{
+                intendedOrder = accountsList.sort((a,b)=>{return a.addedRoutes.length - b.addedRoutes.length})
+            }
+    
+        }else if(based == 'votes'){
+            if(order == 'de'){
+                intendedOrder = accountsList.sort((a,b)=>{return b.votes.length - a.votes.length})
+            }else{
+                intendedOrder = accountsList.sort((a,b)=>{return a.votes.length - b.votes.length})
+            }
+    
+        }
+        // make the dom
+        let currentUserName 
+        dbUser?currentUserName=dbUser.userName:null
+    
+        let userCounter= 1
+        orderedUserElements = `${intendedOrder.map((account, index)=>{
+            if(account.type == 'user'){return`
+    <div class="rankedAccount" ${account.userName == currentUserName?'id="#me" style="background-color: #29D659"':''}>
+        <span class="ranking">${userCounter++}</span>
+            <a href=' http://${window.location.host+'/profile/'+ account.userName} '> <b style='color: white'> 
+        <div class="account">
+            <img class="accountImg" style="background-image: url('${account.img}');">
+            <h3 class="accountUsername ranked">${account.userName}</h3>
+        </div>
+            
+            </b> </a>
+    
+    
+        <h3 class="addedRoutes">${account.addedRoutes.length}</h3>
+        <h3 class="votes">${account.votes.length}</h3>
+        <h3 class="total">${account.addedRoutes.length+account.votes.length}</h3>
+    </div>
+        `}
+    })}`
+    
+    
+            let teamCounter = 1
+        orderedteamElements = `${intendedOrder.map((account, index)=>{
+            if(account.type == 'team'){return`
+    <div class="rankedAccount" ${account.userName == currentUserName?'style="background-color: #29D659"':''}>
+        <span class="ranking">${teamCounter++}</span>
+        <div class="account">
+            <img class="accountImg" style="background-image: url('${account.img}');">
+            <h3 class="accountUsername ranked">${account.userName}</h3>
+        </div>
+    
+        <h3 class="addedRoutes">${account.addedRoutes.length}</h3>
+        <h3 class="votes">${account.votes.length}</h3>
+        <h3 class="total">${account.addedRoutes.length+account.votes.length}</h3>
+    </div>
+        `}
+            })}`
+    
+        console.log('intended order',intendedOrder)
+        document.querySelector('#usersRanking').innerHTML = orderedUserElements.replaceAll(',', '')
+        document.querySelector('#teamsRanking').innerHTML = orderedteamElements.replaceAll(',', '')
+    }
+    
+totalSorting.addEventListener('click', (ev)=>{
+    ev.target.classList.toggle('on')
+    ev.target.classList.contains('on')?ranking('total', 'ac'):ranking('total', 'de')
+})
+addedRoutesSorting.addEventListener('click', (ev)=>{
+    ev.target.classList.toggle('on')
+    ev.target.classList.contains('on')?ranking('addedRoutes', 'ac'):ranking('addedRoutes', 'de')
+})
+votesSorting.addEventListener('click', (ev)=>{
+    ev.target.classList.toggle('on')
+    ev.target.classList.contains('on')?ranking('votes', 'ac'):ranking('votes', 'de')
+})
+
+
+
+
+
+
+
+
+
+
+
+
+        //////////get data 
+
+        let hoveredRoute 
+        let hoveredPoint1
+        let hoveredPoint2
+
+        let routes 
+        let currentRouteId
+
+        window.onload = async () => {
+
+            if(window.location.href.includes('location')){
+                console.log('contains temp pin', window.location.href.split('/'))
+
+                // make the pin
+                let currentPin = L.marker({
+            lat: window.location.href.split('/')[window.location.href.split('/').length-2].split(',')[0],
+            lng: window.location.href.split('/')[window.location.href.split('/').length-2].split(',')[1]
+            }, {icon: redPinIcon}).addTo(map)
+
+                // flyto it 
+                console.log(currentPin)
+                map.flyTo(currentPin._latlng, 16)
+
+            }
+
+            //////get api key 
+            // let rApiKey = await fetch("/map-api-key")
+            // let apiKey = await rApiKey.json()
+            let apiKey = 'pk.eyJ1IjoiYWxmcmVkMjAxNiIsImEiOiJja2RoMHkyd2wwdnZjMnJ0MTJwbnVmeng5In0.E4QbAFjiWLY8k3AFhDtErA'
+            
+            L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+                maxZoom: 18,
+                id: 'mapbox/streets-v11',
+                tileSize: 512,
+                zoomOffset: -1,
+                accessToken: apiKey
+            }).addTo(map);
+
+
+            ///////getting routes 
+
+            // let routes 
+            await getDocs(collection(bygreenDb, 'routes')).then((data)=>{
+            let docs = []
+                data.docs.forEach(doc=>{
+                    docs.push({...doc.data(), id: doc.id})
+                })
+                routes = docs
+                console.log(docs)
+
+                document.querySelector('#addedRoutesCounter').textContent = routes.length
+
+                document.querySelector('#sendingDataMessage').style.display = 'none'
+            }).catch(err=>console.log(err.message))
+
+
+            console.log("get routes; ", routes)
+
+            // document.querySelector("b").textContent = routes.length
+
+            ///deploy them; store
+            deployRoutes(routes)
+        }
+
+
+        function deployRoutes(ev){
+            Object.values(ev).forEach(async e => { 
+
+                /////content 
+                let voteBtns = document.createElement('div')
+                let routeName = document.createElement('h3')
+                e.name?routeName.textContent = e.name:routeName.textContent = 'اسم الخط' 
+
+                // upvote btn
+                let upvoteBtn = document.createElement("button")
+                upvoteBtn.textContent = 'صحيح'
+                upvoteBtn.classList.add("upvoteBtn")
+                
+                upvoteBtn.addEventListener('click', (ev)=>{
+                    downvoteBtn.classList.contains('voted')?downvoteBtn.classList.remove('voted'):null
+                    ev.target.classList.toggle('voted')
+                    if(ev.target.classList.contains('voted')){
+                        sureBtn.removeAttribute('disabled')
+                    }else{
+                        sureBtn.setAttribute('disabled', true)
+                    }
+
+                })
+
+                // downvote btn
+                let downvoteBtn = document.createElement("button")
+                downvoteBtn.textContent = 'خاطئ'
+                downvoteBtn.classList.add("downvoteBtn")
+                // if(currentUser){
+                //     e.downvotes.includes(currentUser)?downvoteBtn.style.border = "2px solid blue":null
+                // }
+
+                downvoteBtn.addEventListener('click', (ev)=>{
+                    upvoteBtn.classList.contains('voted')?upvoteBtn.classList.remove('voted'):null
+                    ev.target.classList.toggle('voted')
+                    if(ev.target.classList.contains('voted')){
+                        sureBtn.removeAttribute('disabled')
+                    }else{
+                        sureBtn.setAttribute('disabled', true)
+                    }
+                })
+
+                let sureDiv = document.createElement('div')
+                let sureBtn = document.createElement('button')
+                sureBtn.textContent = 'متأكد'
+                sureBtn.classList.add('sureBtn')
+                sureBtn.setAttribute('disabled', true)
+                sureBtn.addEventListener('click', (ev)=>{
+
+                    console.log(ev.target,ev.target.parentElement.parentElement,currentRouteId)
+
+                    // check what button choosed 
+                    if(ev.target.parentElement.parentElement.querySelector('.upvoteBtn').classList.contains('voted')){
+                        updateDoc(doc(bygreenDb, 'routes', currentRouteId), {upvotes: arrayUnion(dbUser.userName)}).then(()=>{
+                            console.log('voted')
+                            updateDoc(doc(bygreenDb, 'users', dbUser.id), {votes: arrayUnion(currentRouteId)})
+                            console.log('record the vote')
+                        })
+                    }else if(ev.target.parentElement.parentElement.querySelector('.downvoteBtn').classList.contains('voted')){
+                        updateDoc(doc(bygreenDb, 'routes', currentRouteId), {downvotes: arrayUnion(dbUser.userName)}).then(()=>console.log('voted'))
+                    }
+
+                    upvoteBtn.setAttribute('disabled', true)
+                    downvoteBtn.setAttribute('disabled', true)
+                    ev.target.setAttribute('disabled', true)
+                })
+                sureDiv.append(sureBtn)
+
+
+                /////insert
+                voteBtns.append(routeName, upvoteBtn, downvoteBtn, sureDiv)
+                    let routeObject = L.polyline(e.path).bindPopup(voteBtns).addTo(map)
+
+                    // routeObject.name = e.name
+                    e.point1?L.circle(e.path[0],{radius: 300}).addTo(map):null
+                    e.point2?L.circle(e.path[e.path.length-1],{radius: 300}).addTo(map):null 
+                    
+                    routeObject.upvotes = e.upvotes
+                    routeObject.downvotes = e.downvotes
+                    routeObject.id = e.id
+                    routeObject.point1 = e.point1
+                    routeObject.point2 = e.point2
+                    
+                /////content
+                    ////////////if logged then allow to vote; 
+                    routeObject.addEventListener('click', (ev)=>{
+                        console.log('click on route', ev.target)
+
+                        currentRouteId = e.id
+
+                        ////////mobile; change color 
+                        routesObjects.forEach(e=>{e.setStyle({color: "#3388FF", opacity: .6})})
+                        hoveredRoute?map.removeLayer(hoveredRoute):null
+                        hoveredRoute = L.polyline(ev.target._latlngs, {interactive: false})
+                        hoveredRoute.addTo(map)
+                        hoveredRoute.setStyle({color:"#28a84c", opacity: 1})
+
+
+                        if(dbUser){
+                            if(ev.target.upvotes || ev.target.downvotes){ ///temp
+                                console.log('available votes options')
+                                if(ev.target.upvotes.includes(dbUser.userName)){
+                                    ev.target._popup._content.querySelector('.upvoteBtn').style.border = "2px solid blue"
+
+                                    ev.target._popup._content.querySelector('.upvoteBtn').setAttribute('disabled', true)
+                                    ev.target._popup._content.querySelector('.downvoteBtn').setAttribute('disabled', true)
+                                    // downvoteBtn.setAttribute('disabled', true)
+        
+                                }else if(ev.target.downvotes.includes(dbUser.userName)){
+                                    ev.target._popup._content.querySelector('.downvoteBtn').style.border = "2px solid blue"
+
+                                    ev.target._popup._content.querySelector('.downvoteBtn').setAttribute('disabled', true)
+                                    ev.target._popup._content.querySelector('.upvoteBtn').setAttribute('disabled', true)
+                                }
+                            }else{
+                                console.log('no upvotes option')
+                            }
+
+                        }else{
+                            // no account
+                                // display; have to login to vote 
+
+                            ev.target._popup._content.querySelector('.upvoteBtn').setAttribute('disabled', true)
+                                    ev.target._popup._content.querySelector('.downvoteBtn').setAttribute('disabled', true)
+                                    ev.target._popup._content.append('انشئ حساب للتصويت')
+                        }
+
+                        e.upvotes?console.log('upvotes', e.upvotes):null
+                        e.downvotes?console.log('downvotes', e.downvotes):null
+                    })
+
+                routesObjects.push(routeObject)
+
+                routeObject.addEventListener("mouseover", (route)=>{
+
+                    /// method 1; make route to display over all then to delete
+                    /// it or replace it and to set it interactive false to
+                    /// click over it 
+
+                        // console.log(route.target)
+                        routesObjects.forEach(e=>{e.setStyle({color: "#3388FF", opacity: .6})})
+
+                        hoveredRoute?map.removeLayer(hoveredRoute):null
+                        hoveredPoint1?map.removeLayer(hoveredPoint1):null
+                        hoveredPoint2?map.removeLayer(hoveredPoint2):null
+
+
+                        hoveredRoute = L.polyline(route.target._latlngs, {color:"#28a84c", opacity: 1,interactive: false}).addTo(map)
+                        // console.log(route.target)
+                        route.target.point1?hoveredPoint1 = L.circle(route.target._latlngs[0],{radius:300 ,color:"#28a84c", opacity: 1,interactive: false}).addTo(map):null
+
+                        route.target.point2?hoveredPoint2 = L.circle(route.target._latlngs[route.target._latlngs.length-1], {radius:300, color:"#28a84c", opacity: 1,interactive: false}).addTo(map):null
+                        // hoveredRoute.addTo(map)
+                        // hoveredRoute.setStyle({color:"#28a84c", opacity: 1})
+                        // hoveredRoute.setStyle({color:"red", fillColor: "red"})
+                        // routesObjects.push(newRoute)
+
+
+
+                    // method 2; change opacity and color 
+
+                    // routesObjects.forEach(e=>{e.setStyle({opacity: 0.7, weight: 3, color: "#3388FF", fillColor: "#3388FF"})})
+                    // route.target.setStyle({opacity: 1, weight: 5, color:"#28a84c", fillColor: "#28a84c"})
+                })
+            })
+        }
+
+
+        map.on('zoomend', function () {
+            // let currentZoom = map.getZoom();
+            console.log('current zoom;',map.getZoom()  , map.getBounds())
+            routesObjects.forEach(route=>{
+            if(map.getZoom() == 10){
+                route.setStyle({weight: 5})
+            }else if(map.getZoom() == 11){
+                route.setStyle({weight: 10})
+            }else if(map.getZoom() == 12){
+                route.setStyle({weight: 15})
+            }else if(map.getZoom() == 13){
+                route.setStyle({weight: 20})
+            }else if(map.getZoom() == 14){
+                route.setStyle({weight: 25})
+            }
+            })
+        });
+
+
+        /////////////send data 
+
+        /////containers; 
+        let routesObjects = [] ///to hover and change color; check more about
+        let markers = [] /// list of the labels object
+        //path 
+        let path = [] ///path points
+        let currentPath = [] //path object
+
+        //circles
+        let point1 
+        let point2 
+
+
+        ////collect (get) data 
+
+        let addmode = document.querySelector("#addmode")
+        addmode.addEventListener("click", (e)=>{
+            addmode.classList.toggle("on")
+            if(addmode.classList.contains('on')){
+            addmode.style.backgroundColor = '#df2727'
+
+            ////delete all routes 
+            map.removeLayer(hoveredRoute)
+            routesObjects.forEach(ee=>{
+                map.removeLayer(ee)
+            })
+            }else{
+
+                deployRoutes(routes)
+                addmode.style.backgroundColor = '#54db7b'
+            }
+        })
+
+        let tempMarker 
+
+        // make the main route
+        map.addEventListener('click', function (ev) {
+            if(addmode.classList.contains("on")){
+                /////////disable all routes 
+                routesObjects.forEach(ee=>{ee.setStyle({opacity:0, interactive: false})})
+                console.log(routesObjects)
+
+                ////get data 
+                let latlng = map.mouseEventToLatLng(ev.originalEvent);
+                console.log(latlng)
+
+                ////make 
+                let m = L.marker(latlng, {
+                    icon: oldIcon
+                }).addTo(map);
+                markers.push(m) 
+
+
+                ////content; no need; current label ??
+
+                /////insert 
+                ////js 
+                path.push(latlng)
+                ////ui 
+                currentPath != 0 ? map.removeLayer(currentPath) : null
+                currentPath = L.polyline(path).setStyle({color: "red"}).addTo(map)
+            }else{
+
+                // add direct pin and link to share
+                tempMarker?map.removeLayer(tempMarker):console.log('not removed')
+                console.log(map.mouseEventToLatLng(ev.originalEvent))
+
+                tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent)).bindPopup(`link; <br><a href='${window.location.href+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}'>${window.location.hostname+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}</a>
+                `).addTo(map)
+                // routesObjects.forEach(ee=>{ee.setStyle({opacity: 1,interactive: true})})
+            }
+        });
+
+
+        /////adding points
+
+        document.querySelector("#point1").addEventListener('click', (e)=>{
+            e.target.classList.toggle("on")
+            if(e.target.classList.contains('on')){
+                // get current making route; 
+                console.log(currentPath._latlngs[0])
+                point1 = L.circle(currentPath._latlngs[0], {radius: 600, color: 'red'}).addTo(map)
+                e.target.style.background = '#ff2a2a'
+            }else{
+                // point1.removeLayer(map)/
+                map.removeLayer(point1)
+                e.target.style.background = '#1bf057'
+            }
+        })
+
+        document.querySelector("#point2").addEventListener('click', (e)=>{
+
+            e.target.classList.toggle("on")
+            if(e.target.classList.contains('on')){
+                // get current making route; 
+                console.log(currentPath._latlngs[currentPath._latlngs.length - 1])
+                point2 = L.circle(currentPath._latlngs[currentPath._latlngs.length - 1], {radius: 600, color: 'red'}).addTo(map)
+                e.target.style.background = '#ff2a2a'
+            }else{
+                // point1.removeLayer(map)/
+                map.removeLayer(point2)
+                e.target.style.background = '#1bf057'
+            }
+
+        })
+
+
+        ////cencel step
+        let cancelStep = document.querySelector("#cancel-step")
+        cancelStep.addEventListener("click", () => {
+
+
+            //ui 
+
+            map.removeLayer(markers[markers.length - 1])
+
+            //data 
+            markers.pop()
+
+            path.pop()
+            // points.pop()
+            map.removeLayer(currentPath)
+            currentPath = L.polyline(path).addTo(map)
+
+        })
+        
+        //cancel route
+        let cancelRoute = document.querySelector("#cancel-route")
+        cancelRoute.addEventListener("click", () => {
+            //data 
+
+            path = []
+            map.removeLayer(currentPath)
+            currentPath = undefined
+            console.log(currentPath)
+
+            markers.forEach(e => map.removeLayer(e))
+            markers =[]
+            console.log(markers)
+
+        })
+
+
+
+
+
+
+        ///////////sending 
+
+        document.querySelector("#send").addEventListener("click", () => {
+
+            // if logged send the username with it; 
+            // check if data; may make it only available when data set; 
+            // make object; 
+            let routeToSend = {}
+            if(currentPath[0] || document.querySelector('#routeName').value){ /////available data to send; 
+                // routeToSend.path = currentPath._latlngs 
+                document.querySelector('#sendingDataMessage').textContent = 'sending'
+                document.querySelector('#sendingDataMessage').style.display = 'block'
+                
+                console.log(currentPath)
+                let validRoute = []
+                // let notvalidRoute = []
+                // currentPath._latlngs.forEach(e=>validRoute.push(e))
+                Object.values(currentPath._latlngs).forEach(e=>validRoute.push({lng: e.lng,lat: e.lat}))
+                routeToSend.path = validRoute
+                routeToSend.name = document.querySelector("#routeName").value
+                point1?routeToSend.point1 = true:routeToSend.point1 = false
+                point2?routeToSend.point2 = true:routeToSend.point2 = false
+                routeToSend.upvotes = []
+                routeToSend.downvotes = []
+                // currentUser?routeToSend.insertedBy = currentUser.email:routeToSend.insertedBy = null
+
+                console.log(routeToSend, typeof routeToSend.route, typeof notvalidRoute)
+
+                //////send; 
+                addDoc(collection(bygreenDb, 'unroutes'), routeToSend).then(e=>{
+                    document.querySelector('#sendingDataMessage').textContent = 'sent'
+                    location.reload()
+
+                    setTimeout(() => {
+                        document.querySelector('#sendingDataMessage').style.display = 'none'
+                    }, 1000);
+
+                })
+            }else{
+                console.log('set the rest data')
+                document.querySelector("#errorMessage").textContent = 'اكمل ملئ البيانات و اضافة مسار كامل'
+                document.querySelector("#errorMessage").style.display='block'
+
+                setTimeout(() => {
+                    document.querySelector("#errorMessage").textContent = ''
+                    document.querySelector("#errorMessage").style.display='none'
+                }, 2000);
+            }
+    })
+
+
+
+
+        //////////// test code; 
+
+        window.onclick = ()=>{
+            console.log(currentPath)
+            // console.log(routesObjects)
+        }
+
+
+
+
+    </script>
+
+</body>
+
+</html>
