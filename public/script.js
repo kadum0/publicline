@@ -397,9 +397,10 @@ votesSorting.addEventListener('click', (ev)=>{
         let currentRouteId
 
         window.onload = async () => {
+            console.log( ',.......',window.location)
 
             if(window.location.href.includes('location')){
-                console.log('contains temp pin', window.location.href.split('/'))
+                console.log('contains temp pin', window.location.href.indexOf('location'), window.location.href.slice(0, window.location.href.indexOf('location')))
 
                 // make the pin
                 let currentPin = L.marker({
@@ -708,8 +709,15 @@ votesSorting.addEventListener('click', (ev)=>{
                 tempMarker?map.removeLayer(tempMarker):console.log('not removed')
                 console.log(map.mouseEventToLatLng(ev.originalEvent))
 
-                tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent)).bindPopup(`link; <br><a href='${window.location.href+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}'>${window.location.hostname+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}</a>
-                `).addTo(map)
+                if(window.location.href.includes('location')){
+                    tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent)).bindPopup(`link; <br><a href='${window.location.href.slice(0, window.location.href.indexOf('location'))+'location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}'>${window.location.href.slice(0, window.location.href.indexOf('location'))+'location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}</a>`).addTo(map)
+                    
+                }else{
+                    tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent)).bindPopup(`link; <br><a href='${window.location.hostname+'location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}'>${window.location.hostname+'location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}</a>`).addTo(map)
+
+                }
+
+                // window.location.hostname+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng
                 // routesObjects.forEach(ee=>{ee.setStyle({opacity: 1,interactive: true})})
             }
         });
