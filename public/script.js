@@ -437,6 +437,9 @@ votesSorting.addEventListener('click', (ev)=>{
                     docs.push({...doc.data(), id: doc.id})
                 })
                 routes = docs
+
+                navigator.onLine?localStorage.setItem('routes', JSON.stringify(routes)):routes = JSON.parse(localStorage.getItem("routes") || "[]")
+
                 console.log(docs)
 
                 document.querySelector('#addedRoutesCounter').textContent = routes.length
