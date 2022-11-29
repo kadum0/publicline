@@ -6,11 +6,16 @@
 header{
     height: 3rem;
     background: #29D659;
+    background: #1a1a1a;
+    background-image: linear-gradient(135deg, #1a1a1a, #383838);
+    border-bottom: #1bf057 2px solid;
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
     padding: 0 2rem;
 }
+
 .logo div {
     height: 30%;
     width: 75%;
