@@ -675,6 +675,8 @@ votesSorting.addEventListener('click', (ev)=>{
             }
         })
 
+
+        document.querySelector('#makeLocLink').addEventListener('click', (ev)=>{ev.target.classList.toggle('on')})
         let tempMarker 
 
         // make the main route
@@ -705,20 +707,20 @@ votesSorting.addEventListener('click', (ev)=>{
                 currentPath = L.polyline(path).setStyle({color: "red"}).addTo(map)
             }else{
 
+                if(document.querySelector('#makeLocLink').classList.contains("on")){
+
                 // add direct pin and link to share
-                tempMarker?map.removeLayer(tempMarker):console.log('not removed')
-                console.log(map.mouseEventToLatLng(ev.originalEvent))
+                tempMarker?map.removeLayer(tempMarker):null
 
                 if(window.location.href.includes('location')){
                     tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent)).bindPopup(`link; <br><a href='${window.location.href.slice(0, window.location.href.indexOf('location'))+'location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/'>${window.location.href.slice(0, window.location.href.indexOf('location'))+'location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/</a>`).addTo(map)
                     
                 }else{
                     tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent)).bindPopup(`link; <br><a href='${window.location.hostname+'location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/'>${window.location.hostname+'location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/</a>`).addTo(map)
-
                 }
-
-                // window.location.hostname+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng
-                // routesObjects.forEach(ee=>{ee.setStyle({opacity: 1,interactive: true})})
+            }else{
+                tempMarker?map.removeLayer(tempMarker):null
+            }
             }
         });
 
