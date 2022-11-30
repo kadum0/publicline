@@ -664,7 +664,8 @@ votesSorting.addEventListener('click', (ev)=>{
         addmode.addEventListener("click", (e)=>{
             addmode.classList.toggle("on")
             if(addmode.classList.contains('on')){
-            addmode.style.backgroundColor = '#df2727'
+            // addmode.style.backgroundColor = '#df2727'
+            document.querySelector('#oBtns').style.display='flex'
 
             ////delete all routes 
             map.removeLayer(hoveredRoute)
@@ -674,7 +675,9 @@ votesSorting.addEventListener('click', (ev)=>{
             }else{
 
                 deployRoutes(routes)
-                addmode.style.backgroundColor = '#54db7b'
+                // addmode.style.backgroundColor = '#54db7b'
+                document.querySelector('#oBtns').style.display='none'
+
             }
         })
 

@@ -112,9 +112,6 @@ border: 1px solid rgba(255, 255, 255, 0.3);
     background-repeat: no-repeat;
     font-size: 1.3rem;
     font-weight: bold;
-    /* height: 2.2rem; */
-    /* width: 2.2rem; */
-    /* margin: auto; */
 }
 
 #send{
@@ -169,6 +166,14 @@ border: 1px solid rgba(255, 255, 255, 0.3);
 }
 .btns button{
     font-weight: bold;
+}
+#oBtns{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: .2rem;
+    display: none;
 }
 
 #makeLocLink{
@@ -585,6 +590,9 @@ label:hover{
     footer .info p{
         line-height: auto;
         margin: auto;
+    }
+    .box{
+        padding: .2rem;
     }
 }
 
