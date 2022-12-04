@@ -673,6 +673,7 @@ votesSorting.addEventListener('click', (ev)=>{
                 map.removeLayer(ee)
             })
             }else{
+            
 
                 deployRoutes(routes)
                 // addmode.style.backgroundColor = '#54db7b'
