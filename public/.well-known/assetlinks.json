@@ -1,0 +1,7 @@
+
+[{
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target" : { "namespace": "android_app", "package_name": "bygreen-twa",
+                 "sha256_cert_fingerprints": ["SHA256: 20:D1:EA:14:7D:EC:68:76:5F:E5:4D:55:BA:5D:E5:44:AA:72:DC:18:9B:AB:6C:7C:3E:A9:BE:17:83:65:B1:CA"] }
+  }]
+
