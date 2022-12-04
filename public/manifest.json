@@ -29,7 +29,7 @@
 ],
 "theme_color": "#27F161", 
 "background_color": "#27F161", 
-"start_url": "/publicline/home",
+"start_url": "/publicline/public",
 "display": "standalone",
 "orientation": "portrait"
 }
