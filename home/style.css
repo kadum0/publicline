@@ -591,6 +591,10 @@ label:hover{
     .box{
         padding: .2rem;
     }
+    #footer-di{
+        font-size: 2rem;
+        padding: .3rem;
+    }
 }
 
 
