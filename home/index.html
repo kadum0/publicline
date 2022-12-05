@@ -14,17 +14,14 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
         integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
         crossorigin=""></script>
-
-    <!-- searh box -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-search/3.0.2/leaflet-search.src.js"
-        integrity="sha512-V+GL/y/SDxveIQvxnw71JKEPqV2N+RYrUlf6os3Ru31Yhnv2giUsPadRuFtgmIipiXFBc+nCGMHPUJQc6uxxOA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
-
     <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 
+
+    <link rel="icon" href="/imgs/favicon.ico?" type="image/x-icon">
     <link rel="stylesheet" href="./style.css">
     <link rel="manifest" href="./manifest.json">
+
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
@@ -48,6 +45,7 @@
                 </a>
             </div>
             <span id="footer-di" class="box">?</span>
+            <a href="/admin" class="box">admin</a>
         </div>
 
         <!-- title -->
@@ -229,7 +227,7 @@
                     <p>email; makeitgreen002@gmail.com</p>
                     <p>email; kadum.jawad@gmail.com</p>
 
-                    <div>
+                    <div class="contact">
                         <a href="https://github.com/kadum2/publicline">
                             <div class="box">source code</div>
                         </a>
