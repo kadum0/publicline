@@ -176,8 +176,8 @@ border: 1px solid rgba(255, 255, 255, 0.3);
 
 #makeLocLink{
     position: absolute;
-    top: 5rem;
-    left: 1rem;
+    top: 5.5rem;
+    left: .1rem;
     z-index: 1002;
 }
 
@@ -195,6 +195,15 @@ border: 1px solid rgba(255, 255, 255, 0.3);
 #errorMessage{
     display: none;
     background: #ff2a2a;
+}
+
+
+#routesToDisplay{
+    z-index: 1002;
+    position: absolute;
+    top: 3.2rem;
+    left: .1rem;
+    font-weight: bold;
 }
 
 /* footer */
@@ -325,9 +334,6 @@ footer *{
 }
 
 .contact:hover, .features:hover, .statics:hover{
-    /* background: #29D659; */
-    /* background: #33a353; */
-    /* background: white; */
     box-shadow: 3px 3px 0px 0px  #29D659;
 }
 .contact img, .features img, .statics img{
@@ -417,6 +423,10 @@ label:hover{
     transition: .1s linear;
     cursor: pointer;
 }
+/* main .box{
+    background: #1a1a1a;
+    color: white;
+} */
 .box:hover{
     background-color: #33a353;
     border-radius: .7rem;
@@ -444,12 +454,24 @@ label:hover{
 
 
 .on{
-    background: #1b1b1b;
-    color: white;
+    /* background: #1b1b1b; */
+    /* color: white; */
+    background: #1bf057;
+    /* color: red; */
 }
 .on:hover{
     background: #333333;
+    /* background: #df2727; */
+    background: #33a353;
 }
+#displayCompletedRoutes, #displayUncompletedRoutes{
+    padding: .2rem;
+    border-radius: .2rem;
+    /* color: black;
+    background: #1a1a1a; */
+}
+
+
 
 .red {
     background: #ff2a2a;

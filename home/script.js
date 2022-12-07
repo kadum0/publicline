@@ -377,8 +377,76 @@ votesSorting.addEventListener('click', (ev)=>{
 })
 
 
+// display routes buttons
+displayCompletedRoutes.addEventListener('click', (ev)=>{
+    console.log("display completed routes ")
+    ev.target.classList.toggle('on')
+    if(ev.target.classList.contains('on')){
+        console.log(completedRoutes, completedRoutesObjects, circlesObjects)
+        completedRoutesObjects.forEach(routeObj=>{
+
+            circlesObjects.forEach(circleObj=>{
+                if(JSON.stringify(circleObj._latlng) == JSON.stringify(routeObj._latlngs[0]) || JSON.stringify(circleObj._latlng) == JSON.stringify(routeObj._latlngs[routeObj._latlngs.length-1])){
+                    circleObj.addTo(map)
+                }
+            })
+
+            routeObj.addTo(map)
+        })
+
+    }else{
+        console.log(completedRoutes, completedRoutesObjects, circlesObjects)
 
 
+        completedRoutesObjects.forEach(routeObj=>{
+            circlesObjects.forEach(circleObj=>{
+                console.log(circleObj._latlng, routeObj._latlngs[0], )
+                if(JSON.stringify(circleObj._latlng) == JSON.stringify(routeObj._latlngs[0]) || JSON.stringify(circleObj._latlng) == JSON.stringify(routeObj._latlngs[routeObj._latlngs.length-1])){
+                    console.log('remove circle; ', circleObj)
+                    map.removeLayer(circleObj)
+                }
+            })
+
+            map.removeLayer(routeObj)
+        })
+            
+    }
+})
+
+displayUncompletedRoutes.addEventListener('click', (ev)=>{
+    console.log("display uncompleted routes ")
+    ev.target.classList.toggle('on')
+    if(ev.target.classList.contains('on')){
+        console.log(uncompletedRoutes, uncompletedRoutesObjects, circlesObjects)
+        uncompletedRoutesObjects.forEach(routeObj=>{
+
+            circlesObjects.forEach(circleObj=>{
+                if(JSON.stringify(circleObj._latlng) == JSON.stringify(routeObj._latlngs[0]) || JSON.stringify(circleObj._latlng) == JSON.stringify(routeObj._latlngs[routeObj._latlngs.length-1])){
+                    circleObj.addTo(map)
+                }
+            })
+
+            routeObj.addTo(map)
+        })
+
+    }else{
+        console.log(uncompletedRoutes, uncompletedRoutesObjects, circlesObjects)
+
+
+        uncompletedRoutesObjects.forEach(routeObj=>{
+            circlesObjects.forEach(circleObj=>{
+                console.log(circleObj._latlng, routeObj._latlngs[0], )
+                if(JSON.stringify(circleObj._latlng) == JSON.stringify(routeObj._latlngs[0]) || JSON.stringify(circleObj._latlng) == JSON.stringify(routeObj._latlngs[routeObj._latlngs.length-1])){
+                    console.log('remove circle; ', circleObj)
+                    map.removeLayer(circleObj)
+                }
+            })
+
+            map.removeLayer(routeObj)
+        })
+            
+    }
+})
 
 
 
@@ -395,6 +463,9 @@ votesSorting.addEventListener('click', (ev)=>{
 
         let routes 
         let currentRouteId
+
+        let completedRoutes
+        let uncompletedRoutes
 
         window.onload = async () => {
             console.log( ',.......',window.location)
@@ -450,12 +521,22 @@ votesSorting.addEventListener('click', (ev)=>{
 
             console.log("get routes; ", routes)
 
+            completedRoutes = routes.filter(route=>route.point1 && route.point2)
+            uncompletedRoutes = routes.filter(route=>!route.point1 || !route.point2)
+
+            console.log('completed routes', completedRoutes)
+            console.log('uncompleted routes;', uncompletedRoutes)
+
             // document.querySelector("b").textContent = routes.length
 
             ///deploy them; store
-            deployRoutes(routes)
-        }
+            deployRoutes(completedRoutes)
+            displayCompletedRoutes.classList.toggle('on')
+            deployRoutes(uncompletedRoutes)
+            displayUncompletedRoutes.classList.toggle('on')
 
+            // deployRoutes(routes)
+        }
 
         function deployRoutes(ev){
             Object.values(ev).forEach(async e => { 
@@ -531,8 +612,19 @@ votesSorting.addEventListener('click', (ev)=>{
                     let routeObject = L.polyline(e.path).bindPopup(voteBtns).addTo(map)
 
                     // routeObject.name = e.name
-                    e.point1?L.circle(e.path[0],{radius: 300}).addTo(map):null
-                    e.point2?L.circle(e.path[e.path.length-1],{radius: 300}).addTo(map):null 
+                    e.point1?circlesObjects.push(L.circle(e.path[0],{radius: 300}).addTo(map)):null
+                    e.point2?circlesObjects.push(L.circle(e.path[e.path.length-1],{radius: 300}).addTo(map)):null 
+
+
+                    // if(e.point1 && e.point2){
+                    //     e.point1?completedCircles.push(L.circle(e.path[0],{radius: 300}).addTo(map)):null
+                    //     e.point2?completedCircles.push(L.circle(e.path[e.path.length-1],{radius: 300}).addTo(map)):null 
+    
+                    // }else{
+                    //     e.point1?uncompletedCircles.push(L.circle(e.path[0],{radius: 300}).addTo(map)):null
+                    //     e.point2?uncompletedCircles.push(L.circle(e.path[e.path.length-1],{radius: 300}).addTo(map)):null 
+                    // }
+
                     
                     routeObject.upvotes = e.upvotes
                     routeObject.downvotes = e.downvotes
@@ -621,6 +713,12 @@ votesSorting.addEventListener('click', (ev)=>{
                     // routesObjects.forEach(e=>{e.setStyle({opacity: 0.7, weight: 3, color: "#3388FF", fillColor: "#3388FF"})})
                     // route.target.setStyle({opacity: 1, weight: 5, color:"#28a84c", fillColor: "#28a84c"})
                 })
+
+                if(e.point1 && e.point2){
+                    completedRoutesObjects.push(routeObject)
+                }else if(!e.point1 || !e.point2){
+                    uncompletedRoutesObjects.push(routeObject)
+                }
             })
         }
 
@@ -647,6 +745,14 @@ votesSorting.addEventListener('click', (ev)=>{
         /////////////send data 
 
         /////containers; 
+        let completedRoutesObjects = []
+        let uncompletedRoutesObjects = []
+
+        let circlesObjects = []
+
+        // let completedCircles = []
+        // let uncompletedCircles = []
+
         let routesObjects = [] ///to hover and change color; check more about
         let markers = [] /// list of the labels object
         //path 
@@ -784,21 +890,21 @@ votesSorting.addEventListener('click', (ev)=>{
 
         })
         
-        //cancel route
-        let cancelRoute = document.querySelector("#cancel-route")
-        cancelRoute.addEventListener("click", () => {
-            //data 
+        //cancel route; fix later
+        // let cancelRoute = document.querySelector("#cancel-route")
+        // cancelRoute.addEventListener("click", () => {
+        //     //data 
 
-            path = []
-            map.removeLayer(currentPath)
-            currentPath = undefined
-            console.log(currentPath)
+        //     path = []
+        //     map.removeLayer(currentPath)
+        //     currentPath = undefined
+        //     console.log(currentPath)
 
-            markers.forEach(e => map.removeLayer(e))
-            markers =[]
-            console.log(markers)
+        //     markers.forEach(e => map.removeLayer(e))
+        //     markers =[]
+        //     console.log(markers)
 
-        })
+        // })
 
 
 
