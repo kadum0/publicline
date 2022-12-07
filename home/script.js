@@ -515,6 +515,12 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
 
                 document.querySelector('#addedRoutesCounter').textContent = routes.length
 
+                let votes = 0
+                docs.forEach(route=> votes += (route.upvotes.length + route.downvotes.length))
+                // document.querySelector('#votesCounter').textContent = docs.filter
+                document.querySelector('#votesCounter').innerHTML = votes
+
+
                 document.querySelector('#sendingDataMessage').style.display = 'none'
             }).catch(err=>console.log(err.message))
 
