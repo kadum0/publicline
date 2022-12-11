@@ -38,15 +38,6 @@ let authUser ///auth
 let type
 let accountsList = []
 
-let redPinIcon = L.icon({
-    iconUrl: "./imgs/red-bus-pin.png",
-    shadowSize: [50, 64], // size of the shadow
-    shadowAnchor: [4, 62], // the same for the shadow
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [0, -30] 
-});
-
 
 // getting ???
 await onAuthStateChanged(bygreenAuth, async (user)=>{
@@ -258,8 +249,15 @@ document.querySelector(".auth").addEventListener("click", (e)=>{
         getLocation()
 
         ////set icons 
-        let oldIcon = L.icon({
+        let busPin = L.icon({
             iconUrl: "./imgs/bus-pin.png",
+            shadowSize: [50, 64], // size of the shadow
+            shadowAnchor: [4, 62], // the same for the shadow
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+        });
+        let redBusPin = L.icon({
+            iconUrl: "./imgs/red-bus-pin.png",
             shadowSize: [50, 64], // size of the shadow
             shadowAnchor: [4, 62], // the same for the shadow
             iconSize: [25, 41],
@@ -477,7 +475,7 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
                 let currentPin = L.marker({
             lat: window.location.href.split('/')[window.location.href.split('/').length-2].split(',')[0],
             lng: window.location.href.split('/')[window.location.href.split('/').length-2].split(',')[1]
-            }, {icon: redPinIcon}).addTo(map)
+            }, {icon: redBusPin}).addTo(map)
 
                 // flyto it 
                 console.log(currentPin)
@@ -811,7 +809,7 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
 
                 ////make 
                 let m = L.marker(latlng, {
-                    icon: oldIcon
+                    icon: busPin
                 }).addTo(map);
                 markers.push(m) 
 
@@ -832,10 +830,10 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
                 tempMarker?map.removeLayer(tempMarker):null
 
                 if(window.location.href.includes('location')){
-                    tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent)).bindPopup(`link; <br><a href='${window.location.href.slice(0, window.location.href.indexOf('location'))+'location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/'>${window.location.href.slice(0, window.location.href.indexOf('location'))+'location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/</a>`).addTo(map)
+                    tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: redBusPin}).bindPopup(`link; <br><a href='${window.location.href.slice(0, window.location.href.indexOf('location'))+'location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/'>${window.location.href.slice(0, window.location.href.indexOf('location'))+'location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/</a>`).addTo(map)
                     
                 }else{
-                    tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent)).bindPopup(`link; <br><a href='${window.location.hostname+'location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/'>${window.location.hostname+'location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/</a>`).addTo(map)
+                    tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: redBusPin}).bindPopup(`link; <br><a href='${window.location.hostname+'location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/'>${window.location.hostname+'location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/</a>`).addTo(map)
                 }
             }else{
                 tempMarker?map.removeLayer(tempMarker):null
