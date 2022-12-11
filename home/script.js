@@ -39,7 +39,7 @@ let type
 let accountsList = []
 
 let redPinIcon = L.icon({
-    iconUrl: "./imgs/redpin.png",
+    iconUrl: "./imgs/red-bus-pin.png",
     shadowSize: [50, 64], // size of the shadow
     shadowAnchor: [4, 62], // the same for the shadow
     iconSize: [25, 41],
@@ -239,7 +239,7 @@ document.querySelector(".auth").addEventListener("click", (e)=>{
 
 
 
-    ////ui-js 
+    //////////////////////ui-js 
 
         const map = L.map('map', { zoomControl: false }).setView([33.396600, 44.356579], 9); //leaflet basic map
         L.Control.geocoder().addTo(map);
@@ -259,7 +259,7 @@ document.querySelector(".auth").addEventListener("click", (e)=>{
 
         ////set icons 
         let oldIcon = L.icon({
-            iconUrl: "./imgs/marker-icon.png",
+            iconUrl: "./imgs/bus-pin.png",
             shadowSize: [50, 64], // size of the shadow
             shadowAnchor: [4, 62], // the same for the shadow
             iconSize: [25, 41],
@@ -281,7 +281,7 @@ document.querySelector(".auth").addEventListener("click", (e)=>{
 
 
 
-    ////// ui-js-data
+    ///////////////////////// ui-js-data
     // ranking options
         function ranking(based, order){
 
@@ -455,7 +455,7 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
 
 
 
-        //////////get data 
+        /////////////////////////////////get data 
 
         let hoveredRoute 
         let hoveredPoint1
@@ -618,8 +618,8 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
                     let routeObject = L.polyline(e.path).bindPopup(voteBtns).addTo(map)
 
                     // routeObject.name = e.name
-                    e.point1?circlesObjects.push(L.circle(e.path[0],{radius: 300}).addTo(map)):null
-                    e.point2?circlesObjects.push(L.circle(e.path[e.path.length-1],{radius: 300}).addTo(map)):null 
+                    e.point1?circlesObjects.push(L.circle(e.path[0],{radius: 300, color: '#0171da', background: '#0171da'}).addTo(map)):null
+                    e.point2?circlesObjects.push(L.circle(e.path[e.path.length-1],{radius: 300, color:'#0171da', background:'#0171da'}).addTo(map)):null 
 
 
                     // if(e.point1 && e.point2){
