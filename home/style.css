@@ -596,8 +596,9 @@ label:hover{
     }
 
     .info{
-        /* flex-direction: column; */
+        flex-direction: column;
         gap: 1rem;
+
     }
     .info div{
         width: 100%;
