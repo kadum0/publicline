@@ -455,25 +455,24 @@ label:hover{
 
 
 .on{
-    /* background: #1b1b1b; */
-    /* color: white; */
-    background: #1bf057;
-    /* color: red; */
+    background: #1b1b1b;
+    color: white;
 }
 .on:hover{
     background: #333333;
     /* background: #df2727; */
     background: #33a353;
 }
+
 #displayCompletedRoutes, #displayUncompletedRoutes{
     padding: .2rem;
     border-radius: .2rem;
     /* color: black;
     background: #1a1a1a; */
 }
-
-
-
+.on2{
+    background: #1bf057;
+}
 .red {
     background: #ff2a2a;
 }
