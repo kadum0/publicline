@@ -345,6 +345,7 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
         let hoveredRoute 
         let hoveredPoint1
         let hoveredPoint2
+        let type
 
         let routes 
         let currentRouteId
@@ -444,6 +445,16 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
     
     
                     document.querySelector('#sendingDataMessage').style.display = 'none'
+
+
+                    completedRoutes = routes.filter(route=>route.point1 && route.point2)
+                    uncompletedRoutes = routes.filter(route=>!route.point1 || !route.point2)
+        
+                    deployRoutes(completedRoutes)
+                displayCompletedRoutes.classList.toggle('on2')
+                deployRoutes(uncompletedRoutes)
+                displayUncompletedRoutes.classList.toggle('on2')
+
             })
     
 
@@ -473,19 +484,12 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
     
                 // console.log("get routes; ", routes)
     
-                completedRoutes = routes.filter(route=>route.point1 && route.point2)
-                uncompletedRoutes = routes.filter(route=>!route.point1 || !route.point2)
-    
                 // console.log('completed routes', completedRoutes)
                 // console.log('uncompleted routes;', uncompletedRoutes)
     
                 // document.querySelector("b").textContent = routes.length
     
                 ///deploy them; store
-                deployRoutes(completedRoutes)
-                displayCompletedRoutes.classList.toggle('on')
-                deployRoutes(uncompletedRoutes)
-                displayUncompletedRoutes.classList.toggle('on')
     
                 // deployRoutes(routes)
     
