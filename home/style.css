@@ -412,6 +412,10 @@ label:hover{
     background: #33a353;
 }
 
+input{
+    font-size: 1.5rem;
+}
+
 
 /* shared */
 .logged, .makeprofile, .notlogged{
