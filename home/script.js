@@ -49,7 +49,7 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
 }).addTo(map);
 
         let busPin = L.icon({
-            iconUrl: "./imgs/bus-pin.png",
+            iconUrl: "./imgs/bus-icon.png",
             shadowSize: [50, 64], // size of the shadow
             shadowAnchor: [4, 62], // the same for the shadow
             iconSize: [25, 41],
@@ -57,8 +57,8 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
             popupAnchor: [0, -30] 
 
         });
-        let redBusPin = L.icon({
-            iconUrl: "./imgs/red-bus-pin.png",
+        let redPin = L.icon({
+            iconUrl: "./imgs/label-icon.png",
             shadowSize: [50, 64], // size of the shadow
             shadowAnchor: [4, 62], // the same for the shadow
             iconSize: [25, 41],
@@ -465,7 +465,7 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
                     let currentPin = L.marker({
                 lat: window.location.href.split('/')[window.location.href.split('/').length-2].split(',')[0],
                 lng: window.location.href.split('/')[window.location.href.split('/').length-2].split(',')[1]
-                }, {icon: redBusPin}).addTo(map)
+                }, {icon: redPin}).addTo(map)
     
                     // flyto it 
                     console.log(currentPin)
@@ -555,10 +555,10 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
                 tempMarker?map.removeLayer(tempMarker):null
 
                 if(window.location.href.includes('location')){
-                    tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: redBusPin}).bindPopup(`link; <br><a href='${window.location.href.slice(0, window.location.href.indexOf('location'))+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/'>${window.location.href.slice(0, window.location.href.indexOf('location'))+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/</a>`).addTo(map)
+                    tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: redPin}).bindPopup(`link; <br><a href='${window.location.href.slice(0, window.location.href.indexOf('location'))+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/'>${window.location.href.slice(0, window.location.href.indexOf('location'))+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/</a>`).addTo(map)
                     
                 }else{
-                    tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: redBusPin}).bindPopup(`link; <br><a href='${window.location.hostname+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/'>${window.location.hostname+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/</a>`).addTo(map)
+                    tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: redPin}).bindPopup(`link; <br><a href='${window.location.hostname+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/'>${window.location.hostname+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/</a>`).addTo(map)
                 }
             }else{
                 tempMarker?map.removeLayer(tempMarker):null

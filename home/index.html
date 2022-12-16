@@ -18,7 +18,7 @@
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 
 
-    <link rel="shortcut icon" type="image/jpg" href="imgs/favicon.ico" />
+    <link rel="shortcut icon" type="image/jpg" href="./imgs/publicline-logo.png" />
     <link rel="stylesheet" href="./style.css">
     <link rel="manifest" href="./manifest.json">
 
@@ -81,11 +81,11 @@
                 <p class="cuserbio">bio</p>
                 <div class="cuserpoints" style="display: inline;">
                     <span class="addedRoutes">
-                        <img src="./imgs/addroute-form.png" alt="">
+                        <img src="./imgs/add-route-icon.png" alt="">
                         <span></span>
                     </span>
                     <span class="votes">
-                        <img src="./imgs/vote.png" alt="">
+                        <img src="./imgs/vote-icon.png" alt="">
                         <span></span>
                     </span>
                 </div>
@@ -127,8 +127,9 @@
 
         <!-- collect data; controllers -->
         <div class="btns">
-            <button class="box" id="addmode">
+            <button class="box" id="addmode" style="background-image: url('./imgs/add-route-icon.png');">
                 +
+                <!-- <img src="./imgs/add-route-icon.png" alt=""> -->
             </button>
 
             <div id="oBtns">
@@ -143,7 +144,7 @@
                 <button class="box" id="send"> ارسال المسار</button>
             </div>
         </div>
-        <button id="makeLocLink" class="box"><img src="./imgs/red-bus-pin.png" alt="" style="pointer-events: none;">
+        <button id="makeLocLink" class="box"><img src="./imgs/label-icon.png" alt="" style="pointer-events: none;">
         </button>
 
         <div id="message">
@@ -184,9 +185,10 @@
                     <button id="rankingSorting" class="box">ranking</button>
                     <button id="accountHeader">account</button>
                     <button class="box" id="addedRoutesSorting"
-                        style="background-image: url('./imgs/addroute-form.png');">
+                        style="background-image: url('./imgs/add-route-icon.png');">
                     </button>
-                    <button class="box" id="votesSorting" style="background-image: url('./imgs/vote.png');"></button>
+                    <button class="box" id="votesSorting"
+                        style="background-image: url('./imgs/vote-icon.png');"></button>
                     <button class="box" id="totalSorting">total points</button>
                 </div>
 
@@ -261,15 +263,19 @@
                     <h2>مميزات الموقع: الغرض و الاستخدام </h2>
                     <div class="box">
                         اظهار مسارات النقل العام
-                        <img src="./imgs/choose-display.png" alt="">
+                        <img src="./imgs/f4-choose-display.png" alt="">
                     </div>
                     <div class="box">
                         اضافة مسارات
-                        <img src="./imgs/addroute-form.png" alt="">
+                        <img src="./imgs/f1-add-route-btn.png" alt="">
                     </div>
                     <div class="box">
                         التصويت على المسار
-                        <img src="./imgs/vote.png" alt="">
+                        <img src="./imgs/f2-vote.png" alt="">
+                    </div>
+                    <div class="box">
+                        تحديد موقع جغرافي و الحصول على رابطه
+                        <img src="./imgs/f3-1-make-label.png" alt="">
                     </div>
 
 
@@ -277,9 +283,9 @@
                 <div class="statics">
                     <span class="green"></span>
                     <h2>نتائج المشروع</h2>
-                    <li>عدد المسارات المضافة <img src="./imgs/addroute-form.png" alt=""><b id="addedRoutesCounter"
+                    <li>عدد المسارات المضافة <img src="./imgs/add-route-icon.png" alt=""><b id="addedRoutesCounter"
                             style="color: red;">0</b>
-                    <li>تم التصويت <img src="./imgs/vote.png" alt=""><b id="votesCounter" style="color: red;">0</b>
+                    <li>تم التصويت <img src="./imgs/vote-icon.png" alt=""><b id="votesCounter" style="color: red;">0</b>
                     <li>عدد المستخدمين: <b id="accountsCounter" style="color: red;">0</b></li>
 
                     </li>
