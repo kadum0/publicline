@@ -52,7 +52,7 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
             iconUrl: "./imgs/bus-icon.png",
             shadowSize: [50, 64], // size of the shadow
             shadowAnchor: [4, 62], // the same for the shadow
-            iconSize: [25, 41],
+            iconSize: [30, 30],
             iconAnchor: [12, 41],
             popupAnchor: [0, -30] 
 
@@ -61,7 +61,7 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
             iconUrl: "./imgs/label-icon.png",
             shadowSize: [50, 64], // size of the shadow
             shadowAnchor: [4, 62], // the same for the shadow
-            iconSize: [25, 41],
+            iconSize: [30, 30],
             iconAnchor: [12, 41],
             popupAnchor: [0, -30] 
 
