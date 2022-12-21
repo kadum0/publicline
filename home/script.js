@@ -49,7 +49,7 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
 }).addTo(map);
 
         let busPin = L.icon({
-            iconUrl: "./imgs/bus-icon.png",
+            iconUrl: "./imgs/add-bus-icon.png",
             shadowSize: [50, 64], // size of the shadow
             shadowAnchor: [4, 62], // the same for the shadow
             iconSize: [30, 30],
@@ -563,10 +563,10 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
                                         // github 
                                         if(window.location.href.includes('github')){
 
-                                            tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: redBusPin}).bindPopup(`link; for githun <br><a href='https://kadum2.github.io${'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/'>${'https://kadum2.github.io/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/</a>`).addTo(map)
+                                            tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: redPin}).bindPopup(`link; for github <br><a href='https://kadum2.github.io${'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/'>${'https://kadum2.github.io/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/</a>`).addTo(map)
                     
                                         }else{
-                                            tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: redBusPin}).bindPopup(`link; for others <br><a href='${window.location.hostname+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/'>${window.location.hostname+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/</a>`).addTo(map)
+                                            tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: redPin}).bindPopup(`link; for others <br><a href='${window.location.hostname+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/'>${window.location.hostname+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/</a>`).addTo(map)
                                         }
                     
                 }
