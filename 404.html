@@ -1069,8 +1069,8 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
             popupAnchor: [0, -30] 
 
         });
-        let redBusPin = L.icon({
-            iconUrl: "../../home/imgs/red-bus-pin.png",
+        let redPin = L.icon({
+            iconUrl: "../../home/imgs/red-pin-icon.png",
             shadowSize: [50, 64], // size of the shadow
             shadowAnchor: [4, 62], // the same for the shadow
             iconSize: [25, 41],
@@ -1470,7 +1470,7 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
             })
     
 
-                if(window.location.href.includes('location')){
+        if(window.location.href.includes('location')){
 
                     console.log('contains temp pin', window.location.href.indexOf('location'), window.location.href.slice(0, window.location.href.indexOf('location')))
 
@@ -1484,26 +1484,6 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
                     console.log(currentPin)
                     map.flyTo(currentPin._latlng, 16)
                 }
-    
-                //////get api key 
-                // let rApiKey = await fetch("/map-api-key")
-                // let apiKey = await rApiKey.json()
-
-                ///////getting routes 
-    
-                // let routes 
-            
-    
-                // console.log("get routes; ", routes)
-    
-                // console.log('completed routes', completedRoutes)
-                // console.log('uncompleted routes;', uncompletedRoutes)
-    
-                // document.querySelector("b").textContent = routes.length
-    
-                ///deploy them; store
-    
-                // deployRoutes(routes)
     
         })
 
@@ -1574,7 +1554,7 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
                     // github 
                     if(window.location.href.includes('github')){
 
-                        tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: redPin}).bindPopup(`link; for github <br><a href='https://kadum2.github.io/publicline/${'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/'>${'https://kadum2.github.io/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/</a>`).addTo(map)
+                        tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: redPin}).bindPopup(`link; for github <br><a href='https://kadum2.github.io/publicline/${'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/'>${'https://kadum2.github.io/publicline/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/</a>`).addTo(map)
 
                     }else{
                         tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: redPin}).bindPopup(`link; for others <br><a href='${window.location.hostname+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/'>${window.location.hostname+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/</a>`).addTo(map)
@@ -1636,21 +1616,6 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
 
         })
 
-        //cancel route; fix later
-        // let cancelRoute = document.querySelector("#cancel-route")
-        // cancelRoute.addEventListener("click", () => {
-        //     //data 
-
-        //     path = []
-        //     map.removeLayer(currentPath)
-        //     currentPath = undefined
-        //     console.log(currentPath)
-
-        //     markers.forEach(e => map.removeLayer(e))
-        //     markers =[]
-        //     console.log(markers)
-
-        // })
 
 
 

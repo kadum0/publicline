@@ -33,15 +33,14 @@
 
 <body>
 
+    <!-- 
     <header>
-        <!-- logo -->
         <div class="flex" style="gap: .2rem;">
             <div class="logo box">
                 <a href="https://kadum2.github.io/ivc/">
                     <div class="black"></div>
                     <div class="red"></div>
                     <div class="white"></div>
-                    <!-- <div class="green"></div> -->
                 </a>
             </div>
             <span id="footer-di" class="box">
@@ -50,11 +49,8 @@
             <a href="../admin/index.html" class="box">admin</a>
         </div>
 
-        <!-- title -->
-        <!-- <p>publicline</p> -->
         <h2 id="projectName" class="box"> publicline| الخط العام</h2>
 
-        <!-- auth; auth-di, auth-state -->
         <div id="auth-di" class="auth box">
             <div class="logged" style="height: fit-content;">
                 <div class="flex">
@@ -99,7 +95,6 @@
                     <input type="text" class="pw" placeholder="pw">
                     <button id="registerbtn" class="box">register</button>
                 </div>
-                <!-- <br> -->
                 <div id="signin">
                     <input type="text" class="em" placeholder="em" id="signinUsername">
                     <input type="text" class="pw" placeholder="pw" id="signinUsername">
@@ -118,6 +113,100 @@
 
                 <button id="signoutsebtn">logout</button>
 
+            </div>
+
+        </div>
+
+    </header>
+-->
+
+    <header>
+        <!-- logo -->
+        <div class="links">
+            <a href="https://kadum2.github.io/ivc/" class="logo box">
+                <div class="black"></div>
+                <div class="red"></div>
+                <div class="white"></div>
+                <!-- <div class="green"></div> -->
+            </a>
+
+            <a href="https://kadum2.github.io/publicline/home" class="box">
+                <img src="./imgs/publicline-logo.png" alt="">
+            </a>
+
+
+            <button id="asideDi" class="box">
+                <img src="./imgs/general/hamburger-menu-icon.png" alt="">
+            </button>
+        </div>
+
+
+        <!-- title -->
+        <h2 id="projectName" class="box"> digital volunteer </h2>
+
+        <!-- auth; auth-di, auth-state -->
+        <div id="miniProfileDi" class="box">
+            <div class="logged" style="height: fit-content;">
+                <div class="flex currentAccount">
+                    <img id="currentAccountImgDi">
+                    <p id="currentAccountUsernameDi">username</p>
+                    <p class="teamEle" style="line-height: none; padding:0;
+            color:white; font-size: .8rem;">team</p>
+                </div>
+            </div>
+
+            <div class="notlogged">
+                انشأ حساب
+            </div>
+            <div class="halfLogged">
+                اكمل البيانات
+            </div>
+        </div>
+
+        <div id="miniProfile">
+
+            <div class="logged">
+                <p>حسابك </p>
+                <!-- account link? -->
+                <a class="flex box currentAccount" id="currentAccountLink" href="">
+                    <img id="currentAccountImgMini">
+                    <p id="currentAccountUsernameMini" style="line-height: 0;">username</p>
+                </a>
+                <b>
+                    <p id="currentAccountName"></p>
+                </b>
+                <p id="currentAccountBio">bio</p>
+                <button class="box" id="signoutBtn" style="display: inline;">logout</button>
+            </div>
+            <div class="halfLogged">
+                <p>انت الان مسجل: يجب اكمال البيانات لانشاء حساب </p>
+                <input type="text" id="username" placeholder="username">
+                <input type="text" id="name" placeholder="name">
+                <input type="text" id="bio" placeholder="bio">
+                <label for="userImg" id="userImgUpload" class="box">upload image</label>
+                <input type="file" id="userImg">
+                <button id="makeProfileBtn" class="box">submit</button>
+
+                <button id="halfLoggedSignoutBtn" class="box">logout</button>
+
+            </div>
+
+            <div class="notLogged">
+                <p>تسجيل الدخول: </p>
+                <div id="register">
+                    <input type="text" class="em" placeholder="em">
+                    <input type="text" class="pw" placeholder="pw">
+                    <button id="registerBtn" class="box">register</button>
+                </div>
+                <br>
+                <div id="signin">
+                    <input type="text" class="em" placeholder="em" id="signinUsername">
+                    <input type="text" class="pw" placeholder="pw" id="signinUsername">
+                    <button id="signinBtn" class="box">signin</button>
+                </div>
+                <h3>or</h3>
+                <button id="byGoogle" class="box">register with google <img src="./imgs/general/google-logo.png" alt="">
+                </button>
             </div>
 
         </div>
@@ -146,7 +235,7 @@
                 <button class="box" id="send"> ارسال المسار</button>
             </div>
         </div>
-        <button id="makeLocLink" class="box"><img src="./imgs/label-icon.png" alt="" style="pointer-events: none;">
+        <button id="makeLocLink" class="box"><img src="./imgs/red-pin-icon.png" alt="" style="pointer-events: none;">
         </button>
 
         <div id="message">
@@ -170,20 +259,164 @@
         </div>
     </main>
 
+
+    <aside>
+        <!-- leaderboard -->
+        <!-- <div class="flex"> -->
+        <div class="leaderBoard">
+
+            <div class="rankingSections" style="margin-bottom: 1rem;">
+                <p style="color: white; display: inline;">leaderBoard</p>
+
+                <button id="displayUsersRanking" class="">users</button>
+                <button id="displayteamsRanking" class="">team</button>
+                <button href="#me" class="box">me</button>
+            </div>
+
+            <div class="rankingHeader">
+                <button id="rankingSorting" class="box">المركز</button>
+                <button id="accountHeader" class="box">الحساب</button>
+                <div class="points">
+                    <button class="box" id="addedRoutesSorting"
+                        style="background-image: url('./imgs/add-bus-icon.png');"></button>
+                    <button class="box" id="votesSorting"
+                        style="background-image: url('./imgs/vote-icon.png');"></button>
+                    <button class="box" id="totalSorting">=</button>
+                </div>
+            </div>
+            <br>
+            <div id="usersRanking">
+
+                <!-- prototyped account -->
+                <div class="rankedAccount">
+                    <div class="ranking points">${index+1}</div>
+                    <div class="account flex" style="justify-content: flex-start;">
+                        <img class="accountImg" style="background-image: url('${account.img}');">
+                        <h3 class="accountUsername ranked">${account.userName}</h3>
+                    </div>
+
+                    <div class="publiclinePoints points">${points}</div>
+                    <div class="bygreenPoints points">${points}</div>
+                    <div class="total points">${account.red.length+account.green.length}</div>
+                </div>
+            </div>
+
+            <div id="teamsRanking" style="display: none;">
+                <!-- prototyped account -->
+                <div class="rankedAccount">
+                    <div class="ranking">${index+1}</div>
+                    <div class="account flex" style="justify-content: flex-start;">
+                        <img class="accountImg" style="background-image: url('${account.img}');">
+                        <h3 class="accountUsername ranked">${account.userName}</h3>
+                    </div>
+
+                    <div class="publiclinePoints">${points}</div>
+                    <div class="bygreenPoints">${points}</div>
+                    <div class="total">${account.red.length+account.green.length}</div>
+                </div>
+            </div>
+
+        </div>
+        <!-- </div> -->
+
+
+
+        <footer>
+            <div class="contact">
+                <span class="red logoPart"></span>
+                <h2>تواصل </h2>
+                <span>
+                    <a href="https://www.instagram.com/kadum_0/" target="_blank">
+                        <img src="./imgs/general/instagram-logo.png" alt="">
+                    </a>
+                    <a href="t.me/kadum0" target="_blank">
+                        <img src="./imgs/general/telegram-logo.png" alt="">
+                    </a>
+                    <a href="https://www.github.com/kadum2" target="_blank">
+                        <img src="./imgs/general/github-logo.png" alt="">
+                    </a>
+                </span>
+
+                <p style="line-height: 0;">kadum1230@gmail.com</p>
+                <p style="line-height: 0;">makeitgreen002@gmail.com</p>
+
+            </div>
+            <!-- 
+        <div class="features">
+            <div class="black logoPart"></div>
+
+            <div class="projectStatics">
+                <b>ivc</b>
+                <li>عدد المستخدمين: <img src="./imgs/account-icon.png" alt=""> <b id="accountsCounter">0</b></li>
+                <li>عدد المساهمات: <img src="./imgs/account-icon.png" alt=""> <b id="contriCounter">0</b></li>
+            </div>
+
+        </div>
+-->
+
+            <div class="statics">
+                <div class="green logoPart"></div>
+                <h2>نتائج </h2>
+                <div class="projectsInfo">
+
+                    <div class="projectStatics">
+                        <b>ivc <img src="./imgs/general/ivc-logo.png" alt=""></b>
+                        <li>عدد المستخدمين: <img src="./imgs/general/account-icon.png" alt=""> <b
+                                id="accountsCounter">0</b>
+                        </li>
+                        <li>عدد المساهمات: <img src="./imgs/general/account-icon.png" alt=""> <b
+                                id="contriCounter">0</b>
+                        </li>
+                    </div>
+
+                    <div class="projectStatics">
+                        <b>publicline <img src="./imgs/publicline-logo.png" alt=""></b>
+                        <li>المسارات المضافة <img src="./imgs/add-route-icon.png">
+                            <b id='routesCounter'>0</b>
+                        </li>
+                        <li>تم التصويت: <img src="./imgs/vote-icon.png" alt=""> <b id="votesCounter">0</b></li>
+
+                    </div>
+
+                    <br>
+                    <div class="projectStatics">
+                        <b>bygreen <img src="./imgs/bygreen/bygreen-logo.png" alt=""></b>
+                        <li>تم زراعتها <img src="./imgs/bygreen/green-icon-stroked.png" alt=""><b
+                                id="greenCounter">0</b>
+                        </li>
+                        <li>تحتاج الى زراعة <img src="./imgs/bygreen/red-icon-stroked.png"> <b id="redCounter">0</b>
+                        </li>
+                        <li>الحملات الحالية: <img src="./imgs/bygreen/yellow-icon-stroked.png"> <b
+                                id="yellowCounter">0</b>
+                        </li>
+                        <li>عدد النباتات المزروعة: <img src="./imgs/bygreen/plant-icon.png" alt=""> <b
+                                id="contriCounter">0</b></li>
+                        <li>عدد المشاتل: <img src="./imgs/bygreen/shop-icon.png" alt=""> <b id="shopsCounter">0</b></li>
+                    </div>
+                    <br>
+
+                </div>
+            </div>
+        </footer>
+
+
+
+    </aside>
+
+
+
+    <!-- footer 
+
     <footer>
         <div class="footerflex">
             <div class="leaderBoard">
                 <span style="margin-bottom: 1rem;">
                     <p style="color: white; display: inline;">leaderBoard</p>
-                    <!-- leaderBoard -->
-                    <!-- <button id="displayUsersRanking" class="">users</button>
-                    <button id="displayteamsRanking" class="">team</button> -->
                     <a href="#me">
                         <button class="box">me</button>
                     </a>
                 </span>
                 <div class="rankingHeader">
-                    <!-- <span>none</span> -->
                     <button id="rankingSorting" class="box">ranking</button>
                     <button id="accountHeader">account</button>
                     <button class="box" id="addedRoutesSorting"
@@ -196,7 +429,6 @@
 
                 <div id="usersRanking">
 
-                    <!-- prototyped account -->
 
                     <div class="rankedAccount">
                         <span class="ranking">${index+1}</span>
@@ -213,7 +445,6 @@
                 </div>
 
                 <div id="teamsRanking" style="display: none;">
-                    <!-- prototyped account -->
                     <div class="rankedAccount">
                         <span class="ranking">${index+1}</span>
                         <div class="account">
@@ -245,7 +476,6 @@
                             <img src="./imgs/general/github-logo.png" alt="">
                         </a>
                     </span>
-                    <!-- <p>facebook</p> -->
                     <p>email; makeitgreen002@gmail.com</p>
                     <p>email; kadum.jawad@gmail.com</p>
 
@@ -298,6 +528,9 @@
         </div>
 
     </footer>
+ -->
+
+
     <!-- main script  -->
     <script src="./script.js" type="module"></script>
 
