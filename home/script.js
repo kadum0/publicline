@@ -61,7 +61,7 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
             iconUrl: "./imgs/red-pin-icon.png",
             shadowSize: [50, 64], // size of the shadow
             shadowAnchor: [4, 62], // the same for the shadow
-            iconSize: [30, 30],
+            iconSize: [25, 41],
             iconAnchor: [12, 41],
             popupAnchor: [0, -30] 
 
@@ -322,8 +322,8 @@ document.querySelector("#miniProfileDi").addEventListener("click", (ev)=>{
 })
 
 document.querySelector('#asideDi').addEventListener('click', (ev)=>{
-    ev.target.classList.toggle('on')
-    ev.target.classList.contains('on')?document.querySelector('aside').style.display = 'flex':document.querySelector('aside').style.display = 'none'
+    ev.target.classList.toggle('on2')
+    ev.target.classList.contains('on2')?document.querySelector('aside').style.display = 'flex':document.querySelector('aside').style.display = 'none'
 })
 
 

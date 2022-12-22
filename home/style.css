@@ -35,6 +35,7 @@ header{
 #asideDi{
     padding: .7rem;
     z-index: 1004;
+    
     /* height: 2rem; */
 }
 #asideDi img{
@@ -116,7 +117,7 @@ header{
 
 /* main */
 main{
-    overflow: hidden;
+    overflow-y: hidden;
 }
 
 #map {
@@ -414,7 +415,14 @@ footer{
     color: red;
 }
 .features li{
-    direction: ltr;
+    direction: rtl;
+    background: #1a1a1a;
+    color: white;
+    margin: .1rem;
+    padding: .3rem;
+    border-radius: .3rem;
+    list-style-type: none;
+
 }
 
 /* .features{
