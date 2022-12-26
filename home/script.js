@@ -33,6 +33,12 @@ const bygreenStorage = getStorage(bygreen)
 
 /////////auth state 
 
+let greenColor = '#27F060'
+let darkerGreenColor = '#21C24F'
+
+let blueColor = '#3388FF'
+let darkerBlueColor = '#075FDA'
+
 
 // map configure
 const map = L.map('map', { zoomControl: false }).setView([33.396600, 44.356579], 9); 
@@ -53,7 +59,8 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
             shadowSize: [50, 64], // size of the shadow
             shadowAnchor: [4, 62], // the same for the shadow
             iconSize: [30, 30],
-            iconAnchor: [12, 41],
+            // iconAnchor: [12, 41],
+            iconAnchor: [12, 25],
             popupAnchor: [0, -30] 
 
         });
@@ -81,121 +88,6 @@ const provider = new GoogleAuthProvider()
 
 
 ////////////////////////////////////////////////ui-js
-
-// ///////register 
-// document.querySelector('#registerbtn').addEventListener('click', (ev)=>{
-//     // check if valid data
-
-//     // send 
-//     if(ev.target.parentElement.querySelector(".em").value.length > 0 &&ev.target.parentElement.querySelector(".em").value.length < 20 && ev.target.parentElement.querySelector(".pw").value.length > 0){
-
-//         console.log('make account')
-//         createUserWithEmailAndPassword(bygreenAuth, ev.target.parentElement.querySelector(".em").value, ev.target.parentElement.querySelector(".pw").value).then(cred=>{
-//             console.log(cred)
-//         }).catch(err=>{
-//             console.log(err.message)
-//             document.querySelector('#errors').textContent = err.message
-//             document.querySelector('#errors').style.display = 'block'
-//             setTimeout(() => {
-//                 document.querySelector('#errors').style.display = 'none'
-//             }, 10000);
-//         })
-//     }else{
-
-//     }
-//     // empty 
-//     document.querySelector('#registerUsername').value = ''
-//     document.querySelector('#registerPassword').value = ''
-// })
-
-// //////signin
-// document.querySelector('#signinbtn').addEventListener('click', (ev)=>{
-//     console.log('to sign in')
-//     console.log(ev.target.parentElement)
-//     // console.log('click signin', document.querySelector('#signinUsername').value.length)
-//     // console.log(document.querySelector('#signinUsername').value.length >0)
-
-//     // send 
-//     // if(document.querySelector('#signinUsername').value.length > 0 && document.querySelector('#signinPassword').value.length > 0){
-//         console.log('make account')
-//         signInWithEmailAndPassword(bygreenAuth, ev.target.parentElement.querySelector(".em").value ,ev.target.parentElement.querySelector(".pw").value)
-//     // }else{
-
-//     // }
-//     // empty 
-//     ev.target.parentElement.querySelector(".em").value = ''
-//     ev.target.parentElement.querySelector(".pw").value = ''
-// })
-
-// //////signout 
-// document.querySelector('#signoutbtn').addEventListener('click', ()=>{
-//     signOut(bygreenAuth, (result)=>{console.log(result)})
-// })
-
-///////sign with google
-// document.querySelector('#bygoogle').addEventListener('click', ()=>{
-//     signInWithPopup(bygreenAuth, provider).then((cred)=>console.log(cred))
-
-// })
-
-// //////make profile; 
-// document.querySelector('#makeprofilebtn').addEventListener('click', async (ev)=>{
-//     //////////set user in the users collection user current user uid 
-//     let q = query(collection(bygreenDb, 'users'), where('username', '==', ev.target.parentElement.querySelector('#username').value))
-//     let foundDoc = await getDocs(q)
-//     let found
-
-//     foundDoc.forEach(e=>{
-//         found = doc.data()
-//         console.log(doc.id, doc.data())
-//     })
-//     console.log(foundDoc, found)
-//     if(!found){
-//         console.log('no taken')
-
-//         let fileRef = ref(bygreenStorage, '/userimgs/' + new Date().toISOString().replace(/:/g, '-') +document.querySelector("#userimg").files[0].name.replaceAll(" ","") )
-
-//             uploadBytes(fileRef, document.querySelector("#userimg").files[0]).then(res=>{
-//                 getDownloadURL(res.ref).then(url=>{
-//                     console.log(url)
-//                     let imgUrl = url
-
-//         ///addDoc; add document to a collection; 
-//         setDoc(doc(bygreenDb, 'users', authUser.uid), {
-//             userName: ev.target.parentElement.querySelector('#username').value,
-//             name: ev.target.parentElement.querySelector('#name').value,
-//             bio: ev.target.parentElement.querySelector('#bio').value,
-//             img: imgUrl,
-//             red: [],
-//             green: [],
-//             yellow:[],
-//             addedRoutes: [], 
-//             votes: [],
-//             type: 'user'
-//         }).then(()=>{window.location.reload();}) 
-        
-//         })
-//     })
-
-
-
-//         // setDoc(doc(bygreenDb, 'users', currentUser.uid), {name: ev.target.querySelector('username').value})
-//     }else{
-//         //////////make messaga section to display errors 
-//         console.log('username already taken')
-//     }
-
-// })
-
-// ////authstate; mini profile di
-// document.querySelector(".auth").addEventListener("click", (e)=>{
-//     e.target.classList.toggle('on')
-//     if(e.target.classList.contains('on')){
-//         document.querySelector(".authstate").style.display = 'block'
-//     }else{
-//         document.querySelector(".authstate").style.display = 'none'
-//     }
-// })
 
 
 
@@ -322,8 +214,8 @@ document.querySelector("#miniProfileDi").addEventListener("click", (ev)=>{
 })
 
 document.querySelector('#asideDi').addEventListener('click', (ev)=>{
-    ev.target.classList.toggle('on2')
-    ev.target.classList.contains('on2')?document.querySelector('aside').style.display = 'flex':document.querySelector('aside').style.display = 'none'
+    ev.target.classList.toggle('red')
+    ev.target.classList.contains('red')?document.querySelector('aside').style.display = 'flex':document.querySelector('aside').style.display = 'none'
 })
 
 
@@ -349,19 +241,22 @@ document.querySelector('#asideDi').addEventListener('click', (ev)=>{
 
     document.querySelector('#makeLocLink').addEventListener('click', (ev)=>{ev.target.classList.toggle('on')})
 
-    document.querySelector("#addmode").addEventListener("click", (ev)=>{
+    document.querySelector("#addRouteMode").addEventListener("click", (ev)=>{
             ev.target.classList.toggle("on")
             if(ev.target.classList.contains('on')){
-            document.querySelector('#oBtns').style.display='flex'
+            document.querySelector('#newRouteDetails').style.display='flex'
             ////delete all routes 
             map.removeLayer(hoveredRoute)
-            routesObjects.forEach(ee=>{
-                map.removeLayer(ee)
-            })
+            routesObjects.forEach(route=>map.removeLayer(route))
+            circlesObjects.forEach(circle=>map.removeLayer(circle))
+
+            // routesObjects.forEach(ee=>{ee.setStyle({opacity:0, interactive: false})})
+            // circlesObjects.forEach(ee=>{ee.setStyle({opacity:0, interactive: false})})
+
             }else{
                 deployRoutes(routes)
-                // addmode.style.backgroundColor = '#54db7b'
-                document.querySelector('#oBtns').style.display='none'
+                // addRouteMode.style.backgroundColor = '#54db7b'
+                document.querySelector('#newRouteDetails').style.display='none'
             }
     })
 
@@ -565,7 +460,7 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
                     // document.querySelector('#votesCounter').textContent = docs.filter
                     document.querySelector('#votesCounter').innerHTML = votes
     
-                    document.querySelector('#sendingDataMessage').style.display = 'none'
+                    document.querySelector('#greenMessage').style.display = 'none'
 
 
                     completedRoutes = routes.filter(route=>route.point1 && route.point2)
@@ -578,6 +473,7 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
 
             })
 
+            // data statics 
         getDocs(collection(bygreenDb, 'pins')).then((data)=>{
         let docs = []
             data.docs.forEach(doc=>{
@@ -658,10 +554,12 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
 
         // make the main route
         map.addEventListener('click', function (ev) {
-            if(document.querySelector("#addmode").classList.contains("on")){
+            if(document.querySelector("#addRouteMode").classList.contains("on")){
                 /////////disable all routes 
-                routesObjects.forEach(ee=>{ee.setStyle({opacity:0, interactive: false})})
-                console.log(routesObjects)
+                // routesObjects.forEach(ee=>{ee.setStyle({opacity:0, interactive: false})})
+                // circlesObjects.forEach(ee=>{ee.setStyle({opacity:0, interactive: false})})
+                console.log('routes; ',routesObjects)
+                console.log('circles; ', circlesObjects)
 
                 ////get data 
                 let latlng = map.mouseEventToLatLng(ev.originalEvent);
@@ -693,20 +591,19 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
                     tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: redPin}).bindPopup(`link; <br><a href='${window.location.href.slice(0, window.location.href.indexOf('location'))+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/'>${window.location.href.slice(0, window.location.href.indexOf('location'))+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/</a>`).addTo(map)
                     
                 }else{
-                    // tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: redPin}).bindPopup(`link; <br><a href='${window.location.hostname+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/'>${window.location.hostname+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/</a>`).addTo(map)
 
-                                        // github 
-                                        if(window.location.href.includes('github')){
+                                // github 
+                                if(window.location.href.includes('github')){
 
-                                            tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: redPin}).bindPopup(`link; for github <br><a href='https://kadum2.github.io/publicline${'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/'>${'https://kadum2.github.io/publicline/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/</a>`).addTo(map)
+                                    tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: redPin}).bindPopup(`link; for github <br><a href='https://kadum2.github.io/publicline${'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/'>${'https://kadum2.github.io/publicline/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/</a>`).addTo(map)
                     
-                                        }else{
-                                            tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: redPin}).bindPopup(`link; for others <br><a href='${window.location.hostname+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/'>${window.location.hostname+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/</a>`).addTo(map)
-                                        }
+                                }else{
+                                    tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: redPin}).bindPopup(`link; for others <br><a href='${window.location.hostname+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/'>${window.location.hostname+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/</a>`).addTo(map)
+                                }
                     
-                }
+        }
             }else{
-                tempMarker?map.removeLayer(tempMarker):null
+            tempMarker?map.removeLayer(tempMarker):null
             }
             }
         });
@@ -718,34 +615,32 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
                 // get current making route; 
                 console.log(currentPath._latlngs[0])
                 point1 = L.circle(currentPath._latlngs[0], {radius: 600, color: 'red'}).addTo(map)
-                e.target.style.background = '#ff2a2a'
+                // e.target.style.background = '#ff2a2a'
             }else{
                 // point1.removeLayer(map)/
                 map.removeLayer(point1)
-                e.target.style.background = '#1bf057'
+                // e.target.style.background = '#1bf057'
             }
         })
-        document.querySelector("#point2").addEventListener('click', (e)=>{
 
+        document.querySelector("#point2").addEventListener('click', (e)=>{
             e.target.classList.toggle("on")
             if(e.target.classList.contains('on')){
                 // get current making route; 
                 console.log(currentPath._latlngs[currentPath._latlngs.length - 1])
                 point2 = L.circle(currentPath._latlngs[currentPath._latlngs.length - 1], {radius: 600, color: 'red'}).addTo(map)
-                e.target.style.background = '#ff2a2a'
+                // e.target.style.background = '#ff2a2a'
             }else{
                 // point1.removeLayer(map)/
                 map.removeLayer(point2)
-                e.target.style.background = '#1bf057'
+                // e.target.style.background = '#1bf057'
             }
 
         })
 
         ////cencel step
-        let cancelStep = document.querySelector("#cancel-step")
-        cancelStep.addEventListener("click", () => {
-
-
+        
+        document.querySelector("#cancel-step").addEventListener("click", () => {
             //ui 
 
             map.removeLayer(markers[markers.length - 1])
@@ -756,8 +651,7 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
             path.pop()
             // points.pop()
             map.removeLayer(currentPath)
-            currentPath = L.polyline(path).addTo(map)
-
+            currentPath = L.polyline(path, {color: 'red'}).addTo(map)
         })
 
         //cancel route; fix later
@@ -788,8 +682,8 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
             let routeToSend = {}
             if(currentPath[0] || document.querySelector('#routeName').value){ /////available data to send; 
                 // routeToSend.path = currentPath._latlngs 
-                document.querySelector('#sendingDataMessage').textContent = 'sending'
-                document.querySelector('#sendingDataMessage').style.display = 'block'
+                document.querySelector('#greenMessage').textContent = 'sending'
+                document.querySelector('#greenMessage').style.display = 'block'
                 
                 console.log(currentPath)
                 let validRoute = []
@@ -798,8 +692,8 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
                 Object.values(currentPath._latlngs).forEach(e=>validRoute.push({lng: e.lng,lat: e.lat}))
                 routeToSend.path = validRoute
                 routeToSend.name = document.querySelector("#routeName").value
-                point1?routeToSend.point1 = true:routeToSend.point1 = false
-                point2?routeToSend.point2 = true:routeToSend.point2 = false
+                point1?routeToSend.start = true:routeToSend.start = false
+                point2?routeToSend.end = true:routeToSend.end = false
                 routeToSend.upvotes = []
                 routeToSend.downvotes = []
                 // currentUser?routeToSend.insertedBy = currentUser.email:routeToSend.insertedBy = null
@@ -808,22 +702,22 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
 
                 //////send; 
                 addDoc(collection(bygreenDb, 'unroutes'), routeToSend).then(e=>{
-                    document.querySelector('#sendingDataMessage').textContent = 'sent'
+                    document.querySelector('#greenMessage').textContent = 'sent'
                     location.reload()
 
                     setTimeout(() => {
-                        document.querySelector('#sendingDataMessage').style.display = 'none'
+                        document.querySelector('#greenMessage').style.display = 'none'
                     }, 1000);
 
                 })
             }else{
                 console.log('set the rest data')
-                document.querySelector("#errorMessage").textContent = 'اكمل ملئ البيانات و اضافة مسار كامل'
-                document.querySelector("#errorMessage").style.display='block'
+                document.querySelector("#redMessage").textContent = 'اكمل ملئ البيانات و اضافة مسار كامل'
+                document.querySelector("#redMessage").style.display='block'
 
                 setTimeout(() => {
-                    document.querySelector("#errorMessage").textContent = ''
-                    document.querySelector("#errorMessage").style.display='none'
+                    document.querySelector("#redMessage").textContent = ''
+                    document.querySelector("#redMessage").style.display='none'
                 }, 2000);
             }
     })
@@ -916,22 +810,11 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
 
             /////insert
             voteBtns.append(routeName, upvoteBtn, downvoteBtn, sureDiv)
-                let routeObject = L.polyline(e.path).bindPopup(voteBtns).addTo(map)
+                let routeObject = L.polyline(e.path, {color: greenColor}).bindPopup(voteBtns).addTo(map)
 
                 // routeObject.name = e.name
-                e.point1?circlesObjects.push(L.circle(e.path[0],{radius: 300, color: '#0171da', background: '#0171da'}).addTo(map)):null
-                e.point2?circlesObjects.push(L.circle(e.path[e.path.length-1],{radius: 300, color:'#0171da', background:'#0171da'}).addTo(map)):null 
-
-
-                // if(e.point1 && e.point2){
-                //     e.point1?completedCircles.push(L.circle(e.path[0],{radius: 300}).addTo(map)):null
-                //     e.point2?completedCircles.push(L.circle(e.path[e.path.length-1],{radius: 300}).addTo(map)):null 
-
-                // }else{
-                //     e.point1?uncompletedCircles.push(L.circle(e.path[0],{radius: 300}).addTo(map)):null
-                //     e.point2?uncompletedCircles.push(L.circle(e.path[e.path.length-1],{radius: 300}).addTo(map)):null 
-                // }
-
+                e.point1?circlesObjects.push(L.circle(e.path[0],{radius: 300, color: darkerGreenColor, background: darkerGreenColor}).addTo(map)):null
+                e.point2?circlesObjects.push(L.circle(e.path[e.path.length-1],{radius: 300, color:darkerGreenColor, background:darkerGreenColor}).addTo(map)):null 
                 
                 routeObject.upvotes = e.upvotes
                 routeObject.downvotes = e.downvotes
@@ -947,11 +830,11 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
                     currentRouteId = e.id
 
                     ////////mobile; change color 
-                    routesObjects.forEach(e=>{e.setStyle({color: "#3388FF", opacity: .6})})
+                    routesObjects.forEach(e=>{e.setStyle({color: greenColor, opacity: .6})})
                     hoveredRoute?map.removeLayer(hoveredRoute):null
-                    hoveredRoute = L.polyline(ev.target._latlngs, {interactive: false})
+                    hoveredRoute = L.polyline(ev.target._latlngs, {color: blueColor, interactive: false})
                     hoveredRoute.addTo(map)
-                    hoveredRoute.setStyle({color:"#28a84c", opacity: 1})
+                    hoveredRoute.setStyle({color:blueColor, opacity: 1})
 
 
                     if(dbUser){
@@ -996,29 +879,18 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
                 /// click over it 
 
                     // console.log(route.target)
-                    routesObjects.forEach(e=>{e.setStyle({color: "#3388FF", opacity: .6})})
+                    routesObjects.forEach(e=>{e.setStyle({color: greenColor, opacity: .6})})
 
                     hoveredRoute?map.removeLayer(hoveredRoute):null
                     hoveredPoint1?map.removeLayer(hoveredPoint1):null
                     hoveredPoint2?map.removeLayer(hoveredPoint2):null
 
 
-                    hoveredRoute = L.polyline(route.target._latlngs, {color:"#28a84c", opacity: 1,interactive: false}).addTo(map)
+                    hoveredRoute = L.polyline(route.target._latlngs, {color:blueColor, opacity: 1,interactive: false}).addTo(map)
                     // console.log(route.target)
-                    route.target.point1?hoveredPoint1 = L.circle(route.target._latlngs[0],{radius:300 ,color:"#28a84c", opacity: 1,interactive: false}).addTo(map):null
+                    route.target.point1?hoveredPoint1 = L.circle(route.target._latlngs[0],{radius:300 ,color:blueColor, opacity: 1,interactive: false}).addTo(map):null
 
-                    route.target.point2?hoveredPoint2 = L.circle(route.target._latlngs[route.target._latlngs.length-1], {radius:300, color:"#28a84c", opacity: 1,interactive: false}).addTo(map):null
-                    // hoveredRoute.addTo(map)
-                    // hoveredRoute.setStyle({color:"#28a84c", opacity: 1})
-                    // hoveredRoute.setStyle({color:"red", fillColor: "red"})
-                    // routesObjects.push(newRoute)
-
-
-
-                // method 2; change opacity and color 
-
-                // routesObjects.forEach(e=>{e.setStyle({opacity: 0.7, weight: 3, color: "#3388FF", fillColor: "#3388FF"})})
-                // route.target.setStyle({opacity: 1, weight: 5, color:"#28a84c", fillColor: "#28a84c"})
+                    route.target.point2?hoveredPoint2 = L.circle(route.target._latlngs[route.target._latlngs.length-1], {radius:300, color:blueColor, opacity: 1,interactive: false}).addTo(map):null
             })
 
             if(e.point1 && e.point2){
@@ -1071,10 +943,10 @@ orderedUserElements = `${intendedOrder.map((account, index)=>{
 <div class="rankedAccount" ${account.userName == currentUserName?'id="#me" style="background-color: #29D659"':''}>
 
     <div class="ranking point">${userCounter++}</div>
-    <div href=' https://kadum2.github.io/ivc/profile/kdm//${account.userName}' class="account">
+    <a href=' https://kadum2.github.io/ivc/profile/${account.userName}' class="account">
         <img class="accountImg" style="background-image: url('${account.img}');">
         <h3 class="accountUsername ranked">${account.userName}</h3>
-    </div>
+    </a>
         
 
     <div class='points'>
@@ -1092,10 +964,10 @@ orderedteamElements = `${intendedOrder.map((account, index)=>{
     if(account.type == 'team'){return`
 <div class="rankedAccount" ${account.userName == currentUserName?'style="background-color: #29D659"':''}>
     <div class="ranking point">${teamCounter++}</div>
-    <div href=' https://kadum2.github.io/ivc/profile/kdm//${account.userName}' class="account">
+    <a href=' https://kadum2.github.io/ivc/profile/${account.userName}' class="account">
         <img class="accountImg" style="background-image: url('${account.img}');">
         <h3 class="accountUsername ranked">${account.userName}</h3>
-    </div>
+    </a>
 
     <div class='points'>
 <div class="publiclineCounter point">${(account.addedRoutes[0]?account.addedRoutes.length:0)+(account.votes[0]?account.votes.length:0)}</div>
@@ -1122,157 +994,22 @@ document.querySelector('#teamsRanking').innerHTML = orderedteamElements.replaceA
 
 
 
+// updateDoc(bygreenDb, collection())
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        // ivc; 
-
-/////////////////////getting; 
-// let profile
-// let profileAccount
-
-    // await onAuthStateChanged(bygreenAuth, async (user)=>{
-    // console.log('onauthstate; ', user)
-
-    // if(user){
-    //     console.log('from auth ', user)
-    //     authUser = user
-    //     user.getIdTokenResult().then(idTokenResult => {
-    //         console.log('claims', idTokenResult.claims)
-    //         type = idTokenResult.claims
-    //         // if team 
-    //         if (idTokenResult.claims.team){
-    //             document.querySelectorAll('.teamEle').forEach(teamEle=>{
-    //                 teamEle.style.display = 'inline-block'
-    //             })
-    //             // document.querySelector('.addYellow').style.display = 'block'
-    //         }
-    //     })
-
-    //     let dbUserDoc = await getDoc(doc(bygreenDb, 'users', user.uid))
-    //     dbUser = dbUserDoc.data()
-
-
-
-    //     if(dbUser){
-    //     dbUser.id = dbUserDoc.id
-
-    //         ////registered
-    //         document.querySelectorAll('.logged').forEach(e=>{e.style.display = 'block'})
-    //         document.querySelectorAll('.halfLogged').forEach(e=>e.style.display = 'none')
-    //         document.querySelectorAll('.notLogged').forEach(e=>e.style.display = 'none')
-
-    //         // di
-    //         document.querySelector('#currentAccountImgDi').style.backgroundImage = `url('${dbUser.img}')`
-    //         document.querySelector("#currentAccountUsernameDi").textContent = '@'+ dbUser.userName
-
-    //         // mini
-    //         document.querySelector('#currentAccountImgMini').style.backgroundImage = `url('${dbUser.img}')`
-    //         document.querySelector("#currentAccountUsernameMini").textContent = '@'+ dbUser.userName
-    //         document.querySelector("#currentAccountName").textContent = dbUser.name
-    //         document.querySelector("#currentAccountBio").textContent = dbUser.bio
-    //         document.querySelector("#currentAccountLink").href = `https://kadum2.github.io/ivc/profile/${dbUser.userName}`
-
-    //     }else{
-    //         /////half registered; make profile
-    //         document.querySelectorAll('.logged').forEach(e=>e.style.display = 'none')
-    //         document.querySelectorAll('.halfLogged').forEach(e=>e.style.display = 'block')
-    //         document.querySelectorAll('.notLogged').forEach(e=>e.style.display = 'none')
-    //     }
-        
-    // }else{
-    //     /////not registered
-    //     document.querySelectorAll('.logged').forEach(e=>e.style.display = 'none')
-    //     document.querySelectorAll('.halfLogged').forEach(e=>e.style.display = 'none')
-    //     document.querySelectorAll('.notlogged').forEach(e=>e.style.display = 'block')
-    //     dbUser = 'none'
-    // }
-
-
-    // getDocs(collection(bygreenDb, 'users')).then((data)=>{
-    //     let docs = []
-    //         data.docs.forEach(doc=>{
-    //             docs.push({...doc.data(), id: doc.id})
-    //         })
-    //         accountsList = docs
-    //         console.log(docs)
-    //         document.querySelector('#accountsCounter').textContent = accountsList.length
-    //             ranking('total', 'de')
-    //     })
-
-    // getDocs(collection(bygreenDb, 'pins')).then((data)=>{
-    //             let docs = []
-    //                 data.docs.forEach(doc=>{
-    //                     docs.push({...doc.data(), id: doc.id})
-    //                 })
-
-    //                 let red = 0
-    //                 let green = 0
-    //                 let yellow = 0
-    //                 let redToGreen = 0
-
-    //                 docs.forEach(generalPin=>{
-    //                     generalPin.afterImgs?red++:green++
-    //                     generalPin.next?yellow++:null
-    //                     generalPin.redToGreen?redToGreen++:null
-    //                 })
-
-    //                 document.querySelector('#redCounter').textContent = red
-    //                 document.querySelector('#greenCounter').textContent = green
-    //                 document.querySelector('#yellowCounter').textContent = yellow
-    //                 // document.querySelector('#redToGreenCounter').textContent = green
-    //     })
-    
-    // getDocs(collection(bygreenDb, 'shop')).then((data)=>{
+    // getDocs(collection(bygreenDb, 'routes')).then((data)=>{
     //         let docs = []
     //             data.docs.forEach(doc=>{
     //                 docs.push({...doc.data(), id: doc.id})
     //             })
-    //             // console.log(docs[0].upvotes.length + docs[0].downvotes)
-    //             document.querySelector('#shopsCounter').textContent = docs.length
+                
+    //         docs.forEach(docu=>{
+    //             console.log(docu, docu.id)
+    //             // updateDoc(doc(bygreenDb, 'routes', docu.id), {name: "اسم المسار"})
+                
+    //         })
     //     })
 
-    // getDocs(collection(bygreenDb, 'routes')).then((data)=>{
-    //             let docs = []
-    //                 data.docs.forEach(doc=>{
-    //                     docs.push({...doc.data(), id: doc.id})
-    //                 })
-    //                 console.log(docs[0].upvotes.length + docs[0].downvotes)
-    //                 document.querySelector('#routesCounter').textContent = docs.length
-    //                 let votes = 0
-    //                 docs.forEach(route=> votes += (route.upvotes.length + route.downvotes.length))
-    //                 // document.querySelector('#votesCounter').textContent = docs.filter
-    //                 document.querySelector('#votesCounter').innerHTML = votes
-    //     })
-
-    // })
 
 
 
