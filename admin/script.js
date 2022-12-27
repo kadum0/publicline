@@ -45,52 +45,35 @@ const map = L.map('map').setView([33.396600, 44.356579], 10);
 }).addTo(map);
 L.Control.geocoder().addTo(map);
 
+// let greenColor = '#27F060'
+let greenColor = "#68F690"
+
+let darkerGreenColor = '#21C24F'
+
+let blueColor = '#3388FF'
+let darkerBlueColor = '#075FDA'
 
 
-/////////////////authentication 
-onAuthStateChanged(bygreenAuth, async (user)=>{
-            if(user){
-                console.log(user, user.uid)
-                user.getIdTokenResult().then(idTokenResult => {
-                    console.log(idTokenResult.claims)
-                    if(idTokenResult.claims.admin){
-                        // auth
-                        document.querySelectorAll('.cuserusername').forEach(notlogged=>notlogged.textContent= 'admin')
-                        // main
-                        document.querySelector('.adminEle').style.display = 'block'
-                    }else{
-                        // auth
-                        document.querySelectorAll('.cuserusername').forEach(notlogged=>notlogged.textContent= user.username)
-                        // main
-                    }
-                })
 
-                ////authstate
-                document.querySelectorAll('.logged').forEach(notlogged=>notlogged.style.display = 'block')
-                document.querySelectorAll('.notlogged').forEach(notlogged=>notlogged.style.display = 'none')
-            }else{
-                document.querySelectorAll('.notlogged').forEach(notlogged=>notlogged.style.display = 'block')
-                document.querySelectorAll('.logged').forEach(notlogged=>notlogged.style.display = 'none')
-            }
-})
+/////////////////authentication; 
 
 //////signin
-signinbtn.addEventListener('click', (ev)=>{
+signinBtn.addEventListener('click', (ev)=>{
     // send 
     if(ev.target.parentElement.querySelector('.em').value.length > 0 && ev.target.parentElement.querySelector('.pw').value.length > 0){
         signInWithEmailAndPassword(bygreenAuth, ev.target.parentElement.querySelector(".em").value ,ev.target.parentElement.querySelector(".pw").value).then().catch(err=>{
             console.log(err.message)
-            document.querySelector('#errors').textContent = err.message
-            document.querySelector('#errors').style.display = 'block'
+            document.querySelector('#redMessage').textContent = err.message
+            document.querySelector('#redMessage').style.display = 'block'
             setTimeout(() => {
-                document.querySelector('#errors').style.display = 'none'
+                document.querySelector('#redMessage').style.display = 'none'
             }, 10000);
         })
     }else{
-        document.querySelector('#errors').textContent = 'insert data'
-        document.querySelector('#errors').style.display = 'block'
+        document.querySelector('#redMessage').textContent = 'insert data'
+        document.querySelector('#redMessage').style.display = 'block'
         setTimeout(() => {
-            document.querySelector('#errors').style.display = 'none'
+            document.querySelector('#redMessage').style.display = 'none'
         }, 10000);
     }
     // empty 
@@ -99,24 +82,27 @@ signinbtn.addEventListener('click', (ev)=>{
 })
 
 //////signout 
-signoutbtn.addEventListener('click', ()=>{
-    signOut(bygreenAuth, (result)=>{console.log('signed out', result)})
+document.querySelector('#signoutBtn').addEventListener('click', ()=>{
+    signOut(bygreenAuth, (result)=>{console.log(result)})
+})
+document.querySelector('#halfLoggedSignoutBtn').addEventListener('click', ()=>{
+    signOut(bygreenAuth, (result)=>{console.log(result)})
 })
 
 
 
 ////////////ui-js 
-document.querySelector(".auth").addEventListener("click", (e)=>{
+document.querySelector("#miniProfileDi").addEventListener("click", (e)=>{
     e.target.classList.toggle('on')
     if(e.target.classList.contains('on')){
-        document.querySelector(".authstate").style.display = 'block'
+        document.querySelector("#miniProfile").style.display = 'block'
     }else{
-        document.querySelector(".authstate").style.display = 'none'
+        document.querySelector("#miniProfile").style.display = 'none'
     }
 })
 
 
-    document.querySelector("#unconf").addEventListener("click", ()=>{
+document.querySelector("#unconf").addEventListener("click", ()=>{
         // ev.target.classList.toggle('on')
         document.querySelector('#unconf').classList.add("on")
         document.querySelector('#conf').classList.remove("on")
@@ -177,16 +163,75 @@ document.querySelector(".auth").addEventListener("click", (e)=>{
     let unRoutes 
     let currentId
 
+    // to be globally available
+    let dbUser
+
         let unconfirmedRoutesList = []
         let deleteList = []
         let confrimList = []
 
+        onAuthStateChanged(bygreenAuth, async (user)=>{
+
+            document.querySelector('#greenMessage').textContent = 'getting data'
+            document.querySelector('#greenMessage').style.display = 'block'
+    
+            if(user){
+                console.log(user, user.uid)
+                user.getIdTokenResult().then(idTokenResult => {
+                    console.log(idTokenResult.claims)
+                    if(idTokenResult.claims.admin){
+
+                        // admin case
+                        document.querySelectorAll('.admin').forEach(admin => admin.style.display = 'block')
+                        document.querySelectorAll('.logged').forEach(logged => logged.style.display = 'none')
+                        document.querySelectorAll('.halfLogged').forEach(halfLogged => halfLogged.style.display = 'none')
+                        document.querySelectorAll('.notLogged').forEach(notLogged => notLogged.style.display = 'none')
+
+                    }else{
+                        // account or half logged
+
+                        // get the account from users collection
+                        // let dbUserDoc = 
+                        getDoc(doc(bygreenDb, 'users', user.uid)).then((dbUserDoc)=>{
+                            dbUser = dbUserDoc.data()
+                            console.log('accounts are; ',dbUserDoc, dbUser)
 
 
-    window.onload = async () => {
+                            if(dbUser){
+                                // account case
 
-        document.querySelector('#sendingDataMessage').textContent = 'getting data'
-        document.querySelector('#sendingDataMessage').style.display = 'block'
+                                document.querySelectorAll('.admin').forEach(admin=>admin.style.display = 'none')
+                                document.querySelectorAll('.logged').forEach(logged=>logged.style.display = 'block')
+                                document.querySelectorAll('.halfLogged').forEach(halfLogged=>halfLogged.style.display = 'none')
+                                document.querySelectorAll('.notLogged').forEach(notLogged=>notLogged.style.display = 'none')
+        
+                                // set info
+                                document.querySelector('#accountUsername').textContent = '@'+ dbUser.userName
+                                document.querySelector("#accountImg").style.backgroundImage = `url('${dbUser.img}')`
+                            }else{
+                                // half logged case
+
+                                document.querySelectorAll('.admin').forEach(admin=>admin.style.display = 'none')
+                                document.querySelectorAll('.logged').forEach(logged=>logged.style.display = 'none')
+                                document.querySelectorAll('.halfLogged').forEach(halfLogged=>halfLogged.style.display = 'block')
+                                document.querySelectorAll('.notLogged').forEach(notLogged=>notLogged.style.display = 'none')
+        
+        
+                            }
+                        })
+                    }
+                })
+            }else{
+
+                // not logged
+
+                document.querySelectorAll('.admin').forEach(admin=>admin.style.display = 'none')
+                document.querySelectorAll('.logged').forEach(logged=>logged.style.display = 'none')
+                document.querySelectorAll('.halfLogged').forEach(halfLogged=>halfLogged.style.display = 'none')
+                document.querySelectorAll('.notLogged').forEach(notLogged=>notLogged.style.display = 'block')
+
+    }
+
 
 
     //get data; unconfirmed paths, labels 
@@ -199,27 +244,29 @@ document.querySelector(".auth").addEventListener("click", (e)=>{
                 unRoutes = docs
                 console.log('unconfirmed routes' ,unRoutes)
             })
-            unRoutes.forEach(uroute=>{
-                console.log("the uroute; ", uroute)
+            unRoutes.forEach(unroute=>{
+                console.log("the unroute; ", unroute)
 
-                let routeObj = L.polyline(uroute.path).addTo(map)
-
-                if(uroute.point1){
-                    routeObj.point1 = L.circle(uroute.path[0], {
-                                fillColor: '#3388FF',
+                let routeObj = L.polyline(unroute.path, {color: blueColor}).addTo(map)
+                // unroute.start
+                if(unroute.start){
+                    routeObj.start = L.circle(unroute.path[0], {
+                        color: darkerBlueColor,
+                        fillColor: darkerBlueColor,
                                 fillOpacity: 0.8,
                                 radius: 10
                             }).addTo(map)    
                         }
                         
-                if(uroute.point2){
-                    routeObj.point2 = L.circle(uroute.path[uroute.path.length-1], {
-                            fillColor: '#3388FF',
+                if(unroute.end){
+                    routeObj.end = L.circle(unroute.path[unroute.path.length-1], {
+                            color: darkerBlueColor,
+                            fillColor: darkerBlueColor,
                             fillOpacity: 0.8,
                             radius: 10
                             }).addTo(map)    
                     }
-                    routeObj.id = uroute.id
+                    routeObj.id = unroute.id
 
 
                 ////document
@@ -228,7 +275,7 @@ document.querySelector(".auth").addEventListener("click", (e)=>{
 
                 let routename = document.createElement('div')
                 routename.classList.add('routeName')
-                routename.textContent = uroute.name
+                routename.textContent = unroute.name
 
                 let addbtn = document.createElement("button")
                 addbtn.classList.add("addbtn")
@@ -248,10 +295,10 @@ document.querySelector(".auth").addEventListener("click", (e)=>{
                     console.log('current hovered card is; ', ev.target)
                     unconfirmedRoutesList.forEach(route=>{
                         route.card.style.background = 'white'
-                        route.setStyle({color: '#3C8EFC', opacity: .4})
+                        route.setStyle({color: blueColor, opacity: .4})
                     })
-                    card.style.background = ' #ff2a2a'
-                    unconfirmedRoutesList.filter(route=>route.card == ev.target)[0].setStyle({color: ' #ff2a2a', opacity: 1})
+                    card.style.background = darkerBlueColor
+                    unconfirmedRoutesList.filter(route=>route.card == ev.target)[0].setStyle({color: darkerBlueColor, opacity: 1})
 
                     map.fitBounds(unconfirmedRoutesList.filter(ee=>{return ee.card == ev.target})[0]._bounds)
 
@@ -285,19 +332,19 @@ document.querySelector(".auth").addEventListener("click", (e)=>{
                 routeObj.addEventListener('mouseover', (ev)=>{
                     unconfirmedRoutesList.forEach(route=>{
                         route.card.style.background = 'white'
-                        route.setStyle({color: '#3C8EFC', opacity: .4})
+                        route.setStyle({color: blueColor, opacity: .4})
                     })
-                    ev.target.card.style.background = ' #ff2a2a'
-                    ev.target.setStyle({color: ' #ff2a2a', opacity: 1})
+                    ev.target.card.style.background = darkerBlueColor
+                    ev.target.setStyle({color: darkerBlueColor, opacity: 1})
                 })
                 routeObj.addEventListener('click', (ev)=>{
                     console.log('current object id; ', ev.target.id)
                     currentId = ev.target.id
 
-                    document.querySelector('#sendingDataMessage').textContent = 'select route'
-                    document.querySelector('#sendingDataMessage').style.display = 'block'
+                    document.querySelector('#greenMessage').textContent = 'select route'
+                    document.querySelector('#greenMessage').style.display = 'block'
                     setTimeout(() => {
-                        document.querySelector('#sendingDataMessage').style.display = 'none'
+                        document.querySelector('#greenMessage').style.display = 'none'
                         
                     }, 1000);
                 })
@@ -308,8 +355,7 @@ document.querySelector(".auth").addEventListener("click", (e)=>{
             })
 
 
-            // confirmed routes
-                    // routes
+                    // confirmed routes
         await getDocs(collection(bygreenDb, 'routes')).then((data)=>{
             let docs = []
                 data.docs.forEach(doc=>{
@@ -317,33 +363,33 @@ document.querySelector(".auth").addEventListener("click", (e)=>{
                 })
                 conRoutes = docs
                 console.log('unconfirmed routes' ,unRoutes)
-                document.querySelector('#sendingDataMessage').style.display = 'none'
+                document.querySelector('#greenMessage').style.display = 'none'
             })
 
         let confirmedRoutesList = []
-            conRoutes.forEach(uroute=>{
-                console.log("the uroute; ", uroute)
+            conRoutes.forEach(unroute=>{
+                console.log("the unroute; ", unroute)
 
-                let routeObj = L.polyline(uroute.path, {color: `#29D659`}).addTo(map)
+                let routeObj = L.polyline(unroute.path, {color: greenColor}).addTo(map)
 
-                if(uroute.point1){
-                    routeObj.point1 = L.circle(uroute.path[0], {
-                                fillColor: '#29D659',
-                                color: '#29D659',
+                if(unroute.start){
+                    routeObj.start = L.circle(unroute.path[0], {
+                                fillColor: darkerGreenColor,
+                                color: darkerGreenColor,
                                 fillOpacity: 0.8,
                                 radius: 10
                             }).addTo(map)    
                         }
                         
-                if(uroute.point2){
-                    routeObj.point2 = L.circle(uroute.path[uroute.path.length-1], {
-                            fillColor: '#29D659',
-                            color: '#29D659',
+                if(unroute.end){
+                    routeObj.end = L.circle(unroute.path[unroute.path.length-1], {
+                            fillColor: darkerGreenColor,
+                            color: darkerGreenColor,
                             fillOpacity: 0.8,
                             radius: 10
                             }).addTo(map)    
                     }
-                    routeObj.id = uroute.id
+                    routeObj.id = unroute.id
 
 
                 ////document
@@ -352,7 +398,7 @@ document.querySelector(".auth").addEventListener("click", (e)=>{
 
                 let routename = document.createElement('div')
                 routename.classList.add('routeName')
-                routename.textContent = uroute.name
+                routename.textContent = unroute.name
 
                 let dltbtn = document.createElement("button")
                 dltbtn.classList.add("dltbtn")
@@ -368,10 +414,10 @@ document.querySelector(".auth").addEventListener("click", (e)=>{
                     console.log('current hovered card is; ', ev.target)
                     confirmedRoutesList.forEach(route=>{
                         route.card.style.background = 'white'
-                        route.setStyle({color: 'rgba(41, 214, 90, 0.801)', opacity: .4})
+                        route.setStyle({color: greenColor, opacity: .4})
                     })
-                    card.style.background = '#21883e'
-                    confirmedRoutesList.filter(route=>route.card == ev.target)[0].setStyle({color: '#21883e', opacity: 1})
+                    card.style.background = darkerGreenColor
+                    confirmedRoutesList.filter(route=>route.card == ev.target)[0].setStyle({color: darkerGreenColor, opacity: 1})
 
                     // let filteredconRoute = 
                     // console.log(filteredconRoute)
@@ -396,20 +442,20 @@ document.querySelector(".auth").addEventListener("click", (e)=>{
                 routeObj.addEventListener('mouseover', (ev)=>{
                     confirmedRoutesList.forEach(route=>{
                         route.card.style.background = 'white'
-                        route.setStyle({color: 'rgba(41, 214, 90, 0.801)', opacity: .4})
+                        route.setStyle({color: greenColor, opacity: .4})
                     })
-                    ev.target.card.style.background = '#21883e'
-                    ev.target.setStyle({color: '#21883e', opacity: 1})
+                    ev.target.card.style.background = darkerGreenColor
+                    ev.target.setStyle({color: darkerGreenColor, opacity: 1})
                 })
 
                 routeObj.addEventListener('click', (ev)=>{
                     console.log('current object id; ', ev.target.id)
                     currentId = ev.target.id
 
-                    document.querySelector('#sendingDataMessage').textContent = 'select route'
-                    document.querySelector('#sendingDataMessage').style.display = 'block'
+                    document.querySelector('#greenMessage').textContent = 'select route'
+                    document.querySelector('#greenMessage').style.display = 'block'
                     setTimeout(() => {
-                        document.querySelector('#sendingDataMessage').style.display = 'none'
+                        document.querySelector('#greenMessage').style.display = 'none'
                         
                     }, 1000);
                 })
@@ -419,7 +465,8 @@ document.querySelector(".auth").addEventListener("click", (e)=>{
         confirmedRoutesList.push(routeObj)
             })
 
-    }
+})
+
 
 
 
@@ -441,24 +488,23 @@ document.querySelector(".auth").addEventListener("click", (e)=>{
 
 
 
-    let send = document.querySelector("#send")
-    send.addEventListener("click", async () => {
+    document.querySelector("#send").addEventListener("click", async () => {
         console.log("confirmed",confrimList, "deleted", deleteList, "deletedIDs")
 
 
         confrimList.forEach(confirmed=>{
             let routeToAdd = unRoutes.filter(route=>route.id==confirmed)[0]
-            document.querySelector('#sendingDataMessage').textContent = 'sending data'
-            document.querySelector('#sendingDataMessage').style.display = 'block'
+            document.querySelector('#greenMessage').textContent = 'sending data'
+            document.querySelector('#greenMessage').style.display = 'block'
 
             // add 
             addDoc(collection(bygreenDb, 'routes'), routeToAdd).then(()=>{
             // delete
             deleteDoc(doc(bygreenDb, 'unroutes', confirmed)).then(()=>console.log('deleted'))
-            document.querySelector('#sendingDataMessage').textContent = 'sent'
+            document.querySelector('#greenMessage').textContent = 'sent'
 
                 setTimeout(() => {
-                    document.querySelector('#sendingDataMessage').style.display = 'none'
+                    document.querySelector('#greenMessage').style.display = 'none'
                 }, 1000);
 
             })

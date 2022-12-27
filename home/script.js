@@ -33,7 +33,9 @@ const bygreenStorage = getStorage(bygreen)
 
 /////////auth state 
 
-let greenColor = '#27F060'
+// let greenColor = '#27F060'
+let greenColor = "#68F690"
+
 let darkerGreenColor = '#21C24F'
 
 let blueColor = '#3388FF'

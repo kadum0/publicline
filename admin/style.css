@@ -1,11 +1,10 @@
 
 /* basic */
 /* header */
-header{
+/* header{
     height: 3rem;
     background: #29D659;
-    /* background: rgba(41, 214, 90, 0.301); */
-    /* background: #21883e; */
+    background-image: linear-gradient(135deg,  #1a1a1a,  #333333);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -23,11 +22,6 @@ header{
         width: 2rem;
 }
 
-#footer-di{
-    /* background: red; */
-    z-index: 1003;
-    border: #ff2a2a 2px solid;
-}
 .auth{
 height: 2rem;
 }
@@ -45,7 +39,6 @@ height: 2rem;
     display: none;
 
 
-background: rgba(255, 255, 255, 0.2);
 background: rgba(149, 255, 193, 0.2);
 
 border-radius: 16px;
@@ -59,6 +52,105 @@ border: 1px solid rgba(255, 255, 255, 0.3);
 }
 header input{
     display: block;
+} */
+
+
+
+header{
+    height: 3rem;
+    background-image: linear-gradient(135deg,  #1a1a1a,  #333333);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+    border-bottom: #27f060 2px solid;
+    position: relative;
+}
+.links{
+    display: flex;
+    /* padding: 1rem; */
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+.logo div{
+    height: 30%;
+    width: 75%;
+    margin-bottom: 10%;
+    transform: rotateZ(-15deg);
+    }
+.logo {
+        height: 3rem;
+        width: 3rem;
+    }
+
+#asideDi{
+    padding: .7rem;
+    z-index: 1004;
+    /* background: #303832; */
+    /* background-color: #333333; */
+    border-radius: .3rem;
+    transition: .1s linear;
+    cursor: pointer;
+    /* height: 2rem; */
+}
+#asideDi img{
+    height: 1rem;
+}
+
+
+#miniProfile{
+    position: absolute;
+    padding: .6rem;
+    top: 3rem;
+    right: 1rem;
+
+    display: none;
+
+    background: rgba(149, 255, 193, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+
+    z-index: 1003;
+}
+
+#miniProfileDi div {
+    pointer-events: none;
+    /* padding: .2rem; */
+}
+#miniProfileDi {
+    padding: .1rem;
+}
+#miniProfileDi img{
+    height: 2rem;
+    width: 2rem;
+    border-radius: 50%;
+}
+
+.logged, .notlogged, .halfLogged{
+    display: none;
+}
+
+/* not logged */
+#register, #signin{
+    /* background: #22c7519a; */
+    background: #22c751;
+    background: #68F690;
+    background-image: linear-gradient(135deg,  #68F690,  #22c751);
+
+    border-radius: .5rem;
+}
+/* logged */
+#currentAccount{
+    text-decoration: none;
+    color: black;
+}
+#currentAccountImgDi{
+    background-position: center;
+    background-size: cover;
 }
 
 
@@ -186,12 +278,12 @@ main button:hover{
             top: 51vh;
 
         }
-        #message{
+        #messages{
             position: absolute;
             top: 1rem;
             right: 50vw;
         }
-        #sendingDataMessage, #errorMessage{
+        #greenMessage, #redMessage{
             display: none;
             padding: .2rem;
             text-align: center;
@@ -410,6 +502,24 @@ footer *{
 
 }
 
+
+#cards .box{
+    background: #1a1a1a;
+    padding: .5rem;
+    border-radius: .5rem;
+    transition: .1s linear;
+    cursor: pointer;
+    color: white;
+}
+
+#cards .box:hover{
+    background: #242424;
+    padding: .5rem;
+    border-radius: .5rem;
+    transition: .1s linear;
+    cursor: pointer;
+}
+
         .logged, .makeprofile, .notlogged{
             display: none;
         }
@@ -436,7 +546,8 @@ footer *{
         
         
         .on{
-            background: #1b1b1b;
+            /* background: #1b1b1b; */
+            background: #21C24F;
             color: white;
         }
         .on:hover{

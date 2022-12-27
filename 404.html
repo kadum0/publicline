@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>public lines</title>
+    <title>publicline</title>
 
     <!-- leaflet cdn -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
@@ -14,136 +14,180 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
         integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
         crossorigin=""></script>
-
-    <!-- searh box -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-search/3.0.2/leaflet-search.src.js"
-        integrity="sha512-V+GL/y/SDxveIQvxnw71JKEPqV2N+RYrUlf6os3Ru31Yhnv2giUsPadRuFtgmIipiXFBc+nCGMHPUJQc6uxxOA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
-
     <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 
+
+    <link rel="shortcut icon" type="image/jpg"
+        href="https://kadum2.github.io/publicline/home/imgs/publicline-logo.png" />
+    <link rel="stylesheet" href="./style.css">
+    <link rel="manifest" href="./manifest.json">
+
+
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prosto+One&family=Changa:wght@300&display=swap"
+        rel="stylesheet">
+
     <style>
-        /* basics */
+        @import url('https://fonts.googleapis.com/css2?family=Prosto+One&family=Changa:wght@300&display=swap');
+    </style>
+
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js');
+            });
+        }
+    </script>
+
+    <style>
+        /* basic */
         /* header */
 
         header {
             height: 3rem;
-            background: #29D659;
-            background: #1a1a1a;
-            background-image: linear-gradient(135deg, #1a1a1a, #383838);
-            border-bottom: #1bf057 2px solid;
+            background-image: linear-gradient(135deg, #1a1a1a, #333333);
             display: flex;
-            flex-direction: row;
             justify-content: space-between;
             align-items: center;
             padding: 0 2rem;
+            border-bottom: #27f060 2px solid;
+            position: relative;
+        }
+
+        .links {
+            display: flex;
+            /* padding: 1rem; */
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
         }
 
         .logo div {
-            height: 30%;
-            width: 75%;
+            height: 25%;
+            width: 65%;
             margin-bottom: 10%;
             transform: rotateZ(-15deg);
         }
 
         .logo {
-            height: 2rem;
-            width: 2rem;
+            height: 3rem;
+            width: 3rem;
         }
 
-        #footer-di {
-            /* background: red; */
-            z-index: 1003;
-            color: white;
-            /* border: #ff2a2a 2px solid; */
+        #asideDi {
+            padding: .7rem;
+            z-index: 1004;
+            /* background: #303832; */
+            /* background-color: #333333; */
+            border-radius: .3rem;
+            transition: .1s linear;
+            cursor: pointer;
+            /* height: 2rem; */
         }
 
-        .auth {
-            height: 2rem;
+        #asideDi img {
+            height: 1rem;
         }
 
-        .auth div {
-            pointer-events: none;
-        }
 
-        .authstate {
+        #miniProfile {
             position: absolute;
-            /* make it glass form */
-            /* background: #29D659;
-    border-radius: .6rem; */
             padding: .6rem;
             top: 3rem;
             right: 1rem;
-            /* width: 7rem; */
-            width: auto;
 
-            z-index: 1002;
             display: none;
 
-            /* From https://css.glass */
-            background: rgba(255, 255, 255, 0.2);
             background: rgba(149, 255, 193, 0.2);
-
             border-radius: 16px;
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
             border: 1px solid rgba(255, 255, 255, 0.3);
+
+            z-index: 1003;
         }
 
-        .cuserimg {
-            /* height: 3rem; */
-            width: auto;
+        #miniProfileDi div {
+            pointer-events: none;
+            /* padding: .2rem; */
         }
 
-        #profileLink {
-            text-decoration: none;
-            color: black;
+        #miniProfileDi {
+            padding: .1rem;
+        }
+
+        #miniProfileDi img {
+            height: 2rem;
+            width: 2rem;
+            border-radius: 50%;
         }
 
         .logged,
         .notlogged,
-        .makeprofile {
+        .halfLogged {
             display: none;
         }
 
-        .logged {}
+        /* not logged */
+        #register,
+        #signin {
+            /* background: #22c7519a; */
+            background: #22c751;
+            background: #68F690;
+            background-image: linear-gradient(135deg, #68F690, #22c751);
 
-        .auth img {
+            border-radius: .5rem;
+        }
+
+        /* logged */
+        #currentAccount {
+            text-decoration: none;
+            color: black;
+        }
+
+        #currentAccountImgDi {
+            background-position: center;
+            background-size: cover;
+        }
+
+
+        .currentAccount .accountImg {
             height: 3rem;
-            height: 2.3rem;
             width: 3rem;
-            width: 2.3rem;
             background-size: cover;
             background-position: center;
             border-radius: 50%;
         }
 
-        .cuserimg {
-            height: 3rem;
-            width: 3rem;
-            background-size: cover;
-            background-position: center;
-            border-radius: 50%;
-        }
-
-        #bygoogle {
+        #byGoogle {
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
+        /* half logged */
+
+
+
         /* main */
+        main {
+            overflow: hidden;
+        }
+
         #map {
-            height: 100vh;
+            height: 92vh;
             width: 100vw;
         }
 
-        #addmode {
+        #addRouteMode {
             border: #1F2721 2px solid;
-            z-index: 1002;
-            background-image: url('https://kadum2.github.io/ivc/imgs/publicline/addroute-form.png');
+            z-index: 1003;
+            background-image: url('https://kadum2.github.io/publicline/home/imgs/addroute-form.png');
             background-repeat: no-repeat;
             font-size: 1.3rem;
             font-weight: bold;
@@ -175,17 +219,17 @@
         }
 
         /* controllers */
-        .btns {
+        #controller {
             display: flex;
             flex-direction: column;
-            width: 10vw;
+            width: 6rem;
             gap: .4rem;
             font-size: 2.4rem;
             font-weight: bold;
             position: absolute;
             top: 50%;
             right: .1rem;
-            z-index: 1002;
+            z-index: 1003;
             background: #303832;
             border-radius: .5rem;
             background: rgba(255, 255, 255, 0.2);
@@ -198,11 +242,11 @@
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
-        .btns button {
+        #controller button {
             font-weight: bold;
         }
 
-        #oBtns {
+        #newRouteDetails {
             height: 100%;
             width: 100%;
             display: flex;
@@ -215,30 +259,25 @@
             position: absolute;
             top: 5.5rem;
             left: .1rem;
-            z-index: 1002;
+            z-index: 1003;
         }
 
-        #message {
+
+        #messages {
             position: absolute;
-            top: 3rem;
-            right: 50vw;
-            transform: translate(50%, 50%);
-            z-index: 1002;
-            padding: 1rem;
+            top: 2rem;
+            right: 45vw;
+            text-align: center;
         }
 
-        #sendingDataMessage {
-            background: #54db7b;
-        }
-
-        #errorMessage {
+        #messages div {
             display: none;
-            background: #ff2a2a;
         }
+
 
 
         #routesToDisplay {
-            z-index: 1002;
+            z-index: 1003;
             position: absolute;
             top: 3.2rem;
             left: .1rem;
@@ -246,80 +285,108 @@
             /* color: #0171da; */
         }
 
-        /* footer */
+        #routesToDisplay button {
+            /* border: ; */
+            border: #2b2b2b 1px solid;
+            border-radius: .3rem;
+        }
 
-        footer {
-            height: 100vh;
-            width: 100vw;
-            /* background: rgba(0, 0, 0, 0.8); */
-            background-image: url('https://kadum2.github.io/ivc/imgs/publicline/footercover.png');
-            background-size: contain;
-            position: absolute;
-            top: 0%;
-            right: 0%;
-            z-index: 1002;
+
+        /* aside */
+        aside {
             display: none;
-        }
-
-        footer * {
-            box-sizing: border-box;
-        }
-
-        .footerflex {
-            display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            width: 100%;
+            flex-direction: column;
+
+            position: absolute;
+            background: #1a1a1a8c;
+            top: 0;
+            /* height: 100vh; */
+            width: 100vw;
+            margin-top: 3rem;
+            gap: 1rem;
+
+            z-index: 1003;
         }
 
-        /* footer; ranking */
+
+
+
+        /* leaderboard */
         .leaderBoard {
             display: flex;
             flex-direction: column;
             width: 70%;
             padding: 1rem;
             max-height: 65vh;
-            overflow-y: scroll;
+            /* overflow-y: scroll; */
             background: #242424;
+            background-image: linear-gradient(135deg, #1a1a1a, #2b2b2b);
+
             border: #27f060 1px solid;
             max-height: 70vh;
+            /* box-sizing: border-box; */
+            overflow: scroll;
         }
 
-        .leaderBoard>span button {
+        .leaderBoard button {
+            background-repeat: no-repeat;
+        }
+
+        .rankingSections button {
             background: #33a353;
             padding: .2rem;
             cursor: pointer;
             border-radius: .2rem;
+            /* width: fit-content; */
         }
 
         .rankingHeader {
             display: flex;
             flex-direction: row;
             background: #0a0a0a;
+            justify-content: space-between;
+        }
+
+        .rankingHeader img {
+            min-height: 3rem;
+            min-width: 3rem;
         }
 
         .rankingHeader button {
-            width: 10rem;
-            /* flex-grow: 1; */
-        }
-
-        #accountHeader {
-            min-width: 5rem;
-        }
-
-        .usersRanking {
-            max-width: 100%;
+            padding: 1rem;
+            width: 100%;
+            width: fit-content;
         }
 
         .rankedAccount {
             border: #0a0a0a 2px solid;
             display: flex;
+            justify-content: space-between;
             color: white;
-            background: #242424;
+            /* background: #242424; */
+            background-image: linear-gradient(135deg, #1a1a1a, #2b2b2b);
+
             gap: 1rem;
             max-width: 100%;
             box-sizing: border-box;
+        }
+
+        .rankedAccount .account {
+            color: white;
+        }
+
+        .points {
+            display: flex;
+            width: 7rem;
+            justify-content: space-between;
+
+        }
+
+        .point {
+            text-align: center;
+            font-size: 2rem;
         }
 
         .ranking {
@@ -327,68 +394,49 @@
             flex-direction: column;
             background: #29D659;
             border: #a0f7b9 2px solid;
-            font-size: 2rem;
-            text-align: center;
+            padding: .3rem;
         }
 
-        .rankedAccount span,
-        .rankedAccount>h3,
-        .rankedAccount .account {
-            width: 10vw;
-            /* flex-grow: 1; */
-        }
-
-        .rankedAccount .account {
-            justify-content: flex-start;
-            /* flex-grow: 2; */
-        }
-
-        .rankedAccount>h3 {
-            text-align: center;
-        }
-
-        .rankedAccount img {
+        .rankedAccount .accountImg {
             min-height: 2rem;
             min-width: 2rem;
-        }
-
-        .leaderBoard button {
-            background-repeat: no-repeat;
         }
 
         .rankedAccount h3 {
             line-height: 0;
         }
 
+        .rankedAccount .account:hover {
+            background: #3ac962;
+        }
 
-        /* footer; info */
-        .info {
+
+        /* footer */
+        footer {
             min-height: 20vh;
-            /* padding: 0% 1rem; */
-            /* background: green; */
-            background: #0a0a0a;
+            background-image: linear-gradient(45deg, #1a1a1a, #292929);
+
             display: flex;
             justify-content: space-between;
-            /* justify-content: center; */
             align-items: center;
             padding: 1rem;
-            width: 100vw;
-            /* box-sizing: border-box; */
+            border-top: #27f060 2px solid;
+            gap: 1rem;
+            width: 100%;
         }
 
         .contact,
-        .features,
-        .statics {
+        .statics,
+        .features {
             display: flex;
             justify-content: space-around;
             flex-direction: column;
             align-items: center;
-            /* background: #29D659; */
             min-height: 15vh;
-            width: 20vw;
             border-radius: .5rem;
             transition: .1s linear;
             background: white;
+            padding: 1rem;
         }
 
         .contact:hover,
@@ -397,40 +445,89 @@
             box-shadow: 3px 3px 0px 0px #29D659;
         }
 
-        .contact img,
-        .features img,
-        .statics img {
-            /* height: 2rem; */
+        .logoPart {
+            /* background: red; */
+            height: 1rem;
+            width: 2rem;
+            margin-top: 1rem;
+            transform: rotateZ(-15deg);
+            z-index: 1001;
         }
 
-        .features {
-            width: 50vw;
+
+        .projectsInfo {
+            display: flex;
+            width: 100%;
+            justify-content: space-around;
+            gap: .3rem;
         }
 
-        .features div {
-            background: #1a1a1a;
-            color: white;
-            margin: .1rem;
+        .projectStatics {
+            background: #54db7b;
+            background-image: linear-gradient(135deg, #6ada89, #3ac962);
+            /* background: red; */
+            border-radius: .3rem;
+            padding: .3rem;
+            display: flex;
+            flex-direction: column;
+            gap: .3rem;
         }
 
-        .features li {
-            direction: ltr;
+        .statics li b {
+            color: red;
         }
 
         .statics img {
             height: 1rem;
         }
 
-        footer .info p {
-            /* line-height: 0%; */
-            margin: .8rem;
+        .statics li {
+            background: #C0F9D0;
+            background-image: linear-gradient(135deg, #9cffb8, #54ff85);
+
+            border-radius: .4rem;
+            margin-bottom: .2rem;
         }
+
+
+        .features {
+            width: fit-content;
+        }
+
+        .features img {
+            height: 1rem;
+        }
+
+        .features li b {
+            color: red;
+        }
+
+        .features li {
+            direction: rtl;
+            background: #1a1a1a;
+            color: white;
+            margin: .1rem;
+            padding: .3rem;
+            border-radius: .3rem;
+            list-style-type: none;
+
+        }
+
+        /* .features{
+    width: 50vw;
+}
+.features div{
+    background: #1a1a1a;
+    color: white;
+    margin: .1rem;
+} */
 
 
 
         /* elements */
         body {
             margin: 0;
+            overflow-x: hidden;
         }
 
         main div,
@@ -444,15 +541,10 @@
             direction: rtl;
         }
 
-        body {
-            overflow-x: hidden;
-            background: #1F2721;
-            margin: 0;
-            overflow: hidden;
-        }
-
         body * {
-            /* box-sizing: border-box; */
+            box-sizing: border-box;
+            font-family: 'Prosto One', 'Changa';
+            font-size: .8rem;
         }
 
         img {
@@ -460,6 +552,11 @@
             background-position: center;
             background-repeat: no-repeat;
             height: 2rem;
+            pointer-events: none;
+        }
+
+        input[type=text] {
+            font-size: 1rem;
         }
 
         input[type=file] {
@@ -476,27 +573,17 @@
             background-size: contain;
         }
 
-        li {
-            background: #C0F9D0;
-            border-radius: .4rem;
-            margin-bottom: .2rem;
+
+        ::-webkit-scrollbar {
+            width: 6px;
+            border-left: 1px solid #292929;
         }
 
-        label {
-            background: #54db7b;
-            cursor: pointer;
-            padding: .4rem;
-            transition: .2s linear;
-            border-radius: .2rem;
+        ::-webkit-scrollbar-thumb {
+            background-color: #33a353;
         }
 
-        label:hover {
-            background: #33a353;
-        }
 
-        input {
-            font-size: 1.5rem;
-        }
 
 
         /* shared */
@@ -506,18 +593,21 @@
             display: none;
         }
 
+        .teamEle {
+            display: none;
+        }
+
         .box {
             background-color: #27f060;
+            /* background-image: linear-gradient(135deg,  #27f060, #22c751); */
+            background-image: linear-gradient(135deg, #27F060, #21C24F);
+
             padding: .5rem;
             border-radius: .5rem;
             transition: .1s linear;
             cursor: pointer;
         }
 
-        /* main .box{
-    background: #1a1a1a;
-    color: white;
-} */
         .box:hover {
             background-color: #33a353;
             border-radius: .7rem;
@@ -531,6 +621,7 @@
 
         .account {
             display: flex;
+            flex-direction: row;
             gap: .6rem;
             justify-content: center;
             align-items: center;
@@ -543,8 +634,6 @@
             border: #0a0a0a 1px solid;
         }
 
-
-
         .on {
             background: #1b1b1b;
             color: white;
@@ -552,36 +641,68 @@
 
         .on:hover {
             background: #333333;
-            /* background: #df2727; */
-            background: #33a353;
-        }
-
-        #displayCompletedRoutes,
-        #displayUncompletedRoutes {
-            padding: .2rem;
-            border-radius: .2rem;
-            /* color: black;
-    background: #1a1a1a; */
         }
 
         .on2 {
-            background: #1bf057;
+            /* background: #1bf057; */
+            background-image: linear-gradient(135deg, #27F060, #21C24F);
+
         }
 
         .red {
             background: #ff2a2a;
+            background-image: linear-gradient(135deg, #ED2121, #CD1A1A);
         }
 
         .green {
             background: #27f060;
+            background-image: linear-gradient(135deg, #27F060, #21C24F);
         }
 
         .black {
-            background: #0a0a0a;
+            background: #1b1b1b;
+            background-image: linear-gradient(135deg, #1A1A1A, #0E0E0E);
         }
 
         .white {
             background: rgb(245, 245, 245);
+            background-image: linear-gradient(135deg, #F5F5F5, #DEDEDE);
+        }
+
+        /* mobile */
+
+        @media all and (max-width: 500px) {
+            main {
+                flex-direction: column;
+            }
+
+            body * {
+                font-size: .8rem;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: .2rem;
+            }
+
+            .contact,
+            .features,
+            .statics {
+                width: 90vw;
+            }
+
+            /* leaderboard */
+            .leaderBoard {
+                width: 90vw;
+            }
+
+            .rankingHeader {
+                height: 2rem;
+            }
+
+            .box {
+                padding: .2rem;
+            }
         }
 
 
@@ -635,201 +756,100 @@
         .sureBtn:hover {
             background: rgb(34, 106, 173);
         }
-
-
-        /* mobile */
-
-        @media all and (max-width: 500px) {
-            body * {
-                font-size: .6rem;
-            }
-
-            header {
-                padding: 0;
-            }
-
-            img {
-                height: 1.5rem;
-            }
-
-            .btns * {
-                font-size: .7rem;
-            }
-
-            .btns {
-                margin: 0 0 3rem 0;
-                width: 5rem;
-
-            }
-
-            footer {
-                padding-top: 2rem;
-            }
-
-            /* leaderboard */
-            .leaderBoard {
-                /* position: absolute; */
-                /* top: 2rem; */
-                /* transform: translate(0, 2rem); */
-                width: 100vw;
-            }
-
-            .leaderBoard img {
-                height: 1rem;
-            }
-
-            .rankingHeader {
-                height: 2rem;
-                font-size: small;
-            }
-
-            .rankedAccount {
-                /* justify-content: space-evenly; */
-                height: fit-content;
-            }
-
-            .rankedAccount .account {
-                /* min-width: fit-content; */
-
-                width: 5rem;
-                /* width: 3rem; */
-            }
-
-            .rankedAccount span {
-                font-size: small;
-            }
-
-            .rankedAccount>h3,
-            .rankedAccount div {
-                font-size: .7rem;
-            }
-
-            .info {
-                flex-direction: column;
-                gap: 1rem;
-
-            }
-
-            .info div {
-                width: 100%;
-                padding: .1rem;
-            }
-
-            .features img {
-                height: 1rem;
-            }
-
-            footer .info p {
-                line-height: auto;
-                margin: auto;
-            }
-
-            .box {
-                padding: .2rem;
-            }
-
-            #footer-di {
-                font-size: 2rem;
-                padding: .3rem;
-            }
-        }
     </style>
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js');
-            });
-        }
-    </script>
-
 </head>
 
 <body>
+
     <header>
         <!-- logo -->
-        <div class="flex" style="gap: .2rem;">
-            <div class="logo box">
-                <a href="https://kadum2.github.io/ivc/">
-                    <div class="black"></div>
-                    <div class="red"></div>
-                    <div class="white"></div>
-                    <!-- <div class="green"></div> -->
-                </a>
-            </div>
-            <span id="footer-di" class="box">
-                <a src="https://kadum2.github.io/ivc/imgs/hamburger-menu-icon.png"> </span> <a
-                href="../admin/index.html" class="box">admin</a>
+        <div class="links">
+            <a href="https://kadum2.github.io/digital-aid" class="logo box">
+                <div class="black"></div>
+                <div class="red"></div>
+                <div class="white"></div>
+                <!-- <div class="green"></div> -->
+            </a>
+
+            <a href="https://kadum2.github.io/publicline/home" class="box">
+                <img src="https://kadum2.github.io/publicline/home/imgs/publicline-logo.png" alt="">
+            </a>
+
+            <button id="asideDi" class="box">
+                <img src="https://kadum2.github.io/publicline/home/imgs/general/hamburger-menu-icon.png" alt="">
+            </button>
+
+            <button class="box" id="translateToEn">en</button>
         </div>
+
 
         <!-- title -->
-        <!-- <p>publicline</p> -->
-        <h2 id="projectName" class="box"> publicline| الخط العام</h2>
+        <h2 id="projectName" class="box"> publicline </h2>
 
         <!-- auth; auth-di, auth-state -->
-        <div id="auth-di" class="auth box">
+        <div id="miniProfileDi" class="box">
             <div class="logged" style="height: fit-content;">
-                <div class="flex">
-                    <img class="minicuserimg">
+                <div class="flex currentAccount">
+                    <img id="currentAccountImgDi">
+                    <p id="currentAccountUsernameDi">username</p>
                     <p class="teamEle" style="line-height: none; padding:0;
-                color:white; font-size: .8rem;">team</p>
+            color:white; font-size: .8rem;">team</p>
                 </div>
             </div>
+
             <div class="notlogged">
-                make account
+                انشأ حساب
             </div>
-            <div class="makeprofile">
-                make profile
+            <div class="halfLogged">
+                اكمل البيانات
             </div>
         </div>
 
-        <div class="authstate">
+        <div id="miniProfile">
+
             <div class="logged">
-                <a class="flex box" id="profileLink" href="">
-                    <img class="cuserimg">
-                    <p class="cuserusername" style="line-height: 0;">username</p>
+                <p>حسابك </p>
+                <!-- account link? -->
+                <a class="flex box currentAccount" id="currentAccountLink" href="">
+                    <img id="currentAccountImgMini">
+                    <p id="currentAccountUsernameMini" style="line-height: 0;">username</p>
                 </a>
                 <b>
-                    <p class="cusername"></p>
+                    <p id="currentAccountName"></p>
                 </b>
-                <p class="cuserbio">bio</p>
-                <div class="cuserpoints" style="display: inline;">
-                    <span class="addedRoutes">
-                        <img src="https://kadum2.github.io/ivc/imgs/publicline/add-route-icon.png" alt="">
-                        <span></span>
-                    </span>
-                    <span class="votes">
-                        <img src="https://kadum2.github.io/ivc/imgs/publicline/vote-icon.png" alt="">
-                        <span></span>
-                    </span>
-                </div>
-                <button class="box" id="signoutbtn" style="display: inline;">logout</button>
+                <p id="currentAccountBio">bio</p>
+                <button class="box" id="signoutBtn" style="display: inline;">logout</button>
             </div>
-            <div class="notlogged">
-                <div id="register">
-                    <input type="text" class="em" placeholder="em">
-                    <input type="text" class="pw" placeholder="pw">
-                    <button id="registerbtn" class="box">register</button>
-                </div>
-                <!-- <br> -->
-                <div id="signin">
-                    <input type="text" class="em" placeholder="em" id="signinUsername">
-                    <input type="text" class="pw" placeholder="pw" id="signinUsername">
-                    <button id="signinbtn" class="box">signin</button>
-                </div>
-                <h3>or</h3>
-                <button id="bygoogle" class="box">register with google <img
-                        src="https://kadum2.github.io/ivc/imgs/publicline/google-logo.png" alt="">
-                </button>
-            </div>
-            <div class="makeprofile">
+            <div class="halfLogged">
+                <p>انت الان مسجل: يجب اكمال البيانات لانشاء حساب </p>
                 <input type="text" id="username" placeholder="username">
                 <input type="text" id="name" placeholder="name">
                 <input type="text" id="bio" placeholder="bio">
-                <input type="file" id="userimg">
-                <button id="makeprofilebtn">submit</button>
+                <label for="userImg" id="userImgUpload" class="box">upload image</label>
+                <input type="file" id="userImg">
+                <button id="makeProfileBtn" class="box">submit</button>
 
-                <button id="signoutsebtn">logout</button>
+                <button id="halfLoggedSignoutBtn" class="box">logout</button>
 
+            </div>
+
+            <div class="notLogged">
+                <p>تسجيل الدخول: </p>
+                <div id="register">
+                    <input type="text" class="em" placeholder="em">
+                    <input type="text" class="pw" placeholder="pw">
+                    <button id="registerBtn" class="box">register</button>
+                </div>
+                <br>
+                <div id="signin">
+                    <input type="text" class="em" placeholder="em" id="signinUsername">
+                    <input type="text" class="pw" placeholder="pw" id="signinUsername">
+                    <button id="signinBtn" class="box">signin</button>
+                </div>
+                <h3>or</h3>
+                <button id="byGoogle" class="box">register with google <img
+                        src="https://kadum2.github.io/publicline/home/imgs/general/google-logo.png" alt="">
+                </button>
             </div>
 
         </div>
@@ -840,12 +860,14 @@
         <div id="map"></div>
 
         <!-- collect data; controllers -->
-        <div class="btns">
-            <button class="box" id="addmode">
+        <div id="controller">
+            <button class="box" id="addRouteMode"
+                style="background-image: url('https://kadum2.github.io/publicline/home/imgs/add-route-icon.png');background-color: #27f060;">
                 +
+                <!-- <img src="https://kadum2.github.io/publicline/home/imgs/add-route-icon.png" alt=""> -->
             </button>
 
-            <div id="oBtns">
+            <div id="newRouteDetails">
                 <input type="text" name="" id="routeName" placeholder="اسم المسار">
                 <div class="deletebtns">
                     <button class="box" id="cancel-step">الغاء الخطوة</button>
@@ -857,20 +879,8 @@
                 <button class="box" id="send"> ارسال المسار</button>
             </div>
         </div>
-        <button id="makeLocLink" class="box"><img src="https://kadum2.github.io/ivc/imgs/publicline/red-pin-icon.png"
-                alt="" style="pointer-events: none;">
-        </button>
-
-        <div id="message">
-            <!-- <div id="laodingMessage" class="box">loading</div> -->
-            <!-- <div id="sendingMessage" class="box">sending</div> -->
-            <!-- <div id="sentMessage" class="box">sent</div> -->
-            <!-- <div id="errorMessage" class="box">error; full the rest data</div> -->
-
-
-            <div id="sendingDataMessage" class="box">loading data</div>
-            <div id="errorMessage" class="box">some thing is wrong</div>
-        </div>
+        <button id="makeLocLink" class="box"><img src="https://kadum2.github.io/publicline/home/imgs/red-pin-icon.png"
+                alt="" style="pointer-events: none;"></button>
 
         <div id="routesToDisplay">
             <button id="displayCompletedRoutes">
@@ -880,135 +890,184 @@
                 غير كاملة
             </button>
         </div>
+
+
+        <div id="messages">
+            <div id="greenMessage" class="box green">getting, sending, sent</div>
+            <div id="redMessage" class="box red">error, no valid data, full the rest</div>
+        </div>
+
     </main>
 
-    <footer>
-        <div class="footerflex">
-            <div class="leaderBoard">
-                <span style="margin-bottom: 1rem;">
-                    <p style="color: white; display: inline;">leaderBoard</p>
-                    <!-- leaderBoard -->
-                    <!-- <button id="displayUsersRanking" class="">users</button>
-                    <button id="displayteamsRanking" class="">team</button> -->
-                    <a href="#me">
-                        <button class="box">me</button>
+
+    <aside>
+        <!-- leaderboard -->
+        <div class="leaderBoard">
+
+            <div class="rankingSections" style="margin-bottom: 1rem;">
+                <p style="color: white; display: inline;">leaderBoard</p>
+
+                <button id="displayUsersRanking" class="">users</button>
+                <button id="displayteamsRanking" class="">team</button>
+                <button href="#me" class="box">me</button>
+            </div>
+
+            <div class="rankingHeader">
+                <button id="rankingSorting" class="box">المركز</button>
+                <button id="accountHeader" class="box">الحساب</button>
+                <div class="points">
+                    <button class="box" id="addedRoutesSorting"
+                        style="background-image: url('https://kadum2.github.io/publicline/home/imgs/add-bus-icon-green-blue-green-blue.png');"></button>
+                    <button class="box" id="votesSorting"
+                        style="background-image: url('https://kadum2.github.io/publicline/home/imgs/vote-icon.png');"></button>
+                    <button class="box" id="totalSorting">=</button>
+                </div>
+            </div>
+            <br>
+            <div id="usersRanking">
+
+                <!-- prototyped account -->
+                <div class="rankedAccount">
+                    <div class="ranking points">${index+1}</div>
+                    <div class="account flex" style="justify-content: flex-start;">
+                        <img class="accountImg" style="background-image: url('${account.img}');">
+                        <h3 class="accountUsername ranked">${account.userName}</h3>
+                    </div>
+
+                    <div class="publiclinePoints points">${points}</div>
+                    <div class="bygreenPoints points">${points}</div>
+                    <div class="total points">${account.red.length+account.green.length}</div>
+                </div>
+            </div>
+
+            <div id="teamsRanking" style="display: none;">
+                <!-- prototyped account -->
+                <div class="rankedAccount">
+                    <div class="ranking">${index+1}</div>
+                    <div class="account flex" style="justify-content: flex-start;">
+                        <img class="accountImg" style="background-image: url('${account.img}');">
+                        <h3 class="accountUsername ranked">${account.userName}</h3>
+                    </div>
+
+                    <div class="publiclinePoints">${points}</div>
+                    <div class="bygreenPoints">${points}</div>
+                    <div class="total">${account.red.length+account.green.length}</div>
+                </div>
+            </div>
+
+        </div>
+
+        <footer>
+            <div class="contact">
+                <span class="red logoPart"></span>
+                <h2>تواصل </h2>
+                <span>
+                    <a href="https://www.instagram.com/kadum_0/" target="_blank">
+                        <img src="https://kadum2.github.io/publicline/home/imgs/general/instagram-logo.png" alt="">
+                    </a>
+                    <a href="t.me/kadum0" target="_blank">
+                        <img src="https://kadum2.github.io/publicline/home/imgs/general/telegram-logo.png" alt="">
+                    </a>
+                    <a href="https://www.github.com/kadum2" target="_blank">
+                        <img src="https://kadum2.github.io/publicline/home/imgs/general/github-logo.png" alt="">
                     </a>
                 </span>
-                <div class="rankingHeader">
-                    <!-- <span>none</span> -->
-                    <button id="rankingSorting" class="box">ranking</button>
-                    <button id="accountHeader">account</button>
-                    <button class="box" id="addedRoutesSorting"
-                        style="background-image: url('https://kadum2.github.io/ivc/imgs/publicline/add-route-icon.png');">
-                    </button>
-                    <button class="box" id="votesSorting"
-                        style="background-image: url('https://kadum2.github.io/ivc/imgs/publicline/vote-icon.png');"></button>
-                    <button class="box" id="totalSorting">total points</button>
-                </div>
 
-                <div id="usersRanking">
-
-                    <!-- prototyped account -->
-
-                    <div class="rankedAccount">
-                        <span class="ranking">${index+1}</span>
-                        <div class="account flex" style="justify-content: flex-start;">
-                            <img class="accountImg" style="background-image: url('${account.img}');">
-                            <h3 class="accountUsername ranked">${account.userName}</h3>
-                        </div>
-
-                        <h3 class="red">${account.red.length}</h3>
-                        <h3 class="green">${account.green.length}</h3>
-                        <h3 class="makingGreen">not yet</h3>
-                        <h3 class="total">${account.red.length+account.green.length}</h3>
-                    </div>
-                </div>
-
-                <div id="teamsRanking" style="display: none;">
-                    <!-- prototyped account -->
-                    <div class="rankedAccount">
-                        <span class="ranking">${index+1}</span>
-                        <div class="account">
-                            <img class="accountImg" style="background-image: url('${account.img}');">
-                            <h3 class="accountUsername ranked">${account.userName}</h3>
-                        </div>
-
-                        <h3 class="red">${account.red.length}</h3>
-                        <h3 class="green">${account.green.length}</h3>
-                        <h3 class="makingGreen">not yet</h3>
-                        <h3 class="makingGreen">${account.red.length+account.green.length}</h3>
-                    </div>
-                </div>
+                <p style="line-height: 0;">kadum1230@gmail.com</p>
+                <p style="line-height: 0;">makeitgreen002@gmail.com</p>
 
             </div>
 
-            <div class="info">
-                <div class="contact">
-                    <span class="red"></span>
-                    <h2>تواصل معنا</h2>
-                    <span>
-                        <a href="https://www.instagram.com/kadum_0/" target="_blank">
-                            <img src="https://kadum2.github.io/ivc/imgs/instagram-logo.png" alt="">
-                        </a>
-                        <a href="t.me/kadum0" target="_blank">
-                            <img src="https://kadum2.github.io/ivc/imgs/telegram-logo.png" alt="">
-                        </a>
-                        <a href="https://www.github.com/kadum2/" target="_blank">
-                            <img src="https://kadum2.github.io/ivc/imgs/github-logo.png" alt="">
-                        </a>
-                    </span>
-                    <!-- <p>facebook</p> -->
-                    <p>email; makeitgreen002@gmail.com</p>
-                    <p>email; kadum.jawad@gmail.com</p>
+            <div class="features">
+                <div class="black logoPart"></div>
 
-                    <div class="contact">
-                        <a href="https://github.com/kadum2/publicline">
-                            <div class="box">source code</div>
-                        </a>
-                        <a href="https://github.com/kadum2/ivc/docs/publicline">
-                            <div class="box">التفاصيل</div>
-                        </a>
-                    </div>
+                <h2>الهدف و المميزات</h2>
+                <li>
+                    موقع و تطبيق لعرض خريطة مسارات النقل العام في العراق و تمكين
+                    المستخدم من اضافة المزيد من المسارات اليها, لتسهيل التنقل
+                    بتكاليف قليلة
+                </li>
 
-                </div>
-                <div class="features">
-                    <span class="black"></span>
-                    <h2>مميزات الموقع: الغرض و الاستخدام </h2>
-                    <div class="box">
-                        اظهار مسارات النقل العام
-                        <img src="https://kadum2.github.io/ivc/imgs/publicline/f4-choose-display.png" alt="">
-                    </div>
-                    <div class="box">
-                        اضافة مسارات
-                        <img src="https://kadum2.github.io/ivc/imgs/publicline/f1-add-route-btn.png" alt="">
-                    </div>
-                    <div class="box">
-                        التصويت على المسار
-                        <img src="https://kadum2.github.io/ivc/imgs/publicline/f2-vote.png" alt="">
-                    </div>
+                <br>
 
-
-                </div>
-                <div class="statics">
-                    <span class="green"></span>
-                    <h2>نتائج المشروع</h2>
-                    <li>عدد المسارات المضافة <img src="https://kadum2.github.io/ivc/imgs/publicline/add-route-icon.png"
-                            alt=""><b id="addedRoutesCounter" style="color: red;">0</b>
-                    <li>تم التصويت <img src="https://kadum2.github.io/ivc/imgs/publicline/vote-icon.png" alt=""><b
-                            id="votesCounter" style="color: red;">0</b>
-                    <li>عدد المستخدمين: <b id="accountsCounter" style="color: red;">0</b></li>
-
+                <div>
+                    <li>اظهار مسارات النقل العام: مكتملة و غير مكتملة<img
+                            src="https://kadum2.github.io/publicline/home/imgs/f4-choose-display.png" alt="">
                     </li>
+                    <li>اضافة مسار <img src="https://kadum2.github.io/publicline/home/imgs/add-route-icon.png" alt="">
+                    </li>
+                    <li>التصويت على المسار, لزيادة دقتها <img
+                            src="https://kadum2.github.io/publicline/home/imgs/vote-icon.png" alt=""></li>
+
                 </div>
 
+
             </div>
-        </div>
-        </div>
 
-    </footer>
 
-    <!-- main script  -->
-    <script type="module">
+            <div class="statics">
+                <div class="green logoPart"></div>
+                <h2>نتائج </h2>
+                <div class="projectsInfo">
+
+                    <div class="projectStatics">
+                        <b>ivc <img src="https://kadum2.github.io/publicline/home/imgs/general/ivc-logo.png" alt=""></b>
+                        <li>عدد المستخدمين: <img
+                                src="https://kadum2.github.io/publicline/home/imgs/general/account-icon.png" alt=""> <b
+                                id="accountsCounter">0</b>
+                        </li>
+                        <li>عدد المساهمات: <img
+                                src="https://kadum2.github.io/publicline/home/imgs/general/account-icon.png" alt=""> <b
+                                id="contriCounter">0</b>
+                        </li>
+                    </div>
+
+                    <div class="projectStatics">
+                        <b>publicline <img
+                                src="https://kadum2.github.io/publicline/home/imgs/publicline-logo-green-blue.png"
+                                alt=""></b>
+                        <li>المسارات المضافة <img
+                                src="https://kadum2.github.io/publicline/home/imgs/add-route-icon.png">
+                            <b id='routesCounter'>0</b>
+                        </li>
+                        <li>تم التصويت: <img src="https://kadum2.github.io/publicline/home/imgs/vote-icon.png" alt="">
+                            <b id="votesCounter">0</b></li>
+
+                    </div>
+
+                    <br>
+                    <div class="projectStatics">
+                        <b>bygreen <img src="https://kadum2.github.io/publicline/home/imgs/bygreen/bygreen-logo.png"
+                                alt=""></b>
+                        <li>تم زراعتها <img
+                                src="https://kadum2.github.io/publicline/home/imgs/bygreen/green-icon-stroked.png"
+                                alt=""><b id="greenCounter">0</b>
+                        </li>
+                        <li>تحتاج الى زراعة <img
+                                src="https://kadum2.github.io/publicline/home/imgs/bygreen/red-icon-stroked.png"> <b
+                                id="redCounter">0</b>
+                        </li>
+                        <li>الحملات الحالية: <img
+                                src="https://kadum2.github.io/publicline/home/imgs/bygreen/yellow-icon-stroked.png"> <b
+                                id="yellowCounter">0</b>
+                        </li>
+                        <li>عدد النباتات المزروعة: <img
+                                src="https://kadum2.github.io/publicline/home/imgs/bygreen/plant-icon.png" alt=""> <b
+                                id="contriCounter">0</b></li>
+                        <li>عدد المشاتل: <img src="https://kadum2.github.io/publicline/home/imgs/bygreen/shop-icon.png"
+                                alt=""> <b id="shopsCounter">0</b></li>
+                    </div>
+                    <br>
+
+                </div>
+            </div>
+        </footer>
+
+
+
+    </aside>
+
+    <script type='module'>
 
 
         // firebase 
@@ -1044,6 +1103,14 @@ const bygreenStorage = getStorage(bygreen)
 
 /////////auth state 
 
+// let greenColor = '#27F060'
+let greenColor = "#68F690"
+
+let darkerGreenColor = '#21C24F'
+
+let blueColor = '#3388FF'
+let darkerBlueColor = '#075FDA'
+
 
 // map configure
 const map = L.map('map', { zoomControl: false }).setView([33.396600, 44.356579], 9); 
@@ -1060,21 +1127,23 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
 }).addTo(map);
 
         let busPin = L.icon({
-            iconUrl: "https://kadum2.github.io/ivc/imgs/publicline/add-bus-icon.png",
+            iconUrl: "https://kadum2.github.io/publicline/home/imgs/add-bus-icon.png",
+            shadowSize: [50, 64], // size of the shadow
+            shadowAnchor: [4, 62], // the same for the shadow
+            iconSize: [30, 30],
+            // iconAnchor: [12, 41],
+            iconAnchor: [12, 25],
+            popupAnchor: [0, -30] 
+
+        });
+        let redPin = L.icon({
+            iconUrl: "https://kadum2.github.io/publicline/home/imgs/red-pin-icon.png",
             shadowSize: [50, 64], // size of the shadow
             shadowAnchor: [4, 62], // the same for the shadow
             iconSize: [25, 41],
             iconAnchor: [12, 41],
             popupAnchor: [0, -30] 
 
-        });
-        let redPin = L.icon({
-            iconUrl: "https://kadum2.github.io/ivc/imgs/publicline/red-pin-icon.png",
-            shadowSize: [50, 64], // size of the shadow
-            shadowAnchor: [4, 62], // the same for the shadow
-            iconSize: [25, 41],
-            iconAnchor: [12, 41],
-            popupAnchor: [0, -30] 
         });
 
 
@@ -1087,10 +1156,15 @@ let accountsList = []
 
 let tempMarker 
 
+const provider = new GoogleAuthProvider()
+
+
 ////////////////////////////////////////////////ui-js
 
+
+
 ///////register 
-document.querySelector('#registerbtn').addEventListener('click', (ev)=>{
+document.querySelector('#registerBtn').addEventListener('click', (ev)=>{
     // check if valid data
 
     // send 
@@ -1116,7 +1190,7 @@ document.querySelector('#registerbtn').addEventListener('click', (ev)=>{
 })
 
 //////signin
-document.querySelector('#signinbtn').addEventListener('click', (ev)=>{
+document.querySelector('#signinBtn').addEventListener('click', (ev)=>{
     console.log('to sign in')
     console.log(ev.target.parentElement)
     // console.log('click signin', document.querySelector('#signinUsername').value.length)
@@ -1135,19 +1209,21 @@ document.querySelector('#signinbtn').addEventListener('click', (ev)=>{
 })
 
 //////signout 
-document.querySelector('#signoutbtn').addEventListener('click', ()=>{
+document.querySelector('#signoutBtn').addEventListener('click', ()=>{
+    signOut(bygreenAuth, (result)=>{console.log(result)})
+})
+document.querySelector('#halfLoggedSignoutBtn').addEventListener('click', ()=>{
     signOut(bygreenAuth, (result)=>{console.log(result)})
 })
 
-///////sign with google
-const provider = new GoogleAuthProvider()
-document.querySelector('#bygoogle').addEventListener('click', ()=>{
+// sign with google  
+document.querySelector('#byGoogle').addEventListener('click', ()=>{
     signInWithPopup(bygreenAuth, provider).then((cred)=>console.log(cred))
 
 })
 
 //////make profile; 
-document.querySelector('#makeprofilebtn').addEventListener('click', async (ev)=>{
+document.querySelector('#makeProfileBtn').addEventListener('click', async (ev)=>{
     //////////set user in the users collection user current user uid 
     let q = query(collection(bygreenDb, 'users'), where('username', '==', ev.target.parentElement.querySelector('#username').value))
     let foundDoc = await getDocs(q)
@@ -1161,9 +1237,9 @@ document.querySelector('#makeprofilebtn').addEventListener('click', async (ev)=>
     if(!found){
         console.log('no taken')
 
-        let fileRef = ref(bygreenStorage, '/userimgs/' + new Date().toISOString().replace(/:/g, '-') +document.querySelector("#userimg").files[0].name.replaceAll(" ","") )
+        let fileRef = ref(bygreenStorage, '/https://kadum2.github.io/publicline/home/imgs/' + new Date().toISOString().replace(/:/g, '-') +document.querySelector("#userImg").files[0].name.replaceAll(" ","") )
 
-            uploadBytes(fileRef, document.querySelector("#userimg").files[0]).then(res=>{
+            uploadBytes(fileRef, document.querySelector("#userImg").files[0]).then(res=>{
                 getDownloadURL(res.ref).then(url=>{
                     console.log(url)
                     let imgUrl = url
@@ -1195,30 +1271,29 @@ document.querySelector('#makeprofilebtn').addEventListener('click', async (ev)=>
 
 })
 
-////authstate; mini profile di
-document.querySelector(".auth").addEventListener("click", (e)=>{
-    e.target.classList.toggle('on')
-    if(e.target.classList.contains('on')){
-        document.querySelector(".authstate").style.display = 'block'
+
+
+
+
+//////////////////ui-js; 
+document.querySelector("#miniProfileDi").addEventListener("click", (ev)=>{
+    ev.target.classList.toggle('on')
+    if(ev.target.classList.contains('on')){
+        document.querySelector("#miniProfile").style.display = 'block'
     }else{
-        document.querySelector(".authstate").style.display = 'none'
+        document.querySelector("#miniProfile").style.display = 'none'
     }
 })
 
+document.querySelector('#asideDi').addEventListener('click', (ev)=>{
+    ev.target.classList.toggle('red')
+    ev.target.classList.contains('red')?document.querySelector('aside').style.display = 'flex':document.querySelector('aside').style.display = 'none'
+})
+
+
 //leaflet basic map
-        ////set icons 
 
-        ///////display the footer 
-        document.querySelector("#footer-di").addEventListener("click", (e)=>{
-            e.target.classList.toggle("on")
-            if(e.target.classList.contains("on")){
-                document.querySelector("footer").style.display = 'block'
-            }else{
-                document.querySelector("footer").style.display = 'none'
-            }
-        })
-
-        map.on('zoomend', function () {
+    map.on('zoomend', function () {
             // let currentZoom = map.getZoom();
             console.log('current zoom;',map.getZoom()  , map.getBounds())
             routesObjects.forEach(route=>{
@@ -1234,25 +1309,28 @@ document.querySelector(".auth").addEventListener("click", (e)=>{
                 route.setStyle({weight: 25})
             }
             })
-        });
+    });
 
-        document.querySelector('#makeLocLink').addEventListener('click', (ev)=>{ev.target.classList.toggle('on')})
+    document.querySelector('#makeLocLink').addEventListener('click', (ev)=>{ev.target.classList.toggle('on')})
 
-        document.querySelector("#addmode").addEventListener("click", (ev)=>{
+    document.querySelector("#addRouteMode").addEventListener("click", (ev)=>{
             ev.target.classList.toggle("on")
             if(ev.target.classList.contains('on')){
-            document.querySelector('#oBtns').style.display='flex'
+            document.querySelector('#newRouteDetails').style.display='flex'
             ////delete all routes 
             map.removeLayer(hoveredRoute)
-            routesObjects.forEach(ee=>{
-                map.removeLayer(ee)
-            })
+            routesObjects.forEach(route=>map.removeLayer(route))
+            circlesObjects.forEach(circle=>map.removeLayer(circle))
+
+            // routesObjects.forEach(ee=>{ee.setStyle({opacity:0, interactive: false})})
+            // circlesObjects.forEach(ee=>{ee.setStyle({opacity:0, interactive: false})})
+
             }else{
                 deployRoutes(routes)
-                // addmode.style.backgroundColor = '#54db7b'
-                document.querySelector('#oBtns').style.display='none'
+                // addRouteMode.style.backgroundColor = '#54db7b'
+                document.querySelector('#newRouteDetails').style.display='none'
             }
-        })
+    })
 
 
 
@@ -1273,6 +1351,8 @@ votesSorting.addEventListener('click', (ev)=>{
 
 
 // display routes buttons
+
+
 displayCompletedRoutes.addEventListener('click', (ev)=>{
     console.log("display completed routes ")
     ev.target.classList.toggle('on2')
@@ -1353,8 +1433,8 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
         /////////////////////////////////get data 
 
         let hoveredRoute 
-        let hoveredPoint1
-        let hoveredPoint2
+        let hoveredstart
+        let hoveredend
         let type
 
         let routes 
@@ -1374,49 +1454,46 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
                     type = idTokenResult.claims
                     // if team 
                     if (idTokenResult.claims.team){
-                        document.querySelectorAll('.teamEle').forEach(teamEle=>{
-                            teamEle.style.display = 'inline-block'
-                        })
-                        // document.querySelector('.addYellow').style.display = 'block'
+                    document.querySelectorAll('.teamEle').forEach(teamEle=>teamEle.style.display = 'inline-block')
                     }
                 })
+        
                 let dbUserDoc = await getDoc(doc(bygreenDb, 'users', user.uid))
                 dbUser = dbUserDoc.data()
+        
+        
         
                 if(dbUser){
                 dbUser.id = dbUserDoc.id
         
                     ////registered
                     document.querySelectorAll('.logged').forEach(e=>{e.style.display = 'block'})
-                    document.querySelectorAll('.makeprofile').forEach(e=>e.style.display = 'none')
-                    document.querySelectorAll('.notlogged').forEach(e=>e.style.display = 'none')
+                    document.querySelectorAll('.halfLogged').forEach(e=>e.style.display = 'none')
+                    document.querySelectorAll('.notLogged').forEach(e=>e.style.display = 'none')
         
-                    ///insert the basic info; 
-                    document.querySelector('.minicuserimg').style.backgroundImage = `url('${dbUser.img}')`
-                    // document.querySelector(".minicuserusername").textContent = '@'+ dbUser.userName
-                    document.querySelector('.cuserimg').style.backgroundImage = `url('${dbUser.img}')`
-                    document.querySelector(".cuserusername").textContent = '@'+ dbUser.userName
-                    document.querySelector(".cusername").textContent = dbUser.name
-                    document.querySelector(".cuserbio").textContent = dbUser.bio
-                    document.querySelector("#profileLink").href = window.location.host+'/'+ dbUser.userName
+                    // di
+                    document.querySelector('#currentAccountImgDi').style.backgroundImage = `url('${dbUser.img}')`
+                    document.querySelector("#currentAccountUsernameDi").textContent = '@'+ dbUser.userName
         
-                    document.querySelector(".addedRoutes").querySelector('span').textContent = dbUser.addedRoutes.length
-                    document.querySelector(".votes").querySelector('span').textContent += dbUser.votes.length
-        
+                    // mini
+                    document.querySelector('#currentAccountImgMini').style.backgroundImage = `url('${dbUser.img}')`
+                    document.querySelector("#currentAccountUsernameMini").textContent = '@'+ dbUser.userName
+                    document.querySelector("#currentAccountName").textContent = dbUser.name
+                    document.querySelector("#currentAccountBio").textContent = dbUser.bio
+                    document.querySelector("#currentAccountLink").href = `https://kadum2.github.io/ivc/profile/${dbUser.userName}`
         
                 }else{
                     /////half registered; make profile
-                    document.querySelectorAll('.makeprofile').forEach(e=>e.style.display = 'block')
                     document.querySelectorAll('.logged').forEach(e=>e.style.display = 'none')
-                    document.querySelectorAll('.notlogged').forEach(e=>e.style.display = 'none')
+                    document.querySelectorAll('.halfLogged').forEach(e=>e.style.display = 'block')
+                    document.querySelectorAll('.notLogged').forEach(e=>e.style.display = 'none')
                 }
                 
             }else{
                 /////not registered
-                document.querySelectorAll('.notlogged').forEach(e=>e.style.display = 'block')
                 document.querySelectorAll('.logged').forEach(e=>e.style.display = 'none')
-                document.querySelectorAll('.makeprofile').forEach(e=>e.style.display = 'none')
-        
+                document.querySelectorAll('.halfLogged').forEach(e=>e.style.display = 'none')
+                document.querySelectorAll('.notlogged').forEach(e=>e.style.display = 'block')
                 dbUser = 'none'
             }
         
@@ -1446,32 +1523,64 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
     
                     console.log(docs)
     
-                    document.querySelector('#addedRoutesCounter').textContent = routes.length
-    
+                    document.querySelector('#routesCounter').textContent = docs.length
                     let votes = 0
                     docs.forEach(route=> votes += (route.upvotes.length + route.downvotes.length))
                     // document.querySelector('#votesCounter').textContent = docs.filter
                     document.querySelector('#votesCounter').innerHTML = votes
     
-    
-                    document.querySelector('#sendingDataMessage').style.display = 'none'
+                    document.querySelector('#greenMessage').style.display = 'none'
 
 
-                    completedRoutes = routes.filter(route=>route.point1 && route.point2)
-                    uncompletedRoutes = routes.filter(route=>!route.point1 || !route.point2)
+                    completedRoutes = routes.filter(route=>route.start && route.end)
+                    uncompletedRoutes = routes.filter(route=>!route.start || !route.end)
         
-                    deployRoutes(completedRoutes)
+                deployRoutes(completedRoutes)
                 displayCompletedRoutes.classList.toggle('on2')
                 deployRoutes(uncompletedRoutes)
                 displayUncompletedRoutes.classList.toggle('on2')
 
             })
-    
+
+            // data statics 
+        getDocs(collection(bygreenDb, 'pins')).then((data)=>{
+        let docs = []
+            data.docs.forEach(doc=>{
+                docs.push({...doc.data(), id: doc.id})
+            })
+
+            let red = 0
+            let green = 0
+            let yellow = 0
+            let redToGreen = 0
+
+            docs.forEach(generalPin=>{
+                generalPin.afterImgs?red++:green++
+                generalPin.next?yellow++:null
+                generalPin.redToGreen?redToGreen++:null
+            })
+
+            document.querySelector('#redCounter').textContent = red
+            document.querySelector('#greenCounter').textContent = green
+            document.querySelector('#yellowCounter').textContent = yellow
+            // document.querySelector('#redToGreenCounter').textContent = green
+    })
+
+        getDocs(collection(bygreenDb, 'shop')).then((data)=>{
+    let docs = []
+        data.docs.forEach(doc=>{
+            docs.push({...doc.data(), id: doc.id})
+        })
+        // console.log(docs[0].upvotes.length + docs[0].downvotes)
+        document.querySelector('#shopsCounter').textContent = docs.length
+    })
+
+
+
 
         if(window.location.href.includes('location')){
-
                     console.log('contains temp pin', window.location.href.indexOf('location'), window.location.href.slice(0, window.location.href.indexOf('location')))
-
+    
                     // make the pin
                     let currentPin = L.marker({
                 lat: window.location.href.split('/')[window.location.href.split('/').length-2].split(',')[0],
@@ -1481,8 +1590,9 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
                     // flyto it 
                     console.log(currentPin)
                     map.flyTo(currentPin._latlng, 16)
-                }
     
+        }
+
         })
 
 
@@ -1505,18 +1615,20 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
         let currentPath = [] //path object
 
         //circles
-        let point1 
-        let point2 
+        let start 
+        let end 
 
 
 
 
         // make the main route
         map.addEventListener('click', function (ev) {
-            if(document.querySelector("#addmode").classList.contains("on")){
+            if(document.querySelector("#addRouteMode").classList.contains("on")){
                 /////////disable all routes 
-                routesObjects.forEach(ee=>{ee.setStyle({opacity:0, interactive: false})})
-                console.log(routesObjects)
+                // routesObjects.forEach(ee=>{ee.setStyle({opacity:0, interactive: false})})
+                // circlesObjects.forEach(ee=>{ee.setStyle({opacity:0, interactive: false})})
+                console.log('routes; ',routesObjects)
+                console.log('circles; ', circlesObjects)
 
                 ////get data 
                 let latlng = map.mouseEventToLatLng(ev.originalEvent);
@@ -1545,61 +1657,59 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
                 tempMarker?map.removeLayer(tempMarker):null
 
                 if(window.location.href.includes('location')){
-                    tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: redBusPin}).bindPopup(`link; for github <br><a href='${window.location.href.slice(0, window.location.href.indexOf('location'))+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/'>${window.location.href.slice(0, window.location.href.indexOf('location'))+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/</a>`).addTo(map)
+                    tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: redPin}).bindPopup(`link; <br><a href='${window.location.href.slice(0, window.location.href.indexOf('location'))+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/'>${window.location.href.slice(0, window.location.href.indexOf('location'))+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/</a>`).addTo(map)
                     
                 }else{
 
-                    // github 
-                    if(window.location.href.includes('github')){
+                                // github 
+                                if(window.location.href.includes('github')){
 
-                        tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: redPin}).bindPopup(`link; for github <br><a href='https://kadum2.github.io/publicline/${'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/'>${'https://kadum2.github.io/publicline/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/</a>`).addTo(map)
-
-                    }else{
-                        tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: redPin}).bindPopup(`link; for others <br><a href='${window.location.hostname+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/'>${window.location.hostname+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/</a>`).addTo(map)
-                    }
-
-                }
+                                    tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: redPin}).bindPopup(`link; for github <br><a href='https://kadum2.github.io/publicline${'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/'>${'https://kadum2.github.io/publicline/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/</a>`).addTo(map)
+                    
+                                }else{
+                                    tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: redPin}).bindPopup(`link; for others <br><a href='${window.location.hostname+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/'>${window.location.hostname+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/</a>`).addTo(map)
+                                }
+                    
+        }
             }else{
-                tempMarker?map.removeLayer(tempMarker):null
+            tempMarker?map.removeLayer(tempMarker):null
             }
             }
         });
 
         /////adding points
-        document.querySelector("#point1").addEventListener('click', (e)=>{
+        document.querySelector("#start").addEventListener('click', (e)=>{
             e.target.classList.toggle("on")
             if(e.target.classList.contains('on')){
                 // get current making route; 
                 console.log(currentPath._latlngs[0])
-                point1 = L.circle(currentPath._latlngs[0], {radius: 600, color: 'red'}).addTo(map)
-                e.target.style.background = '#ff2a2a'
+                start = L.circle(currentPath._latlngs[0], {radius: 600, color: 'red'}).addTo(map)
+                // e.target.style.background = '#ff2a2a'
             }else{
-                // point1.removeLayer(map)/
-                map.removeLayer(point1)
-                e.target.style.background = '#1bf057'
+                // start.removeLayer(map)/
+                map.removeLayer(start)
+                // e.target.style.background = '#1bf057'
             }
         })
-        document.querySelector("#point2").addEventListener('click', (e)=>{
 
+        document.querySelector("#end").addEventListener('click', (e)=>{
             e.target.classList.toggle("on")
             if(e.target.classList.contains('on')){
                 // get current making route; 
                 console.log(currentPath._latlngs[currentPath._latlngs.length - 1])
-                point2 = L.circle(currentPath._latlngs[currentPath._latlngs.length - 1], {radius: 600, color: 'red'}).addTo(map)
-                e.target.style.background = '#ff2a2a'
+                end = L.circle(currentPath._latlngs[currentPath._latlngs.length - 1], {radius: 600, color: 'red'}).addTo(map)
+                // e.target.style.background = '#ff2a2a'
             }else{
-                // point1.removeLayer(map)/
-                map.removeLayer(point2)
-                e.target.style.background = '#1bf057'
+                // start.removeLayer(map)/
+                map.removeLayer(end)
+                // e.target.style.background = '#1bf057'
             }
 
         })
 
         ////cencel step
-        let cancelStep = document.querySelector("#cancel-step")
-        cancelStep.addEventListener("click", () => {
-
-
+        
+        document.querySelector("#cancel-step").addEventListener("click", () => {
             //ui 
 
             map.removeLayer(markers[markers.length - 1])
@@ -1610,10 +1720,24 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
             path.pop()
             // points.pop()
             map.removeLayer(currentPath)
-            currentPath = L.polyline(path).addTo(map)
-
+            currentPath = L.polyline(path, {color: 'red'}).addTo(map)
         })
 
+        //cancel route; fix later
+        // let cancelRoute = document.querySelector("#cancel-route")
+        // cancelRoute.addEventListener("click", () => {
+        //     //data 
+
+        //     path = []
+        //     map.removeLayer(currentPath)
+        //     currentPath = undefined
+        //     console.log(currentPath)
+
+        //     markers.forEach(e => map.removeLayer(e))
+        //     markers =[]
+        //     console.log(markers)
+
+        // })
 
 
 
@@ -1627,8 +1751,8 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
             let routeToSend = {}
             if(currentPath[0] || document.querySelector('#routeName').value){ /////available data to send; 
                 // routeToSend.path = currentPath._latlngs 
-                document.querySelector('#sendingDataMessage').textContent = 'sending'
-                document.querySelector('#sendingDataMessage').style.display = 'block'
+                document.querySelector('#greenMessage').textContent = 'sending'
+                document.querySelector('#greenMessage').style.display = 'block'
                 
                 console.log(currentPath)
                 let validRoute = []
@@ -1637,8 +1761,8 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
                 Object.values(currentPath._latlngs).forEach(e=>validRoute.push({lng: e.lng,lat: e.lat}))
                 routeToSend.path = validRoute
                 routeToSend.name = document.querySelector("#routeName").value
-                point1?routeToSend.point1 = true:routeToSend.point1 = false
-                point2?routeToSend.point2 = true:routeToSend.point2 = false
+                start?routeToSend.start = true:routeToSend.start = false
+                end?routeToSend.end = true:routeToSend.end = false
                 routeToSend.upvotes = []
                 routeToSend.downvotes = []
                 // currentUser?routeToSend.insertedBy = currentUser.email:routeToSend.insertedBy = null
@@ -1647,22 +1771,22 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
 
                 //////send; 
                 addDoc(collection(bygreenDb, 'unroutes'), routeToSend).then(e=>{
-                    document.querySelector('#sendingDataMessage').textContent = 'sent'
+                    document.querySelector('#greenMessage').textContent = 'sent'
                     location.reload()
 
                     setTimeout(() => {
-                        document.querySelector('#sendingDataMessage').style.display = 'none'
+                        document.querySelector('#greenMessage').style.display = 'none'
                     }, 1000);
 
                 })
             }else{
                 console.log('set the rest data')
-                document.querySelector("#errorMessage").textContent = 'اكمل ملئ البيانات و اضافة مسار كامل'
-                document.querySelector("#errorMessage").style.display='block'
+                document.querySelector("#redMessage").textContent = 'اكمل ملئ البيانات و اضافة مسار كامل'
+                document.querySelector("#redMessage").style.display='block'
 
                 setTimeout(() => {
-                    document.querySelector("#errorMessage").textContent = ''
-                    document.querySelector("#errorMessage").style.display='none'
+                    document.querySelector("#redMessage").textContent = ''
+                    document.querySelector("#redMessage").style.display='none'
                 }, 2000);
             }
     })
@@ -1755,28 +1879,17 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
 
             /////insert
             voteBtns.append(routeName, upvoteBtn, downvoteBtn, sureDiv)
-                let routeObject = L.polyline(e.path).bindPopup(voteBtns).addTo(map)
+                let routeObject = L.polyline(e.path, {color: greenColor}).bindPopup(voteBtns).addTo(map)
 
                 // routeObject.name = e.name
-                e.point1?circlesObjects.push(L.circle(e.path[0],{radius: 300, color: '#0171da', background: '#0171da'}).addTo(map)):null
-                e.point2?circlesObjects.push(L.circle(e.path[e.path.length-1],{radius: 300, color:'#0171da', background:'#0171da'}).addTo(map)):null 
-
-
-                // if(e.point1 && e.point2){
-                //     e.point1?completedCircles.push(L.circle(e.path[0],{radius: 300}).addTo(map)):null
-                //     e.point2?completedCircles.push(L.circle(e.path[e.path.length-1],{radius: 300}).addTo(map)):null 
-
-                // }else{
-                //     e.point1?uncompletedCircles.push(L.circle(e.path[0],{radius: 300}).addTo(map)):null
-                //     e.point2?uncompletedCircles.push(L.circle(e.path[e.path.length-1],{radius: 300}).addTo(map)):null 
-                // }
-
+                e.start?circlesObjects.push(L.circle(e.path[0],{radius: 300, color: darkerGreenColor, background: darkerGreenColor}).addTo(map)):null
+                e.end?circlesObjects.push(L.circle(e.path[e.path.length-1],{radius: 300, color:darkerGreenColor, background:darkerGreenColor}).addTo(map)):null 
                 
                 routeObject.upvotes = e.upvotes
                 routeObject.downvotes = e.downvotes
                 routeObject.id = e.id
-                routeObject.point1 = e.point1
-                routeObject.point2 = e.point2
+                routeObject.start = e.start
+                routeObject.end = e.end
                 
             /////content
                 ////////////if logged then allow to vote; 
@@ -1786,17 +1899,18 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
                     currentRouteId = e.id
 
                     ////////mobile; change color 
-                    routesObjects.forEach(e=>{e.setStyle({color: "#3388FF", opacity: .6})})
+                    routesObjects.forEach(e=>{e.setStyle({color: greenColor, opacity: .6})})
                     hoveredRoute?map.removeLayer(hoveredRoute):null
-                    hoveredRoute = L.polyline(ev.target._latlngs, {interactive: false})
+                    hoveredRoute = L.polyline(ev.target._latlngs, {color: blueColor, interactive: false})
                     hoveredRoute.addTo(map)
-                    hoveredRoute.setStyle({color:"#28a84c", opacity: 1})
+                    hoveredRoute.setStyle({color:blueColor, opacity: 1})
 
 
                     if(dbUser){
                         if(ev.target.upvotes || ev.target.downvotes){ ///temp
                             console.log('available votes options')
                             if(ev.target.upvotes.includes(dbUser.userName)){
+                                console.log('upvoter; ', ev.target.upvotes, ev.target.upvotes.includes(dbUser.userName))
                                 ev.target._popup._content.querySelector('.upvoteBtn').style.border = "2px solid blue"
 
                                 ev.target._popup._content.querySelector('.upvoteBtn').setAttribute('disabled', true)
@@ -1804,6 +1918,7 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
                                 // downvoteBtn.setAttribute('disabled', true)
     
                             }else if(ev.target.downvotes.includes(dbUser.userName)){
+                                console.log('downvoter; ',ev.target.downvotes, ev.target.downvotes.includes(dbUser.userName))
                                 ev.target._popup._content.querySelector('.downvoteBtn').style.border = "2px solid blue"
 
                                 ev.target._popup._content.querySelector('.downvoteBtn').setAttribute('disabled', true)
@@ -1835,34 +1950,23 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
                 /// click over it 
 
                     // console.log(route.target)
-                    routesObjects.forEach(e=>{e.setStyle({color: "#3388FF", opacity: .6})})
+                    routesObjects.forEach(e=>{e.setStyle({color: greenColor, opacity: .6})})
 
                     hoveredRoute?map.removeLayer(hoveredRoute):null
-                    hoveredPoint1?map.removeLayer(hoveredPoint1):null
-                    hoveredPoint2?map.removeLayer(hoveredPoint2):null
+                    hoveredstart?map.removeLayer(hoveredstart):null
+                    hoveredend?map.removeLayer(hoveredend):null
 
 
-                    hoveredRoute = L.polyline(route.target._latlngs, {color:"#28a84c", opacity: 1,interactive: false}).addTo(map)
+                    hoveredRoute = L.polyline(route.target._latlngs, {color:blueColor, opacity: 1,interactive: false}).addTo(map)
                     // console.log(route.target)
-                    route.target.point1?hoveredPoint1 = L.circle(route.target._latlngs[0],{radius:300 ,color:"#28a84c", opacity: 1,interactive: false}).addTo(map):null
+                    route.target.start?hoveredstart = L.circle(route.target._latlngs[0],{radius:300 ,color:blueColor, opacity: 1,interactive: false}).addTo(map):null
 
-                    route.target.point2?hoveredPoint2 = L.circle(route.target._latlngs[route.target._latlngs.length-1], {radius:300, color:"#28a84c", opacity: 1,interactive: false}).addTo(map):null
-                    // hoveredRoute.addTo(map)
-                    // hoveredRoute.setStyle({color:"#28a84c", opacity: 1})
-                    // hoveredRoute.setStyle({color:"red", fillColor: "red"})
-                    // routesObjects.push(newRoute)
-
-
-
-                // method 2; change opacity and color 
-
-                // routesObjects.forEach(e=>{e.setStyle({opacity: 0.7, weight: 3, color: "#3388FF", fillColor: "#3388FF"})})
-                // route.target.setStyle({opacity: 1, weight: 5, color:"#28a84c", fillColor: "#28a84c"})
+                    route.target.end?hoveredend = L.circle(route.target._latlngs[route.target._latlngs.length-1], {radius:300, color:blueColor, opacity: 1,interactive: false}).addTo(map):null
             })
 
-            if(e.point1 && e.point2){
+            if(e.start && e.end){
                 completedRoutesObjects.push(routeObject)
-            }else if(!e.point1 || !e.point2){
+            }else if(!e.start || !e.end){
                 uncompletedRoutesObjects.push(routeObject)
             }
         })
@@ -1870,83 +1974,86 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
 
     function ranking(based, order){
 
-        // restructure the accounts array
-    //label the current account to be green 
+    // restructure the accounts array
+//label the current account to be green 
 
-    let intendedOrder = []
-    let orderedUserElements
-    let orderedteamElements
+let intendedOrder = []
+let orderedUserElements
+let orderedteamElements
 
-    if(based == 'total'){
-        if(order == 'de'){
-            // decending order 
-            intendedOrder = accountsList.sort((a, b) => { return (b.votes.length+b.addedRoutes.length)-(a.votes.length +a.addedRoutes.length)}) 
-        }else{
-            //acending order 
-            intendedOrder = accountsList.sort((a, b) => { return (a.votes.length +a.addedRoutes.length)-(b.votes.length+b.addedRoutes.length)})
-        }
-    }else if(based == 'addedRoutes'){
-        if(order == 'de'){
-            intendedOrder = accountsList.sort((a,b)=>{return b.addedRoutes.length - a.addedRoutes.length})
-        }else{
-            intendedOrder = accountsList.sort((a,b)=>{return a.addedRoutes.length - b.addedRoutes.length})
-        }
-
-    }else if(based == 'votes'){
-        if(order == 'de'){
-            intendedOrder = accountsList.sort((a,b)=>{return b.votes.length - a.votes.length})
-        }else{
-            intendedOrder = accountsList.sort((a,b)=>{return a.votes.length - b.votes.length})
-        }
-
+if(based == 'total'){
+    if(order == 'de'){
+        // decending order 
+        intendedOrder = accountsList.sort((a, b) => { return (b.green.length+b.red.length +b.addedRoutes.length + b.votes.length)-(a.green.length +a.red.length+a.addedRoutes.length + a.votes.length)}) 
+    }else{
+        //acending order 
+        intendedOrder = accountsList.sort((a, b) => { return (a.green.length +a.red.length+a.addedRoutes.length + a.votes.length) - (b.green.length+b.red.length +b.addedRoutes.length + b.votes.length)})
     }
-    // make the dom
-    let currentUserName 
-    dbUser?currentUserName=dbUser.userName:null
+}else if(based == 'publicline'){
+    if(order == 'de'){
+        intendedOrder = accountsList.sort((a,b)=>{return (b.addedRoutes.length + b.votes.length) - (a.addedRoutes.length + a.votes.length)})
+    }else{
+        intendedOrder = accountsList.sort((a,b)=>{return (a.addedRoutes.length + a.votes.length)- (b.addedRoutes.length + b.votes.length)})
+    }
 
-    let userCounter= 1
-    orderedUserElements = `${intendedOrder.map((account, index)=>{
-        if(account.type == 'user'){return`
+}else if(based == 'bygreen'){
+    if(order == 'de'){
+        intendedOrder = accountsList.sort((a,b)=>{return (b.red.length + b.green.length) - (a.red.length + a.green.length)})
+    }else{
+        intendedOrder = accountsList.sort((a,b)=>{return (a.red.length + a.green.length)- (b.red.length + b.green.length)})
+    }
+}
+
+// make the dom
+let currentUserName 
+dbUser?currentUserName=dbUser.userName:null
+
+let userCounter= 1
+orderedUserElements = `${intendedOrder.map((account, index)=>{
+    if(account.type == 'user'){return`
 <div class="rankedAccount" ${account.userName == currentUserName?'id="#me" style="background-color: #29D659"':''}>
-    <span class="ranking">${userCounter++}</span>
-        <a href=' http://${window.location.host+'/profile/'+ account.userName} '> <b style='color: white'> 
-    <div class="account">
+
+    <div class="ranking point">${userCounter++}</div>
+    <a href=' https://kadum2.github.io/ivc/profile/${account.userName}' class="account">
         <img class="accountImg" style="background-image: url('${account.img}');">
         <h3 class="accountUsername ranked">${account.userName}</h3>
-    </div>
+    </a>
         
-        </b> </a>
 
-
-    <h3 class="addedRoutes">${account.addedRoutes.length}</h3>
-    <h3 class="votes">${account.votes.length}</h3>
-    <h3 class="total">${account.addedRoutes.length+account.votes.length}</h3>
+    <div class='points'>
+<div class="publiclineCounter point">${(account.addedRoutes[0]?account.addedRoutes.length:0)+(account.votes[0]?account.votes.length:0)}</div>
+<div class="bygreenCounter point">${(account.red[0]?account.red.length:0)+(account.green[0]?account.green.length:0)}</div>
+<div class="total point">${((account.addedRoutes[0]?account.addedRoutes.length:0)+(account.votes[0]?account.votes.length:0)) + ((account.red[0]?account.red.length:0)+(account.green[0]?account.green.length:0))}</div>
 </div>
-    `}
+    </div>
+`}
 })}`
 
 
-        let teamCounter = 1
-    orderedteamElements = `${intendedOrder.map((account, index)=>{
-        if(account.type == 'team'){return`
+    let teamCounter = 1
+orderedteamElements = `${intendedOrder.map((account, index)=>{
+    if(account.type == 'team'){return`
 <div class="rankedAccount" ${account.userName == currentUserName?'style="background-color: #29D659"':''}>
-    <span class="ranking">${teamCounter++}</span>
-    <div class="account">
+    <div class="ranking point">${teamCounter++}</div>
+    <a href=' https://kadum2.github.io/ivc/profile/${account.userName}' class="account">
         <img class="accountImg" style="background-image: url('${account.img}');">
         <h3 class="accountUsername ranked">${account.userName}</h3>
-    </div>
+    </a>
 
-    <h3 class="addedRoutes">${account.addedRoutes.length}</h3>
-    <h3 class="votes">${account.votes.length}</h3>
-    <h3 class="total">${account.addedRoutes.length+account.votes.length}</h3>
+    <div class='points'>
+<div class="publiclineCounter point">${(account.addedRoutes[0]?account.addedRoutes.length:0)+(account.votes[0]?account.votes.length:0)}</div>
+<div class="bygreenCounter point">${(account.red[0]?account.red.length:0)+(account.green[0]?account.green.length:0)}</div>
+<div class="total point">${((account.addedRoutes[0]?account.addedRoutes.length:0)+(account.votes[0]?account.votes.length:0)) + ((account.red[0]?account.red.length:0)+(account.green[0]?account.green.length:0))}</div>
 </div>
-    `}
-        })}`
+    </div>
+`}
+    })}`
 
-    console.log('intended order',intendedOrder)
-    document.querySelector('#usersRanking').innerHTML = orderedUserElements.replaceAll(',', '')
-    document.querySelector('#teamsRanking').innerHTML = orderedteamElements.replaceAll(',', '')
+// console.log('intended order',intendedOrder)
+document.querySelector('#usersRanking').innerHTML = orderedUserElements.replaceAll(',', '')
+document.querySelector('#teamsRanking').innerHTML = orderedteamElements.replaceAll(',', '')
 }
+
 
 
         //////////// test code; 
@@ -1958,18 +2065,24 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
 
 
 
+// updateDoc(bygreenDb, collection())
+
+
+    // getDocs(collection(bygreenDb, 'routes')).then((data)=>{
+    //         let docs = []
+    //             data.docs.forEach(doc=>{
+    //                 docs.push({...doc.data(), id: doc.id})
+    //             })
+                
+    //         docs.forEach(docu=>{
+    //             console.log(docu, docu.id)
+    //             // updateDoc(doc(bygreenDb, 'routes', docu.id), {name: "اسم المسار"})
+                
+    //         })
+    //     })
 
 
 
-
-
-
-
-
-
-
-
-        
 
 
     </script>

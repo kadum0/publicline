@@ -22,8 +22,8 @@ header{
     gap: 1rem;
 }
 .logo div{
-    height: 30%;
-    width: 75%;
+    height: 25%;
+    width: 65%;
     margin-bottom: 10%;
     transform: rotateZ(-15deg);
     }
@@ -497,7 +497,8 @@ button{
 }
 .box{
     background-color: #27f060;
-    background-image: linear-gradient(135deg,  #27f060, #22c751);
+    /* background-image: linear-gradient(135deg,  #27f060, #22c751); */
+    background-image: linear-gradient(135deg,  #27F060,  #21C24F);
 
     padding: .5rem;
     border-radius: .5rem;
@@ -536,23 +537,29 @@ button{
     background: #333333;
 }
 .on2{
-    background: #1bf057;
+    /* background: #1bf057; */
+    background-image: linear-gradient(135deg,  #27F060,  #21C24F);
+
 }
 
 .red {
     background: #ff2a2a;
+    background-image: linear-gradient(135deg,  #ED2121,  #CD1A1A);
 }
 
 .green {
     background: #27f060;
+    background-image: linear-gradient(135deg,  #27F060,  #21C24F);
 }
 
 .black {
     background: #1b1b1b;
+    background-image: linear-gradient(135deg,  #1A1A1A,  #0E0E0E);
 }
 
 .white {
     background: rgb(245, 245, 245);
+    background-image: linear-gradient(135deg,  #F5F5F5,  #DEDEDE);
 }
 
 /* mobile */
@@ -577,6 +584,9 @@ button{
     }
     .rankingHeader{
         height: 2rem;
+    }
+    .box{
+        padding: .2rem;
     }
 }
 
