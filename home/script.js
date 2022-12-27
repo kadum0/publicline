@@ -361,8 +361,8 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
         /////////////////////////////////get data 
 
         let hoveredRoute 
-        let hoveredPoint1
-        let hoveredPoint2
+        let hoveredstart
+        let hoveredend
         let type
 
         let routes 
@@ -382,10 +382,7 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
                     type = idTokenResult.claims
                     // if team 
                     if (idTokenResult.claims.team){
-                        document.querySelectorAll('.teamEle').forEach(teamEle=>{
-                            teamEle.style.display = 'inline-block'
-                        })
-                        // document.querySelector('.addYellow').style.display = 'block'
+                    document.querySelectorAll('.teamEle').forEach(teamEle=>teamEle.style.display = 'inline-block')
                     }
                 })
         
@@ -463,10 +460,10 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
                     document.querySelector('#greenMessage').style.display = 'none'
 
 
-                    completedRoutes = routes.filter(route=>route.point1 && route.point2)
-                    uncompletedRoutes = routes.filter(route=>!route.point1 || !route.point2)
+                    completedRoutes = routes.filter(route=>route.start && route.end)
+                    uncompletedRoutes = routes.filter(route=>!route.start || !route.end)
         
-                    deployRoutes(completedRoutes)
+                deployRoutes(completedRoutes)
                 displayCompletedRoutes.classList.toggle('on2')
                 deployRoutes(uncompletedRoutes)
                 displayUncompletedRoutes.classList.toggle('on2')
@@ -546,8 +543,8 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
         let currentPath = [] //path object
 
         //circles
-        let point1 
-        let point2 
+        let start 
+        let end 
 
 
 
@@ -609,30 +606,30 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
         });
 
         /////adding points
-        document.querySelector("#point1").addEventListener('click', (e)=>{
+        document.querySelector("#start").addEventListener('click', (e)=>{
             e.target.classList.toggle("on")
             if(e.target.classList.contains('on')){
                 // get current making route; 
                 console.log(currentPath._latlngs[0])
-                point1 = L.circle(currentPath._latlngs[0], {radius: 600, color: 'red'}).addTo(map)
+                start = L.circle(currentPath._latlngs[0], {radius: 600, color: 'red'}).addTo(map)
                 // e.target.style.background = '#ff2a2a'
             }else{
-                // point1.removeLayer(map)/
-                map.removeLayer(point1)
+                // start.removeLayer(map)/
+                map.removeLayer(start)
                 // e.target.style.background = '#1bf057'
             }
         })
 
-        document.querySelector("#point2").addEventListener('click', (e)=>{
+        document.querySelector("#end").addEventListener('click', (e)=>{
             e.target.classList.toggle("on")
             if(e.target.classList.contains('on')){
                 // get current making route; 
                 console.log(currentPath._latlngs[currentPath._latlngs.length - 1])
-                point2 = L.circle(currentPath._latlngs[currentPath._latlngs.length - 1], {radius: 600, color: 'red'}).addTo(map)
+                end = L.circle(currentPath._latlngs[currentPath._latlngs.length - 1], {radius: 600, color: 'red'}).addTo(map)
                 // e.target.style.background = '#ff2a2a'
             }else{
-                // point1.removeLayer(map)/
-                map.removeLayer(point2)
+                // start.removeLayer(map)/
+                map.removeLayer(end)
                 // e.target.style.background = '#1bf057'
             }
 
@@ -692,8 +689,8 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
                 Object.values(currentPath._latlngs).forEach(e=>validRoute.push({lng: e.lng,lat: e.lat}))
                 routeToSend.path = validRoute
                 routeToSend.name = document.querySelector("#routeName").value
-                point1?routeToSend.start = true:routeToSend.start = false
-                point2?routeToSend.end = true:routeToSend.end = false
+                start?routeToSend.start = true:routeToSend.start = false
+                end?routeToSend.end = true:routeToSend.end = false
                 routeToSend.upvotes = []
                 routeToSend.downvotes = []
                 // currentUser?routeToSend.insertedBy = currentUser.email:routeToSend.insertedBy = null
@@ -813,14 +810,14 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
                 let routeObject = L.polyline(e.path, {color: greenColor}).bindPopup(voteBtns).addTo(map)
 
                 // routeObject.name = e.name
-                e.point1?circlesObjects.push(L.circle(e.path[0],{radius: 300, color: darkerGreenColor, background: darkerGreenColor}).addTo(map)):null
-                e.point2?circlesObjects.push(L.circle(e.path[e.path.length-1],{radius: 300, color:darkerGreenColor, background:darkerGreenColor}).addTo(map)):null 
+                e.start?circlesObjects.push(L.circle(e.path[0],{radius: 300, color: darkerGreenColor, background: darkerGreenColor}).addTo(map)):null
+                e.end?circlesObjects.push(L.circle(e.path[e.path.length-1],{radius: 300, color:darkerGreenColor, background:darkerGreenColor}).addTo(map)):null 
                 
                 routeObject.upvotes = e.upvotes
                 routeObject.downvotes = e.downvotes
                 routeObject.id = e.id
-                routeObject.point1 = e.point1
-                routeObject.point2 = e.point2
+                routeObject.start = e.start
+                routeObject.end = e.end
                 
             /////content
                 ////////////if logged then allow to vote; 
@@ -841,6 +838,7 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
                         if(ev.target.upvotes || ev.target.downvotes){ ///temp
                             console.log('available votes options')
                             if(ev.target.upvotes.includes(dbUser.userName)){
+                                console.log('upvoter; ', ev.target.upvotes, ev.target.upvotes.includes(dbUser.userName))
                                 ev.target._popup._content.querySelector('.upvoteBtn').style.border = "2px solid blue"
 
                                 ev.target._popup._content.querySelector('.upvoteBtn').setAttribute('disabled', true)
@@ -848,6 +846,7 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
                                 // downvoteBtn.setAttribute('disabled', true)
     
                             }else if(ev.target.downvotes.includes(dbUser.userName)){
+                                console.log('downvoter; ',ev.target.downvotes, ev.target.downvotes.includes(dbUser.userName))
                                 ev.target._popup._content.querySelector('.downvoteBtn').style.border = "2px solid blue"
 
                                 ev.target._popup._content.querySelector('.downvoteBtn').setAttribute('disabled', true)
@@ -882,20 +881,20 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
                     routesObjects.forEach(e=>{e.setStyle({color: greenColor, opacity: .6})})
 
                     hoveredRoute?map.removeLayer(hoveredRoute):null
-                    hoveredPoint1?map.removeLayer(hoveredPoint1):null
-                    hoveredPoint2?map.removeLayer(hoveredPoint2):null
+                    hoveredstart?map.removeLayer(hoveredstart):null
+                    hoveredend?map.removeLayer(hoveredend):null
 
 
                     hoveredRoute = L.polyline(route.target._latlngs, {color:blueColor, opacity: 1,interactive: false}).addTo(map)
                     // console.log(route.target)
-                    route.target.point1?hoveredPoint1 = L.circle(route.target._latlngs[0],{radius:300 ,color:blueColor, opacity: 1,interactive: false}).addTo(map):null
+                    route.target.start?hoveredstart = L.circle(route.target._latlngs[0],{radius:300 ,color:blueColor, opacity: 1,interactive: false}).addTo(map):null
 
-                    route.target.point2?hoveredPoint2 = L.circle(route.target._latlngs[route.target._latlngs.length-1], {radius:300, color:blueColor, opacity: 1,interactive: false}).addTo(map):null
+                    route.target.end?hoveredend = L.circle(route.target._latlngs[route.target._latlngs.length-1], {radius:300, color:blueColor, opacity: 1,interactive: false}).addTo(map):null
             })
 
-            if(e.point1 && e.point2){
+            if(e.start && e.end){
                 completedRoutesObjects.push(routeObject)
-            }else if(!e.point1 || !e.point2){
+            }else if(!e.start || !e.end){
                 uncompletedRoutesObjects.push(routeObject)
             }
         })
