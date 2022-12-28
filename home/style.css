@@ -197,9 +197,15 @@ border: 1px solid rgba(255, 255, 255, 0.3);
     display: none;
 }
 
-#makeLocLink{
+#selectGovernate{
     position: absolute;
     top: 5.5rem;
+    z-index: 1003;
+}
+
+#makeLocLink{
+    position: absolute;
+    top: 7rem;
     left: .1rem;
     z-index: 1003;
 }
@@ -492,7 +498,11 @@ button{
 .logged, .makeprofile, .notlogged{
     display: none;
 }
-.teamEle{
+.team{
+    display: none;
+}
+
+.en{
     display: none;
 }
 .box{

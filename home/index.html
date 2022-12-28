@@ -66,7 +66,6 @@
             <button class="box" id="translateToEn">en</button>
         </div>
 
-
         <!-- title -->
         <h2 id="projectName" class="box"> publicline </h2>
 
@@ -76,7 +75,7 @@
                 <div class="flex currentAccount">
                     <img id="currentAccountImgDi">
                     <p id="currentAccountUsernameDi">username</p>
-                    <p class="teamEle" style="line-height: none; padding:0;
+                    <p class="team" style="line-height: none; padding:0;
             color:white; font-size: .8rem;">team</p>
                 </div>
             </div>
@@ -153,17 +152,27 @@
             <div id="newRouteDetails">
                 <input type="text" name="" id="routeName" placeholder="اسم المسار">
                 <div class="deletebtns">
-                    <button class="box" id="cancel-step">الغاء الخطوة</button>
+                    <button class="box" id="cancel-step">
+                        <p class="en">cancel step</p>
+                        <p class="ar">الغاء الخط</p>
+                    </button>
                     <!-- <button class="box" id="cancel-route">الغاء المسار</button> -->
                 </div>
-                <button class="box" id="point1">نقطة البداية</button>
-                <button class="box" id="point2">نقطة النهاية</button>
+                <button class="box" id="start">
+                    <p class="en">start point</p>
+                    <p class="ar">نقطة البدية</p>
+                </button>
+                <button class="box" id="end">
+                    <p class="en">end point</p>
+                    <p class="a">نقطة النهاية</p>
+                </button>
 
-                <button class="box" id="send"> ارسال المسار</button>
+                <button class="box" id="send">
+                    <p class="en">send</p>
+                    <p class="ar">ارسال</p>
+                </button>
             </div>
         </div>
-        <button id="makeLocLink" class="box"><img src="./imgs/red-pin-icon.png" alt=""
-                style="pointer-events: none;"></button>
 
         <div id="routesToDisplay">
             <button id="displayCompletedRoutes">
@@ -173,6 +182,96 @@
                 غير كاملة
             </button>
         </div>
+
+        <select id="selectGovernate">
+            <!-- main -->
+            <option value="baghdad">
+                <p class="en">baghdad</p>
+                <div class="ar">بغداد</div>
+            </option>
+            <option value="basra">
+                <div class="en">basra</div>
+                <div class="ar">بصرة</div>
+            </option>
+            <option value="nineveh">
+                <div class="en">nineveh</div>
+                <div class="ar">نينوى</div>
+            </option>
+            <option value="dhi-qar">
+                <div class="en">dhi-qar</div>
+                <div class="ar">ذي قار</div>
+            </option>
+            <option value="babil">
+                <div class="en">babil</div>
+                <div class="ar">بابل</div>
+            </option>
+            <option value="sulaymaniyah">
+                <div class="en">sulaymaniyah</div>
+                <div class="ar">سليمانية</div>
+            </option>
+            <option value="erbil">
+                <div class="en">erbil</div>
+                <div class="ar">اربيل</div>
+            </option>
+            <option value="anbar">
+                <div class="en">anbar</div>
+                <div class="ar">انبار</div>
+            </option>
+
+            <option value="karbala">
+                <div class="en">karbala</div>
+                <div class="ar">كربلاء</div>
+            </option>
+            <option value="najaf">
+                <div class="en">najaf</div>
+                <div class="ar">نجف</div>
+            </option>
+
+            <!--  -->
+            <!-- 
+            <option value="dohuk">
+                <div class="en">dohuk</div>
+                <div class="ar">دهوك</div>
+            </option>
+            <option value="kirkuk">
+                <div class="en">kirkuk</div>
+                <div class="ar">كركوك</div>
+            </option>
+            <option value="saladin">
+                <div class="en">saladin</div>
+                <div class="ar">صلاح الدين</div>
+            </option>
+            <option value="diyala">
+                <div class="en">diyala</div>
+                <div class="ar">ديالى</div>
+            </option>
+            <option value="wasit">
+                <div class="en">wasit</div>
+                <div class="ar">واسط</div>
+            </option>
+            <option value="al-qadisiyyah">
+                <div class="en">al-qadisiyyah</div>
+                <div class="ar">القادسية</div>
+            </option>
+            <option value="maysan">
+                <div class="en">maysan</div>
+                <div class="ar">ميسان</div>
+            </option>
+            <option value="muthanna">
+                <div class="en">muthanna</div>
+                <div class="ar">مثنى</div>
+            </option>
+            <option value="halabja">
+                <div class="en">halabja</div>
+                <div class="ar">حلبجة</div>
+            </option>
+            -->
+
+
+        </select>
+
+        <button id="makeLocLink" class="box"><img src="./imgs/red-pin-icon.png" alt=""
+                style="pointer-events: none;"></button>
 
 
         <div id="messages">

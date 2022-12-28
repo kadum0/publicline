@@ -41,9 +41,13 @@ let darkerGreenColor = '#21C24F'
 let blueColor = '#3388FF'
 let darkerBlueColor = '#075FDA'
 
+// governates coordinates; 
+
+
+
 
 // map configure
-const map = L.map('map', { zoomControl: false }).setView([33.396600, 44.356579], 9); 
+const map = L.map('map', { zoomControl: false }).setView([33.396600, 44.356579], 10); 
 L.Control.geocoder().addTo(map);
 
 let apiKey = 'pk.eyJ1IjoiYWxmcmVkMjAxNiIsImEiOiJja2RoMHkyd2wwdnZjMnJ0MTJwbnVmeng5In0.E4QbAFjiWLY8k3AFhDtErA'
@@ -221,26 +225,6 @@ document.querySelector('#asideDi').addEventListener('click', (ev)=>{
 })
 
 
-//leaflet basic map
-
-    map.on('zoomend', function () {
-            // let currentZoom = map.getZoom();
-            console.log('current zoom;',map.getZoom()  , map.getBounds())
-            routesObjects.forEach(route=>{
-            if(map.getZoom() == 10){
-                route.setStyle({weight: 5})
-            }else if(map.getZoom() == 11){
-                route.setStyle({weight: 10})
-            }else if(map.getZoom() == 12){
-                route.setStyle({weight: 15})
-            }else if(map.getZoom() == 13){
-                route.setStyle({weight: 20})
-            }else if(map.getZoom() == 14){
-                route.setStyle({weight: 25})
-            }
-            })
-    });
-
     document.querySelector('#makeLocLink').addEventListener('click', (ev)=>{ev.target.classList.toggle('on')})
 
     document.querySelector("#addRouteMode").addEventListener("click", (ev)=>{
@@ -266,6 +250,27 @@ document.querySelector('#asideDi').addEventListener('click', (ev)=>{
 
     ///////////////////////// ui-js-data
     // ranking options
+
+//leaflet basic map
+map.on('zoomend', function () {
+    // let currentZoom = map.getZoom();
+    console.log('current zoom;',map.getZoom()  , map.getBounds())
+    routesObjects.forEach(route=>{
+    if(map.getZoom() == 10){
+        route.setStyle({weight: 5})
+    }else if(map.getZoom() == 11){
+        route.setStyle({weight: 10})
+    }else if(map.getZoom() == 12){
+        route.setStyle({weight: 15})
+    }else if(map.getZoom() == 13){
+        route.setStyle({weight: 20})
+    }else if(map.getZoom() == 14){
+        route.setStyle({weight: 25})
+    }
+    })
+});
+
+
 totalSorting.addEventListener('click', (ev)=>{
     ev.target.classList.toggle('on')
     ev.target.classList.contains('on')?ranking('total', 'ac'):ranking('total', 'de')
@@ -354,7 +359,33 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
 })
 
 
+// basra; 30.534238, 47.764500
 
+selectGovernate.addEventListener('click', (ev)=>{
+    console.log('options', ev.target.value)
+
+    // the most in numbers; main 
+    ev.target.value == 'baghdad'?map.flyTo([33.314644, 44.420873], 10):null
+    ev.target.value == 'basra'?map.flyTo([30.534238, 47.764500], 10):null
+    ev.target.value == 'nineveh'?map.flyTo([36.346197, 43.158618], 10):null
+    ev.target.value == 'sulaymaniyah'?map.flyTo([35.560957, 45.414252], 10):null
+    ev.target.value == 'anbar'?map.flyTo([33.422346, 43.268823], 10):null
+    ev.target.value == 'karbala'?map.flyTo([32.601386, 44.018819], 10):null
+    ev.target.value == 'erbil'?map.flyTo([36.188488, 44.013199], 10):null
+    ev.target.value == 'babil'?map.flyTo([32.471120, 44.426321], 10):null
+    ev.target.value == 'najaf'?map.flyTo([32.001916, 44.331424], 10):null
+    ev.target.value == 'dhi-qar'?map.flyTo([31.040835, 46.249916], 10):null
+
+    // ev.target.value == 'dohuk'?map.flyTo([36.862733, 42.991273], 10):null
+    // ev.target.value == 'kirkuk'?map.flyTo([35.459780, 44.385553], 10):null
+    // ev.target.value == 'saladin'?map.flyTo([30.534238, 47.764500], 10):null
+    // ev.target.value == 'diyala'?map.flyTo([30.534238, 47.764500], 10):null
+    // ev.target.value == 'wasit'?map.flyTo([30.534238, 47.764500], 10):null
+    // ev.target.value == 'maysan'?map.flyTo([30.534238, 47.764500], 10):null
+    // ev.target.value == 'al-qadisiyyah'?map.flyTo([30.534238, 47.764500], 10):null
+    // ev.target.value == 'muthanna'?map.flyTo([30.534238, 47.764500], 10):null
+    // ev.target.value == 'halabja'?map.flyTo([30.534238, 47.764500], 10):null
+})
 
 
 
