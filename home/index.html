@@ -37,7 +37,7 @@
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js');
+                navigator.serviceWorker.register('./newsw.js');
             });
         }
     </script>
@@ -154,17 +154,17 @@
                 <div class="deletebtns">
                     <button class="box" id="cancel-step">
                         <div class="en">cancel step</div>
-                        <div class="ar">الغاء الخط</div>
+                        <div class="ar">الغاء الخطوة </div>
                     </button>
                     <!-- <button class="box" id="cancel-route">الغاء المسار</button> -->
                 </div>
                 <button class="box" id="start">
-                    <div class="en">start point</p>
-                        <div class="ar">نقطة البدية</div>
+                    <div class="en">start point</div>
+                    <div class="ar">نقطة البدية</div>
                 </button>
                 <button class="box" id="end">
                     <div class="en">end point</div>
-                    <div class="a">نقطة النهاية</div>
+                    <div class="ar">نقطة النهاية</div>
                 </button>
 
                 <button class="box" id="send">

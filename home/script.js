@@ -420,7 +420,7 @@ findMe.addEventListener('click', ()=>{
         myLat = pos.coords.latitude
         myLon = pos.coords.longitude
 
-        myLoc = L.circle([pos.coords.latitude, pos.coords.longitude], {color: "red", radius: 500}).addTo(map)
+        myLoc = L.circle([pos.coords.latitude, pos.coords.longitude], {color: "red", radius: 100}).addTo(map)
         map.flyTo([pos.coords.latitude, pos.coords.longitude], 16)
 
         // setView([pos.coords.latitude, pos.coords.longitude])
