@@ -359,9 +359,7 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
 })
 
 
-// basra; 30.534238, 47.764500
-
-selectGovernate.addEventListener('click', (ev)=>{
+selectGovernate.addEventListener('change', (ev)=>{
     console.log('options', ev.target.value)
 
     // the most in numbers; main 
@@ -387,7 +385,62 @@ selectGovernate.addEventListener('click', (ev)=>{
     // ev.target.value == 'halabja'?map.flyTo([30.534238, 47.764500], 10):null
 })
 
+let myLoc 
+let myLat
+let myLon
 
+findMe.addEventListener('click', ()=>{
+
+    // console.log('to find and track me ', navigator.geolocation.getCurrentPosition)
+    // console.log(navigator.geolocation.getCurrentPosition((pos)=>console.log(pos)))
+    // navigator.geolocation.getCurrentPosition((pos)=>console.log(pos.coords.longitude),
+    // (err)=>console.log(err))
+    
+// no need 
+    // navigator.geolocation.getCurrentPosition((pos)=>{
+    //     console.log('pos is ', pos)
+    //     myLat = pos.coords.latitude
+    //     myLon = pos.coords.longitude
+    //     map.flyTo([pos.coords.latitude, pos.coords.longitude], 16)
+    // }, (not)=>{
+    //     console.log('not', not)
+    //     document.querySelector('#redMessage').textContent = 'allow geolocation'
+    //     document.querySelector('#redMessage').style.display = 'block'
+    //     setTimeout(() => {
+    //         document.querySelector('#redMessage').style.display = 'none'
+            
+    //     }, 3000);
+    // })
+
+
+    navigator.geolocation.watchPosition((pos)=>{
+        console.log('watching; ',pos.coords.latitude, pos.coords.longitude)
+        
+        myLoc?map.removeLayer(myLoc):null
+        myLat = pos.coords.latitude
+        myLon = pos.coords.longitude
+
+        myLoc = L.circle([pos.coords.latitude, pos.coords.longitude], {color: "red", radius: 500}).addTo(map)
+        map.flyTo([pos.coords.latitude, pos.coords.longitude], 16)
+
+        // setView([pos.coords.latitude, pos.coords.longitude])
+    }, (err)=>{
+        console.log("allow this website to get your location, and enable gps")
+        alert('geolocation is not enabled')
+        document.querySelector('#redMessage').textContent = 'allow geolocation'
+        document.querySelector('#redMessage').style.display = 'block'
+        setTimeout(() => {
+            document.querySelector('#redMessage').style.display = 'none'
+            
+        }, 3000);
+
+    })
+
+    if(myLat && myLon){
+        console.log('geolocation is enabled')
+        map.flyTo([myLat, myLon], 16)
+    }
+})
 
 
 
@@ -762,11 +815,12 @@ selectGovernate.addEventListener('click', (ev)=>{
             console.log('Geolocation is not supported by this browser')
         }
         }
+
     function showPosition(position) {
             // map.setView([position.coords.latitude, position.coords.longitude], 16)
             map.flyTo({lat: position.coords.latitude,lng: position.coords.longitude}, 16)
         }
-        getLocation()
+        // getLocation()
 
 
     function deployRoutes(ev){

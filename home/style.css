@@ -216,6 +216,7 @@ border: 1px solid rgba(255, 255, 255, 0.3);
     top: 2rem;
     right: 45vw;
     text-align: center;
+    z-index: 1003;
 }
 #messages div{
     display: none;
@@ -237,6 +238,14 @@ border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: .3rem;
 }
 
+#findMe{
+    position: absolute;
+    top: 11rem;
+    left: .1rem;
+    z-index: 1003;
+    border-radius: 50%; 
+    padding: .1rem;
+}
 
 /* aside */
 aside{
