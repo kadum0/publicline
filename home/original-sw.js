@@ -9,8 +9,6 @@ const assets = [
   './script.js',
 ];
 
-
-
 // cache size limit function
 const limitCacheSize = (name, size) => {
   caches.open(name).then(cache => {
@@ -46,9 +44,6 @@ self.addEventListener('activate', evt => {
     })
   );
 });
-
-
-
 
 self.addEventListener('fetch', (ev) => {
     console.log(`fetch request for: ${ev.request.url}`);
@@ -92,6 +87,5 @@ self.addEventListener('fetch', (ev) => {
     })
     );
 });
-
 
 
