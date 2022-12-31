@@ -37,8 +37,9 @@
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./original-sw.js');
+                // navigator.serviceWorker.register('./original-sw.js');
                 // navigator.serviceWorker.register('../original-sw.js');
+                navigator.serviceWorker.register('./chat-gpt-sw.js');
             });
         }
     </script>
