@@ -54,16 +54,16 @@ self.addEventListener('fetch', (ev) => {
     console.log(`fetch request for: ${ev.request.url}`);
 
     // version 2 - check the caches first for the file. If missing do a fetch
-    ev.respondWith(
-    caches.match(ev.request).then((cacheRes) => {
-        // if (cacheRes == undefined) {
-        // console.log(`MISSING ${ev.request.url}`);
-        // }
-        console.log(ev.request, ev.request.url, 'to continue')
-        console.log("includes the map; ", ev.request.url.indexOf('mapbox'), ev.request.url.indexOf('mapbox') != -1 )
-        return cacheRes || fetch(ev.request);
-    })
-    );
+    // ev.respondWith(
+    // caches.match(ev.request).then((cacheRes) => {
+    //     // if (cacheRes == undefined) {
+    //     // console.log(`MISSING ${ev.request.url}`);
+    //     // }
+    //     // console.log(ev.request, ev.request.url, 'to continue')
+    //     // console.log("includes the map; ", ev.request.url.indexOf('mapbox'), ev.request.url.indexOf('mapbox') != -1 )
+    //     return cacheRes || fetch(ev.request);
+    // })
+    // );
     /*                  */
     //version 3 - check cache. fetch if missing. then add response to cache
 
@@ -73,20 +73,18 @@ self.addEventListener('fetch', (ev) => {
       caches.match(ev.request).then((cacheRes) => {
 
         return (
-          cacheRes ||
-          fetch(ev.request).then((fetchResponse) => {
+        cacheRes || fetch(ev.request).then((fetchResponse) => {
 
             // let type = fetchResponse.headers.get('content-type');
             
-            if (
-            ev.request.url.indexOf('mapbox') != -1             
-            ) {
+            if (ev.request.url.indexOf('mapbox') != -1) {
             console.log(`save a map layer ${ev.request.url}`);
             return caches.open(dynamicCacheName).then((cache) => {
                 cache.put(ev.request, fetchResponse.clone());
-                return fetchResponse;
             });
             }
+            return fetchResponse;
+
 
         })
         );
