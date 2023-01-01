@@ -19,7 +19,7 @@ workbox.routing.registerRoute(
 );
 
 workbox.routing.registerRoute(
-    /leaflet/,
+    /https:\/\/unpkg\.com\/leaflet-control-geocoder/,
     new workbox.strategies.NetworkFirst({
       cacheName: 'map-leaflet',
     })
