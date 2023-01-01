@@ -33,16 +33,6 @@
         @import url('https://fonts.googleapis.com/css2?family=Prosto+One&family=Changa:wght@300&display=swap');
     </style>
 
-
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                // navigator.serviceWorker.register('./original-sw.js');
-                // navigator.serviceWorker.register('../original-sw.js');
-                navigator.serviceWorker.register('./chat-gpt-sw.js');
-            });
-        }
-    </script>
 </head>
 
 <body>
@@ -437,8 +427,21 @@
 
     </aside>
 
+
     <!-- main script  -->
     <script src="./script.js" type="module"></script>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                // navigator.serviceWorker.register('./original-sw.js');
+                // navigator.serviceWorker.register('../original-sw.js');
+                // navigator.serviceWorker.register('./chat-gpt-sw.js');
+                navigator.serviceWorker.register('./chat-gpt-workbox-sw.js');
+            });
+        }
+    </script>
+
 
 </body>
 
