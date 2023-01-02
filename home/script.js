@@ -77,8 +77,18 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
             iconSize: [25, 41],
             iconAnchor: [12, 41],
             popupAnchor: [0, -30] 
+        });
+
+        let sindibad25 = L.icon({
+            iconUrl: "./imgs/sindibad-25-icon.png",
+            shadowSize: [50, 64], // size of the shadow
+            shadowAnchor: [4, 62], // the same for the shadow
+            iconSize: [70, 60],
+            iconAnchor: [12, 41],
+            popupAnchor: [0, 0] 
 
         });
+
 
 
 
@@ -386,6 +396,8 @@ selectGovernate.addEventListener('change', (ev)=>{
 })
 
 let myLoc 
+let myPin
+
 let myLat
 let myLon
 
@@ -393,7 +405,7 @@ findMe.addEventListener('click', ()=>{
 
     // console.log('to find and track me ', navigator.geolocation.getCurrentPosition)
     // console.log(navigator.geolocation.getCurrentPosition((pos)=>console.log(pos)))
-    // navigator.geolocation.getCurrentPosition((pos)=>console.log(pos.coords.longitude),
+    // navigator.geolocation.getCurrentPosition((pos)=>console.log(data.longitude),
     // (err)=>console.log(err))
     
 // no need 
@@ -420,13 +432,15 @@ findMe.addEventListener('click', ()=>{
         myLat = pos.coords.latitude
         myLon = pos.coords.longitude
 
+        myPin = L.marker([pos.coords.latitude, pos.coords.longitude], {icon: sindibad25}).addTo(map)
         myLoc = L.circle([pos.coords.latitude, pos.coords.longitude], {color: "red", radius: 100}).addTo(map)
+        
         map.flyTo([pos.coords.latitude, pos.coords.longitude], 16)
 
         // setView([pos.coords.latitude, pos.coords.longitude])
     }, (err)=>{
         console.log("allow this website to get your location, and enable gps")
-        alert('geolocation is not enabled')
+        // alert('geolocation is not enabled')
         document.querySelector('#redMessage').textContent = 'allow geolocation'
         document.querySelector('#redMessage').style.display = 'block'
         setTimeout(() => {
@@ -434,12 +448,28 @@ findMe.addEventListener('click', ()=>{
             
         }, 3000);
 
+        if(navigator.onLine){
+    // no permisson case
+    fetch('https://ipapi.co/json/')
+        .then(res=>res.json())
+        .then(data=>{
+            map.flyTo([data.latitude, data.longitude], 16)
+            myPin = L.marker([data.latitude, data.longitude], {icon: sindibad25}).addTo(map)
+            myLoc = L.circle([data.latitude, data.longitude], {color: "red", radius: 100}).addTo(map)
+
+            console.log(myPin, myLoc)
+        })
+        }else{
+
+    // give the previous saved location
+    // if(myLat && myLon){
+    //     console.log('geolocation is enabled')
+    //     map.flyTo([myLat, myLon], 16)
+    // }
+        }
+
     })
 
-    if(myLat && myLon){
-        console.log('geolocation is enabled')
-        map.flyTo([myLat, myLon], 16)
-    }
 })
 
 
@@ -1073,8 +1103,8 @@ document.querySelector('#teamsRanking').innerHTML = orderedteamElements.replaceA
 
         //////////// test code; 
 
-        window.onclick = ()=>{
-            console.log(currentPath)
+        window.onclick = (ev)=>{
+            console.log(ev.target, ev.target.style.zIndex, getComputedStyle(ev.target).zIndex)
             // console.log(routesObjects)
         }
 

@@ -27,7 +27,7 @@ header{
     margin-bottom: 10%;
     transform: rotateZ(-15deg);
     }
-.logo {
+.logo, .projectLink, #asideDi{
         height: 3rem;
         width: 3rem;
     }
@@ -40,10 +40,11 @@ header{
     border-radius: .3rem;
     transition: .1s linear;
     cursor: pointer;
-    /* height: 2rem; */
 }
-#asideDi img{
-    height: 1rem;
+.projectLink img, #asideDi img{
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
 }
 
 
@@ -166,7 +167,7 @@ main{
 #controller {
     display: flex;
     flex-direction: column;
-    width: 6rem;
+    width: 3rem;
     gap: .4rem;
     font-size: 2.4rem;
     font-weight: bold;
@@ -203,6 +204,20 @@ border: 1px solid rgba(255, 255, 255, 0.3);
     z-index: 1003;
 }
 
+#basraLogo{
+    background-image: url('./imgs/basra-logo.png');
+    background-position: left center;
+    background-repeat: no-repeat;
+  }
+  select#selectGovernate option[value="basra"]   { 
+    height: 1rem;
+    width: 1rem;
+    background-image: url('./imgs/basra-logo.png'); 
+}
+
+
+
+
 #makeLocLink{
     position: absolute;
     top: 7rem;
@@ -213,10 +228,10 @@ border: 1px solid rgba(255, 255, 255, 0.3);
 
 #messages{
     position: absolute;
-    top: 2rem;
-    right: 45vw;
+    top: 5rem;
+    right: 30vw;
     text-align: center;
-    z-index: 1003;
+    z-index: 1005;
 }
 #messages div{
     display: none;
@@ -270,6 +285,8 @@ aside{
 
   /* leaderboard */
 .leaderBoard{
+    margin-top: 5rem;
+    position: relative;
     display: flex;
     flex-direction: column;
     width: 70%;
@@ -286,6 +303,15 @@ aside{
 }
 .leaderBoard button{
     background-repeat: no-repeat;
+}
+
+#leaderBoardImg{
+    position: absolute;
+    top: 0rem;
+    right: 0rem;
+    height: 7rem;
+    width: 9rem;
+    z-index: 1010;
 }
 
 .rankingSections button{
@@ -524,6 +550,10 @@ button{
     transition: .1s linear;
     cursor: pointer;
 }
+.box img{
+    /* height: 100%; */
+}
+
 .box:hover{
     background-color: #33a353;
     border-radius: .7rem;
@@ -584,6 +614,16 @@ button{
 /* mobile */
 
 @media all and (max-width: 500px){
+    header{
+        gap: .3rem;
+    }
+    .links{
+        gap: .3rem;
+    }
+    .links a, .links button{
+        height: 2rem;
+        width: 2rem;
+    }
     main{
         flex-direction: column;
     }
@@ -658,6 +698,8 @@ button{
 }
 
 
-
+.leaflet-control-geocoder-icon{
+    z-index: 1020;
+}
 
 
