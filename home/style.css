@@ -47,10 +47,9 @@ header{
     object-fit: contain;
 }
 
-
 #miniProfile{
     position: absolute;
-    padding: .6rem;
+    padding: 1rem;
     top: 3rem;
     right: 1rem;
 
@@ -60,10 +59,14 @@ header{
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(5px);
+
+    background-image: linear-gradient(135deg,  #f0f0f0,  #ffffff);
+
+    
     -webkit-backdrop-filter: blur(5px);
     border: 1px solid rgba(255, 255, 255, 0.3);
 
-    z-index: 1003;
+    z-index: 1005;
 }
 
 #miniProfileDi div {
@@ -633,6 +636,9 @@ button{
     .links a, .links button{
         height: 2rem;
         width: 2rem;
+    }
+    #miniProfile{
+        margin: 2rem;
     }
     main{
         flex-direction: column;
