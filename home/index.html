@@ -188,6 +188,7 @@
 
                 <img src="./imgs/basra-logo.png" style="height: 1rem;">
             </option>
+
             <option value="nineveh">
                 <div class="en">nineveh</div>
                 <div class="ar">نينوى</div>
@@ -280,8 +281,8 @@
 
 
     <aside>
-        <!-- leaderboard -->
         <img src="./imgs/sindibad-25-icon.png" id="leaderBoardImg">
+        <!-- leaderboard -->
         <div class="leaderBoard">
 
 
@@ -338,7 +339,34 @@
 
         </div>
 
+        <div id="shordDescription" class="box">
+            <h2 style="font-size: 2rem;">وصف</h2>
+            بسبب غياب النقل العام في البلد ظهرت حافلات رخيصة التكلفة على الناس
+            تسير بمسارات ثابتة
+            لكن لا يمكن الاعتماد على تلك الحافلات وحدها للوصول الى نقطة معينة و
+            التنقل
+            عموما بسبب عشوائيتها و عدم وجود خريطة توضح تلك المسارات في عموم البلد
+            مشروع الخط العام يصنع تلك الخريطة بمساهمة الافراد في اضافة تلك
+            الخارطة (مع اسمها) و التصويت على المسارات الموجود لزيادة دقة الخارطة
+            مستقبلا (حيث يحذف المسار او يبقى حسب التصويت)
+
+            ملاحظة: المسارات المضافة حديثا لا تضاف مباشرة الى الخارطة بل الى
+            صفحة (ادمن) ليقوم بالتاكد من صحتها (منطقيا) عندها ستضاف الى الخارطة
+            الرئيسية
+
+            يمكن لاي احد زيارة صفحة الادمن و مشاهدة المسارات الحديثة لكن لا يمكن
+            لاي احد (غير الادمن ) التعديل على المسارات فيها
+        </div>
+
         <footer>
+
+            <a href="https://kadum2.github.io/digital-aid" class="logo box">
+                <div class="black"></div>
+                <div class="red"></div>
+                <div class="white"></div>
+            </a>
+
+
             <div class="contact">
                 <span class="red logoPart"></span>
                 <h2>تواصل </h2>
@@ -382,13 +410,12 @@
 
             </div>
 
-
             <div class="statics">
                 <div class="green logoPart"></div>
                 <h2>نتائج </h2>
                 <div class="projectsInfo">
 
-                    <div class="projectStatics">
+                    <div class="projectStatics" style="display: none;">
                         <b>ivc <img src="./imgs/general/ivc-logo.png" alt=""></b>
                         <li>عدد المستخدمين: <img src="./imgs/general/account-icon.png" alt=""> <b
                                 id="accountsCounter">0</b>
@@ -408,7 +435,7 @@
                     </div>
 
                     <br>
-                    <div class="projectStatics">
+                    <div class="projectStatics" style="display: none;">
                         <b>bygreen <img src="./imgs/bygreen/bygreen-logo.png" alt=""></b>
                         <li>تم زراعتها <img src="./imgs/bygreen/green-icon-stroked.png" alt=""><b
                                 id="greenCounter">0</b>
@@ -426,23 +453,23 @@
 
                 </div>
             </div>
+
         </footer>
 
 
 
     </aside>
 
-
-    <!-- main script  -->
     <script src="./script.js" type="module"></script>
 
+    <!-- service worker -->
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 // navigator.serviceWorker.register('./original-sw.js');
                 // navigator.serviceWorker.register('../original-sw.js');
                 // navigator.serviceWorker.register('./chat-gpt-sw.js');
-                // navigator.serviceWorker.register('./chat-gpt-workbox-sw.js');
+                navigator.serviceWorker.register('./chat-gpt-workbox-sw.js');
             });
         }
     </script>

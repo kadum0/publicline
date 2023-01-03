@@ -401,7 +401,7 @@ let myPin
 let myLat
 let myLon
 
-findMe.addEventListener('click', ()=>{
+findMe.addEventListener('click', (ev)=>{
 
     // console.log('to find and track me ', navigator.geolocation.getCurrentPosition)
     // console.log(navigator.geolocation.getCurrentPosition((pos)=>console.log(pos)))
@@ -424,7 +424,9 @@ findMe.addEventListener('click', ()=>{
     //     }, 3000);
     // })
 
-
+    ev.target.classList.toggle('on')
+    if(ev.target.classList.contains('on')){
+        // add marker and circle
     navigator.geolocation.watchPosition((pos)=>{
         console.log('watching; ',pos.coords.latitude, pos.coords.longitude)
         
@@ -441,13 +443,6 @@ findMe.addEventListener('click', ()=>{
     }, (err)=>{
         console.log("allow this website to get your location, and enable gps")
         // alert('geolocation is not enabled')
-        document.querySelector('#redMessage').textContent = 'allow geolocation'
-        document.querySelector('#redMessage').style.display = 'block'
-        setTimeout(() => {
-            document.querySelector('#redMessage').style.display = 'none'
-            
-        }, 3000);
-
         if(navigator.onLine){
     // no permisson case
     fetch('https://ipapi.co/json/')
@@ -461,6 +456,15 @@ findMe.addEventListener('click', ()=>{
         })
         }else{
 
+            document.querySelector('#redMessage').textContent = 'no internet connection'
+        document.querySelector('#redMessage').style.display = 'block'
+        setTimeout(() => {
+            document.querySelector('#redMessage').style.display = 'none'
+            
+        }, 3000);
+
+
+
     // give the previous saved location
     // if(myLat && myLon){
     //     console.log('geolocation is enabled')
@@ -469,6 +473,15 @@ findMe.addEventListener('click', ()=>{
         }
 
     })
+
+
+
+    }else{
+        // remote marker and circle 
+        map.removeLayer(myLoc)
+        map.removeLayer(myPin)
+
+    }
 
 })
 
@@ -1104,7 +1117,7 @@ document.querySelector('#teamsRanking').innerHTML = orderedteamElements.replaceA
         //////////// test code; 
 
         window.onclick = (ev)=>{
-            console.log(ev.target, ev.target.style.zIndex, getComputedStyle(ev.target).zIndex)
+            // console.log(ev.target, ev.target.style.zIndex, getComputedStyle(ev.target).zIndex)
             // console.log(routesObjects)
         }
 
