@@ -427,17 +427,25 @@ findMe.addEventListener('click', (ev)=>{
     ev.target.classList.toggle('on')
     if(ev.target.classList.contains('on')){
         // add marker and circle
+
+        // get into the locatoin
+    navigator.geolocation.getCurrentPosition(pos=>{
+        map.flyTo([pos.coords.latitude, pos.coords.longitude], 16)
+    })
+
     navigator.geolocation.watchPosition((pos)=>{
         console.log('watching; ',pos.coords.latitude, pos.coords.longitude)
         
+        myPin?map.removeLayer(myPin):null
         myLoc?map.removeLayer(myLoc):null
+
         myLat = pos.coords.latitude
         myLon = pos.coords.longitude
 
         myPin = L.marker([pos.coords.latitude, pos.coords.longitude], {icon: sindibad25}).addTo(map)
         myLoc = L.circle([pos.coords.latitude, pos.coords.longitude], {color: "red", radius: 100}).addTo(map)
         
-        map.flyTo([pos.coords.latitude, pos.coords.longitude], 16)
+        // map.flyTo([pos.coords.latitude, pos.coords.longitude], 16)
 
         // setView([pos.coords.latitude, pos.coords.longitude])
     }, (err)=>{
