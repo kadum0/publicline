@@ -529,6 +529,8 @@ input[type=file]{
 a{
     text-decoration: none;
     color: black;
+    display: inline-block;
+
 }
 button{
     background-position: center;
