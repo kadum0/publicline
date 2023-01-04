@@ -20,7 +20,7 @@
 
     <link rel="shortcut icon" type="image/jpg"
         href="https://kadum2.github.io/publicline/home/imgs/publicline-logo.png" />
-    <link rel="stylesheet" href="./style.css">
+
     <link rel="manifest" href="./manifest.json">
 
 
@@ -33,15 +33,6 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Prosto+One&family=Changa:wght@300&display=swap');
     </style>
-
-
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js');
-            });
-        }
-    </script>
 
     <style>
         /* basic */
@@ -73,7 +64,9 @@
             transform: rotateZ(-15deg);
         }
 
-        .logo {
+        .logo,
+        .projectLink,
+        #asideDi {
             height: 3rem;
             width: 3rem;
         }
@@ -86,17 +79,18 @@
             border-radius: .3rem;
             transition: .1s linear;
             cursor: pointer;
-            /* height: 2rem; */
         }
 
+        .projectLink img,
         #asideDi img {
-            height: 1rem;
+            height: 100%;
+            width: 100%;
+            object-fit: contain;
         }
-
 
         #miniProfile {
             position: absolute;
-            padding: .6rem;
+            padding: 1rem;
             top: 3rem;
             right: 1rem;
 
@@ -106,10 +100,14 @@
             border-radius: 16px;
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
             backdrop-filter: blur(5px);
+
+            background-image: linear-gradient(135deg, #f0f0f0, #ffffff);
+
+
             -webkit-backdrop-filter: blur(5px);
             border: 1px solid rgba(255, 255, 255, 0.3);
 
-            z-index: 1003;
+            z-index: 1005;
         }
 
         #miniProfileDi div {
@@ -222,7 +220,7 @@
         #controller {
             display: flex;
             flex-direction: column;
-            width: 6rem;
+            width: 3rem;
             gap: .4rem;
             font-size: 2.4rem;
             font-weight: bold;
@@ -255,9 +253,30 @@
             display: none;
         }
 
-        #makeLocLink {
+        #selectGovernate {
             position: absolute;
             top: 5.5rem;
+            z-index: 1003;
+        }
+
+        #basraLogo {
+            background-image: url('https://kadum2.github.io/publicline/home/imgs/basra-logo.png');
+            background-position: left center;
+            background-repeat: no-repeat;
+        }
+
+        select#selectGovernate option[value="basra"] {
+            height: 1rem;
+            width: 1rem;
+            background-image: url('https://kadum2.github.io/publicline/home/imgs/basra-logo.png');
+        }
+
+
+
+
+        #makeLocLink {
+            position: absolute;
+            top: 7rem;
             left: .1rem;
             z-index: 1003;
         }
@@ -265,9 +284,10 @@
 
         #messages {
             position: absolute;
-            top: 2rem;
-            right: 45vw;
+            top: 5rem;
+            right: 30vw;
             text-align: center;
+            z-index: 1005;
         }
 
         #messages div {
@@ -291,6 +311,14 @@
             border-radius: .3rem;
         }
 
+        #findMe {
+            position: absolute;
+            top: 11rem;
+            left: .1rem;
+            z-index: 1003;
+            border-radius: 50%;
+            padding: .1rem;
+        }
 
         /* aside */
         aside {
@@ -301,6 +329,8 @@
 
             position: absolute;
             background: #1a1a1a8c;
+            background-image: linear-gradient(180deg, #33333362, #088f2a70);
+
             top: 0;
             /* height: 100vh; */
             width: 100vw;
@@ -315,6 +345,8 @@
 
         /* leaderboard */
         .leaderBoard {
+            margin-top: 5rem;
+            position: relative;
             display: flex;
             flex-direction: column;
             width: 70%;
@@ -332,6 +364,15 @@
 
         .leaderBoard button {
             background-repeat: no-repeat;
+        }
+
+        #leaderBoardImg {
+            position: absolute;
+            top: 0rem;
+            right: 5rem;
+            height: 11rem;
+            width: 13rem;
+            z-index: 1010;
         }
 
         .rankingSections button {
@@ -409,6 +450,14 @@
         .rankedAccount .account:hover {
             background: #3ac962;
         }
+
+
+        #shordDescription {
+            margin: 5rem;
+            font-weight: bold;
+            padding: 1rem;
+        }
+
 
 
         /* footer */
@@ -593,7 +642,11 @@
             display: none;
         }
 
-        .teamEle {
+        .team {
+            display: none;
+        }
+
+        .en {
             display: none;
         }
 
@@ -606,6 +659,10 @@
             border-radius: .5rem;
             transition: .1s linear;
             cursor: pointer;
+        }
+
+        .box img {
+            /* height: 100%; */
         }
 
         .box:hover {
@@ -672,6 +729,24 @@
         /* mobile */
 
         @media all and (max-width: 500px) {
+            header {
+                gap: .3rem;
+            }
+
+            .links {
+                gap: .3rem;
+            }
+
+            .links a,
+            .links button {
+                height: 2rem;
+                width: 2rem;
+            }
+
+            #miniProfile {
+                margin: 2rem;
+            }
+
             main {
                 flex-direction: column;
             }
@@ -697,11 +772,30 @@
             }
 
             .rankingHeader {
-                height: 2rem;
+                /* height: 2rem; */
+            }
+
+            .rankingHeader button:first-child {
+                /* padding: auto; */
+                /* width: auto; */
+                /* line-height: 0; */
             }
 
             .box {
                 padding: .2rem;
+            }
+
+            #leaderBoardImg {
+                top: 0rem;
+                right: 0rem;
+                height: 7rem;
+                width: 9rem;
+            }
+
+            #shordDescription {
+                margin: 1rem;
+                font-weight: bold;
+                padding: .5rem;
             }
         }
 
@@ -756,7 +850,13 @@
         .sureBtn:hover {
             background: rgb(34, 106, 173);
         }
+
+
+        .leaflet-control-geocoder-icon {
+            z-index: 1020;
+        }
     </style>
+
 </head>
 
 <body>
@@ -764,14 +864,15 @@
     <header>
         <!-- logo -->
         <div class="links">
-            <a href="https://kadum2.github.io/digital-aid" class="logo box">
+            <!-- 
+            <a href="https://kadum2.github.io/git4v" class="logo box">
                 <div class="black"></div>
                 <div class="red"></div>
                 <div class="white"></div>
-                <!-- <div class="green"></div> -->
             </a>
+        -->
 
-            <a href="https://kadum2.github.io/publicline/home" class="box">
+            <a href="https://kadum2.github.io/publicline/home" class="box projectLink">
                 <img src="https://kadum2.github.io/publicline/home/imgs/publicline-logo.png" alt="">
             </a>
 
@@ -779,9 +880,8 @@
                 <img src="https://kadum2.github.io/publicline/home/imgs/general/hamburger-menu-icon.png" alt="">
             </button>
 
-            <button class="box" id="translateToEn">en</button>
+            <!-- <button class="box" id="translateToEn">en</button> -->
         </div>
-
 
         <!-- title -->
         <h2 id="projectName" class="box"> publicline </h2>
@@ -792,7 +892,7 @@
                 <div class="flex currentAccount">
                     <img id="currentAccountImgDi">
                     <p id="currentAccountUsernameDi">username</p>
-                    <p class="teamEle" style="line-height: none; padding:0;
+                    <p class="team" style="line-height: none; padding:0;
             color:white; font-size: .8rem;">team</p>
                 </div>
             </div>
@@ -870,17 +970,27 @@
             <div id="newRouteDetails">
                 <input type="text" name="" id="routeName" placeholder="اسم المسار">
                 <div class="deletebtns">
-                    <button class="box" id="cancel-step">الغاء الخطوة</button>
+                    <button class="box" id="cancel-step">
+                        <div class="en">cancel step</div>
+                        <div class="ar">الغاء الخطوة </div>
+                    </button>
                     <!-- <button class="box" id="cancel-route">الغاء المسار</button> -->
                 </div>
-                <button class="box" id="point1">نقطة البداية</button>
-                <button class="box" id="point2">نقطة النهاية</button>
+                <button class="box" id="start">
+                    <div class="en">start point</div>
+                    <div class="ar">نقطة البدية</div>
+                </button>
+                <button class="box" id="end">
+                    <div class="en">end point</div>
+                    <div class="ar">نقطة النهاية</div>
+                </button>
 
-                <button class="box" id="send"> ارسال المسار</button>
+                <button class="box" id="send">
+                    <div class="en">send</div>
+                    <div class="ar">ارسال</div>
+                </button>
             </div>
         </div>
-        <button id="makeLocLink" class="box"><img src="https://kadum2.github.io/publicline/home/imgs/red-pin-icon.png"
-                alt="" style="pointer-events: none;"></button>
 
         <div id="routesToDisplay">
             <button id="displayCompletedRoutes">
@@ -890,6 +1000,103 @@
                 غير كاملة
             </button>
         </div>
+
+        <select id="selectGovernate">
+            <!-- main -->
+            <option value="baghdad">
+                <p class="en">baghdad</p>
+                <div class="ar">بغداد</div>
+            </option>
+            <option value="basra" id="basraLogo">
+                <div class="en">basra</div>
+                <div class="ar">بصرة</div>
+
+                <img src="https://kadum2.github.io/publicline/home/imgs/basra-logo.png" style="height: 1rem;">
+            </option>
+
+            <option value="nineveh">
+                <div class="en">nineveh</div>
+                <div class="ar">نينوى</div>
+            </option>
+            <option value="dhi-qar">
+                <div class="en">dhi-qar</div>
+                <div class="ar">ذي قار</div>
+            </option>
+            <option value="babil">
+                <div class="en">babil</div>
+                <div class="ar">بابل</div>
+            </option>
+            <option value="sulaymaniyah">
+                <div class="en">sulaymaniyah</div>
+                <div class="ar">سليمانية</div>
+            </option>
+            <option value="erbil">
+                <div class="en">erbil</div>
+                <div class="ar">اربيل</div>
+            </option>
+            <option value="anbar">
+                <div class="en">anbar</div>
+                <div class="ar">انبار</div>
+            </option>
+
+            <option value="karbala">
+                <div class="en">karbala</div>
+                <div class="ar">كربلاء</div>
+            </option>
+            <option value="najaf">
+                <div class="en">najaf</div>
+                <div class="ar">نجف</div>
+            </option>
+
+            <!--  -->
+            <!-- 
+            <option value="dohuk">
+                <div class="en">dohuk</div>
+                <div class="ar">دهوك</div>
+            </option>
+            <option value="kirkuk">
+                <div class="en">kirkuk</div>
+                <div class="ar">كركوك</div>
+            </option>
+            <option value="saladin">
+                <div class="en">saladin</div>
+                <div class="ar">صلاح الدين</div>
+            </option>
+            <option value="diyala">
+                <div class="en">diyala</div>
+                <div class="ar">ديالى</div>
+            </option>
+            <option value="wasit">
+                <div class="en">wasit</div>
+                <div class="ar">واسط</div>
+            </option>
+            <option value="al-qadisiyyah">
+                <div class="en">al-qadisiyyah</div>
+                <div class="ar">القادسية</div>
+            </option>
+            <option value="maysan">
+                <div class="en">maysan</div>
+                <div class="ar">ميسان</div>
+            </option>
+            <option value="muthanna">
+                <div class="en">muthanna</div>
+                <div class="ar">مثنى</div>
+            </option>
+            <option value="halabja">
+                <div class="en">halabja</div>
+                <div class="ar">حلبجة</div>
+            </option>
+            -->
+
+
+        </select>
+
+        <button id="makeLocLink" class="box"><img
+                src="https://kadum2.github.io/publicline/home/imgs/general/red-pin-icon.png" alt=""
+                style="pointer-events: none;"></button>
+
+        <button id="findMe" class="box"><img
+                src="https://kadum2.github.io/publicline/home/imgs/general/aim-icon.png"></button>
 
 
         <div id="messages">
@@ -901,8 +1108,10 @@
 
 
     <aside>
+        <img src="https://kadum2.github.io/publicline/home/imgs/sindibad-25-icon.png" id="leaderBoardImg">
         <!-- leaderboard -->
         <div class="leaderBoard">
+
 
             <div class="rankingSections" style="margin-bottom: 1rem;">
                 <p style="color: white; display: inline;">leaderBoard</p>
@@ -917,9 +1126,9 @@
                 <button id="accountHeader" class="box">الحساب</button>
                 <div class="points">
                     <button class="box" id="addedRoutesSorting"
-                        style="background-image: url('https://kadum2.github.io/publicline/home/imgs/add-bus-icon-green-blue-green-blue.png');"></button>
+                        style="background-image: url('https://kadum2.github.io/publicline/home/imgs/add-route-icon.png');"></button>
                     <button class="box" id="votesSorting"
-                        style="background-image: url('https://kadum2.github.io/publicline/home/imgs/vote-icon.png');"></button>
+                        style="background-image: url('https://kadum2.github.io/publicline/home/imgs/f2-vote.png');"></button>
                     <button class="box" id="totalSorting">=</button>
                 </div>
             </div>
@@ -957,7 +1166,38 @@
 
         </div>
 
+        <div id="shordDescription" class="box">
+            <h2 style="font-size: 2rem;">وصف الموقع</h2>
+            بسبب غياب النقل العام في العراق ظهرت حافلات رخيصة التكلفة على الناس
+            تسير بمسارات ثابتة
+            لكن لا يمكن الاعتماد على تلك الحافلات وحدها للوصول الى نقطة معينة و
+            التنقل
+            عموما بسبب عشوائيتها و عدم وجود خريطة توضح تلك المسارات في عموم البلد
+            مشروع الخط العام يصنع تلك الخريطة بمساهمة الافراد في اضافة تلك
+            الخارطة (مع اسمها) و التصويت على المسارات الموجود لزيادة دقة الخارطة
+            مستقبلا (حيث يحذف المسار او يبقى حسب التصويت)
+
+            ملاحظة: المسارات المضافة حديثا لا تضاف مباشرة الى الخارطة بل الى
+            صفحة (ادمن) ليقوم بالتاكد من صحتها (منطقيا) عندها ستضاف الى الخارطة
+            الرئيسية
+
+            يمكن لاي احد زيارة صفحة الادمن و مشاهدة المسارات الحديثة لكن لا يمكن
+            لاي احد (غير الادمن ) التعديل على المسارات فيها
+        </div>
+        <div class="app box">
+            <h2>لتنزيل التطبيق</h2>
+            <img src="https://kadum2.github.io/publicline/home/imgs/download-app.jpg" style="height: 18rem;">
+            <img src="https://kadum2.github.io/publicline/home/imgs/download-app-2.jpg" style="height: 18rem;">
+        </div>
+
         <footer>
+
+            <a href="https://kadum2.github.io/git4v" class="logo box">
+                <div class="black"></div>
+                <div class="red"></div>
+                <div class="white"></div>
+            </a>
+
             <div class="contact">
                 <span class="red logoPart"></span>
                 <h2>تواصل </h2>
@@ -994,23 +1234,23 @@
                     <li>اظهار مسارات النقل العام: مكتملة و غير مكتملة<img
                             src="https://kadum2.github.io/publicline/home/imgs/f4-choose-display.png" alt="">
                     </li>
-                    <li>اضافة مسار <img src="https://kadum2.github.io/publicline/home/imgs/add-route-icon.png" alt="">
-                    </li>
+                    <li>اضافة مسار <img src="https://kadum2.github.io/publicline/home/imgs/add-route-icon.png"></li>
                     <li>التصويت على المسار, لزيادة دقتها <img
-                            src="https://kadum2.github.io/publicline/home/imgs/vote-icon.png" alt=""></li>
+                            src="https://kadum2.github.io/publicline/home/imgs/f2-vote.png"></li>
+                    <li>تحديد موقع لنشره <img
+                            src="https://kadum2.github.io/publicline/home/imgs/general/red-pin-icon.png" alt=""></li>
 
                 </div>
 
 
             </div>
 
-
             <div class="statics">
                 <div class="green logoPart"></div>
                 <h2>نتائج </h2>
                 <div class="projectsInfo">
 
-                    <div class="projectStatics">
+                    <div class="projectStatics" style="display: none;">
                         <b>ivc <img src="https://kadum2.github.io/publicline/home/imgs/general/ivc-logo.png" alt=""></b>
                         <li>عدد المستخدمين: <img
                                 src="https://kadum2.github.io/publicline/home/imgs/general/account-icon.png" alt=""> <b
@@ -1030,44 +1270,60 @@
                                 src="https://kadum2.github.io/publicline/home/imgs/add-route-icon.png">
                             <b id='routesCounter'>0</b>
                         </li>
-                        <li>تم التصويت: <img src="https://kadum2.github.io/publicline/home/imgs/vote-icon.png" alt="">
-                            <b id="votesCounter">0</b></li>
+                        <li>تم التصويت: <img src="https://kadum2.github.io/publicline/home/imgs/f2-vote.png" alt=""> <b
+                                id="votesCounter">0</b></li>
 
                     </div>
 
                     <br>
-                    <div class="projectStatics">
-                        <b>bygreen <img src="https://kadum2.github.io/publicline/home/imgs/bygreen/bygreen-logo.png"
+                    <div class="projectStatics" style="display: none;">
+                        <b>bygreen <img
+                                src="https://kadum2.github.io/git4https://kadum2.github.io/publicline/home/imgs/bygreen/bygreen-logo.png"
                                 alt=""></b>
                         <li>تم زراعتها <img
-                                src="https://kadum2.github.io/publicline/home/imgs/bygreen/green-icon-stroked.png"
+                                src="https://kadum2.github.io/git4https://kadum2.github.io/publicline/home/imgs/bygreen/green-icon-stroked.png"
                                 alt=""><b id="greenCounter">0</b>
                         </li>
                         <li>تحتاج الى زراعة <img
-                                src="https://kadum2.github.io/publicline/home/imgs/bygreen/red-icon-stroked.png"> <b
-                                id="redCounter">0</b>
+                                src="https://kadum2.github.io/git4https://kadum2.github.io/publicline/home/imgs/bygreen/red-icon-stroked.png">
+                            <b id="redCounter">0</b>
                         </li>
                         <li>الحملات الحالية: <img
-                                src="https://kadum2.github.io/publicline/home/imgs/bygreen/yellow-icon-stroked.png"> <b
-                                id="yellowCounter">0</b>
+                                src="https://kadum2.github.io/git4https://kadum2.github.io/publicline/home/imgs/bygreen/yellow-icon-stroked.png">
+                            <b id="yellowCounter">0</b>
                         </li>
                         <li>عدد النباتات المزروعة: <img
-                                src="https://kadum2.github.io/publicline/home/imgs/bygreen/plant-icon.png" alt=""> <b
-                                id="contriCounter">0</b></li>
-                        <li>عدد المشاتل: <img src="https://kadum2.github.io/publicline/home/imgs/bygreen/shop-icon.png"
+                                src="https://kadum2.github.io/git4https://kadum2.github.io/publicline/home/imgs/bygreen/plant-icon.png"
+                                alt=""> <b id="contriCounter">0</b></li>
+                        <li>عدد المشاتل: <img
+                                src="https://kadum2.github.io/git4https://kadum2.github.io/publicline/home/imgs/bygreen/shop-icon.png"
                                 alt=""> <b id="shopsCounter">0</b></li>
                     </div>
                     <br>
-
                 </div>
             </div>
+
+            <a href="https://kadum2.github.io/injazat-3la-gd-el7al/">
+                <img src="https://kadum2.github.io/publicline/home/imgs/general/injazat-logo.png" style="height: 3rem;">
+            </a>
+
         </footer>
-
-
 
     </aside>
 
-    <script type='module'>
+    <!-- service worker -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                // navigator.serviceWorker.register('./original-sw.js');
+                // navigator.serviceWorker.register('../original-sw.js');
+                // navigator.serviceWorker.register('./chat-gpt-sw.js');
+                navigator.serviceWorker.register('./chat-gpt-workbox-sw.js');
+            });
+        }
+    </script>
+
+    <script type="module">
 
 
         // firebase 
@@ -1111,9 +1367,13 @@ let darkerGreenColor = '#21C24F'
 let blueColor = '#3388FF'
 let darkerBlueColor = '#075FDA'
 
+// governates coordinates; 
+
+
+
 
 // map configure
-const map = L.map('map', { zoomControl: false }).setView([33.396600, 44.356579], 9); 
+const map = L.map('map', { zoomControl: false }).setView([33.396600, 44.356579], 10); 
 L.Control.geocoder().addTo(map);
 
 let apiKey = 'pk.eyJ1IjoiYWxmcmVkMjAxNiIsImEiOiJja2RoMHkyd2wwdnZjMnJ0MTJwbnVmeng5In0.E4QbAFjiWLY8k3AFhDtErA'
@@ -1130,7 +1390,7 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
             iconUrl: "https://kadum2.github.io/publicline/home/imgs/add-bus-icon.png",
             shadowSize: [50, 64], // size of the shadow
             shadowAnchor: [4, 62], // the same for the shadow
-            iconSize: [30, 30],
+            iconSize: [25, 41],
             // iconAnchor: [12, 41],
             iconAnchor: [12, 25],
             popupAnchor: [0, -30] 
@@ -1143,8 +1403,18 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
             iconSize: [25, 41],
             iconAnchor: [12, 41],
             popupAnchor: [0, -30] 
+        });
+
+        let sindibad25 = L.icon({
+            iconUrl: "https://kadum2.github.io/publicline/home/imgs/sindibad-25-icon.png",
+            shadowSize: [50, 64], // size of the shadow
+            shadowAnchor: [4, 62], // the same for the shadow
+            iconSize: [70, 60],
+            iconAnchor: [12, 41],
+            popupAnchor: [0, 0] 
 
         });
+
 
 
 
@@ -1237,7 +1507,7 @@ document.querySelector('#makeProfileBtn').addEventListener('click', async (ev)=>
     if(!found){
         console.log('no taken')
 
-        let fileRef = ref(bygreenStorage, '/https://kadum2.github.io/publicline/home/imgs/' + new Date().toISOString().replace(/:/g, '-') +document.querySelector("#userImg").files[0].name.replaceAll(" ","") )
+        let fileRef = ref(bygreenStorage, '/user-imgs/' + new Date().toISOString().replace(/:/g, '-') +document.querySelector("#userImg").files[0].name.replaceAll(" ","") )
 
             uploadBytes(fileRef, document.querySelector("#userImg").files[0]).then(res=>{
                 getDownloadURL(res.ref).then(url=>{
@@ -1291,26 +1561,6 @@ document.querySelector('#asideDi').addEventListener('click', (ev)=>{
 })
 
 
-//leaflet basic map
-
-    map.on('zoomend', function () {
-            // let currentZoom = map.getZoom();
-            console.log('current zoom;',map.getZoom()  , map.getBounds())
-            routesObjects.forEach(route=>{
-            if(map.getZoom() == 10){
-                route.setStyle({weight: 5})
-            }else if(map.getZoom() == 11){
-                route.setStyle({weight: 10})
-            }else if(map.getZoom() == 12){
-                route.setStyle({weight: 15})
-            }else if(map.getZoom() == 13){
-                route.setStyle({weight: 20})
-            }else if(map.getZoom() == 14){
-                route.setStyle({weight: 25})
-            }
-            })
-    });
-
     document.querySelector('#makeLocLink').addEventListener('click', (ev)=>{ev.target.classList.toggle('on')})
 
     document.querySelector("#addRouteMode").addEventListener("click", (ev)=>{
@@ -1336,6 +1586,27 @@ document.querySelector('#asideDi').addEventListener('click', (ev)=>{
 
     ///////////////////////// ui-js-data
     // ranking options
+
+//leaflet basic map
+map.on('zoomend', function () {
+    // let currentZoom = map.getZoom();
+    console.log('current zoom;',map.getZoom()  , map.getBounds())
+    routesObjects.forEach(route=>{
+    if(map.getZoom() == 10){
+        route.setStyle({weight: 5})
+    }else if(map.getZoom() == 11){
+        route.setStyle({weight: 10})
+    }else if(map.getZoom() == 12){
+        route.setStyle({weight: 15})
+    }else if(map.getZoom() == 13){
+        route.setStyle({weight: 20})
+    }else if(map.getZoom() == 14){
+        route.setStyle({weight: 25})
+    }
+    })
+});
+
+
 totalSorting.addEventListener('click', (ev)=>{
     ev.target.classList.toggle('on')
     ev.target.classList.contains('on')?ranking('total', 'ac'):ranking('total', 'de')
@@ -1424,9 +1695,129 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
 })
 
 
+selectGovernate.addEventListener('change', (ev)=>{
+    console.log('options', ev.target.value)
+
+    // the most in numbers; main 
+    ev.target.value == 'baghdad'?map.flyTo([33.314644, 44.420873], 10):null
+    ev.target.value == 'basra'?map.flyTo([30.534238, 47.764500], 10):null
+    ev.target.value == 'nineveh'?map.flyTo([36.346197, 43.158618], 10):null
+    ev.target.value == 'sulaymaniyah'?map.flyTo([35.560957, 45.414252], 10):null
+    ev.target.value == 'anbar'?map.flyTo([33.422346, 43.268823], 10):null
+    ev.target.value == 'karbala'?map.flyTo([32.601386, 44.018819], 10):null
+    ev.target.value == 'erbil'?map.flyTo([36.188488, 44.013199], 10):null
+    ev.target.value == 'babil'?map.flyTo([32.471120, 44.426321], 10):null
+    ev.target.value == 'najaf'?map.flyTo([32.001916, 44.331424], 10):null
+    ev.target.value == 'dhi-qar'?map.flyTo([31.040835, 46.249916], 10):null
+
+    // ev.target.value == 'dohuk'?map.flyTo([36.862733, 42.991273], 10):null
+    // ev.target.value == 'kirkuk'?map.flyTo([35.459780, 44.385553], 10):null
+    // ev.target.value == 'saladin'?map.flyTo([30.534238, 47.764500], 10):null
+    // ev.target.value == 'diyala'?map.flyTo([30.534238, 47.764500], 10):null
+    // ev.target.value == 'wasit'?map.flyTo([30.534238, 47.764500], 10):null
+    // ev.target.value == 'maysan'?map.flyTo([30.534238, 47.764500], 10):null
+    // ev.target.value == 'al-qadisiyyah'?map.flyTo([30.534238, 47.764500], 10):null
+    // ev.target.value == 'muthanna'?map.flyTo([30.534238, 47.764500], 10):null
+    // ev.target.value == 'halabja'?map.flyTo([30.534238, 47.764500], 10):null
+})
+
+let myLoc 
+let myPin
+
+let myLat
+let myLon
+
+findMe.addEventListener('click', (ev)=>{
+
+    // console.log('to find and track me ', navigator.geolocation.getCurrentPosition)
+    // console.log(navigator.geolocation.getCurrentPosition((pos)=>console.log(pos)))
+    // navigator.geolocation.getCurrentPosition((pos)=>console.log(data.longitude),
+    // (err)=>console.log(err))
+    
+// no need 
+    // navigator.geolocation.getCurrentPosition((pos)=>{
+    //     console.log('pos is ', pos)
+    //     myLat = pos.coords.latitude
+    //     myLon = pos.coords.longitude
+    //     map.flyTo([pos.coords.latitude, pos.coords.longitude], 16)
+    // }, (not)=>{
+    //     console.log('not', not)
+    //     document.querySelector('#redMessage').textContent = 'allow geolocation'
+    //     document.querySelector('#redMessage').style.display = 'block'
+    //     setTimeout(() => {
+    //         document.querySelector('#redMessage').style.display = 'none'
+            
+    //     }, 3000);
+    // })
+
+    ev.target.classList.toggle('on')
+    if(ev.target.classList.contains('on')){
+        // add marker and circle
+
+        // get into the locatoin
+    navigator.geolocation.getCurrentPosition(pos=>{
+        map.flyTo([pos.coords.latitude, pos.coords.longitude], 16)
+    })
+
+    navigator.geolocation.watchPosition((pos)=>{
+        console.log('watching; ',pos.coords.latitude, pos.coords.longitude)
+        
+        myPin?map.removeLayer(myPin):null
+        myLoc?map.removeLayer(myLoc):null
+
+        myLat = pos.coords.latitude
+        myLon = pos.coords.longitude
+
+        myPin = L.marker([pos.coords.latitude, pos.coords.longitude], {icon: sindibad25}).addTo(map)
+        myLoc = L.circle([pos.coords.latitude, pos.coords.longitude], {color: "red", radius: 100}).addTo(map)
+        
+        // map.flyTo([pos.coords.latitude, pos.coords.longitude], 16)
+
+        // setView([pos.coords.latitude, pos.coords.longitude])
+    }, (err)=>{
+        console.log("allow this website to get your location, and enable gps")
+        // alert('geolocation is not enabled')
+        if(navigator.onLine){
+    // no permisson case
+    fetch('https://ipapi.co/json/')
+        .then(res=>res.json())
+        .then(data=>{
+            map.flyTo([data.latitude, data.longitude], 16)
+            myPin = L.marker([data.latitude, data.longitude], {icon: sindibad25}).addTo(map)
+            myLoc = L.circle([data.latitude, data.longitude], {color: "red", radius: 100}).addTo(map)
+
+            console.log(myPin, myLoc)
+        })
+        }else{
+
+            document.querySelector('#redMessage').textContent = 'no internet connection'
+        document.querySelector('#redMessage').style.display = 'block'
+        setTimeout(() => {
+            document.querySelector('#redMessage').style.display = 'none'
+            
+        }, 3000);
 
 
 
+    // give the previous saved location
+    // if(myLat && myLon){
+    //     console.log('geolocation is enabled')
+    //     map.flyTo([myLat, myLon], 16)
+    // }
+        }
+
+    })
+
+
+
+    }else{
+        // remote marker and circle 
+        map.removeLayer(myLoc)
+        map.removeLayer(myPin)
+
+    }
+
+})
 
 
 
@@ -1801,11 +2192,12 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
             console.log('Geolocation is not supported by this browser')
         }
         }
+
     function showPosition(position) {
             // map.setView([position.coords.latitude, position.coords.longitude], 16)
             map.flyTo({lat: position.coords.latitude,lng: position.coords.longitude}, 16)
         }
-        getLocation()
+        // getLocation()
 
 
     function deployRoutes(ev){
@@ -2058,8 +2450,8 @@ document.querySelector('#teamsRanking').innerHTML = orderedteamElements.replaceA
 
         //////////// test code; 
 
-        window.onclick = ()=>{
-            console.log(currentPath)
+        window.onclick = (ev)=>{
+            // console.log(ev.target, ev.target.style.zIndex, getComputedStyle(ev.target).zIndex)
             // console.log(routesObjects)
         }
 
@@ -2087,6 +2479,9 @@ document.querySelector('#teamsRanking').innerHTML = orderedteamElements.replaceA
 
     </script>
 
+
+
 </body>
 
 </html>
+<!-- https://kadum2.github.io/publicline/home -->
