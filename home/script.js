@@ -64,7 +64,7 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
             iconUrl: "./imgs/add-bus-icon.png",
             shadowSize: [50, 64], // size of the shadow
             shadowAnchor: [4, 62], // the same for the shadow
-            iconSize: [30, 30],
+            iconSize: [25, 41],
             // iconAnchor: [12, 41],
             iconAnchor: [12, 25],
             popupAnchor: [0, -30] 

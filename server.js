@@ -38,7 +38,8 @@ const bygreenConfig = {
     storageBucket: "bygreen-453c9.appspot.com",
     messagingSenderId: "19954598250",
     appId: "1:19954598250:web:ba57c792bdf65dbc18a513",
-    measurementId: "G-265TN8HGKX"};
+    measurementId: "G-265TN8HGKX"
+};
 
 const bygreen = initializeApp(bygreenConfig, 'bygreen');
 const bygreenDb = getFirestore(bygreen)
@@ -63,12 +64,9 @@ onSnapshot(collection(bygreenDb, 'routes'), (data)=>{
     data.docs.forEach(doc=>{
         docs.push({...doc.data(), id: doc.id})
     })
-    // console.log(docs)
 
-
-        ////
     docs.forEach(e=>{
-        // not to allow multiple voting for the route; e.upvotes, e.downvotes
+        // not to allow multiple voting by the same account for the route; e.upvotes, e.downvotes
         e.upvotes.forEach(ee=>{
             if(e.downvotes.includes(ee)){
                 // not good user; delete 
@@ -79,7 +77,7 @@ onSnapshot(collection(bygreenDb, 'routes'), (data)=>{
 
         //////calculate the route 
         // console.log(e)
-        if(e.downvotes.length+e.upvotes.length == 20){
+        if(e.downvotes.length+e.upvotes.length == 10){
 
             console.log('time to calc')
             if (e.downvotes.length > e.upvotes.length){
@@ -88,13 +86,12 @@ onSnapshot(collection(bygreenDb, 'routes'), (data)=>{
             }
         }
     })
-
-    console.log('fired')
+    console.log('got the routes and calculated them')
 })
 
-
-app.use('/location/:coordinates',express.static('public'))
+app.use('/', express.static('./home'))
+app.use('/location/:coordinates',express.static('./home'))
 // to route into ivc
-app.use('/profile/:username',express.static('profile'))
+// app.use('/profile/:username',express.static('profile'))
 
-app.listen(process.env.PORT || 1000, ()=>console.log("listennig on port 1000..."))
+app.listen(process.env.PORT || 3000, ()=>console.log("listennig on port 3000..."))
