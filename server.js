@@ -91,6 +91,11 @@ onSnapshot(collection(bygreenDb, 'routes'), (data)=>{
 
 app.use('/', express.static('./home'))
 app.use('/location/:coordinates',express.static('./home'))
+
+app.get('/trying', (req, res)=>{
+    console.log('server is live')
+    res.send('server is live')
+})
 // to route into ivc
 // app.use('/profile/:username',express.static('profile'))
 

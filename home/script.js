@@ -398,8 +398,7 @@ selectGovernate.addEventListener('change', (ev)=>{
 let myLoc 
 let myPin
 
-let myLat
-let myLon
+let watchID
 
 findMe.addEventListener('click', (ev)=>{
 
@@ -433,7 +432,7 @@ findMe.addEventListener('click', (ev)=>{
         map.flyTo([pos.coords.latitude, pos.coords.longitude], 16)
     })
 
-    navigator.geolocation.watchPosition((pos)=>{
+    watchID = navigator.geolocation.watchPosition((pos)=>{
         console.log('watching; ',pos.coords.latitude, pos.coords.longitude)
         
         myPin?map.removeLayer(myPin):null
@@ -485,7 +484,8 @@ findMe.addEventListener('click', (ev)=>{
 
 
     }else{
-        // remote marker and circle 
+        // remove marker and circle, and stop watching 
+        navigator.geolocation.clearWatch(watchID);
         map.removeLayer(myLoc)
         map.removeLayer(myPin)
 
