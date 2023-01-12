@@ -20,6 +20,7 @@ header{
     justify-content: space-between;
     align-items: center;
     gap: 1rem;
+    position: relative;
 }
 .logo div{
     height: 25%;
@@ -120,6 +121,19 @@ header{
     align-items: center;
 }
 /* half logged */
+
+
+#redArrow{
+    display: none;
+    position: absolute;
+    top: 1rem;
+    /* left: 3.5rem; */
+    left: 4rem;
+    transform: rotateZ(-140deg);
+    z-index: 1010;
+    height: 7rem;
+    width: 7rem;
+}
 
 
 
@@ -265,6 +279,7 @@ border: 1px solid rgba(255, 255, 255, 0.3);
     padding: .1rem;
 }
 
+
 /* aside */
 aside{
     display: none;
@@ -312,7 +327,7 @@ aside{
 
 #leaderBoardImg{
     position: absolute;
-    top: 0rem;
+    top: 20rem;
     right: 5rem;
     height: 11rem;
     width: 13rem;
@@ -554,7 +569,12 @@ button{
 
 .en{
     display: none;
+    pointer-events: none;
 }
+.ar{
+    pointer-events: none;
+}
+
 .box{
     background-color: #27f060;
     /* background-image: linear-gradient(135deg,  #27f060, #22c751); */
@@ -671,7 +691,7 @@ button{
         padding: .2rem;
     }
     #leaderBoardImg{
-        top: 0rem;
+        top: 27rem;
         right: 0rem;
         height: 7rem;
         width: 9rem;
@@ -680,6 +700,9 @@ button{
         margin: 1rem;
         font-weight: bold;
         padding: .5rem;
+    }
+    #redArrow{
+    left: 3.5rem;
     }
 }
 

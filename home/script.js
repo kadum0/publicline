@@ -384,16 +384,31 @@ selectGovernate.addEventListener('change', (ev)=>{
     ev.target.value == 'najaf'?map.flyTo([32.001916, 44.331424], 10):null
     ev.target.value == 'dhi-qar'?map.flyTo([31.040835, 46.249916], 10):null
 
-    // ev.target.value == 'dohuk'?map.flyTo([36.862733, 42.991273], 10):null
-    // ev.target.value == 'kirkuk'?map.flyTo([35.459780, 44.385553], 10):null
-    // ev.target.value == 'saladin'?map.flyTo([30.534238, 47.764500], 10):null
-    // ev.target.value == 'diyala'?map.flyTo([30.534238, 47.764500], 10):null
-    // ev.target.value == 'wasit'?map.flyTo([30.534238, 47.764500], 10):null
-    // ev.target.value == 'maysan'?map.flyTo([30.534238, 47.764500], 10):null
-    // ev.target.value == 'al-qadisiyyah'?map.flyTo([30.534238, 47.764500], 10):null
-    // ev.target.value == 'muthanna'?map.flyTo([30.534238, 47.764500], 10):null
-    // ev.target.value == 'halabja'?map.flyTo([30.534238, 47.764500], 10):null
+    ev.target.value == 'dohuk'?map.flyTo([36.862733, 42.991273], 10):null
+    ev.target.value == 'kirkuk'?map.flyTo([35.459780, 44.385553], 10):null
+    ev.target.value == 'saladin'?map.flyTo([30.534238, 47.764500], 10):null
+    ev.target.value == 'diyala'?map.flyTo([30.534238, 47.764500], 10):null
+    ev.target.value == 'wasit'?map.flyTo([30.534238, 47.764500], 10):null
+    ev.target.value == 'maysan'?map.flyTo([30.534238, 47.764500], 10):null
+    ev.target.value == 'al-qadisiyyah'?map.flyTo([30.534238, 47.764500], 10):null
+    ev.target.value == 'muthanna'?map.flyTo([30.534238, 47.764500], 10):null
+    ev.target.value == 'halabja'?map.flyTo([30.534238, 47.764500], 10):null
 })
+
+document.querySelector('#translateToEn').addEventListener('click', (ev)=>{
+    ev.target.classList.toggle('on')
+    if(ev.target.classList.contains('on')){
+        document.querySelectorAll('.en').forEach((enElement)=>enElement.style.display='block')
+        document.querySelectorAll('.ar').forEach((arELement)=>arELement.style.display='none')
+        ev.target.textContent = 'ar'
+    }else{
+        document.querySelectorAll('.en').forEach((enElement)=>enElement.style.display='none')
+        document.querySelectorAll('.ar').forEach((arELement)=>arELement.style.display='block')
+        ev.target.textContent = 'en'
+    }
+})
+
+
 
 let myLoc 
 let myPin
@@ -401,27 +416,6 @@ let myPin
 let watchID
 
 findMe.addEventListener('click', (ev)=>{
-
-    // console.log('to find and track me ', navigator.geolocation.getCurrentPosition)
-    // console.log(navigator.geolocation.getCurrentPosition((pos)=>console.log(pos)))
-    // navigator.geolocation.getCurrentPosition((pos)=>console.log(data.longitude),
-    // (err)=>console.log(err))
-    
-// no need 
-    // navigator.geolocation.getCurrentPosition((pos)=>{
-    //     console.log('pos is ', pos)
-    //     myLat = pos.coords.latitude
-    //     myLon = pos.coords.longitude
-    //     map.flyTo([pos.coords.latitude, pos.coords.longitude], 16)
-    // }, (not)=>{
-    //     console.log('not', not)
-    //     document.querySelector('#redMessage').textContent = 'allow geolocation'
-    //     document.querySelector('#redMessage').style.display = 'block'
-    //     setTimeout(() => {
-    //         document.querySelector('#redMessage').style.display = 'none'
-            
-    //     }, 3000);
-    // })
 
     ev.target.classList.toggle('on')
     if(ev.target.classList.contains('on')){
@@ -490,10 +484,7 @@ findMe.addEventListener('click', (ev)=>{
         map.removeLayer(myPin)
 
     }
-
 })
-
-
 
         /////////////////////////////////get data 
 
@@ -510,6 +501,7 @@ findMe.addEventListener('click', (ev)=>{
 
 
         await onAuthStateChanged(bygreenAuth, async (user)=>{
+
             console.log('authstatefun', dbUser)
             if(user){
                 console.log('from auth ', user)
@@ -525,9 +517,7 @@ findMe.addEventListener('click', (ev)=>{
         
                 let dbUserDoc = await getDoc(doc(bygreenDb, 'users', user.uid))
                 dbUser = dbUserDoc.data()
-        
-        
-        
+                
                 if(dbUser){
                 dbUser.id = dbUserDoc.id
         
@@ -608,7 +598,7 @@ findMe.addEventListener('click', (ev)=>{
             })
 
             // data statics 
-        getDocs(collection(bygreenDb, 'pins')).then((data)=>{
+            getDocs(collection(bygreenDb, 'pins')).then((data)=>{
         let docs = []
             data.docs.forEach(doc=>{
                 docs.push({...doc.data(), id: doc.id})
@@ -629,19 +619,20 @@ findMe.addEventListener('click', (ev)=>{
             document.querySelector('#greenCounter').textContent = green
             document.querySelector('#yellowCounter').textContent = yellow
             // document.querySelector('#redToGreenCounter').textContent = green
-    })
+            })
 
-        getDocs(collection(bygreenDb, 'shop')).then((data)=>{
+            getDocs(collection(bygreenDb, 'shop')).then((data)=>{
     let docs = []
         data.docs.forEach(doc=>{
             docs.push({...doc.data(), id: doc.id})
         })
         // console.log(docs[0].upvotes.length + docs[0].downvotes)
         document.querySelector('#shopsCounter').textContent = docs.length
-    })
+            })
 
 
 
+            // side custom 
 
         if(window.location.href.includes('location')){
                     console.log('contains temp pin', window.location.href.indexOf('location'), window.location.href.slice(0, window.location.href.indexOf('location')))
@@ -657,6 +648,33 @@ findMe.addEventListener('click', (ev)=>{
                     map.flyTo(currentPin._latlng, 16)
     
         }
+
+            // if visiting the website for the first time will get into some instructions
+            if (sessionStorage.getItem("firstVisit") === null) {
+                // This is the user's first visit
+                console.log("first time to visit the site; then to show instructions")
+                document.querySelector('#redArrow').style.display = 'block'
+                document.querySelector('#asideDi').classList.toggle('red')
+                document.querySelector('#asideDi').classList.contains('red')?document.querySelector('aside').style.display = 'flex':document.querySelector('aside').style.display = 'none'
+        
+                setTimeout(() => {
+                    // document.querySelector("#features").scrollIntoView({
+                    //     behavior: "auto",
+                    //     block: "center"
+                    // })
+        
+                    // document.body.scrollIntoView({ behavior: 'smooth', block: 'end'
+                    // });
+                    
+                    // window.scrollTo(0, document.body.scrollHeight);
+        
+                    document.querySelector('#redArrow').style.display = 'none'
+                }, 3000)
+        
+                sessionStorage.setItem("firstVisit", false)
+            } else {
+                // This is not the user's first visit
+            }
 
         })
 

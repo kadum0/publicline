@@ -41,7 +41,7 @@
         <!-- logo -->
         <div class="links">
             <!-- 
-            <a href="https://kadum2.github.io/git4v" class="logo box">
+            <a href="https://kadum2.github.io/git4t" class="logo box">
                 <div class="black"></div>
                 <div class="red"></div>
                 <div class="white"></div>
@@ -57,10 +57,16 @@
             </button>
 
             <!-- <button class="box" id="translateToEn">en</button> -->
+
+            <img src="./imgs/general/arrow-right.png" id="redArrow">
+
         </div>
 
         <!-- title -->
-        <h2 id="projectName" class="box"> publicline </h2>
+        <h2 id="projectName" class="box">
+            <div class="en">publicline</div>
+            <div class="ar">publiclinear</div>
+        </h2>
 
         <!-- auth; auth-di, auth-state -->
         <div id="miniProfileDi" class="box">
@@ -74,17 +80,21 @@
             </div>
 
             <div class="notlogged">
-                انشأ حساب
+                <div class="ar">انشأ حساب</div>
+                <div class="en">create account</div>
             </div>
             <div class="halfLogged">
-                اكمل البيانات
+                <div class="ar">اكمل البيانات</div>
+                <div class="en">fill the rest info</div>
             </div>
         </div>
 
         <div id="miniProfile">
 
             <div class="logged">
-                <p>حسابك </p>
+                <div class="ar">حسابك</div>
+                <div class="en">your account</div>
+                <!-- <p>حسابك </p> -->
                 <!-- account link? -->
                 <a class="flex box currentAccount" id="currentAccountLink" href="">
                     <img id="currentAccountImgMini">
@@ -97,20 +107,29 @@
                 <button class="box" id="signoutBtn" style="display: inline;">logout</button>
             </div>
             <div class="halfLogged">
-                <p>انت الان مسجل: يجب اكمال البيانات لانشاء حساب </p>
+                <div class="ar">انت الان مسجل: يجب اكمال البيانات لانشاء
+                    حساب</div>
+                <div class="en">your are now logged; you have to complete
+                    inserting the rest info</div>
+                <!-- <p>انت الان مسجل: يجب اكمال البيانات لانشاء حساب </p> -->
                 <input type="text" id="username" placeholder="username">
                 <input type="text" id="name" placeholder="name">
                 <input type="text" id="bio" placeholder="bio">
                 <label for="userImg" id="userImgUpload" class="box">upload image</label>
                 <input type="file" id="userImg">
-                <button id="makeProfileBtn" class="box">submit</button>
+                <button id="makeProfileBtn" class="box">
+                    <div class="ar">ارسال</div>
+                    <div class="en">send</div>
+                </button>
 
                 <button id="halfLoggedSignoutBtn" class="box">logout</button>
 
             </div>
 
             <div class="notLogged">
-                <p>تسجيل الدخول: </p>
+                <div class="ar">تسجيل الدخول</div>
+                <div class="en">login</div>
+                <!-- <p>تسجيل الدخول: </p> -->
                 <div id="register">
                     <input type="text" class="em" placeholder="em">
                     <input type="text" class="pw" placeholder="pw">
@@ -169,10 +188,12 @@
 
         <div id="routesToDisplay">
             <button id="displayCompletedRoutes">
-                كاملة
+                <div class="ar">كاملة</div>
+                <div class="en">completed</div>
             </button>
             <button id="displayUncompletedRoutes">
-                غير كاملة
+                <div class="ar">غير كاملة</div>
+                <div class="en">not completed</div>
             </button>
         </div>
 
@@ -266,21 +287,85 @@
 
         </select>
 
-        <button id="makeLocLink" class="box"><img src="./imgs/general/red-pin-icon.png" alt=""
-                style="pointer-events: none;"></button>
+        <button id="makeLocLink" class="box"><img src="./imgs/general/red-pin-icon.png" style="pointer-events:
+        none;"></button>
 
         <button id="findMe" class="box"><img src="./imgs/general/aim-icon.png"></button>
 
 
         <div id="messages">
-            <div id="greenMessage" class="box green">getting, sending, sent</div>
-            <div id="redMessage" class="box red">error, no valid data, full the rest</div>
+            <div id="greenMessage" class="box green">
+                <div class="ar"></div>
+                <div class="en">getting, sending, sent</div>
+            </div>
+            <div id="redMessage" class="box red">
+                <div class="ar"></div>
+                <div class="en">error, no valid data, full the rest</div>
+            </div>
         </div>
+
+
 
     </main>
 
 
     <aside>
+
+        <!-- temp -->
+        <div class="features" id="features">
+            <div class="black logoPart"></div>
+
+            <h2>
+                <div class="ar">الهدف</div>
+                <div class="en">goal</div>
+            </h2>
+            <li>
+                <div class="ar"> موقع و تطبيق لعرض خريطة مسارات النقل العام في العراق و تمكين
+                    المستخدم من اضافة المزيد من المسارات اليها ما سيزيد حجم الخارطة
+                    , لتسهيل التنقل
+                    بتكاليف قليلة
+                </div>
+                <div class="en">webstie and application that shows the public transportation
+                    map of iraq, and allows anyone to add a new route so to increase the size of
+                    the map, to facilitate mobility in a lower costs</div>
+            </li>
+
+            <br>
+            <h2>
+                <div class="ar">كيفية الاستخدام و المميزات</div>
+                <div class="en">how to use and features</div>
+            </h2>
+
+            <div>
+                <li>
+                    <div class="ar">اظهار مسارات النقل العام: مكتملة و غير
+                        مكتملة</div>
+                    <div class="en">display public transportation routes;
+                        completed and incompleted</div>
+                    <img src="./imgs/f4-choose-display.png" alt="">
+                </li>
+                <li>
+                    <div class="ar">اضافة مسار</div>
+                    <div class="en">add route</div>
+                    <img src="./imgs/add-route-icon.png">
+                </li>
+                <li>
+                    <div class="ar">التصويت على المسار, لزيادة دقتها</div>
+                    <div class="en">vote for a route, to increase their accuracy</div>
+                    <img src="./imgs/f2-vote.png">
+                </li>
+                <li>
+                    <div class="ar">تحديد مكان و الحصول على رابط الاشارة اليه</div>
+                    <div class="en">select a location to get share link to it</div>
+                    <img src="./imgs/general/red-pin-icon.png" alt="">
+                </li>
+
+            </div>
+
+
+        </div>
+
+
         <img src="./imgs/sindibad-25-icon.png" id="leaderBoardImg">
         <!-- leaderboard -->
         <div class="leaderBoard">
@@ -338,40 +423,100 @@
 
         </div>
 
-        <div id="shordDescription" class="box">
-            <h2 style="font-size: 2rem;">وصف الموقع</h2>
-            بسبب غياب النقل العام في العراق ظهرت حافلات رخيصة التكلفة على الناس
-            تسير بمسارات ثابتة
-            لكن لا يمكن الاعتماد على تلك الحافلات وحدها للوصول الى نقطة معينة و
-            التنقل
-            عموما بسبب عشوائيتها و عدم وجود خريطة توضح تلك المسارات في عموم البلد
-            مشروع الخط العام يصنع تلك الخريطة بمساهمة الافراد في اضافة تلك
-            الخارطة (مع اسمها) و التصويت على المسارات الموجود لزيادة دقة الخارطة
-            مستقبلا (حيث يحذف المسار او يبقى حسب التصويت)
+        <!-- 
+        <div id="howToUseIt" class="box">
+            <h2>كيفية الاستخدام </h2>
 
-            ملاحظة: المسارات المضافة حديثا لا تضاف مباشرة الى الخارطة بل الى
-            صفحة (ادمن) ليقوم بالتاكد من صحتها (منطقيا) عندها ستضاف الى الخارطة
-            الرئيسية
-
-            يمكن لاي احد زيارة صفحة الادمن و مشاهدة المسارات الحديثة لكن لا يمكن
-            لاي احد (غير الادمن ) التعديل على المسارات فيها
+            <div class="box">
+                <img src="">
+                <p>مسارات النقل العام (كيات و
+                    كوسترات)</p>
+            </div>
+            <div class="box">
+                <img src="">
+                <p>اضافة مسار</p>
+            </div>
+            <div class="box">
+                <img src="">
+                <p>تحديد موقع و الحصول على رابط للنشر وال
+                    توجيه الى ذلك الموقع</p>
+            </div>
+            <div class="box">
+                <img src="">
+                <p></p>
+            </div>
         </div>
+        -->
+
+        <div id="shordDescription" class="box">
+            <h2 style="font-size: 2rem;">
+                <div class="ar">وصف الموقع</div>
+                <div class="en">website description</div>
+            </h2>
+            <div class="ar">
+                بسبب غياب النقل العام في العراق ظهرت حافلات رخيصة التكلفة على الناس
+                تسير بمسارات ثابتة
+                لكن لا يمكن الاعتماد على تلك الحافلات وحدها للوصول الى نقطة معينة و
+                التنقل
+                عموما بسبب عشوائيتها و عدم وجود خريطة توضح تلك المسارات في عموم البلد
+                مشروع الخط العام يصنع تلك الخريطة بمساهمة الافراد في اضافة تلك
+                الخارطة (مع اسمها) و التصويت على المسارات الموجود لزيادة دقة الخارطة
+                مستقبلا (حيث يحذف المسار او يبقى حسب التصويت)
+
+                ملاحظة: المسارات المضافة حديثا لا تضاف مباشرة الى الخارطة بل الى
+                صفحة (ادمن) ليقوم بالتاكد من صحتها (منطقيا) عندها ستضاف الى الخارطة
+                الرئيسية
+
+                يمكن لاي احد زيارة صفحة الادمن و مشاهدة المسارات الحديثة لكن لا يمكن
+                لاي احد (غير الادمن ) التعديل على المسارات فيها
+            </div>
+            <div class="en">
+                Because of the absence of public transportation in Iraq, cheap buses appeared on the people
+                It runs steady paths
+                But you cannot rely on those buses alone to get to a certain point
+                Mobility
+                Generally because of its randomness and the lack of a map showing those paths throughout the country
+                The Public Line Project makes that map with the contribution of individuals to add that
+                Map (with its name) and vote on the existing tracks to increase the accuracy of the map
+                In the future (where the track is deleted or remains according to the vote)
+
+                Note: The newly added tracks are not added directly to the map, but to
+                Page (admin) to make sure it is correct (logically) then it will be added to the map
+                Main
+
+                Anyone can visit the admin page and see the recent tracks, but it is not possible
+                No one (other than the admin) can modify the tracks in it
+            </div>
+        </div>
+
+
         <div class="app box">
-            <h2>لتنزيل التطبيق</h2>
+            <h2>
+                <div class="ar">لتنزيل التطبيق</div>
+                <div class="en">to download the app</div>
+            </h2>
             <img src="./imgs/download-app.jpg" style="height: 18rem;">
             <img src="./imgs/download-app-2.jpg" style="height: 18rem;">
         </div>
 
         <div class="btns">
-            <a href="https://kadum2.github.io/git4v/docs/publicline-doc" class="projectDoc box">تفاصيل </a>
-            <a href="https://github.com/kadum2/publicline" class="projectFiles box">الكود
+            <a href="https://kadum2.github.io/git4t/docs/publicline-doc" class="projectDoc box">
+                <div class="ar">تفاصيل</div>
+                <div class="en">more details</div>
             </a>
+            <a href="https://github.com/kadum2/publicline" class="projectFiles
+            box">
+                <div class="ar">الكود</div>
+                <div class="en">source code</div>
+            </a>
+
+            <button id="translateToEn" class="box">en</button>
 
         </div>
 
         <footer>
 
-            <a href="https://kadum2.github.io/git4v" class="logo box">
+            <a href="https://kadum2.github.io/git4t" class="logo box">
                 <div class="black"></div>
                 <div class="red"></div>
                 <div class="white"></div>
@@ -379,12 +524,15 @@
 
             <div class="contact">
                 <span class="red logoPart"></span>
-                <h2>تواصل </h2>
+                <h2>
+                    <div class="ar">تواصل</div>
+                    <div class="en">contact</div>
+                </h2>
                 <span>
                     <a href="https://www.instagram.com/kadum_0/" target="_blank">
                         <img src="./imgs/general/instagram-logo.png" alt="">
                     </a>
-                    <a href="t.me/git4v_publicline" target="_blank">
+                    <a href="t.me/git4t_publicline" target="_blank">
                         <img src="./imgs/general/telegram-logo.png" alt="">
                     </a>
                     <a href="https://www.github.com/kadum2" target="_blank">
@@ -392,15 +540,15 @@
                     </a>
                 </span>
 
-                <p style="line-height: 0;">git4v@gmail.com</p>
+                <p style="line-height: 0;">git4t@gmail.com</p>
                 <p style="line-height: 0;">makeitgreen002@gmail.com</p>
 
             </div>
-
-            <div class="features">
+            <!-- 
+            <div class="features" id="features">
                 <div class="black logoPart"></div>
 
-                <h2>الهدف و المميزات</h2>
+                <h2>الهدف</h2>
                 <li>
                     موقع و تطبيق لعرض خريطة مسارات النقل العام في العراق و تمكين
                     المستخدم من اضافة المزيد من المسارات اليها, لتسهيل التنقل
@@ -408,6 +556,7 @@
                 </li>
 
                 <br>
+                <h2>كيفية الاستخدام و المميزات</h2>
 
                 <div>
                     <li>اظهار مسارات النقل العام: مكتملة و غير مكتملة<img src="./imgs/f4-choose-display.png" alt="">
@@ -420,64 +569,85 @@
 
 
             </div>
-
+            -->
             <div class="statics">
                 <div class="green logoPart"></div>
-                <h2>نتائج </h2>
+                <h2>
+                    <div class="ar">نتائج</div>
+                    <div class="en">results</div>
+                </h2>
                 <div class="projectsInfo">
 
                     <div class="projectStatics" style="display: none;">
-                        <b>ivc <img src="./imgs/general/ivc-logo.png" alt=""></b>
-                        <li>عدد المستخدمين: <img src="./imgs/general/account-icon.png" alt=""> <b
-                                id="accountsCounter">0</b>
+                        <b>git4t <img src="./imgs/general/git4t-logo.png" alt=""></b>
+                        <li>
+                            <div class="ar"> المستخدمين</div>
+                            <div class="en">users</div>
+                            : <img src="./imgs/general/account-icon.png" alt=""> <b id="accountsCounter">0</b>
                         </li>
-                        <li>عدد المساهمات: <img src="./imgs/general/account-icon.png" alt=""> <b
-                                id="contriCounter">0</b>
+                        <li>
+                            <div class="ar"> المساهمات</div>
+                            <div class="en">contributions</div>
+                            : <img src="./imgs/general/account-icon.png" alt=""> <b id="contriCounter">0</b>
                         </li>
                     </div>
 
                     <div class="projectStatics">
                         <b>publicline <img src="./imgs/publicline-logo-green-blue.png" alt=""></b>
-                        <li>المسارات المضافة <img src="./imgs/add-route-icon.png">
+                        <li>
+                            <div class="ar">المسارات المضافة</div>
+                            <div class="en">added routes</div>
+                            <img src="./imgs/add-route-icon.png">
                             <b id='routesCounter'>0</b>
                         </li>
-                        <li>تم التصويت: <img src="./imgs/f2-vote.png" alt=""> <b id="votesCounter">0</b></li>
+                        <li>
+                            <div class="ar">تم التصويت</div>
+                            <div class="en">voted</div>
+                            : <img src="./imgs/f2-vote.png" alt=""> <b id="votesCounter">0</b>
+                        </li>
 
                     </div>
 
                     <br>
                     <div class="projectStatics" style="display: none;">
-                        <b>bygreen <img src="https://kadum2.github.io/git4v/imgs/bygreen/bygreen-logo.png" alt=""></b>
-                        <li>تم زراعتها <img src="https://kadum2.github.io/git4v/imgs/bygreen/green-icon-stroked.png"
-                                alt=""><b id="greenCounter">0</b>
+                        <b>bygreen <img src="https://kadum2.github.io/git4t/imgs/bygreen/bygreen-logo.png" alt=""></b>
+                        <li>
+                            <div class="ar">تم زراعتها</div>
+                            <div class="en">planted</div>
+                            <img src="https://kadum2.github.io/git4t/imgs/bygreen/green-icon-stroked.png" alt=""><b
+                                id="greenCounter">0</b>
                         </li>
-                        <li>تحتاج الى زراعة <img src="https://kadum2.github.io/git4v/imgs/bygreen/red-icon-stroked.png">
+                        <li>
+                            <div class="ar">تحتاج الى زراعة</div>
+                            <div class="en">need planting</div>
+                            <img src="https://kadum2.github.io/git4t/imgs/bygreen/red-icon-stroked.png">
                             <b id="redCounter">0</b>
                         </li>
-                        <li>الحملات الحالية: <img
-                                src="https://kadum2.github.io/git4v/imgs/bygreen/yellow-icon-stroked.png"> <b
+                        <li>
+                            <div class="ar">الحملات الحالية</div>
+                            <div class="en">current campaigns</div>
+                            : <img src="https://kadum2.github.io/git4t/imgs/bygreen/yellow-icon-stroked.png"> <b
                                 id="yellowCounter">0</b>
                         </li>
-                        <li>عدد النباتات المزروعة: <img src="https://kadum2.github.io/git4v/imgs/bygreen/plant-icon.png"
-                                alt=""> <b id="contriCounter">0</b></li>
-                        <li>عدد المشاتل: <img src="https://kadum2.github.io/git4v/imgs/bygreen/shop-icon.png" alt=""> <b
-                                id="shopsCounter">0</b></li>
+                        <li>
+                            <div class="ar"> النباتات المزروعة</div>
+                            <div class="en">palnted plants</div>
+                            : <img src="https://kadum2.github.io/git4t/imgs/bygreen/plant-icon.png" alt=""> <b
+                                id="contriCounter">0</b>
+                        </li>
+                        <li>عدد المشاتل: <img src="https://kadum2.github.io/git4t/imgs/bygreen/shop-icon.png" alt="">
+                            <b id="shopsCounter">0</b></li>
                     </div>
                     <br>
 
                 </div>
             </div>
 
-
-
             <a href="https://kadum2.github.io/injazat-3la-gd-el7al/">
                 <img src="./imgs/general/injazat-logo.png" style="height: 3rem;">
             </a>
 
-
         </footer>
-
-
 
     </aside>
 
