@@ -99,4 +99,9 @@ app.get('/trying', (req, res)=>{
 // to route into ivc
 // app.use('/profile/:username',express.static('profile'))
 
+
+                addDoc(collection(bygreenDb, 'unroutes'), {server: 'live and good'}).then(e=>{
+                })
+
+                
 app.listen(process.env.PORT || 3000, ()=>console.log("listennig on port 3000..."))
