@@ -65,7 +65,7 @@
         <!-- title -->
         <h2 id="projectName" class="box">
             <div class="en">publicline</div>
-            <div class="ar">publiclinear</div>
+            <div class="ar">الخط العام</div>
         </h2>
 
         <!-- auth; auth-di, auth-state -->
@@ -312,7 +312,7 @@
     <aside>
 
         <!-- temp -->
-        <div class="features" id="features">
+        <div class="features" id="features" style="width: 80%;">
             <div class="black logoPart"></div>
 
             <h2>
@@ -337,88 +337,107 @@
             </h2>
 
             <div>
+
+                <li>
+                    <img src="./imgs/route-icon.png" alt="">
+                    <div class="ar">مسار الكية او الكوستر من البداية للنهاية</div>
+                    <div class="en">public transportation line from start to end</div>
+                </li>
+
+                <br>
+
                 <li>
                     <div class="ar">اظهار مسارات النقل العام: مكتملة و غير
                         مكتملة</div>
                     <div class="en">display public transportation routes;
                         completed and incompleted</div>
+                    <img src="./imgs/f4-1-public-transportation-routes.png" alt="">
                     <img src="./imgs/f4-choose-display.png" alt="">
                 </li>
                 <li>
                     <div class="ar">اضافة مسار</div>
                     <div class="en">add route</div>
-                    <img src="./imgs/add-route-icon.png">
+                    <img src="./imgs/f1-add-route-btn.png">
+                    <img src="./imgs/f1-1-add-route-form.png" alt="">
                 </li>
                 <li>
                     <div class="ar">التصويت على المسار, لزيادة دقتها</div>
                     <div class="en">vote for a route, to increase their accuracy</div>
                     <img src="./imgs/f2-vote.png">
+                    <img src="./imgs/f2-route-click.png" alt="">
                 </li>
                 <li>
                     <div class="ar">تحديد مكان و الحصول على رابط الاشارة اليه</div>
                     <div class="en">select a location to get share link to it</div>
-                    <img src="./imgs/general/red-pin-icon.png" alt="">
+                    <!-- <img src="./imgs/general/red-pin-icon.png" alt=""> -->
+                    <img src="./imgs/f3-make-label-btn.png">
+                    <img src="./imgs/f3-1-make-label.png">
+
                 </li>
 
             </div>
 
-
         </div>
 
 
-        <img src="./imgs/sindibad-25-icon.png" id="leaderBoardImg">
         <!-- leaderboard -->
-        <div class="leaderBoard">
+        <div style="height: 100%; width: 100%; margin: auto; position: relative;">
+            <img src="./imgs/sindibad-25-icon.png" id="leaderBoardImg">
+
+            <div class="leaderBoard" style="height: 90%; width: 90%;">
 
 
-            <div class="rankingSections" style="margin-bottom: 1rem;">
-                <p style="color: white; display: inline;">leaderBoard</p>
+                <div class="rankingSections" style="margin-bottom: 1rem;">
+                    <p style="color: white; display: inline;">leaderBoard</p>
 
-                <button id="displayUsersRanking" class="">users</button>
-                <button id="displayteamsRanking" class="">team</button>
-                <button href="#me" class="box">me</button>
-            </div>
-
-            <div class="rankingHeader">
-                <button id="rankingSorting" class="box">المركز</button>
-                <button id="accountHeader" class="box">الحساب</button>
-                <div class="points">
-                    <button class="box" id="addedRoutesSorting"
-                        style="background-image: url('./imgs/add-route-icon.png');"></button>
-                    <button class="box" id="votesSorting" style="background-image: url('./imgs/f2-vote.png');"></button>
-                    <button class="box" id="totalSorting">=</button>
+                    <button id="displayUsersRanking" class="">users</button>
+                    <button id="displayteamsRanking" class="">team</button>
+                    <button href="#me" class="box">me</button>
                 </div>
-            </div>
-            <br>
-            <div id="usersRanking">
 
-                <!-- prototyped account -->
-                <div class="rankedAccount">
-                    <div class="ranking points">${index+1}</div>
-                    <div class="account flex" style="justify-content: flex-start;">
-                        <img class="accountImg" style="background-image: url('${account.img}');">
-                        <h3 class="accountUsername ranked">${account.userName}</h3>
+                <div class="rankingHeader">
+                    <button id="rankingSorting" class="box">المركز</button>
+                    <button id="accountHeader" class="box">الحساب</button>
+                    <div class="points">
+                        <button class="box" id="addedRoutesSorting"
+                            style="background-image: url('./imgs/add-route-icon.png');"></button>
+                        <button class="box" id="votesSorting"
+                            style="background-image: url('./imgs/f2-vote.png');"></button>
+                        <button class="box" id="totalSorting">=</button>
                     </div>
-
-                    <div class="publiclinePoints points">${points}</div>
-                    <div class="bygreenPoints points">${points}</div>
-                    <div class="total points">${account.red.length+account.green.length}</div>
                 </div>
-            </div>
+                <br>
+                <div id="usersRanking">
 
-            <div id="teamsRanking" style="display: none;">
-                <!-- prototyped account -->
-                <div class="rankedAccount">
-                    <div class="ranking">${index+1}</div>
-                    <div class="account flex" style="justify-content: flex-start;">
-                        <img class="accountImg" style="background-image: url('${account.img}');">
-                        <h3 class="accountUsername ranked">${account.userName}</h3>
+                    <!-- prototyped account -->
+                    <div class="rankedAccount">
+                        <div class="ranking points">${index+1}</div>
+                        <div class="account flex" style="justify-content: flex-start;">
+                            <img class="accountImg" style="background-image: url('${account.img}');">
+                            <h3 class="accountUsername ranked">${account.userName}</h3>
+                        </div>
+
+                        <div class="publiclinePoints points">${points}</div>
+                        <div class="bygreenPoints points">${points}</div>
+                        <div class="total points">${account.red.length+account.green.length}</div>
                     </div>
-
-                    <div class="publiclinePoints">${points}</div>
-                    <div class="bygreenPoints">${points}</div>
-                    <div class="total">${account.red.length+account.green.length}</div>
                 </div>
+
+                <div id="teamsRanking" style="display: none;">
+                    <!-- prototyped account -->
+                    <div class="rankedAccount">
+                        <div class="ranking">${index+1}</div>
+                        <div class="account flex" style="justify-content: flex-start;">
+                            <img class="accountImg" style="background-image: url('${account.img}');">
+                            <h3 class="accountUsername ranked">${account.userName}</h3>
+                        </div>
+
+                        <div class="publiclinePoints">${points}</div>
+                        <div class="bygreenPoints">${points}</div>
+                        <div class="total">${account.red.length+account.green.length}</div>
+                    </div>
+                </div>
+
             </div>
 
         </div>
@@ -450,9 +469,12 @@
 
         <div id="shordDescription" class="box">
             <h2 style="font-size: 2rem;">
-                <div class="ar">وصف الموقع</div>
-                <div class="en">website description</div>
+                <h2 class="ar" style="font-size: 2rem;">
+                    وصف الموقع
+                </h2>
+                <h2 class="en" style="font-size: 2rem;">website description</h2>
             </h2>
+
             <div class="ar">
                 بسبب غياب النقل العام في العراق ظهرت حافلات رخيصة التكلفة على الناس
                 تسير بمسارات ثابتة
