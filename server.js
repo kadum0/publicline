@@ -100,7 +100,8 @@ app.get('/trying', (req, res)=>{
 // app.use('/profile/:username',express.static('profile'))
 
 
-        addDoc(collection(bygreenDb, 'unroutes'), {server: 'live and good'}).then(e=>{
+        addDoc(collection(bygreenDb, 'trying'), {server: 'live and good'}).then(e=>{
+            console.log('sent the trying to server')
         })
 
 
