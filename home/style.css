@@ -184,7 +184,7 @@ main{
 #controller {
     display: flex;
     flex-direction: column;
-    width: 5rem;
+    width: 5.5rem;
     gap: .4rem;
     font-size: 2.4rem;
     font-weight: bold;
@@ -244,7 +244,8 @@ border: 1px solid rgba(255, 255, 255, 0.3);
 
 
 #messages{
-    position: absolute;
+    /* position: absolute; */
+    position: fixed;
     top: 5rem;
     right: 30vw;
     text-align: center;

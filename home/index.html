@@ -162,7 +162,7 @@
         <!-- collect data; controllers -->
         <div id="controller">
             <button class="box" id="addRouteMode"
-                style="background-image: url('./imgs/add-route-icon.png');background-color: #27f060;">
+                style="background-image: url('./imgs/add-route-stroked-icon.png');background-color: #27f060;">
                 +
                 <!-- <img src="./imgs/add-route-icon.png" alt=""> -->
             </button>
@@ -212,8 +212,6 @@
             <option value="basra" id="basraLogo">
                 <div class="en">basra</div>
                 <div class="ar">بصرة</div>
-
-                <img src="./imgs/basra-logo.png" style="height: 1rem;">
             </option>
 
             <option value="nineveh">
@@ -293,13 +291,13 @@
 
         </select>
 
-        <button id="makeLocLink" class="box"><img src="./imgs/general/red-pin-icon.png" style="pointer-events:
+        <button id="makeLocLink" class="box"><img src="./imgs/red-pin-icon.png" style="pointer-events:
         none;"></button>
 
         <button id="findMe" class="box"><img src="./imgs/general/aim-icon.png"></button>
 
 
-        <div id="messages">
+        <!-- <div id="messages">
             <div id="greenMessage" class="box green">
                 <div class="ar"></div>
                 <div class="en">getting, sending, sent</div>
@@ -308,6 +306,13 @@
                 <div class="ar"></div>
                 <div class="en">error, no valid data, full the rest</div>
             </div>
+        </div> -->
+        <div id="messages">
+            <div id="greenMessage" class="box green">
+                <img src="./imgs/general/loading.gif" style="width: fit-content;">
+            </div>
+
+            <div id="redMessage" class="box red">error, no valid data, full the rest</div>
         </div>
 
 
@@ -388,7 +393,7 @@
 
         <!-- leaderboard -->
         <div style="height: 100%; width: 100%; margin: auto; position: relative;">
-            <img src="./imgs/sindibad-25-icon.png" id="leaderBoardImg">
+            <img src="./imgs/sindibad-icon2.png" id="leaderBoardImg">
 
             <div class="leaderBoard" style="height: 90%; width: 90%;">
 
@@ -560,7 +565,7 @@
                     <a href="https://www.instagram.com/kadum_0/" target="_blank">
                         <img src="./imgs/general/instagram-logo.png" alt="">
                     </a>
-                    <a href="/t.me/git4v_publicline" target="_blank">
+                    <a href="https://www.t.me/git4t_publicline" target="_blank">
                         <img src="./imgs/general/telegram-logo.png" alt="">
                     </a>
                     <a href="https://www.github.com/kadum2" target="_blank">
@@ -623,14 +628,14 @@
                     <div class="projectStatics">
                         <b>publicline <img src="./imgs/publicline-logo-green-blue.png" alt=""></b>
                         <li>
-                            <div class="ar">المسارات المضافة</div>
-                            <div class="en">added routes</div>
+                            <span class="ar">المسارات المضافة</span>
+                            <span class="en">added routes</span>
                             <img src="./imgs/add-route-icon.png">
                             <b id='routesCounter'>0</b>
                         </li>
                         <li>
-                            <div class="ar">تم التصويت</div>
-                            <div class="en">voted</div>
+                            <span class="ar">تم التصويت</span>
+                            <span class="en">voted</span>
                             : <img src="./imgs/f2-vote.png" alt=""> <b id="votesCounter">0</b>
                         </li>
 
@@ -642,7 +647,7 @@
                         <li>
                             <div class="ar">تم زراعتها</div>
                             <div class="en">planted</div>
-                            <img src="https://kadum2.github.io/git4t/imgs/bygreen/green-icon-stroked.png" alt=""><b
+                            <img src="https://kadum2.github.io/git4t/imgs/bygreen/green-pin-icon-stroked.png" alt=""><b
                                 id="greenCounter">0</b>
                         </li>
                         <li>

@@ -40,6 +40,7 @@ let darkerGreenColor = '#21C24F'
 
 let blueColor = '#3388FF'
 let darkerBlueColor = '#075FDA'
+let redColor = '#ff2a2a'
 
 // governates coordinates; 
 
@@ -61,7 +62,7 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
 }).addTo(map);
 
         let busPin = L.icon({
-            iconUrl: "./imgs/add-bus-icon.png",
+            iconUrl: "./imgs/green-pin-icon.png",
             shadowSize: [50, 64], // size of the shadow
             shadowAnchor: [4, 62], // the same for the shadow
             iconSize: [25, 41],
@@ -80,7 +81,7 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
         });
 
         let sindibad25 = L.icon({
-            iconUrl: "./imgs/sindibad-25-icon.png",
+            iconUrl: "./imgs/sindibad-icon.png",
             shadowSize: [50, 64], // size of the shadow
             shadowAnchor: [4, 62], // the same for the shadow
             iconSize: [70, 60],
@@ -500,9 +501,55 @@ findMe.addEventListener('click', (ev)=>{
         let uncompletedRoutes
 
 
-        await onAuthStateChanged(bygreenAuth, async (user)=>{
+        onAuthStateChanged(bygreenAuth, async (user)=>{
+
+            document.querySelector('#greenMessage').style.display = 'block'
 
             console.log('authstatefun', dbUser)
+            // side custom 
+            if(window.location.href.includes('location')){
+            console.log('contains temp pin', window.location.href.indexOf('location'), window.location.href.slice(0, window.location.href.indexOf('location')))
+
+            // make the pin
+            let currentPin = L.marker({
+        lat: window.location.href.split('/')[window.location.href.split('/').length-2].split(',')[0],
+        lng: window.location.href.split('/')[window.location.href.split('/').length-2].split(',')[1]
+        }, {icon: redPin}).addTo(map)
+
+            // flyto it 
+            console.log(currentPin)
+            map.flyTo(currentPin._latlng, 16)
+
+                }
+
+
+    // if visiting the website for the first time will get into some instructions
+    if (localStorage.getItem("firstVisit") === null) {
+        // This is the user's first visit
+        console.log("first time to visit the site; then to show instructions")
+        document.querySelector('#redArrow').style.display = 'block'
+        document.querySelector('#asideDi').classList.toggle('red')
+        document.querySelector('#asideDi').classList.contains('red')?document.querySelector('aside').style.display = 'flex':document.querySelector('aside').style.display = 'none'
+
+        setTimeout(() => {
+            // document.querySelector("#features").scrollIntoView({
+            //     behavior: "auto",
+            //     block: "center"
+            // })
+
+            // document.body.scrollIntoView({ behavior: 'smooth', block: 'end'
+            // });
+            
+            // window.scrollTo(0, document.body.scrollHeight);
+
+            document.querySelector('#redArrow').style.display = 'none'
+        }, 3000)
+
+        localStorage.setItem("firstVisit", false)
+    } else {
+        // This is not the user's first visit
+    }
+
             if(user){
                 console.log('from auth ', user)
                 authUser = user
@@ -551,8 +598,12 @@ findMe.addEventListener('click', (ev)=>{
                 document.querySelectorAll('.notlogged').forEach(e=>e.style.display = 'block')
                 dbUser = 'none'
             }
-        
             getDocs(collection(bygreenDb, 'users')).then((data)=>{
+
+                setTimeout(() => {
+                    document.querySelector('#greenMessage').style.display = 'none'
+                }, 1000);
+
                 let docs = []
                     data.docs.forEach(doc=>{
                         docs.push({...doc.data(), id: doc.id})
@@ -630,51 +681,6 @@ findMe.addEventListener('click', (ev)=>{
         document.querySelector('#shopsCounter').textContent = docs.length
             })
 
-
-
-            // side custom 
-
-        if(window.location.href.includes('location')){
-                    console.log('contains temp pin', window.location.href.indexOf('location'), window.location.href.slice(0, window.location.href.indexOf('location')))
-    
-                    // make the pin
-                    let currentPin = L.marker({
-                lat: window.location.href.split('/')[window.location.href.split('/').length-2].split(',')[0],
-                lng: window.location.href.split('/')[window.location.href.split('/').length-2].split(',')[1]
-                }, {icon: redPin}).addTo(map)
-    
-                    // flyto it 
-                    console.log(currentPin)
-                    map.flyTo(currentPin._latlng, 16)
-    
-        }
-
-            // if visiting the website for the first time will get into some instructions
-            if (sessionStorage.getItem("firstVisit") === null) {
-                // This is the user's first visit
-                console.log("first time to visit the site; then to show instructions")
-                document.querySelector('#redArrow').style.display = 'block'
-                document.querySelector('#asideDi').classList.toggle('red')
-                document.querySelector('#asideDi').classList.contains('red')?document.querySelector('aside').style.display = 'flex':document.querySelector('aside').style.display = 'none'
-        
-                setTimeout(() => {
-                    // document.querySelector("#features").scrollIntoView({
-                    //     behavior: "auto",
-                    //     block: "center"
-                    // })
-        
-                    // document.body.scrollIntoView({ behavior: 'smooth', block: 'end'
-                    // });
-                    
-                    // window.scrollTo(0, document.body.scrollHeight);
-        
-                    document.querySelector('#redArrow').style.display = 'none'
-                }, 3000)
-        
-                sessionStorage.setItem("firstVisit", false)
-            } else {
-                // This is not the user's first visit
-            }
 
         })
 
@@ -834,7 +840,7 @@ findMe.addEventListener('click', (ev)=>{
             let routeToSend = {}
             if(currentPath[0] || document.querySelector('#routeName').value){ /////available data to send; 
                 // routeToSend.path = currentPath._latlngs 
-                document.querySelector('#greenMessage').textContent = 'sending'
+                // document.querySelector('#greenMessage').textContent = 'sending'
                 document.querySelector('#greenMessage').style.display = 'block'
                 
                 console.log(currentPath)
@@ -854,7 +860,7 @@ findMe.addEventListener('click', (ev)=>{
 
                 //////send; 
                 addDoc(collection(bygreenDb, 'unroutes'), routeToSend).then(e=>{
-                    document.querySelector('#greenMessage').textContent = 'sent'
+                    // document.querySelector('#greenMessage').textContent = 'sent'
                     location.reload()
 
                     setTimeout(() => {
@@ -985,9 +991,9 @@ findMe.addEventListener('click', (ev)=>{
                     ////////mobile; change color 
                     routesObjects.forEach(e=>{e.setStyle({color: greenColor, opacity: .6})})
                     hoveredRoute?map.removeLayer(hoveredRoute):null
-                    hoveredRoute = L.polyline(ev.target._latlngs, {color: blueColor, interactive: false})
+                    hoveredRoute = L.polyline(ev.target._latlngs, {color: redColor, interactive: false})
                     hoveredRoute.addTo(map)
-                    hoveredRoute.setStyle({color:blueColor, opacity: 1})
+                    hoveredRoute.setStyle({color:redColor, opacity: 1})
 
 
                     if(dbUser){
@@ -1041,11 +1047,11 @@ findMe.addEventListener('click', (ev)=>{
                     hoveredend?map.removeLayer(hoveredend):null
 
 
-                    hoveredRoute = L.polyline(route.target._latlngs, {color:blueColor, opacity: 1,interactive: false}).addTo(map)
+                    hoveredRoute = L.polyline(route.target._latlngs, {color:redColor, opacity: 1,interactive: false}).addTo(map)
                     // console.log(route.target)
-                    route.target.start?hoveredstart = L.circle(route.target._latlngs[0],{radius:300 ,color:blueColor, opacity: 1,interactive: false}).addTo(map):null
+                    route.target.start?hoveredstart = L.circle(route.target._latlngs[0],{radius:300 ,color:redColor, opacity: 1,interactive: false}).addTo(map):null
 
-                    route.target.end?hoveredend = L.circle(route.target._latlngs[route.target._latlngs.length-1], {radius:300, color:blueColor, opacity: 1,interactive: false}).addTo(map):null
+                    route.target.end?hoveredend = L.circle(route.target._latlngs[route.target._latlngs.length-1], {radius:300, color:redColor, opacity: 1,interactive: false}).addTo(map):null
             })
 
             if(e.start && e.end){

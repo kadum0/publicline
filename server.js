@@ -100,8 +100,8 @@ app.get('/trying', (req, res)=>{
 // app.use('/profile/:username',express.static('profile'))
 
 
-                addDoc(collection(bygreenDb, 'unroutes'), {server: 'live and good'}).then(e=>{
-                })
+        addDoc(collection(bygreenDb, 'unroutes'), {server: 'live and good'}).then(e=>{
+        })
 
-                
+
 app.listen(process.env.PORT || 3000, ()=>console.log("listennig on port 3000..."))
