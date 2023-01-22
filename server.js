@@ -77,12 +77,15 @@ onSnapshot(collection(bygreenDb, 'routes'), (data)=>{
 
         //////calculate the route 
         // console.log(e)
-        if(e.downvotes.length+e.upvotes.length == 10){
+        if(e.downvotes.length+e.upvotes.length >= 10){
 
             console.log('time to calc')
             if (e.downvotes.length > e.upvotes.length){
                 // delete the route 
                 deleteDoc(doc(bygreenDb, 'routes', e.id)).then(()=>console.log('deleted'))
+            }else{
+                // confirm
+                updateDoc(doc(bygreenDb, 'routes', e.id), {confirmed: true}).then(()=>console.log('confirmed route'))
             }
         }
     })
@@ -100,9 +103,9 @@ app.get('/trying', (req, res)=>{
 // app.use('/profile/:username',express.static('profile'))
 
 
-        addDoc(collection(bygreenDb, 'trying'), {server: 'live and good'}).then(e=>{
-            console.log('sent the trying to server')
-        })
+        // addDoc(collection(bygreenDb, 'trying'), {server: 'live and good'}).then(e=>{
+        //     console.log('sent the trying to server')
+        // })
 
 
 app.listen(process.env.PORT || 3000, ()=>console.log("listennig on port 3000..."))

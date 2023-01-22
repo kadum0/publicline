@@ -34,8 +34,8 @@ const bygreenStorage = getStorage(bygreen)
 /////////auth state 
 
 // let greenColor = '#27F060'
+let lightGreen = '#27f060'
 let greenColor = "#68F690"
-
 let darkerGreenColor = '#21C24F'
 
 let blueColor = '#3388FF'
@@ -369,6 +369,42 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
     }
 })
 
+displayConfirmedRoutes.addEventListener('click', (ev)=>{
+    console.log("display confirmed routes ")
+    ev.target.classList.toggle('on2')
+    if(ev.target.classList.contains('on2')){
+        console.log(confirmedRoutes, confirmedRoutesObjects, circlesObjects)
+        confirmedRoutesObjects.forEach(routeObj=>{
+
+            circlesObjects.forEach(circleObj=>{
+                if(JSON.stringify(circleObj._latlng) == JSON.stringify(routeObj._latlngs[0]) || JSON.stringify(circleObj._latlng) == JSON.stringify(routeObj._latlngs[routeObj._latlngs.length-1])){
+                    circleObj.addTo(map)
+                }
+            })
+
+            routeObj.addTo(map)
+        })
+
+    }else{
+        console.log(confirmedRoutes, confirmedRoutesObjects, circlesObjects)
+
+
+        confirmedRoutesObjects.forEach(routeObj=>{
+            circlesObjects.forEach(circleObj=>{
+                console.log(circleObj._latlng, routeObj._latlngs[0], )
+                if(JSON.stringify(circleObj._latlng) == JSON.stringify(routeObj._latlngs[0]) || JSON.stringify(circleObj._latlng) == JSON.stringify(routeObj._latlngs[routeObj._latlngs.length-1])){
+                    console.log('remove circle; ', circleObj)
+                    map.removeLayer(circleObj)
+                }
+            })
+
+            map.removeLayer(routeObj)
+        })
+            
+    }
+})
+
+
 
 selectGovernate.addEventListener('change', (ev)=>{
     console.log('options', ev.target.value)
@@ -499,6 +535,7 @@ findMe.addEventListener('click', (ev)=>{
 
         let completedRoutes
         let uncompletedRoutes
+        let confirmedRoutes
 
 
         onAuthStateChanged(bygreenAuth, async (user)=>{
@@ -637,15 +674,22 @@ findMe.addEventListener('click', (ev)=>{
     
                     document.querySelector('#greenMessage').style.display = 'none'
 
-
-                    completedRoutes = routes.filter(route=>route.start && route.end)
-                    uncompletedRoutes = routes.filter(route=>!route.start || !route.end)
+                    completedRoutes = routes.filter(route=> route.start && route.end && !route.confirmed)
+                    uncompletedRoutes = routes.filter(route=>!route.start || !route.end && !route.confirmed)
+                    confirmedRoutes = routes.filter(route=>route.confirmed)
+                
+                    routes.forEach(route=>console.log(!route.confirmed))
         
                 deployRoutes(completedRoutes)
                 displayCompletedRoutes.classList.toggle('on2')
                 deployRoutes(uncompletedRoutes)
                 displayUncompletedRoutes.classList.toggle('on2')
 
+                deployRoutes(confirmedRoutes)
+                displayConfirmedRoutes.classList.toggle('on2')
+                    
+                // console.log(confirmedRoutes)
+                // console.log('completed routes',completedRoutes)
             })
 
             // data statics 
@@ -694,6 +738,7 @@ findMe.addEventListener('click', (ev)=>{
         /////containers; 
         let completedRoutesObjects = []
         let uncompletedRoutesObjects = []
+        let confirmedRoutesObjects = []
 
         let circlesObjects = []
 
@@ -904,7 +949,7 @@ findMe.addEventListener('click', (ev)=>{
             /////content 
             let voteBtns = document.createElement('div')
             let routeName = document.createElement('h3')
-            e.name?routeName.textContent = e.name:routeName.textContent = 'اسم الخط' 
+            e.name?routeName.textContent = e.name:routeName.textContent = 'اسم المسار' 
 
             // upvote btn
             let upvoteBtn = document.createElement("button")
@@ -969,7 +1014,7 @@ findMe.addEventListener('click', (ev)=>{
 
             /////insert
             voteBtns.append(routeName, upvoteBtn, downvoteBtn, sureDiv)
-                let routeObject = L.polyline(e.path, {color: greenColor}).bindPopup(voteBtns).addTo(map)
+                let routeObject = L.polyline(e.path, {color: confirmedRoutes.includes(e)?lightGreen:greenColor}).bindPopup(voteBtns).addTo(map)
 
                 // routeObject.name = e.name
                 e.start?circlesObjects.push(L.circle(e.path[0],{radius: 300, color: darkerGreenColor, background: darkerGreenColor}).addTo(map)):null
@@ -980,6 +1025,7 @@ findMe.addEventListener('click', (ev)=>{
                 routeObject.id = e.id
                 routeObject.start = e.start
                 routeObject.end = e.end
+                routeObject.confirmed = e.confirmed?true:false
                 
             /////content
                 ////////////if logged then allow to vote; 
@@ -1040,7 +1086,7 @@ findMe.addEventListener('click', (ev)=>{
                 /// click over it 
 
                     // console.log(route.target)
-                    routesObjects.forEach(e=>{e.setStyle({color: greenColor, opacity: .6})})
+                    routesObjects.forEach(e=>{e.setStyle({color: (e.confirmed?lightGreen:greenColor), opacity: .6})})
 
                     hoveredRoute?map.removeLayer(hoveredRoute):null
                     hoveredstart?map.removeLayer(hoveredstart):null
@@ -1054,7 +1100,9 @@ findMe.addEventListener('click', (ev)=>{
                     route.target.end?hoveredend = L.circle(route.target._latlngs[route.target._latlngs.length-1], {radius:300, color:redColor, opacity: 1,interactive: false}).addTo(map):null
             })
 
-            if(e.start && e.end){
+            if(e.confirmed){
+                confirmedRoutesObjects.push(routeObject)
+            }else if(e.start && e.end){
                 completedRoutesObjects.push(routeObject)
             }else if(!e.start || !e.end){
                 uncompletedRoutesObjects.push(routeObject)

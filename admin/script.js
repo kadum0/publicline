@@ -324,7 +324,9 @@ document.querySelector("#unconf").addEventListener("click", ()=>{
                     
                     confrimList.push(unconfirmedRoutesList.filter(route=>route.card==ev.target.parentElement.parentElement)[0].id)
 
-                    document.querySelector('#pathcards').removeChild(ev.target.parentElement.parentElement)
+                    // document.querySelector('#pathcards').removeChild(ev.target.parentElement.parentElement)
+                    ev.target.parentElement.parentElement.style.opacity= '0.3'
+
                     map.removeLayer(unconfirmedRoutesList.filter(route=>route.card == ev.target.parentElement.parentElement)[0])
 
                 })
