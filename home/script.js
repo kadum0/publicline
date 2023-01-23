@@ -798,9 +798,43 @@ findMe.addEventListener('click', (ev)=>{
                                 // github 
                                 if(window.location.href.includes('github')){
 
-
-                                    tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: redPin}).bindPopup(`link; for github <br><a href='https://kadum2.github.io/publicline${'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/'>${'https://kadum2.github.io/publicline/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/</a> <br> something`).addTo(map)
+                                    // tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: redPin}).bindPopup(`link; for github <br><a href='https://kadum2.github.io/publicline${'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/'>${'https://kadum2.github.io/publicline/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/</a> <br> something`).addTo(map)
                     
+
+                                    // https://kadum2.github.io/publicline
+
+                                    
+                                    let makeLocDiv = document.createElement('div')
+
+                                    let linkElement = document.createElement('a')
+                                    linkElement.setAttribute('href', 'https://kadum2.github.io/publicline'+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng)
+                                    linkElement.textContent = '...link'
+
+                                    let copyBtn = document.createElement('button')
+                                    copyBtn.classList.add('box')
+                                    copyBtn.textContent = 'copy'
+
+                            let textToCopy = 'https://kadum2.github.io/publicline'+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng+'/'
+
+                            copyBtn.addEventListener("click", ()=>{
+                                console.log("clicked on copy")
+                                navigator.clipboard.writeText(textToCopy).then(function() {
+                                document.querySelector('#copyMessage').style.display = 'block'
+
+                                setTimeout(() => {
+                                    document.querySelector('#copyMessage').style.display = 'none'
+                                    
+                                }, 2000);
+                                }, function(err) {
+                                console.error("Failed to copy text: ", err);
+                                });
+                            });
+
+                                    makeLocDiv.append(copyBtn, linkElement)
+
+                                    tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: redPin}).bindPopup(makeLocDiv).addTo(map)
+
+
                                 }else{
 
                                     let makeLocDiv = document.createElement('div')
@@ -811,7 +845,7 @@ findMe.addEventListener('click', (ev)=>{
 
                                     let linkElement = document.createElement('a')
                                     linkElement.setAttribute('href', window.location.hostname+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng)
-                                    linkElement.textContent = 'link'
+                                    linkElement.textContent = '...link'
 
                                     let copyBtn = document.createElement('button')
                                     copyBtn.classList.add('box')
