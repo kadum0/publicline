@@ -67,7 +67,7 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
             shadowAnchor: [4, 62], // the same for the shadow
             iconSize: [25, 41],
             // iconAnchor: [12, 41],
-            iconAnchor: [12, 25],
+            iconAnchor: [12, 35],
             popupAnchor: [0, -30] 
 
         });
@@ -798,10 +798,59 @@ findMe.addEventListener('click', (ev)=>{
                                 // github 
                                 if(window.location.href.includes('github')){
 
-                                    tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: redPin}).bindPopup(`link; for github <br><a href='https://kadum2.github.io/publicline${'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/'>${'https://kadum2.github.io/publicline/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/</a>`).addTo(map)
+
+                                    tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: redPin}).bindPopup(`link; for github <br><a href='https://kadum2.github.io/publicline${'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/'>${'https://kadum2.github.io/publicline/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/</a> <br> something`).addTo(map)
                     
                                 }else{
-                                    tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: redPin}).bindPopup(`link; for others <br><a href='${window.location.hostname+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/'>${window.location.hostname+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/</a>`).addTo(map)
+
+                                    let makeLocDiv = document.createElement('div')
+
+                                    // let link= `link; for others <br><a href='${window.location.hostname+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/'>${window.location.hostname+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/</a>`
+
+                                    // let link= `link; for others <br><a href='${window.location.hostname+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/'>link/</a>`
+
+                                    let linkElement = document.createElement('a')
+                                    linkElement.setAttribute('href', window.location.hostname+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng)
+                                    linkElement.textContent = 'link'
+
+                                    let copyBtn = document.createElement('button')
+                                    copyBtn.classList.add('box')
+                                    copyBtn.textContent = 'copy'
+
+                            // <button id="copy-button">Copy</button>
+                            // <script>
+                            // var copyButton = document.getElementById("copy-button");
+
+                            let textToCopy = window.location.hostname+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng+'/'
+
+                            // copyBtn.style.color = 'red'
+                            copyBtn.addEventListener("click", ()=>{
+                                console.log("clicked on copy")
+                                navigator.clipboard.writeText(textToCopy).then(function() {
+                                document.querySelector('#copyMessage').style.display = 'block'
+
+                                setTimeout(() => {
+                                    document.querySelector('#copyMessage').style.display = 'none'
+                                    
+                                }, 2000);
+                                }, function(err) {
+                                console.error("Failed to copy text: ", err);
+                                });
+                            });
+                            // </script>
+
+
+                                    makeLocDiv.append(copyBtn, linkElement)
+                                    // makeLocDiv.innerHTML +=link
+
+                                    // tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: redPin}).bindPopup(`link; for others <br><a href='${window.location.hostname+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/'>${window.location.hostname+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/</a>`).addTo(map)
+
+                                    tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: redPin}).bindPopup(makeLocDiv).addTo(map)
+
+
+                                    // tempMarker.bindPopup(copyBtn)
+
+
                                 }
                     
         }

@@ -184,7 +184,7 @@ main{
 #controller {
     display: flex;
     flex-direction: column;
-    width: 5.5rem;
+    width: 6rem;
     gap: .4rem;
     font-size: 2.4rem;
     font-weight: bold;
