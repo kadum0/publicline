@@ -458,12 +458,17 @@ findMe.addEventListener('click', (ev)=>{
     if(ev.target.classList.contains('on')){
         // add marker and circle
 
-
+        console.log("find me ...")
         // internet based; 
-        if(navigator.online){
+        if(navigator.onLine){
+
+            console.log('online')
+
+
                 fetch('https://ipapi.co/json/')
         .then(res=>res.json())
         .then(data=>{
+            console.log('got online loc;', data)
             map.flyTo([data.latitude, data.longitude], 16)
             myPin = L.marker([data.latitude, data.longitude], {icon: sindibad25}).addTo(map)
             myLoc = L.circle([data.latitude, data.longitude], {color: "red", radius: 100}).addTo(map)
