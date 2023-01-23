@@ -13,11 +13,13 @@ let cors = require("cors")
 app.use(express.json())
 app.use(cors())
 
+require("dotenv").config()
+
+const fs = require('fs');
+
 
 ////////// pages to send
-app.use("/",express.static("./public"))
 
-require("dotenv").config()
 
 import { initializeApp } from "firebase/app";
 import {getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signOut, signInWithEmailAndPassword, useDeviceLanguage} from "firebase/auth"
@@ -102,7 +104,36 @@ app.get('/trying', (req, res)=>{
 // to route into ivc
 // app.use('/profile/:username',express.static('profile'))
 
+        // store data locally for in case; 
+    //     getDocs(collection(bygreenDb, 'routes')).then((data)=>{
+    // let docs = []
+    //     data.docs.forEach(doc=>{
+    //         docs.push({...doc.data(), id: doc.id})
+    //     })
 
+    //     // docs.forEach(route=>{
+            
+    //     // })
+    //     // fs.writeFile("../db/routes.json", JSON.stringify(data), (err) => {
+    //     //     if (err) throw err;
+    //     //     console.log("Data written to file");
+    //     // });
+    //     fs.writeFile("../db/routes.json", JSON.stringify(docs), (err) => {
+    //         if (err) throw err;
+    //         console.log("Data written to file");
+    //     });
+        
+    //     })
+
+        // get data stored locally; 
+        // fs.readFile("../db/routes.json", "utf8", (err, data) => {
+        // if (err) throw err;
+        // let jsonData = JSON.parse(data);
+        // console.log(jsonData);
+        // });
+
+
+// testing
         // addDoc(collection(bygreenDb, 'trying'), {server: 'live and good'}).then(e=>{
         //     console.log('sent the trying to server')
         // })

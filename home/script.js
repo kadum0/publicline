@@ -458,32 +458,10 @@ findMe.addEventListener('click', (ev)=>{
     if(ev.target.classList.contains('on')){
         // add marker and circle
 
-        // get into the locatoin
-    navigator.geolocation.getCurrentPosition(pos=>{
-        map.flyTo([pos.coords.latitude, pos.coords.longitude], 16)
-    })
 
-    watchID = navigator.geolocation.watchPosition((pos)=>{
-        console.log('watching; ',pos.coords.latitude, pos.coords.longitude)
-        
-        myPin?map.removeLayer(myPin):null
-        myLoc?map.removeLayer(myLoc):null
-
-        myLat = pos.coords.latitude
-        myLon = pos.coords.longitude
-
-        myPin = L.marker([pos.coords.latitude, pos.coords.longitude], {icon: sindibad25}).addTo(map)
-        myLoc = L.circle([pos.coords.latitude, pos.coords.longitude], {color: "red", radius: 100}).addTo(map)
-        
-        // map.flyTo([pos.coords.latitude, pos.coords.longitude], 16)
-
-        // setView([pos.coords.latitude, pos.coords.longitude])
-    }, (err)=>{
-        console.log("allow this website to get your location, and enable gps")
-        // alert('geolocation is not enabled')
-        if(navigator.onLine){
-    // no permisson case
-    fetch('https://ipapi.co/json/')
+        // internet based; 
+        if(navigator.online){
+                fetch('https://ipapi.co/json/')
         .then(res=>res.json())
         .then(data=>{
             map.flyTo([data.latitude, data.longitude], 16)
@@ -492,26 +470,58 @@ findMe.addEventListener('click', (ev)=>{
 
             console.log(myPin, myLoc)
         })
+
         }else{
 
-            document.querySelector('#redMessage').textContent = 'no internet connection'
-        document.querySelector('#redMessage').style.display = 'block'
-        setTimeout(() => {
-            document.querySelector('#redMessage').style.display = 'none'
+        // get into the locatoin
+        navigator.geolocation.getCurrentPosition(pos=>{
+            map.flyTo([pos.coords.latitude, pos.coords.longitude], 16)
+        })
+    
+        watchID = navigator.geolocation.watchPosition((pos)=>{
+            console.log('watching; ',pos.coords.latitude, pos.coords.longitude)
             
-        }, 3000);
-
-
-
-    // give the previous saved location
-    // if(myLat && myLon){
-    //     console.log('geolocation is enabled')
-    //     map.flyTo([myLat, myLon], 16)
-    // }
+            myPin?map.removeLayer(myPin):null
+            myLoc?map.removeLayer(myLoc):null
+    
+            myLat = pos.coords.latitude
+            myLon = pos.coords.longitude
+    
+            myPin = L.marker([pos.coords.latitude, pos.coords.longitude], {icon: sindibad25}).addTo(map)
+            myLoc = L.circle([pos.coords.latitude, pos.coords.longitude], {color: "red", radius: 100}).addTo(map)
+            
+            // map.flyTo([pos.coords.latitude, pos.coords.longitude], 16)
+    
+            // setView([pos.coords.latitude, pos.coords.longitude])
+        }, (err)=>{
+            console.log("allow this website to get your location, and enable gps")
+            // alert('geolocation is not enabled')
+            if(navigator.onLine){
+        // no permisson case
+            }else{
+    
+    
+    
+                document.querySelector('#redMessage').textContent = 'no internet connection'
+            document.querySelector('#redMessage').style.display = 'block'
+            setTimeout(() => {
+                document.querySelector('#redMessage').style.display = 'none'
+                
+            }, 3000);
+    
+    
+    
+        // give the previous saved location
+        // if(myLat && myLon){
+        //     console.log('geolocation is enabled')
+        //     map.flyTo([myLat, myLon], 16)
+        // }
+            }
+    
+        })
+    
+    
         }
-
-    })
-
 
 
     }else{
