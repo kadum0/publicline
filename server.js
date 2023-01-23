@@ -105,27 +105,19 @@ app.get('/trying', (req, res)=>{
 // app.use('/profile/:username',express.static('profile'))
 
         // store data locally for in case; 
-    //     getDocs(collection(bygreenDb, 'routes')).then((data)=>{
-    // let docs = []
-    //     data.docs.forEach(doc=>{
-    //         docs.push({...doc.data(), id: doc.id})
-    //     })
-
-    //     // docs.forEach(route=>{
-            
-    //     // })
-    //     // fs.writeFile("../db/routes.json", JSON.stringify(data), (err) => {
-    //     //     if (err) throw err;
-    //     //     console.log("Data written to file");
-    //     // });
-    //     fs.writeFile("../db/routes.json", JSON.stringify(docs), (err) => {
-    //         if (err) throw err;
-    //         console.log("Data written to file");
-    //     });
+        getDocs(collection(bygreenDb, 'routes')).then((data)=>{
+    let docs = []
+        data.docs.forEach(doc=>{
+            docs.push({...doc.data(), id: doc.id})
+        })
+        // fs.writeFile("../db/routes.json", JSON.stringify(docs), (err) => {
+        //     if (err) throw err;
+        //     console.log("Data written to file");
+        // });
         
-    //     })
+        })
 
-        // get data stored locally; 
+        /////////////// get data stored locally; 
         // fs.readFile("../db/routes.json", "utf8", (err, data) => {
         // if (err) throw err;
         // let jsonData = JSON.parse(data);

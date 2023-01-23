@@ -20,8 +20,8 @@
 
     <link rel="shortcut icon" type="image/jpg"
         href="https://kadum2.github.io/publicline/home/imgs/publicline-logo.png" />
-
-    <link rel="manifest" href="./manifest.json">
+    <!-- <link rel="stylesheet" href="./style.css"> -->
+    <!-- <link rel="manifest" href="./manifest.json"> -->
 
 
     <!-- font -->
@@ -55,6 +55,7 @@
             justify-content: space-between;
             align-items: center;
             gap: 1rem;
+            position: relative;
         }
 
         .logo div {
@@ -171,6 +172,19 @@
         /* half logged */
 
 
+        #redArrow {
+            display: none;
+            position: absolute;
+            top: 1rem;
+            /* left: 3.5rem; */
+            left: 4rem;
+            transform: rotateZ(-140deg);
+            z-index: 1010;
+            height: 7rem;
+            width: 7rem;
+        }
+
+
 
         /* main */
         main {
@@ -220,7 +234,7 @@
         #controller {
             display: flex;
             flex-direction: column;
-            width: 3rem;
+            width: 6rem;
             gap: .4rem;
             font-size: 2.4rem;
             font-weight: bold;
@@ -283,9 +297,10 @@
 
 
         #messages {
-            position: absolute;
+            /* position: absolute; */
+            position: fixed;
             top: 5rem;
-            right: 30vw;
+            right: 50vw;
             text-align: center;
             z-index: 1005;
         }
@@ -319,6 +334,7 @@
             border-radius: 50%;
             padding: .1rem;
         }
+
 
         /* aside */
         aside {
@@ -368,8 +384,8 @@
 
         #leaderBoardImg {
             position: absolute;
-            top: 0rem;
-            right: 5rem;
+            top: -1rem;
+            right: -1rem;
             height: 11rem;
             width: 13rem;
             z-index: 1010;
@@ -503,6 +519,12 @@
             z-index: 1001;
         }
 
+        .features li img {
+            all: unset;
+            height: 3rem;
+            /* width: 3rem; */
+        }
+
 
         .projectsInfo {
             display: flex;
@@ -615,6 +637,8 @@
         a {
             text-decoration: none;
             color: black;
+            display: inline-block;
+
         }
 
         button {
@@ -648,6 +672,11 @@
 
         .en {
             display: none;
+            pointer-events: none;
+        }
+
+        .ar {
+            pointer-events: none;
         }
 
         .box {
@@ -786,8 +815,8 @@
             }
 
             #leaderBoardImg {
-                top: 0rem;
-                right: 0rem;
+                /* top: 27rem; */
+                /* right: 0rem; */
                 height: 7rem;
                 width: 9rem;
             }
@@ -796,6 +825,10 @@
                 margin: 1rem;
                 font-weight: bold;
                 padding: .5rem;
+            }
+
+            #redArrow {
+                left: 3.5rem;
             }
         }
 
@@ -865,7 +898,7 @@
         <!-- logo -->
         <div class="links">
             <!-- 
-            <a href="https://kadum2.github.io/git4v" class="logo box">
+            <a href="https://kadum2.github.io/git4t" class="logo box">
                 <div class="black"></div>
                 <div class="red"></div>
                 <div class="white"></div>
@@ -881,10 +914,16 @@
             </button>
 
             <!-- <button class="box" id="translateToEn">en</button> -->
+
+            <img src="https://kadum2.github.io/publicline/home/imgs/general/arrow-right.png" id="redArrow">
+
         </div>
 
         <!-- title -->
-        <h2 id="projectName" class="box"> publicline </h2>
+        <h2 id="projectName" class="box">
+            <div class="en">publicline</div>
+            <div class="ar">الخط العام</div>
+        </h2>
 
         <!-- auth; auth-di, auth-state -->
         <div id="miniProfileDi" class="box">
@@ -898,17 +937,21 @@
             </div>
 
             <div class="notlogged">
-                انشأ حساب
+                <div class="ar">انشأ حساب</div>
+                <div class="en">create account</div>
             </div>
             <div class="halfLogged">
-                اكمل البيانات
+                <div class="ar">اكمل البيانات</div>
+                <div class="en">fill the rest info</div>
             </div>
         </div>
 
         <div id="miniProfile">
 
             <div class="logged">
-                <p>حسابك </p>
+                <div class="ar">حسابك</div>
+                <div class="en">your account</div>
+                <!-- <p>حسابك </p> -->
                 <!-- account link? -->
                 <a class="flex box currentAccount" id="currentAccountLink" href="">
                     <img id="currentAccountImgMini">
@@ -921,27 +964,42 @@
                 <button class="box" id="signoutBtn" style="display: inline;">logout</button>
             </div>
             <div class="halfLogged">
-                <p>انت الان مسجل: يجب اكمال البيانات لانشاء حساب </p>
+                <div class="ar">انت الان مسجل: يجب اكمال البيانات لانشاء
+                    حساب</div>
+                <div class="en">your are now logged; you have to complete
+                    inserting the rest info</div>
+                <!-- <p>انت الان مسجل: يجب اكمال البيانات لانشاء حساب </p> -->
                 <input type="text" id="username" placeholder="username">
                 <input type="text" id="name" placeholder="name">
                 <input type="text" id="bio" placeholder="bio">
                 <label for="userImg" id="userImgUpload" class="box">upload image</label>
                 <input type="file" id="userImg">
-                <button id="makeProfileBtn" class="box">submit</button>
+                <button id="makeProfileBtn" class="box">
+                    <div class="ar">ارسال</div>
+                    <div class="en">send</div>
+                </button>
 
                 <button id="halfLoggedSignoutBtn" class="box">logout</button>
 
             </div>
 
             <div class="notLogged">
-                <p>تسجيل الدخول: </p>
+                <div class="ar">غير مسجل</div>
+                <div class="en">not registered</div>
+                <!-- <p>تسجيل الدخول: </p> -->
                 <div id="register">
+                    <div class="ar">تسجيل لاول مرة</div>
+                    <div class="en">register</div>
+
                     <input type="text" class="em" placeholder="em">
                     <input type="text" class="pw" placeholder="pw">
                     <button id="registerBtn" class="box">register</button>
                 </div>
                 <br>
                 <div id="signin">
+                    <div class="ar">تسجيل الدخول</div>
+                    <div class="en">sign in</div>
+
                     <input type="text" class="em" placeholder="em" id="signinUsername">
                     <input type="text" class="pw" placeholder="pw" id="signinUsername">
                     <button id="signinBtn" class="box">signin</button>
@@ -962,7 +1020,7 @@
         <!-- collect data; controllers -->
         <div id="controller">
             <button class="box" id="addRouteMode"
-                style="background-image: url('https://kadum2.github.io/publicline/home/imgs/add-route-icon.png');background-color: #27f060;">
+                style="background-image: url('https://kadum2.github.io/publicline/home/imgs/add-route-stroked-icon.png');background-color: #27f060;">
                 +
                 <!-- <img src="https://kadum2.github.io/publicline/home/imgs/add-route-icon.png" alt=""> -->
             </button>
@@ -993,11 +1051,17 @@
         </div>
 
         <div id="routesToDisplay">
+            <button id="displayConfirmedRoutes">
+                <div class="ar">مؤكدة</div>
+                <div class="en">confirmed</div>
+            </button>
             <button id="displayCompletedRoutes">
-                كاملة
+                <div class="ar">كاملة</div>
+                <div class="en">completed</div>
             </button>
             <button id="displayUncompletedRoutes">
-                غير كاملة
+                <div class="ar">غير كاملة</div>
+                <div class="en">not completed</div>
             </button>
         </div>
 
@@ -1010,8 +1074,6 @@
             <option value="basra" id="basraLogo">
                 <div class="en">basra</div>
                 <div class="ar">بصرة</div>
-
-                <img src="https://kadum2.github.io/publicline/home/imgs/basra-logo.png" style="height: 1rem;">
             </option>
 
             <option value="nineveh">
@@ -1091,16 +1153,33 @@
 
         </select>
 
-        <button id="makeLocLink" class="box"><img
-                src="https://kadum2.github.io/publicline/home/imgs/general/red-pin-icon.png" alt=""
-                style="pointer-events: none;"></button>
+        <button id="makeLocLink" class="box"><img src="https://kadum2.github.io/publicline/home/imgs/red-pin-icon.png"
+                style="pointer-events:
+        none;"></button>
 
         <button id="findMe" class="box"><img
                 src="https://kadum2.github.io/publicline/home/imgs/general/aim-icon.png"></button>
 
 
+        <!-- <div id="messages">
+            <div id="greenMessage" class="box green">
+                <div class="ar"></div>
+                <div class="en">getting, sending, sent</div>
+            </div>
+            <div id="redMessage" class="box red">
+                <div class="ar"></div>
+                <div class="en">error, no valid data, full the rest</div>
+            </div>
+        </div> -->
         <div id="messages">
-            <div id="greenMessage" class="box green">getting, sending, sent</div>
+            <div id="greenMessage" class="box green">
+                <img src="https://kadum2.github.io/publicline/home/imgs/general/loading.gif"
+                    style="width: fit-content;">
+            </div>
+            <div id="copyMessage" class="box green">
+                link copied
+            </div>
+
             <div id="redMessage" class="box red">error, no valid data, full the rest</div>
         </div>
 
@@ -1108,101 +1187,236 @@
 
 
     <aside>
-        <img src="https://kadum2.github.io/publicline/home/imgs/sindibad-25-icon.png" id="leaderBoardImg">
-        <!-- leaderboard -->
-        <div class="leaderBoard">
 
+        <!-- temp -->
+        <div class="features" id="features" style="width: 80%;">
+            <div class="black logoPart"></div>
 
-            <div class="rankingSections" style="margin-bottom: 1rem;">
-                <p style="color: white; display: inline;">leaderBoard</p>
-
-                <button id="displayUsersRanking" class="">users</button>
-                <button id="displayteamsRanking" class="">team</button>
-                <button href="#me" class="box">me</button>
-            </div>
-
-            <div class="rankingHeader">
-                <button id="rankingSorting" class="box">المركز</button>
-                <button id="accountHeader" class="box">الحساب</button>
-                <div class="points">
-                    <button class="box" id="addedRoutesSorting"
-                        style="background-image: url('https://kadum2.github.io/publicline/home/imgs/add-route-icon.png');"></button>
-                    <button class="box" id="votesSorting"
-                        style="background-image: url('https://kadum2.github.io/publicline/home/imgs/f2-vote.png');"></button>
-                    <button class="box" id="totalSorting">=</button>
+            <h2>
+                <div class="ar">الهدف</div>
+                <div class="en">goal</div>
+            </h2>
+            <li>
+                <div class="ar"> موقع و تطبيق لعرض خريطة مسارات النقل العام في العراق و تمكين
+                    المستخدم من اضافة المزيد من المسارات اليها ما سيزيد حجم الخارطة
+                    , لتسهيل التنقل
+                    بتكاليف قليلة
                 </div>
-            </div>
+                <div class="en">webstie and application that shows the public transportation
+                    map of iraq, and allows anyone to add a new route so to increase the size of
+                    the map, to facilitate mobility in a lower costs</div>
+            </li>
+
             <br>
-            <div id="usersRanking">
+            <h2>
+                <div class="ar">كيفية الاستخدام و المميزات</div>
+                <div class="en">how to use and features</div>
+            </h2>
 
-                <!-- prototyped account -->
-                <div class="rankedAccount">
-                    <div class="ranking points">${index+1}</div>
-                    <div class="account flex" style="justify-content: flex-start;">
-                        <img class="accountImg" style="background-image: url('${account.img}');">
-                        <h3 class="accountUsername ranked">${account.userName}</h3>
-                    </div>
+            <div>
 
-                    <div class="publiclinePoints points">${points}</div>
-                    <div class="bygreenPoints points">${points}</div>
-                    <div class="total points">${account.red.length+account.green.length}</div>
-                </div>
-            </div>
+                <li>
+                    <img src="https://kadum2.github.io/publicline/home/imgs/route-icon.png" alt="">
+                    <div class="ar">مسار الكية او الكوستر من البداية للنهاية</div>
+                    <div class="en">public transportation line from start to end</div>
+                </li>
 
-            <div id="teamsRanking" style="display: none;">
-                <!-- prototyped account -->
-                <div class="rankedAccount">
-                    <div class="ranking">${index+1}</div>
-                    <div class="account flex" style="justify-content: flex-start;">
-                        <img class="accountImg" style="background-image: url('${account.img}');">
-                        <h3 class="accountUsername ranked">${account.userName}</h3>
-                    </div>
+                <br>
 
-                    <div class="publiclinePoints">${points}</div>
-                    <div class="bygreenPoints">${points}</div>
-                    <div class="total">${account.red.length+account.green.length}</div>
-                </div>
+                <li>
+                    <div class="ar">اظهار مسارات النقل العام: مكتملة و غير
+                        مكتملة</div>
+                    <div class="en">display public transportation routes;
+                        completed and incompleted</div>
+                    <img src="https://kadum2.github.io/publicline/home/imgs/f4-1-public-transportation-routes.png"
+                        alt="">
+                    <img src="https://kadum2.github.io/publicline/home/imgs/f4-choose-display.png" alt="">
+                </li>
+                <li>
+                    <div class="ar">اضافة مسار</div>
+                    <div class="en">add route</div>
+                    <img src="https://kadum2.github.io/publicline/home/imgs/f1-add-route-btn.png">
+                    <img src="https://kadum2.github.io/publicline/home/imgs/f1-1-add-route-form.png" alt="">
+                </li>
+                <li>
+                    <div class="ar">التصويت على المسار, لزيادة دقتها</div>
+                    <div class="en">vote for a route, to increase their accuracy</div>
+                    <img src="https://kadum2.github.io/publicline/home/imgs/f2-vote.png">
+                    <img src="https://kadum2.github.io/publicline/home/imgs/f2-route-click.png" alt="">
+                </li>
+                <li>
+                    <div class="ar">تحديد مكان و الحصول على رابط الاشارة اليه</div>
+                    <div class="en">select a location to get share link to it</div>
+                    <!-- <img src="https://kadum2.github.io/publicline/home/imgs/general/red-pin-icon.png" alt=""> -->
+                    <img src="https://kadum2.github.io/publicline/home/imgs/f3-make-label-btn.png">
+                    <img src="https://kadum2.github.io/publicline/home/imgs/f3-1-make-label.png">
+
+                </li>
+
             </div>
 
         </div>
+
+
+        <!-- leaderboard -->
+        <div style="height: 100%; width: 100%; margin: auto; position: relative;">
+            <img src="https://kadum2.github.io/publicline/home/imgs/sindibad-icon2.png" id="leaderBoardImg">
+
+            <div class="leaderBoard" style="height: 90%; width: 90%;">
+
+
+                <div class="rankingSections" style="margin-bottom: 1rem;">
+                    <p style="color: white; display: inline;">leaderBoard</p>
+
+                    <button id="displayUsersRanking" class="">users</button>
+                    <button id="displayteamsRanking" class="">team</button>
+                    <button href="#me" class="box">me</button>
+                </div>
+
+                <div class="rankingHeader">
+                    <button id="rankingSorting" class="box">المركز</button>
+                    <button id="accountHeader" class="box">الحساب</button>
+                    <div class="points">
+                        <button class="box" id="addedRoutesSorting"
+                            style="background-image: url('https://kadum2.github.io/publicline/home/imgs/add-route-icon.png');"></button>
+                        <button class="box" id="votesSorting"
+                            style="background-image: url('https://kadum2.github.io/publicline/home/imgs/f2-vote.png');"></button>
+                        <button class="box" id="totalSorting">=</button>
+                    </div>
+                </div>
+                <br>
+                <div id="usersRanking">
+
+                    <!-- prototyped account -->
+                    <div class="rankedAccount">
+                        <div class="ranking points">${index+1}</div>
+                        <div class="account flex" style="justify-content: flex-start;">
+                            <img class="accountImg" style="background-image: url('${account.img}');">
+                            <h3 class="accountUsername ranked">${account.userName}</h3>
+                        </div>
+
+                        <div class="publiclinePoints points">${points}</div>
+                        <div class="bygreenPoints points">${points}</div>
+                        <div class="total points">${account.red.length+account.green.length}</div>
+                    </div>
+                </div>
+
+                <div id="teamsRanking" style="display: none;">
+                    <!-- prototyped account -->
+                    <div class="rankedAccount">
+                        <div class="ranking">${index+1}</div>
+                        <div class="account flex" style="justify-content: flex-start;">
+                            <img class="accountImg" style="background-image: url('${account.img}');">
+                            <h3 class="accountUsername ranked">${account.userName}</h3>
+                        </div>
+
+                        <div class="publiclinePoints">${points}</div>
+                        <div class="bygreenPoints">${points}</div>
+                        <div class="total">${account.red.length+account.green.length}</div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- 
+        <div id="howToUseIt" class="box">
+            <h2>كيفية الاستخدام </h2>
+
+            <div class="box">
+                <img src="">
+                <p>مسارات النقل العام (كيات و
+                    كوسترات)</p>
+            </div>
+            <div class="box">
+                <img src="">
+                <p>اضافة مسار</p>
+            </div>
+            <div class="box">
+                <img src="">
+                <p>تحديد موقع و الحصول على رابط للنشر وال
+                    توجيه الى ذلك الموقع</p>
+            </div>
+            <div class="box">
+                <img src="">
+                <p></p>
+            </div>
+        </div>
+        -->
 
         <div id="shordDescription" class="box">
-            <h2 style="font-size: 2rem;">وصف الموقع</h2>
-            بسبب غياب النقل العام في العراق ظهرت حافلات رخيصة التكلفة على الناس
-            تسير بمسارات ثابتة
-            لكن لا يمكن الاعتماد على تلك الحافلات وحدها للوصول الى نقطة معينة و
-            التنقل
-            عموما بسبب عشوائيتها و عدم وجود خريطة توضح تلك المسارات في عموم البلد
-            مشروع الخط العام يصنع تلك الخريطة بمساهمة الافراد في اضافة تلك
-            الخارطة (مع اسمها) و التصويت على المسارات الموجود لزيادة دقة الخارطة
-            مستقبلا (حيث يحذف المسار او يبقى حسب التصويت)
+            <h2 style="font-size: 2rem;">
+                <h2 class="ar" style="font-size: 2rem;">
+                    وصف الموقع
+                </h2>
+                <h2 class="en" style="font-size: 2rem;">website description</h2>
+            </h2>
 
-            ملاحظة: المسارات المضافة حديثا لا تضاف مباشرة الى الخارطة بل الى
-            صفحة (ادمن) ليقوم بالتاكد من صحتها (منطقيا) عندها ستضاف الى الخارطة
-            الرئيسية
+            <div class="ar">
+                بسبب غياب النقل العام في العراق ظهرت حافلات رخيصة التكلفة على الناس
+                تسير بمسارات ثابتة
+                لكن لا يمكن الاعتماد على تلك الحافلات وحدها للوصول الى نقطة معينة و
+                التنقل
+                عموما بسبب عشوائيتها و عدم وجود خريطة توضح تلك المسارات في عموم البلد
+                مشروع الخط العام يصنع تلك الخريطة بمساهمة الافراد في اضافة تلك
+                الخارطة (مع اسمها) و التصويت على المسارات الموجود لزيادة دقة الخارطة
+                مستقبلا (حيث يحذف المسار او يبقى حسب التصويت)
 
-            يمكن لاي احد زيارة صفحة الادمن و مشاهدة المسارات الحديثة لكن لا يمكن
-            لاي احد (غير الادمن ) التعديل على المسارات فيها
+                ملاحظة: المسارات المضافة حديثا لا تضاف مباشرة الى الخارطة بل الى
+                صفحة (ادمن) ليقوم بالتاكد من صحتها (منطقيا) عندها ستضاف الى الخارطة
+                الرئيسية
+
+                يمكن لاي احد زيارة صفحة الادمن و مشاهدة المسارات الحديثة لكن لا يمكن
+                لاي احد (غير الادمن ) التعديل على المسارات فيها
+            </div>
+            <div class="en">
+                Because of the absence of public transportation in Iraq, cheap buses appeared on the people
+                It runs steady paths
+                But you cannot rely on those buses alone to get to a certain point
+                Mobility
+                Generally because of its randomness and the lack of a map showing those paths throughout the country
+                The Public Line Project makes that map with the contribution of individuals to add that
+                Map (with its name) and vote on the existing tracks to increase the accuracy of the map
+                In the future (where the track is deleted or remains according to the vote)
+
+                Note: The newly added tracks are not added directly to the map, but to
+                Page (admin) to make sure it is correct (logically) then it will be added to the map
+                Main
+
+                Anyone can visit the admin page and see the recent tracks, but it is not possible
+                No one (other than the admin) can modify the tracks in it
+            </div>
         </div>
+
+
         <div class="app box">
-            <h2>لتنزيل التطبيق</h2>
+            <h2>
+                <div class="ar">لتنزيل التطبيق</div>
+                <div class="en">to download the app</div>
+            </h2>
             <img src="https://kadum2.github.io/publicline/home/imgs/download-app.jpg" style="height: 18rem;">
             <img src="https://kadum2.github.io/publicline/home/imgs/download-app-2.jpg" style="height: 18rem;">
         </div>
 
-
         <div class="btns">
-            <a href="https://kadum2.github.io/git4v/docs/publicline-doc" class="projectDoc box">تفاصيل </a>
-            <a href="https://github.com/kadum2/publicline" class="projectFiles box">الكود
+            <a href="https://kadum2.github.io/git4t/docs/publicline-doc" class="projectDoc box">
+                <div class="ar">تفاصيل</div>
+                <div class="en">more details</div>
             </a>
+            <a href="https://github.com/kadum2/publicline" class="projectFiles
+            box">
+                <div class="ar">الكود</div>
+                <div class="en">source code</div>
+            </a>
+
+            <button id="translateToEn" class="box">en</button>
 
         </div>
 
-
-
         <footer>
 
-            <a href="https://kadum2.github.io/git4v" class="logo box">
+            <a href="https://kadum2.github.io/git4t" class="logo box">
                 <div class="black"></div>
                 <div class="red"></div>
                 <div class="white"></div>
@@ -1210,12 +1424,15 @@
 
             <div class="contact">
                 <span class="red logoPart"></span>
-                <h2>تواصل </h2>
+                <h2>
+                    <div class="ar">تواصل</div>
+                    <div class="en">contact</div>
+                </h2>
                 <span>
                     <a href="https://www.instagram.com/kadum_0/" target="_blank">
                         <img src="https://kadum2.github.io/publicline/home/imgs/general/instagram-logo.png" alt="">
                     </a>
-                    <a href="t.me/git4v_publicline" target="_blank">
+                    <a href="https://www.t.me/git4t_publicline" target="_blank">
                         <img src="https://kadum2.github.io/publicline/home/imgs/general/telegram-logo.png" alt="">
                     </a>
                     <a href="https://www.github.com/kadum2" target="_blank">
@@ -1223,15 +1440,15 @@
                     </a>
                 </span>
 
-                <p style="line-height: 0;">kadum1230@gmail.com</p>
+                <p style="line-height: 0;">git4t@gmail.com</p>
                 <p style="line-height: 0;">makeitgreen002@gmail.com</p>
 
             </div>
-
-            <div class="features">
+            <!-- 
+            <div class="features" id="features">
                 <div class="black logoPart"></div>
 
-                <h2>الهدف و المميزات</h2>
+                <h2>الهدف</h2>
                 <li>
                     موقع و تطبيق لعرض خريطة مسارات النقل العام في العراق و تمكين
                     المستخدم من اضافة المزيد من المسارات اليها, لتسهيل التنقل
@@ -1239,36 +1456,42 @@
                 </li>
 
                 <br>
+                <h2>كيفية الاستخدام و المميزات</h2>
 
                 <div>
-                    <li>اظهار مسارات النقل العام: مكتملة و غير مكتملة<img
-                            src="https://kadum2.github.io/publicline/home/imgs/f4-choose-display.png" alt="">
+                    <li>اظهار مسارات النقل العام: مكتملة و غير مكتملة<img src="https://kadum2.github.io/publicline/home/imgs/f4-choose-display.png" alt="">
                     </li>
                     <li>اضافة مسار <img src="https://kadum2.github.io/publicline/home/imgs/add-route-icon.png"></li>
-                    <li>التصويت على المسار, لزيادة دقتها <img
-                            src="https://kadum2.github.io/publicline/home/imgs/f2-vote.png"></li>
-                    <li>تحديد موقع لنشره <img
-                            src="https://kadum2.github.io/publicline/home/imgs/general/red-pin-icon.png" alt=""></li>
+                    <li>التصويت على المسار, لزيادة دقتها <img src="https://kadum2.github.io/publicline/home/imgs/f2-vote.png"></li>
+                    <li>تحديد موقع لنشره <img src="https://kadum2.github.io/publicline/home/imgs/general/red-pin-icon.png" alt=""></li>
 
                 </div>
 
 
             </div>
-
+            -->
             <div class="statics">
                 <div class="green logoPart"></div>
-                <h2>نتائج </h2>
+                <h2>
+                    <div class="ar">نتائج</div>
+                    <div class="en">results</div>
+                </h2>
                 <div class="projectsInfo">
 
                     <div class="projectStatics" style="display: none;">
-                        <b>ivc <img src="https://kadum2.github.io/publicline/home/imgs/general/ivc-logo.png" alt=""></b>
-                        <li>عدد المستخدمين: <img
-                                src="https://kadum2.github.io/publicline/home/imgs/general/account-icon.png" alt=""> <b
-                                id="accountsCounter">0</b>
+                        <b>git4t <img src="https://kadum2.github.io/publicline/home/imgs/general/git4t-logo.png"
+                                alt=""></b>
+                        <li>
+                            <div class="ar"> المستخدمين</div>
+                            <div class="en">users</div>
+                            : <img src="https://kadum2.github.io/publicline/home/imgs/general/account-icon.png" alt="">
+                            <b id="accountsCounter">0</b>
                         </li>
-                        <li>عدد المساهمات: <img
-                                src="https://kadum2.github.io/publicline/home/imgs/general/account-icon.png" alt=""> <b
-                                id="contriCounter">0</b>
+                        <li>
+                            <div class="ar"> المساهمات</div>
+                            <div class="en">contributions</div>
+                            : <img src="https://kadum2.github.io/publicline/home/imgs/general/account-icon.png" alt="">
+                            <b id="contriCounter">0</b>
                         </li>
                     </div>
 
@@ -1276,40 +1499,53 @@
                         <b>publicline <img
                                 src="https://kadum2.github.io/publicline/home/imgs/publicline-logo-green-blue.png"
                                 alt=""></b>
-                        <li>المسارات المضافة <img
-                                src="https://kadum2.github.io/publicline/home/imgs/add-route-icon.png">
+                        <li>
+                            <span class="ar">المسارات المضافة</span>
+                            <span class="en">added routes</span>
+                            <img src="https://kadum2.github.io/publicline/home/imgs/add-route-icon.png">
                             <b id='routesCounter'>0</b>
                         </li>
-                        <li>تم التصويت: <img src="https://kadum2.github.io/publicline/home/imgs/f2-vote.png" alt=""> <b
-                                id="votesCounter">0</b></li>
+                        <li>
+                            <span class="ar">تم التصويت</span>
+                            <span class="en">voted</span>
+                            : <img src="https://kadum2.github.io/publicline/home/imgs/f2-vote.png" alt=""> <b
+                                id="votesCounter">0</b>
+                        </li>
 
                     </div>
 
                     <br>
                     <div class="projectStatics" style="display: none;">
-                        <b>bygreen <img
-                                src="https://kadum2.github.io/git4https://kadum2.github.io/publicline/home/imgs/bygreen/bygreen-logo.png"
-                                alt=""></b>
-                        <li>تم زراعتها <img
-                                src="https://kadum2.github.io/git4https://kadum2.github.io/publicline/home/imgs/bygreen/green-icon-stroked.png"
-                                alt=""><b id="greenCounter">0</b>
+                        <b>bygreen <img src="https://kadum2.github.io/git4t/imgs/bygreen/bygreen-logo.png" alt=""></b>
+                        <li>
+                            <div class="ar">تم زراعتها</div>
+                            <div class="en">planted</div>
+                            <img src="https://kadum2.github.io/git4t/imgs/bygreen/green-pin-icon-stroked.png" alt=""><b
+                                id="greenCounter">0</b>
                         </li>
-                        <li>تحتاج الى زراعة <img
-                                src="https://kadum2.github.io/git4https://kadum2.github.io/publicline/home/imgs/bygreen/red-icon-stroked.png">
+                        <li>
+                            <div class="ar">تحتاج الى زراعة</div>
+                            <div class="en">need planting</div>
+                            <img src="https://kadum2.github.io/git4t/imgs/bygreen/red-icon-stroked.png">
                             <b id="redCounter">0</b>
                         </li>
-                        <li>الحملات الحالية: <img
-                                src="https://kadum2.github.io/git4https://kadum2.github.io/publicline/home/imgs/bygreen/yellow-icon-stroked.png">
-                            <b id="yellowCounter">0</b>
+                        <li>
+                            <div class="ar">الحملات الحالية</div>
+                            <div class="en">current campaigns</div>
+                            : <img src="https://kadum2.github.io/git4t/imgs/bygreen/yellow-icon-stroked.png"> <b
+                                id="yellowCounter">0</b>
                         </li>
-                        <li>عدد النباتات المزروعة: <img
-                                src="https://kadum2.github.io/git4https://kadum2.github.io/publicline/home/imgs/bygreen/plant-icon.png"
-                                alt=""> <b id="contriCounter">0</b></li>
-                        <li>عدد المشاتل: <img
-                                src="https://kadum2.github.io/git4https://kadum2.github.io/publicline/home/imgs/bygreen/shop-icon.png"
-                                alt=""> <b id="shopsCounter">0</b></li>
+                        <li>
+                            <div class="ar"> النباتات المزروعة</div>
+                            <div class="en">palnted plants</div>
+                            : <img src="https://kadum2.github.io/git4t/imgs/bygreen/plant-icon.png" alt=""> <b
+                                id="contriCounter">0</b>
+                        </li>
+                        <li>عدد المشاتل: <img src="https://kadum2.github.io/git4t/imgs/bygreen/shop-icon.png" alt="">
+                            <b id="shopsCounter">0</b></li>
                     </div>
                     <br>
+
                 </div>
             </div>
 
@@ -1320,6 +1556,7 @@
         </footer>
 
     </aside>
+
 
     <!-- service worker -->
     <script>
@@ -1370,12 +1607,13 @@ const bygreenStorage = getStorage(bygreen)
 /////////auth state 
 
 // let greenColor = '#27F060'
+let lightGreen = '#27f060'
 let greenColor = "#68F690"
-
 let darkerGreenColor = '#21C24F'
 
 let blueColor = '#3388FF'
 let darkerBlueColor = '#075FDA'
+let redColor = '#ff2a2a'
 
 // governates coordinates; 
 
@@ -1397,12 +1635,12 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
 }).addTo(map);
 
         let busPin = L.icon({
-            iconUrl: "https://kadum2.github.io/publicline/home/imgs/add-bus-icon.png",
+            iconUrl: "https://kadum2.github.io/publicline/home/imgs/green-pin-icon.png",
             shadowSize: [50, 64], // size of the shadow
             shadowAnchor: [4, 62], // the same for the shadow
             iconSize: [25, 41],
             // iconAnchor: [12, 41],
-            iconAnchor: [12, 25],
+            iconAnchor: [12, 35],
             popupAnchor: [0, -30] 
 
         });
@@ -1416,7 +1654,7 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
         });
 
         let sindibad25 = L.icon({
-            iconUrl: "https://kadum2.github.io/publicline/home/imgs/sindibad-25-icon.png",
+            iconUrl: "https://kadum2.github.io/publicline/home/imgs/sindibad-icon.png",
             shadowSize: [50, 64], // size of the shadow
             shadowAnchor: [4, 62], // the same for the shadow
             iconSize: [70, 60],
@@ -1704,6 +1942,42 @@ displayUncompletedRoutes.addEventListener('click', (ev)=>{
     }
 })
 
+displayConfirmedRoutes.addEventListener('click', (ev)=>{
+    console.log("display confirmed routes ")
+    ev.target.classList.toggle('on2')
+    if(ev.target.classList.contains('on2')){
+        console.log(confirmedRoutes, confirmedRoutesObjects, circlesObjects)
+        confirmedRoutesObjects.forEach(routeObj=>{
+
+            circlesObjects.forEach(circleObj=>{
+                if(JSON.stringify(circleObj._latlng) == JSON.stringify(routeObj._latlngs[0]) || JSON.stringify(circleObj._latlng) == JSON.stringify(routeObj._latlngs[routeObj._latlngs.length-1])){
+                    circleObj.addTo(map)
+                }
+            })
+
+            routeObj.addTo(map)
+        })
+
+    }else{
+        console.log(confirmedRoutes, confirmedRoutesObjects, circlesObjects)
+
+
+        confirmedRoutesObjects.forEach(routeObj=>{
+            circlesObjects.forEach(circleObj=>{
+                console.log(circleObj._latlng, routeObj._latlngs[0], )
+                if(JSON.stringify(circleObj._latlng) == JSON.stringify(routeObj._latlngs[0]) || JSON.stringify(circleObj._latlng) == JSON.stringify(routeObj._latlngs[routeObj._latlngs.length-1])){
+                    console.log('remove circle; ', circleObj)
+                    map.removeLayer(circleObj)
+                }
+            })
+
+            map.removeLayer(routeObj)
+        })
+            
+    }
+})
+
+
 
 selectGovernate.addEventListener('change', (ev)=>{
     console.log('options', ev.target.value)
@@ -1720,76 +1994,47 @@ selectGovernate.addEventListener('change', (ev)=>{
     ev.target.value == 'najaf'?map.flyTo([32.001916, 44.331424], 10):null
     ev.target.value == 'dhi-qar'?map.flyTo([31.040835, 46.249916], 10):null
 
-    // ev.target.value == 'dohuk'?map.flyTo([36.862733, 42.991273], 10):null
-    // ev.target.value == 'kirkuk'?map.flyTo([35.459780, 44.385553], 10):null
-    // ev.target.value == 'saladin'?map.flyTo([30.534238, 47.764500], 10):null
-    // ev.target.value == 'diyala'?map.flyTo([30.534238, 47.764500], 10):null
-    // ev.target.value == 'wasit'?map.flyTo([30.534238, 47.764500], 10):null
-    // ev.target.value == 'maysan'?map.flyTo([30.534238, 47.764500], 10):null
-    // ev.target.value == 'al-qadisiyyah'?map.flyTo([30.534238, 47.764500], 10):null
-    // ev.target.value == 'muthanna'?map.flyTo([30.534238, 47.764500], 10):null
-    // ev.target.value == 'halabja'?map.flyTo([30.534238, 47.764500], 10):null
+    ev.target.value == 'dohuk'?map.flyTo([36.862733, 42.991273], 10):null
+    ev.target.value == 'kirkuk'?map.flyTo([35.459780, 44.385553], 10):null
+    ev.target.value == 'saladin'?map.flyTo([30.534238, 47.764500], 10):null
+    ev.target.value == 'diyala'?map.flyTo([30.534238, 47.764500], 10):null
+    ev.target.value == 'wasit'?map.flyTo([30.534238, 47.764500], 10):null
+    ev.target.value == 'maysan'?map.flyTo([30.534238, 47.764500], 10):null
+    ev.target.value == 'al-qadisiyyah'?map.flyTo([30.534238, 47.764500], 10):null
+    ev.target.value == 'muthanna'?map.flyTo([30.534238, 47.764500], 10):null
+    ev.target.value == 'halabja'?map.flyTo([30.534238, 47.764500], 10):null
 })
+
+document.querySelector('#translateToEn').addEventListener('click', (ev)=>{
+    ev.target.classList.toggle('on')
+    if(ev.target.classList.contains('on')){
+        document.querySelectorAll('.en').forEach((enElement)=>enElement.style.display='block')
+        document.querySelectorAll('.ar').forEach((arELement)=>arELement.style.display='none')
+        ev.target.textContent = 'ar'
+    }else{
+        document.querySelectorAll('.en').forEach((enElement)=>enElement.style.display='none')
+        document.querySelectorAll('.ar').forEach((arELement)=>arELement.style.display='block')
+        ev.target.textContent = 'en'
+    }
+})
+
+
 
 let myLoc 
 let myPin
 
-let myLat
-let myLon
+let watchID
 
 findMe.addEventListener('click', (ev)=>{
-
-    // console.log('to find and track me ', navigator.geolocation.getCurrentPosition)
-    // console.log(navigator.geolocation.getCurrentPosition((pos)=>console.log(pos)))
-    // navigator.geolocation.getCurrentPosition((pos)=>console.log(data.longitude),
-    // (err)=>console.log(err))
-    
-// no need 
-    // navigator.geolocation.getCurrentPosition((pos)=>{
-    //     console.log('pos is ', pos)
-    //     myLat = pos.coords.latitude
-    //     myLon = pos.coords.longitude
-    //     map.flyTo([pos.coords.latitude, pos.coords.longitude], 16)
-    // }, (not)=>{
-    //     console.log('not', not)
-    //     document.querySelector('#redMessage').textContent = 'allow geolocation'
-    //     document.querySelector('#redMessage').style.display = 'block'
-    //     setTimeout(() => {
-    //         document.querySelector('#redMessage').style.display = 'none'
-            
-    //     }, 3000);
-    // })
 
     ev.target.classList.toggle('on')
     if(ev.target.classList.contains('on')){
         // add marker and circle
 
-        // get into the locatoin
-    navigator.geolocation.getCurrentPosition(pos=>{
-        map.flyTo([pos.coords.latitude, pos.coords.longitude], 16)
-    })
 
-    navigator.geolocation.watchPosition((pos)=>{
-        console.log('watching; ',pos.coords.latitude, pos.coords.longitude)
-        
-        myPin?map.removeLayer(myPin):null
-        myLoc?map.removeLayer(myLoc):null
-
-        myLat = pos.coords.latitude
-        myLon = pos.coords.longitude
-
-        myPin = L.marker([pos.coords.latitude, pos.coords.longitude], {icon: sindibad25}).addTo(map)
-        myLoc = L.circle([pos.coords.latitude, pos.coords.longitude], {color: "red", radius: 100}).addTo(map)
-        
-        // map.flyTo([pos.coords.latitude, pos.coords.longitude], 16)
-
-        // setView([pos.coords.latitude, pos.coords.longitude])
-    }, (err)=>{
-        console.log("allow this website to get your location, and enable gps")
-        // alert('geolocation is not enabled')
-        if(navigator.onLine){
-    // no permisson case
-    fetch('https://ipapi.co/json/')
+        // internet based; 
+        if(navigator.online){
+                fetch('https://ipapi.co/json/')
         .then(res=>res.json())
         .then(data=>{
             map.flyTo([data.latitude, data.longitude], 16)
@@ -1798,38 +2043,68 @@ findMe.addEventListener('click', (ev)=>{
 
             console.log(myPin, myLoc)
         })
+
         }else{
 
-            document.querySelector('#redMessage').textContent = 'no internet connection'
-        document.querySelector('#redMessage').style.display = 'block'
-        setTimeout(() => {
-            document.querySelector('#redMessage').style.display = 'none'
+        // get into the locatoin
+        navigator.geolocation.getCurrentPosition(pos=>{
+            map.flyTo([pos.coords.latitude, pos.coords.longitude], 16)
+        })
+    
+        watchID = navigator.geolocation.watchPosition((pos)=>{
+            console.log('watching; ',pos.coords.latitude, pos.coords.longitude)
             
-        }, 3000);
-
-
-
-    // give the previous saved location
-    // if(myLat && myLon){
-    //     console.log('geolocation is enabled')
-    //     map.flyTo([myLat, myLon], 16)
-    // }
+            myPin?map.removeLayer(myPin):null
+            myLoc?map.removeLayer(myLoc):null
+    
+            myLat = pos.coords.latitude
+            myLon = pos.coords.longitude
+    
+            myPin = L.marker([pos.coords.latitude, pos.coords.longitude], {icon: sindibad25}).addTo(map)
+            myLoc = L.circle([pos.coords.latitude, pos.coords.longitude], {color: "red", radius: 100}).addTo(map)
+            
+            // map.flyTo([pos.coords.latitude, pos.coords.longitude], 16)
+    
+            // setView([pos.coords.latitude, pos.coords.longitude])
+        }, (err)=>{
+            console.log("allow this website to get your location, and enable gps")
+            // alert('geolocation is not enabled')
+            if(navigator.onLine){
+        // no permisson case
+            }else{
+    
+    
+    
+                document.querySelector('#redMessage').textContent = 'no internet connection'
+            document.querySelector('#redMessage').style.display = 'block'
+            setTimeout(() => {
+                document.querySelector('#redMessage').style.display = 'none'
+                
+            }, 3000);
+    
+    
+    
+        // give the previous saved location
+        // if(myLat && myLon){
+        //     console.log('geolocation is enabled')
+        //     map.flyTo([myLat, myLon], 16)
+        // }
+            }
+    
+        })
+    
+    
         }
-
-    })
-
 
 
     }else{
-        // remote marker and circle 
+        // remove marker and circle, and stop watching 
+        navigator.geolocation.clearWatch(watchID);
         map.removeLayer(myLoc)
         map.removeLayer(myPin)
 
     }
-
 })
-
-
 
         /////////////////////////////////get data 
 
@@ -1843,10 +2118,58 @@ findMe.addEventListener('click', (ev)=>{
 
         let completedRoutes
         let uncompletedRoutes
+        let confirmedRoutes
 
 
-        await onAuthStateChanged(bygreenAuth, async (user)=>{
+        onAuthStateChanged(bygreenAuth, async (user)=>{
+
+            document.querySelector('#greenMessage').style.display = 'block'
+
             console.log('authstatefun', dbUser)
+            // side custom 
+            if(window.location.href.includes('location')){
+            console.log('contains temp pin', window.location.href.indexOf('location'), window.location.href.slice(0, window.location.href.indexOf('location')))
+
+            // make the pin
+            let currentPin = L.marker({
+        lat: window.location.href.split('/')[window.location.href.split('/').length-2].split(',')[0],
+        lng: window.location.href.split('/')[window.location.href.split('/').length-2].split(',')[1]
+        }, {icon: redPin}).addTo(map)
+
+            // flyto it 
+            console.log(currentPin)
+            map.flyTo(currentPin._latlng, 16)
+
+                }
+
+
+    // if visiting the website for the first time will get into some instructions
+    if (localStorage.getItem("firstVisit") === null) {
+        // This is the user's first visit
+        console.log("first time to visit the site; then to show instructions")
+        document.querySelector('#redArrow').style.display = 'block'
+        document.querySelector('#asideDi').classList.toggle('red')
+        document.querySelector('#asideDi').classList.contains('red')?document.querySelector('aside').style.display = 'flex':document.querySelector('aside').style.display = 'none'
+
+        setTimeout(() => {
+            // document.querySelector("#features").scrollIntoView({
+            //     behavior: "auto",
+            //     block: "center"
+            // })
+
+            // document.body.scrollIntoView({ behavior: 'smooth', block: 'end'
+            // });
+            
+            // window.scrollTo(0, document.body.scrollHeight);
+
+            document.querySelector('#redArrow').style.display = 'none'
+        }, 3000)
+
+        localStorage.setItem("firstVisit", false)
+    } else {
+        // This is not the user's first visit
+    }
+
             if(user){
                 console.log('from auth ', user)
                 authUser = user
@@ -1861,9 +2184,7 @@ findMe.addEventListener('click', (ev)=>{
         
                 let dbUserDoc = await getDoc(doc(bygreenDb, 'users', user.uid))
                 dbUser = dbUserDoc.data()
-        
-        
-        
+                
                 if(dbUser){
                 dbUser.id = dbUserDoc.id
         
@@ -1897,8 +2218,12 @@ findMe.addEventListener('click', (ev)=>{
                 document.querySelectorAll('.notlogged').forEach(e=>e.style.display = 'block')
                 dbUser = 'none'
             }
-        
             getDocs(collection(bygreenDb, 'users')).then((data)=>{
+
+                setTimeout(() => {
+                    document.querySelector('#greenMessage').style.display = 'none'
+                }, 1000);
+
                 let docs = []
                     data.docs.forEach(doc=>{
                         docs.push({...doc.data(), id: doc.id})
@@ -1932,19 +2257,26 @@ findMe.addEventListener('click', (ev)=>{
     
                     document.querySelector('#greenMessage').style.display = 'none'
 
-
-                    completedRoutes = routes.filter(route=>route.start && route.end)
-                    uncompletedRoutes = routes.filter(route=>!route.start || !route.end)
+                    completedRoutes = routes.filter(route=> route.start && route.end && !route.confirmed)
+                    uncompletedRoutes = routes.filter(route=>!route.start || !route.end && !route.confirmed)
+                    confirmedRoutes = routes.filter(route=>route.confirmed)
+                
+                    routes.forEach(route=>console.log(!route.confirmed))
         
                 deployRoutes(completedRoutes)
                 displayCompletedRoutes.classList.toggle('on2')
                 deployRoutes(uncompletedRoutes)
                 displayUncompletedRoutes.classList.toggle('on2')
 
+                deployRoutes(confirmedRoutes)
+                displayConfirmedRoutes.classList.toggle('on2')
+                    
+                // console.log(confirmedRoutes)
+                // console.log('completed routes',completedRoutes)
             })
 
             // data statics 
-        getDocs(collection(bygreenDb, 'pins')).then((data)=>{
+            getDocs(collection(bygreenDb, 'pins')).then((data)=>{
         let docs = []
             data.docs.forEach(doc=>{
                 docs.push({...doc.data(), id: doc.id})
@@ -1965,34 +2297,17 @@ findMe.addEventListener('click', (ev)=>{
             document.querySelector('#greenCounter').textContent = green
             document.querySelector('#yellowCounter').textContent = yellow
             // document.querySelector('#redToGreenCounter').textContent = green
-    })
+            })
 
-        getDocs(collection(bygreenDb, 'shop')).then((data)=>{
+            getDocs(collection(bygreenDb, 'shop')).then((data)=>{
     let docs = []
         data.docs.forEach(doc=>{
             docs.push({...doc.data(), id: doc.id})
         })
         // console.log(docs[0].upvotes.length + docs[0].downvotes)
         document.querySelector('#shopsCounter').textContent = docs.length
-    })
+            })
 
-
-
-
-        if(window.location.href.includes('location')){
-                    console.log('contains temp pin', window.location.href.indexOf('location'), window.location.href.slice(0, window.location.href.indexOf('location')))
-    
-                    // make the pin
-                    let currentPin = L.marker({
-                lat: window.location.href.split('/')[window.location.href.split('/').length-2].split(',')[0],
-                lng: window.location.href.split('/')[window.location.href.split('/').length-2].split(',')[1]
-                }, {icon: redPin}).addTo(map)
-    
-                    // flyto it 
-                    console.log(currentPin)
-                    map.flyTo(currentPin._latlng, 16)
-    
-        }
 
         })
 
@@ -2006,6 +2321,7 @@ findMe.addEventListener('click', (ev)=>{
         /////containers; 
         let completedRoutesObjects = []
         let uncompletedRoutesObjects = []
+        let confirmedRoutesObjects = []
 
         let circlesObjects = []
 
@@ -2058,19 +2374,113 @@ findMe.addEventListener('click', (ev)=>{
                 tempMarker?map.removeLayer(tempMarker):null
 
                 if(window.location.href.includes('location')){
-                    tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: redPin}).bindPopup(`link; <br><a href='${window.location.href.slice(0, window.location.href.indexOf('location'))+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/'>${window.location.href.slice(0, window.location.href.indexOf('location'))+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/</a>`).addTo(map)
+                    // tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: redPin}).bindPopup(`link; <br><a href='${window.location.href.slice(0, window.location.href.indexOf('location'))+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/'>${window.location.href.slice(0, window.location.href.indexOf('location'))+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/</a>`).addTo(map)
+                    
+                    let makeLocDiv = document.createElement('div')
+
+                    let linkElement = document.createElement('a')
+                    linkElement.setAttribute('href', window.location.href.slice(0, window.location.href.indexOf('location'))+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng)
+                    linkElement.textContent = '...link'
+
+                    let copyBtn = document.createElement('button')
+                    copyBtn.classList.add('box')
+                    copyBtn.textContent = 'copy'
+
+            let textToCopy = window.location.href.slice(0, window.location.href.indexOf('location'))+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng+'/'
+
+            copyBtn.addEventListener("click", ()=>{
+                navigator.clipboard.writeText(textToCopy).then(function() {
+                document.querySelector('#copyMessage').style.display = 'block'
+
+                setTimeout(() => {
+                    document.querySelector('#copyMessage').style.display = 'none'
+                    
+                }, 2000);
+                }, function(err) {
+                console.error("Failed to copy text: ", err);
+                });
+            });
+
+                    makeLocDiv.append(copyBtn, linkElement)
+
+                    tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: redPin}).bindPopup(makeLocDiv).addTo(map)
+
+
+
                     
                 }else{
 
-                                // github 
+                        // github 
                                 if(window.location.href.includes('github')){
 
-                                    tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: redPin}).bindPopup(`link; for github <br><a href='https://kadum2.github.io/publicline${'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/'>${'https://kadum2.github.io/publicline/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/</a>`).addTo(map)
-                    
+                                    // tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: redPin}).bindPopup(`link; for github <br><a href='https://kadum2.github.io/publicline${'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/'>${'https://kadum2.github.io/publicline/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/</a> <br> something`).addTo(map)
+
+                                    // https://kadum2.github.io/publicline
+
+                                    
+                                    let makeLocDiv = document.createElement('div')
+
+                                    let linkElement = document.createElement('a')
+                                    linkElement.setAttribute('href', 'https://kadum2.github.io/publicline'+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng)
+                                    linkElement.textContent = '...link'
+
+                                    let copyBtn = document.createElement('button')
+                                    copyBtn.classList.add('box')
+                                    copyBtn.textContent = 'copy'
+
+                            let textToCopy = 'https://kadum2.github.io/publicline'+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng+'/'
+
+                            copyBtn.addEventListener("click", ()=>{
+                                console.log("clicked on copy")
+                                navigator.clipboard.writeText(textToCopy).then(function() {
+                                document.querySelector('#copyMessage').style.display = 'block'
+
+                                setTimeout(() => {
+                                    document.querySelector('#copyMessage').style.display = 'none'
+                                    
+                                }, 2000);
+                                }, function(err) {
+                                console.error("Failed to copy text: ", err);
+                                });
+                            });
+
+                            makeLocDiv.append(copyBtn, linkElement)
+
+                            tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: redPin}).bindPopup(makeLocDiv).addTo(map)
+
                                 }else{
-                                    tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: redPin}).bindPopup(`link; for others <br><a href='${window.location.hostname+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/'>${window.location.hostname+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/</a>`).addTo(map)
-                                }
-                    
+
+                                    let makeLocDiv = document.createElement('div')
+
+                                    let linkElement = document.createElement('a')
+                                    linkElement.setAttribute('href', window.location.hostname+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng)
+                                    linkElement.textContent = '...link'
+
+                                    let copyBtn = document.createElement('button')
+                                    copyBtn.classList.add('box')
+                                    copyBtn.textContent = 'copy'
+
+                            let textToCopy = window.location.hostname+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng+'/'
+
+                            copyBtn.addEventListener("click", ()=>{
+                                navigator.clipboard.writeText(textToCopy).then(function() {
+                                document.querySelector('#copyMessage').style.display = 'block'
+
+                                setTimeout(() => {
+                                    document.querySelector('#copyMessage').style.display = 'none'
+                                    
+                                }, 2000);
+                                }, function(err) {
+                                console.error("Failed to copy text: ", err);
+                                });
+                            });
+
+                                    makeLocDiv.append(copyBtn, linkElement)
+
+                                    tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: redPin}).bindPopup(makeLocDiv).addTo(map)
+
+                            }
+                
         }
             }else{
             tempMarker?map.removeLayer(tempMarker):null
@@ -2152,7 +2562,7 @@ findMe.addEventListener('click', (ev)=>{
             let routeToSend = {}
             if(currentPath[0] || document.querySelector('#routeName').value){ /////available data to send; 
                 // routeToSend.path = currentPath._latlngs 
-                document.querySelector('#greenMessage').textContent = 'sending'
+                // document.querySelector('#greenMessage').textContent = 'sending'
                 document.querySelector('#greenMessage').style.display = 'block'
                 
                 console.log(currentPath)
@@ -2172,7 +2582,7 @@ findMe.addEventListener('click', (ev)=>{
 
                 //////send; 
                 addDoc(collection(bygreenDb, 'unroutes'), routeToSend).then(e=>{
-                    document.querySelector('#greenMessage').textContent = 'sent'
+                    // document.querySelector('#greenMessage').textContent = 'sent'
                     location.reload()
 
                     setTimeout(() => {
@@ -2216,7 +2626,7 @@ findMe.addEventListener('click', (ev)=>{
             /////content 
             let voteBtns = document.createElement('div')
             let routeName = document.createElement('h3')
-            e.name?routeName.textContent = e.name:routeName.textContent = 'اسم الخط' 
+            e.name?routeName.textContent = e.name:routeName.textContent = 'اسم المسار' 
 
             // upvote btn
             let upvoteBtn = document.createElement("button")
@@ -2281,7 +2691,7 @@ findMe.addEventListener('click', (ev)=>{
 
             /////insert
             voteBtns.append(routeName, upvoteBtn, downvoteBtn, sureDiv)
-                let routeObject = L.polyline(e.path, {color: greenColor}).bindPopup(voteBtns).addTo(map)
+                let routeObject = L.polyline(e.path, {color: confirmedRoutes.includes(e)?lightGreen:greenColor}).bindPopup(voteBtns).addTo(map)
 
                 // routeObject.name = e.name
                 e.start?circlesObjects.push(L.circle(e.path[0],{radius: 300, color: darkerGreenColor, background: darkerGreenColor}).addTo(map)):null
@@ -2292,6 +2702,7 @@ findMe.addEventListener('click', (ev)=>{
                 routeObject.id = e.id
                 routeObject.start = e.start
                 routeObject.end = e.end
+                routeObject.confirmed = e.confirmed?true:false
                 
             /////content
                 ////////////if logged then allow to vote; 
@@ -2303,9 +2714,9 @@ findMe.addEventListener('click', (ev)=>{
                     ////////mobile; change color 
                     routesObjects.forEach(e=>{e.setStyle({color: greenColor, opacity: .6})})
                     hoveredRoute?map.removeLayer(hoveredRoute):null
-                    hoveredRoute = L.polyline(ev.target._latlngs, {color: blueColor, interactive: false})
+                    hoveredRoute = L.polyline(ev.target._latlngs, {color: redColor, interactive: false})
                     hoveredRoute.addTo(map)
-                    hoveredRoute.setStyle({color:blueColor, opacity: 1})
+                    hoveredRoute.setStyle({color:redColor, opacity: 1})
 
 
                     if(dbUser){
@@ -2352,21 +2763,23 @@ findMe.addEventListener('click', (ev)=>{
                 /// click over it 
 
                     // console.log(route.target)
-                    routesObjects.forEach(e=>{e.setStyle({color: greenColor, opacity: .6})})
+                    routesObjects.forEach(e=>{e.setStyle({color: (e.confirmed?lightGreen:greenColor), opacity: .6})})
 
                     hoveredRoute?map.removeLayer(hoveredRoute):null
                     hoveredstart?map.removeLayer(hoveredstart):null
                     hoveredend?map.removeLayer(hoveredend):null
 
 
-                    hoveredRoute = L.polyline(route.target._latlngs, {color:blueColor, opacity: 1,interactive: false}).addTo(map)
+                    hoveredRoute = L.polyline(route.target._latlngs, {color:redColor, opacity: 1,interactive: false}).addTo(map)
                     // console.log(route.target)
-                    route.target.start?hoveredstart = L.circle(route.target._latlngs[0],{radius:300 ,color:blueColor, opacity: 1,interactive: false}).addTo(map):null
+                    route.target.start?hoveredstart = L.circle(route.target._latlngs[0],{radius:300 ,color:redColor, opacity: 1,interactive: false}).addTo(map):null
 
-                    route.target.end?hoveredend = L.circle(route.target._latlngs[route.target._latlngs.length-1], {radius:300, color:blueColor, opacity: 1,interactive: false}).addTo(map):null
+                    route.target.end?hoveredend = L.circle(route.target._latlngs[route.target._latlngs.length-1], {radius:300, color:redColor, opacity: 1,interactive: false}).addTo(map):null
             })
 
-            if(e.start && e.end){
+            if(e.confirmed){
+                confirmedRoutesObjects.push(routeObject)
+            }else if(e.start && e.end){
                 completedRoutesObjects.push(routeObject)
             }else if(!e.start || !e.end){
                 uncompletedRoutesObjects.push(routeObject)
@@ -2490,8 +2903,8 @@ document.querySelector('#teamsRanking').innerHTML = orderedteamElements.replaceA
     </script>
 
 
-
 </body>
 
 </html>
-<!-- https://kadum2.github.io/publicline/home -->
+
+<!-- https://kadum2.github.io/publicline/home/imgs/ -->
