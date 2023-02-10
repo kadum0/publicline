@@ -433,7 +433,8 @@ footer{
     width: 6rem;
     position: absolute;
     bottom: -3rem;
-    left: -3rem;
+    left: -1rem;
+    z-index: 3;
 }
 
 .contact, .statics, .features{
@@ -724,9 +725,10 @@ button{
         /* width: auto; */
         /* line-height: 0; */
     }
-    .box{
+    .box, .bbox{
         padding: .2rem;
     }
+    
     #leaderBoardImg{
         /* top: 27rem; */
         /* right: 0rem; */
