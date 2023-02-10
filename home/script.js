@@ -38,9 +38,13 @@ let lightGreen = '#27f060'
 let greenColor = "#68F690"
 let darkerGreenColor = '#21C24F'
 
-let blueColor = '#3388FF'
+// let blueColor = '#3388FF'
+let blueColor = '#198CD4'
 let darkerBlueColor = '#075FDA'
 let redColor = '#ff2a2a'
+
+// green; #1EF738
+
 
 // governates coordinates; 
 
@@ -72,7 +76,7 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
 
         });
         let redPin = L.icon({
-            iconUrl: "./imgs/red-pin-icon.png",
+            iconUrl: "./imgs/green-pin-icon.png",
             shadowSize: [50, 64], // size of the shadow
             shadowAnchor: [4, 62], // the same for the shadow
             iconSize: [25, 41],
@@ -80,8 +84,8 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
             popupAnchor: [0, -30] 
         });
 
-        let sindibad25 = L.icon({
-            iconUrl: "./imgs/sindibad-icon.png",
+        let sindibad = L.icon({
+            iconUrl: "./imgs/sindibad-basic-icon.png",
             shadowSize: [50, 64], // size of the shadow
             shadowAnchor: [4, 62], // the same for the shadow
             iconSize: [70, 60],
@@ -116,8 +120,12 @@ document.querySelector('#registerBtn').addEventListener('click', (ev)=>{
     if(ev.target.parentElement.querySelector(".em").value.length > 0 &&ev.target.parentElement.querySelector(".em").value.length < 20 && ev.target.parentElement.querySelector(".pw").value.length > 0){
 
         console.log('make account')
+        document.querySelector('#greenMessage').style.display = 'block'
         createUserWithEmailAndPassword(bygreenAuth, ev.target.parentElement.querySelector(".em").value, ev.target.parentElement.querySelector(".pw").value).then(cred=>{
             console.log(cred)
+            setTimeout(() => {
+                document.querySelector('#greenMessage').style.display = 'none'
+            }, 2000);
         }).catch(err=>{
             console.log(err.message)
             document.querySelector('#errors').textContent = err.message
@@ -142,12 +150,19 @@ document.querySelector('#signinBtn').addEventListener('click', (ev)=>{
     // console.log(document.querySelector('#signinUsername').value.length >0)
 
     // send 
-    // if(document.querySelector('#signinUsername').value.length > 0 && document.querySelector('#signinPassword').value.length > 0){
+    if(document.querySelector('#signinUsername').value.length > 0 && document.querySelector('#signinPassword').value.length > 0){
+        document.querySelector('#greenMessage').style.display = 'block'
         console.log('make account')
-        signInWithEmailAndPassword(bygreenAuth, ev.target.parentElement.querySelector(".em").value ,ev.target.parentElement.querySelector(".pw").value)
-    // }else{
+        signInWithEmailAndPassword(bygreenAuth, ev.target.parentElement.querySelector(".em").value ,ev.target.parentElement.querySelector(".pw").value).then(()=>{
+            setTimeout(() => {
+                document.querySelector('#greenMessage').style.display = 'none'
+            }, 2000);
+    
+    
+        })
+    }else{
 
-    // }
+    }
     // empty 
     ev.target.parentElement.querySelector(".em").value = ''
     ev.target.parentElement.querySelector(".pw").value = ''
@@ -470,7 +485,7 @@ findMe.addEventListener('click', (ev)=>{
         .then(data=>{
             console.log('got online loc;', data)
             map.flyTo([data.latitude, data.longitude], 16)
-            myPin = L.marker([data.latitude, data.longitude], {icon: sindibad25}).addTo(map)
+            myPin = L.marker([data.latitude, data.longitude], {icon: sindibad}).addTo(map)
             myLoc = L.circle([data.latitude, data.longitude], {color: "red", radius: 100}).addTo(map)
 
             console.log(myPin, myLoc)
@@ -492,14 +507,20 @@ findMe.addEventListener('click', (ev)=>{
             myLat = pos.coords.latitude
             myLon = pos.coords.longitude
     
-            myPin = L.marker([pos.coords.latitude, pos.coords.longitude], {icon: sindibad25}).addTo(map)
+            myPin = L.marker([pos.coords.latitude, pos.coords.longitude], {icon: sindibad}).addTo(map)
             myLoc = L.circle([pos.coords.latitude, pos.coords.longitude], {color: "red", radius: 100}).addTo(map)
             
             // map.flyTo([pos.coords.latitude, pos.coords.longitude], 16)
     
             // setView([pos.coords.latitude, pos.coords.longitude])
         }, (err)=>{
-            console.log("allow this website to get your location, and enable gps")
+            console.log("not online, no")
+            document.querySelector('#redMessage').textContent = 'connect to internet to enable location detecting'
+            document.querySelector('#redMessage').style.display = 'block'
+            setTimeout(() => {
+                document.querySelector('#redMessage').style.display = 'none'
+            }, 2000);
+
             // alert('geolocation is not enabled')
             if(navigator.onLine){
         // no permisson case
@@ -740,7 +761,6 @@ findMe.addEventListener('click', (ev)=>{
         document.querySelector('#shopsCounter').textContent = docs.length
             })
 
-
         })
 
 
@@ -966,24 +986,6 @@ findMe.addEventListener('click', (ev)=>{
             currentPath = L.polyline(path, {color: 'red'}).addTo(map)
         })
 
-        //cancel route; fix later
-        // let cancelRoute = document.querySelector("#cancel-route")
-        // cancelRoute.addEventListener("click", () => {
-        //     //data 
-
-        //     path = []
-        //     map.removeLayer(currentPath)
-        //     currentPath = undefined
-        //     console.log(currentPath)
-
-        //     markers.forEach(e => map.removeLayer(e))
-        //     markers =[]
-        //     console.log(markers)
-
-        // })
-
-
-
     ////////////////////////sending 
 
         document.querySelector("#send").addEventListener("click", () => {
@@ -1037,28 +1039,18 @@ findMe.addEventListener('click', (ev)=>{
 
     ////////////////////////////functions
 
-    function getLocation() {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(showPosition);
-        } else {
-            console.log('Geolocation is not supported by this browser')
-        }
-        }
-
-    function showPosition(position) {
-            // map.setView([position.coords.latitude, position.coords.longitude], 16)
-            map.flyTo({lat: position.coords.latitude,lng: position.coords.longitude}, 16)
-        }
-        // getLocation()
-
-
     function deployRoutes(ev){
         Object.values(ev).forEach(async e => { 
 
             /////content 
             let voteBtns = document.createElement('div')
             let routeName = document.createElement('h3')
+            routeName.style.display= 'inline'
+            let nameDiv = document.createElement('div')
             e.name?routeName.textContent = e.name:routeName.textContent = 'اسم المسار' 
+            let checkImg = document.createElement('img')
+            checkImg.setAttribute('src', './imgs/general/check-icon.png')
+            checkImg.style.height = '1rem'
 
             // upvote btn
             let upvoteBtn = document.createElement("button")
@@ -1120,9 +1112,11 @@ findMe.addEventListener('click', (ev)=>{
             })
             sureDiv.append(sureBtn)
 
+            nameDiv.append(routeName)
+            confirmedRoutes.includes(e)?nameDiv.append(checkImg):null
 
             /////insert
-            voteBtns.append(routeName, upvoteBtn, downvoteBtn, sureDiv)
+            voteBtns.append(nameDiv, upvoteBtn, downvoteBtn, sureDiv)
                 let routeObject = L.polyline(e.path, {color: confirmedRoutes.includes(e)?lightGreen:greenColor}).bindPopup(voteBtns).addTo(map)
 
                 // routeObject.name = e.name
@@ -1146,9 +1140,9 @@ findMe.addEventListener('click', (ev)=>{
                     ////////mobile; change color 
                     routesObjects.forEach(e=>{e.setStyle({color: greenColor, opacity: .6})})
                     hoveredRoute?map.removeLayer(hoveredRoute):null
-                    hoveredRoute = L.polyline(ev.target._latlngs, {color: redColor, interactive: false})
+                    hoveredRoute = L.polyline(ev.target._latlngs, {color: blueColor, interactive: false})
                     hoveredRoute.addTo(map)
-                    hoveredRoute.setStyle({color:redColor, opacity: 1})
+                    hoveredRoute.setStyle({color:blueColor, opacity: 1})
 
 
                     if(dbUser){
@@ -1202,11 +1196,11 @@ findMe.addEventListener('click', (ev)=>{
                     hoveredend?map.removeLayer(hoveredend):null
 
 
-                    hoveredRoute = L.polyline(route.target._latlngs, {color:redColor, opacity: 1,interactive: false}).addTo(map)
+                    hoveredRoute = L.polyline(route.target._latlngs, {color:blueColor, opacity: 1,interactive: false}).addTo(map)
                     // console.log(route.target)
-                    route.target.start?hoveredstart = L.circle(route.target._latlngs[0],{radius:300 ,color:redColor, opacity: 1,interactive: false}).addTo(map):null
+                    route.target.start?hoveredstart = L.circle(route.target._latlngs[0],{radius:300 ,color:blueColor, opacity: 1,interactive: false}).addTo(map):null
 
-                    route.target.end?hoveredend = L.circle(route.target._latlngs[route.target._latlngs.length-1], {radius:300, color:redColor, opacity: 1,interactive: false}).addTo(map):null
+                    route.target.end?hoveredend = L.circle(route.target._latlngs[route.target._latlngs.length-1], {radius:300, color:blueColor, opacity: 1,interactive: false}).addTo(map):null
             })
 
             if(e.confirmed){
@@ -1299,21 +1293,17 @@ orderedteamElements = `${intendedOrder.map((account, index)=>{
 // console.log('intended order',intendedOrder)
 document.querySelector('#usersRanking').innerHTML = orderedUserElements.replaceAll(',', '')
 document.querySelector('#teamsRanking').innerHTML = orderedteamElements.replaceAll(',', '')
-}
-
-
+    }
 
         //////////// test code; 
 
-        window.onclick = (ev)=>{
+    window.onclick = (ev)=>{
             // console.log(ev.target, ev.target.style.zIndex, getComputedStyle(ev.target).zIndex)
             // console.log(routesObjects)
-        }
-
+    }
 
 
 // updateDoc(bygreenDb, collection())
-
 
     // getDocs(collection(bygreenDb, 'routes')).then((data)=>{
     //         let docs = []
@@ -1326,7 +1316,7 @@ document.querySelector('#teamsRanking').innerHTML = orderedteamElements.replaceA
     //             // updateDoc(doc(bygreenDb, 'routes', docu.id), {name: "اسم المسار"})
                 
     //         })
-    //     })
+//})
 
 
 

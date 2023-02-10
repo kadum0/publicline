@@ -150,7 +150,8 @@ main{
 #addRouteMode{
     border: #1F2721 2px solid;
     z-index: 1003;
-    background-image: url('./imgs/addroute-form.png');
+    /* background: red; */
+    /* background-image: url('./imgs/addroute-form.png'); */
     background-repeat: no-repeat;
     font-size: 1.3rem;
     font-weight: bold;
@@ -426,6 +427,15 @@ footer{
     width: 100%;
 }
 
+
+.sindibadIcons{
+    height: 6rem;
+    width: 6rem;
+    position: absolute;
+    bottom: -3rem;
+    left: -3rem;
+}
+
 .contact, .statics, .features{
     display: flex;
     justify-content: space-around;
@@ -436,6 +446,7 @@ footer{
     transition: .1s linear;
     background: white;
     padding: 1rem;
+    position: relative;
 }
 
 .contact:hover, .features:hover, .statics:hover{
@@ -478,7 +489,7 @@ footer{
     color: red;
 }
 .statics img{
-    height: 1rem;
+    /* height: 1rem; */
 }
 .statics li{
     background: #C0F9D0;
@@ -493,7 +504,7 @@ footer{
     width: fit-content;
 }
 .features img{
-    height: 1rem;
+    /* height: 1rem; */
 }
 .features li b{
     color: red;
@@ -592,6 +603,18 @@ button{
     transition: .1s linear;
     cursor: pointer;
 }
+.bbox{
+    /* background-color: #27f060; */
+    /* background-image: linear-gradient(135deg,  #27f060, #22c751); */
+    /* background-image: linear-gradient(135deg,  #000000,  #161616); */
+    background-image: linear-gradient(135deg,  #1a1a1a,  #333333);
+
+
+    padding: .5rem;
+    border-radius: .5rem;
+    transition: .1s linear;
+    cursor: pointer;
+}
 .box img{
     /* height: 100%; */
 }
@@ -600,6 +623,13 @@ button{
     background-color: #33a353;
     border-radius: .7rem;
 }
+.bbox:hover{
+    background-color: #464646;
+    background-image: linear-gradient(135deg,  #141414,  #2e2e2e);
+
+    border-radius: .7rem;
+}
+
 .flex{
     display: flex;
     justify-content: center;
