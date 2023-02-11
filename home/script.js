@@ -65,8 +65,8 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
     accessToken: apiKey
 }).addTo(map);
 
-        let busPin = L.icon({
-            iconUrl: "./imgs/green-pin-icon.png",
+        let bluePin = L.icon({
+            iconUrl: "./imgs/blue-pin-icon.png",
             shadowSize: [50, 64], // size of the shadow
             shadowAnchor: [4, 62], // the same for the shadow
             iconSize: [25, 41],
@@ -75,7 +75,7 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
             popupAnchor: [0, -30] 
 
         });
-        let redPin = L.icon({
+        let greenPin = L.icon({
             iconUrl: "./imgs/green-pin-icon.png",
             shadowSize: [50, 64], // size of the shadow
             shadowAnchor: [4, 62], // the same for the shadow
@@ -486,7 +486,7 @@ findMe.addEventListener('click', (ev)=>{
             console.log('got online loc;', data)
             map.flyTo([data.latitude, data.longitude], 16)
             myPin = L.marker([data.latitude, data.longitude], {icon: sindibad}).addTo(map)
-            myLoc = L.circle([data.latitude, data.longitude], {color: "red", radius: 100}).addTo(map)
+            myLoc = L.circle([data.latitude, data.longitude], {color: darkerGreenColor, radius: 100}).addTo(map)
 
             console.log(myPin, myLoc)
         })
@@ -508,7 +508,7 @@ findMe.addEventListener('click', (ev)=>{
             myLon = pos.coords.longitude
     
             myPin = L.marker([pos.coords.latitude, pos.coords.longitude], {icon: sindibad}).addTo(map)
-            myLoc = L.circle([pos.coords.latitude, pos.coords.longitude], {color: "red", radius: 100}).addTo(map)
+            myLoc = L.circle([pos.coords.latitude, pos.coords.longitude], {color: darkerGreenColor, radius: 100}).addTo(map)
             
             // map.flyTo([pos.coords.latitude, pos.coords.longitude], 16)
     
@@ -587,7 +587,7 @@ findMe.addEventListener('click', (ev)=>{
             let currentPin = L.marker({
         lat: window.location.href.split('/')[window.location.href.split('/').length-2].split(',')[0],
         lng: window.location.href.split('/')[window.location.href.split('/').length-2].split(',')[1]
-        }, {icon: redPin}).addTo(map)
+        }, {icon: greenPin}).addTo(map)
 
             // flyto it 
             console.log(currentPin)
@@ -805,7 +805,7 @@ findMe.addEventListener('click', (ev)=>{
 
                 ////make 
                 let m = L.marker(latlng, {
-                    icon: busPin
+                    icon: bluePin
                 }).addTo(map);
                 markers.push(m) 
 
@@ -817,7 +817,7 @@ findMe.addEventListener('click', (ev)=>{
                 path.push(latlng)
                 ////ui 
                 currentPath != 0 ? map.removeLayer(currentPath) : null
-                currentPath = L.polyline(path).setStyle({color: "red"}).addTo(map)
+                currentPath = L.polyline(path).setStyle({color: darkerGreenColor}).addTo(map)
             }else{
 
                 if(document.querySelector('#makeLocLink').classList.contains("on")){
@@ -826,7 +826,7 @@ findMe.addEventListener('click', (ev)=>{
                 tempMarker?map.removeLayer(tempMarker):null
 
                 if(window.location.href.includes('location')){
-                    // tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: redPin}).bindPopup(`link; <br><a href='${window.location.href.slice(0, window.location.href.indexOf('location'))+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/'>${window.location.href.slice(0, window.location.href.indexOf('location'))+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/</a>`).addTo(map)
+                    // tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: greenPin}).bindPopup(`link; <br><a href='${window.location.href.slice(0, window.location.href.indexOf('location'))+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/'>${window.location.href.slice(0, window.location.href.indexOf('location'))+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/</a>`).addTo(map)
                     
                     let makeLocDiv = document.createElement('div')
 
@@ -855,7 +855,7 @@ findMe.addEventListener('click', (ev)=>{
 
                     makeLocDiv.append(copyBtn, linkElement)
 
-                    tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: redPin}).bindPopup(makeLocDiv).addTo(map)
+                    tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: greenPin}).bindPopup(makeLocDiv).addTo(map)
 
 
 
@@ -865,7 +865,7 @@ findMe.addEventListener('click', (ev)=>{
                         // github 
                                 if(window.location.href.includes('github')){
 
-                                    // tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: redPin}).bindPopup(`link; for github <br><a href='https://kadum2.github.io/publicline${'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/'>${'https://kadum2.github.io/publicline/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/</a> <br> something`).addTo(map)
+                                    // tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: greenPin}).bindPopup(`link; for github <br><a href='https://kadum2.github.io/publicline${'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/'>${'https://kadum2.github.io/publicline/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/</a> <br> something`).addTo(map)
 
                                     // https://kadum2.github.io/publicline
 
@@ -898,7 +898,7 @@ findMe.addEventListener('click', (ev)=>{
 
                             makeLocDiv.append(copyBtn, linkElement)
 
-                            tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: redPin}).bindPopup(makeLocDiv).addTo(map)
+                            tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: greenPin}).bindPopup(makeLocDiv).addTo(map)
 
                                 }else{
 
@@ -929,7 +929,7 @@ findMe.addEventListener('click', (ev)=>{
 
                                     makeLocDiv.append(copyBtn, linkElement)
 
-                                    tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: redPin}).bindPopup(makeLocDiv).addTo(map)
+                                    tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: greenPin}).bindPopup(makeLocDiv).addTo(map)
 
                             }
                 
