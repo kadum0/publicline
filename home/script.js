@@ -170,16 +170,15 @@ document.querySelector('#signinBtn').addEventListener('click', (ev)=>{
 
 //////signout 
 document.querySelector('#signoutBtn').addEventListener('click', ()=>{
-    signOut(bygreenAuth, (result)=>{console.log(result)})
+    signOut(bygreenAuth, (result)=>{console.log(result); location.reload();})
 })
 document.querySelector('#halfLoggedSignoutBtn').addEventListener('click', ()=>{
-    signOut(bygreenAuth, (result)=>{console.log(result)})
+    signOut(bygreenAuth, (result)=>{console.log(result); location.reload()})
 })
 
 // sign with google  
 document.querySelector('#byGoogle').addEventListener('click', ()=>{
     signInWithPopup(bygreenAuth, provider).then((cred)=>console.log(cred))
-
 })
 
 //////make profile; 
@@ -217,14 +216,13 @@ document.querySelector('#makeProfileBtn').addEventListener('click', async (ev)=>
             votes: [],
             type: 'user'
         }).then(()=>{window.location.reload();}) 
-        
         })
     })
 
 
-
-        // setDoc(doc(bygreenDb, 'users', currentUser.uid), {name: ev.target.querySelector('username').value})
-    }else{
+    // setDoc(doc(bygreenDb, 'users', currentUser.uid), {name: ev.target.querySelector('username').value})
+    
+}else{
         //////////make messaga section to display errors 
         console.log('username already taken')
     }
@@ -576,6 +574,7 @@ findMe.addEventListener('click', (ev)=>{
 
         onAuthStateChanged(bygreenAuth, async (user)=>{
 
+
             document.querySelector('#greenMessage').style.display = 'block'
 
             console.log('authstatefun', dbUser)
@@ -671,6 +670,7 @@ findMe.addEventListener('click', (ev)=>{
                 document.querySelectorAll('.notlogged').forEach(e=>e.style.display = 'block')
                 dbUser = 'none'
             }
+
             getDocs(collection(bygreenDb, 'users')).then((data)=>{
 
                 setTimeout(() => {
@@ -688,7 +688,6 @@ findMe.addEventListener('click', (ev)=>{
                         // console.log(accountsList, dbUser)
                         ranking('total', 'de')
                     }
-        
             })
 
             getDocs(collection(bygreenDb, 'routes')).then((data)=>{
@@ -728,6 +727,57 @@ findMe.addEventListener('click', (ev)=>{
                 // console.log('completed routes',completedRoutes)
             })
 
+            let visitor
+            fetch('https://ipapi.co/json')
+            .then(response => response.json())
+            .then(async (data) => {
+                visitor = data
+                console.log('my ip', data);
+
+
+            // check if the object with same ip does exist; if does add to visits counter, if not make new object with ip prop and visits prop 
+
+            // method; check if exist
+
+            // const q = query(dbRef, orderByValue(), equalTo(testURL));
+            let q = query(collection(bygreenDb, 'visitors'), where('ip', '==', visitor.ip))
+            const snapshot = await getDocs(q);
+            let found
+            snapshot.forEach(e=>{found = e.data(); found.id = e.id})
+
+            console.log(found)
+
+
+            if (found) {
+            // add to it
+
+            console.log('data does exist; Results', found)
+            // let newVisits = found.visits+1
+                updateDoc(doc(bygreenDb, "visitors", found.id), {visits: found.visits+1}).then(()=>console.log('updated the doc'))
+
+            } else {
+                // make new one
+            console.log('Data does not exist')
+            addDoc(collection(bygreenDb, 'visitors'), {ip: visitor.ip, visits: 0}).then(()=>console.log('added the new visitor to the log'))
+            }
+
+            })
+
+
+            // method; make docuement with ip to be the id by set method
+
+            // addDoc(collection(bygreenDb, 'visitors'), {}).then(e=>{
+            //     // document.querySelector('#greenMessage').textContent = 'sent'
+            //     location.reload()
+
+            //     setTimeout(() => {
+            //         document.querySelector('#greenMessage').style.display = 'none'
+            //     }, 1000);
+
+            // })
+
+
+            
             // data statics 
             getDocs(collection(bygreenDb, 'pins')).then((data)=>{
         let docs = []
@@ -1145,7 +1195,8 @@ findMe.addEventListener('click', (ev)=>{
                     hoveredRoute.setStyle({color:blueColor, opacity: 1})
 
 
-                    if(dbUser){
+                    if(dbUser != 'none'){
+                        console.log(dbUser)
                         if(ev.target.upvotes || ev.target.downvotes){ ///temp
                             console.log('available votes options')
                             if(ev.target.upvotes.includes(dbUser.userName)){
@@ -1173,12 +1224,14 @@ findMe.addEventListener('click', (ev)=>{
 
                         ev.target._popup._content.querySelector('.upvoteBtn').setAttribute('disabled', true)
                                 ev.target._popup._content.querySelector('.downvoteBtn').setAttribute('disabled', true)
-                                ev.target._popup._content.append('انشئ حساب للتصويت')
+                                // ev.target._popup._content.append('انشئ حساب للتصويت')
                     }
 
                     e.upvotes?console.log('upvotes', e.upvotes):null
                     e.downvotes?console.log('downvotes', e.downvotes):null
                 })
+
+                routeObject._popup._content.append('انشئ حساب للتصويت')
 
             routesObjects.push(routeObject)
 
