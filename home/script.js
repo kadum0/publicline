@@ -10,7 +10,7 @@ import { getFirestore, onSnapshot,
 	collection, doc, getDocs, getDoc,
 	addDoc, deleteDoc, setDoc,
 	query, where, orderBy, serverTimestamp,
-	updateDoc, arrayUnion, arrayRemove} from "https://www.gstatic.com/firebasejs/9.9.2/firebase-firestore.js";
+	updateDoc, arrayUnion, arrayRemove, FieldValue } from "https://www.gstatic.com/firebasejs/9.9.2/firebase-firestore.js";
 
 // firebase storage; 
 import {getStorage, ref, uploadBytes, getDownloadURL, listAll, list} from 'https://www.gstatic.com/firebasejs/9.9.2/firebase-storage.js'
@@ -422,27 +422,72 @@ displayConfirmedRoutes.addEventListener('click', (ev)=>{
 selectGovernate.addEventListener('change', (ev)=>{
     console.log('options', ev.target.value)
 
-    // the most in numbers; main 
-    ev.target.value == 'baghdad'?map.flyTo([33.314644, 44.420873], 10):null
-    ev.target.value == 'basra'?map.flyTo([30.534238, 47.764500], 10):null
-    ev.target.value == 'nineveh'?map.flyTo([36.346197, 43.158618], 10):null
-    ev.target.value == 'sulaymaniyah'?map.flyTo([35.560957, 45.414252], 10):null
-    ev.target.value == 'anbar'?map.flyTo([33.422346, 43.268823], 10):null
-    ev.target.value == 'karbala'?map.flyTo([32.601386, 44.018819], 10):null
-    ev.target.value == 'erbil'?map.flyTo([36.188488, 44.013199], 10):null
-    ev.target.value == 'babil'?map.flyTo([32.471120, 44.426321], 10):null
-    ev.target.value == 'najaf'?map.flyTo([32.001916, 44.331424], 10):null
-    ev.target.value == 'dhi-qar'?map.flyTo([31.040835, 46.249916], 10):null
+    let currentGov
+    function saveGov(coords){
+        localStorage.setItem('clientLoc', coords)
+    }
 
-    ev.target.value == 'dohuk'?map.flyTo([36.862733, 42.991273], 10):null
-    ev.target.value == 'kirkuk'?map.flyTo([35.459780, 44.385553], 10):null
-    ev.target.value == 'saladin'?map.flyTo([30.534238, 47.764500], 10):null
-    ev.target.value == 'diyala'?map.flyTo([30.534238, 47.764500], 10):null
-    ev.target.value == 'wasit'?map.flyTo([30.534238, 47.764500], 10):null
-    ev.target.value == 'maysan'?map.flyTo([30.534238, 47.764500], 10):null
-    ev.target.value == 'al-qadisiyyah'?map.flyTo([30.534238, 47.764500], 10):null
-    ev.target.value == 'muthanna'?map.flyTo([30.534238, 47.764500], 10):null
-    ev.target.value == 'halabja'?map.flyTo([30.534238, 47.764500], 10):null
+    // the most in numbers; main 
+    if(ev.target.value=='baghdad'){
+        map.flyTo([33.314644, 44.420873], 10)
+        localStorage.setItem('clientLoc', [33.314644, 44.420873])
+    }else if(ev.target.value == 'basra'){
+        map.flyTo([30.534238, 47.764500], 10)
+        localStorage.setItem('clientLoc', [30.534238, 47.764500])
+    }else if(ev.target.value == 'nineveh'){
+        map.flyTo([36.346197, 43.158618], 10)
+        localStorage.setItem('clientLoc', [36.346197, 43.158618])
+    }else if(ev.target.value == 'sulaymaniyah'){
+        map.flyTo([35.560957, 45.414252], 10)
+        localStorage.setItem('clientLoc', [35.560957, 45.414252])
+    }else if(ev.target.value == 'anbar'){
+        map.flyTo([33.422346, 43.268823], 10)
+        localStorage.setItem('clientLoc', [33.422346, 43.268823])
+    }else if(ev.target.value == 'karbala'){
+        map.flyTo([32.601386, 44.018819], 10)
+        localStorage.setItem('clientLoc', [32.601386, 44.018819])
+    }else if(ev.target.value == 'erbil'){
+        map.flyTo([36.188488, 44.013199], 10)
+        localStorage.setItem('clientLoc', [36.188488, 44.013199])
+    }else if(ev.target.value == 'babil'){
+        map.flyTo([32.471120, 44.426321], 10)
+        localStorage.setItem('clientLoc', [32.471120, 44.426321])
+    }else if(ev.target.value == 'najaf'){
+        map.flyTo([32.001916, 44.331424], 10)
+        localStorage.setItem('clientLoc', [32.001916, 44.331424])
+    }else if(ev.target.value == 'dhi-qar'){
+        map.flyTo([31.040835, 46.249916], 10)
+        localStorage.setItem('clientLoc', [31.040835, 46.249916])
+    }else if(ev.target.value == 'dohuk'){
+        map.flyTo([36.862733, 42.991273], 10)
+        localStorage.setItem('clientLoc', [36.862733, 42.991273])
+    }else if(ev.target.value == 'kirkuk'){
+        map.flyTo([35.470205, 44.390994], 10)
+        localStorage.setItem('clientLoc', [35.470205, 44.390994])
+    }else if(ev.target.value == 'saladin'){
+        map.flyTo([34.596914, 43.676320], 10)
+        localStorage.setItem('clientLoc', [34.596914, 43.676320])
+    }else if(ev.target.value == 'diyala'){
+        map.flyTo([33.741855, 44.613693], 10)
+        localStorage.setItem('clientLoc', [33.741855, 44.613693])
+    }else if(ev.target.value == 'wasit'){
+        map.flyTo([32.516900, 45.816420], 10)
+        localStorage.setItem('clientLoc', [32.516900, 45.816420])
+    }else if(ev.target.value == 'maysan'){
+        map.flyTo([31.838153, 47.144565], 10)
+        localStorage.setItem('clientLoc', [31.838153, 47.144565])
+    }else if(ev.target.value == 'al-qadisiyyah'){
+        map.flyTo([31.987575, 44.917299], 10)
+        localStorage.setItem('clientLoc', [31.987575, 44.917299])
+    }else if(ev.target.value == 'muthanna'){
+        map.flyTo([31.313330, 45.281570], 10)
+        localStorage.setItem('clientLoc', [31.313330, 45.281570])
+    }else if(ev.target.value == 'halabja'){
+        map.flyTo([35.177346, 45.992220], 10)
+        localStorage.setItem('clientLoc', [35.177346, 45.992220])
+    }
+
+    // ev.target.value == 'baghdad'?map.flyTo([33.314644, 44.420873], 10):null
 })
 
 document.querySelector('#translateToEn').addEventListener('click', (ev)=>{
@@ -473,23 +518,7 @@ findMe.addEventListener('click', (ev)=>{
 
         console.log("find me ...")
         // internet based; 
-        if(navigator.onLine){
-
-            console.log('online')
-
-
-                fetch('https://ipapi.co/json/')
-        .then(res=>res.json())
-        .then(data=>{
-            console.log('got online loc;', data)
-            map.flyTo([data.latitude, data.longitude], 16)
-            myPin = L.marker([data.latitude, data.longitude], {icon: sindibad}).addTo(map)
-            myLoc = L.circle([data.latitude, data.longitude], {color: darkerGreenColor, radius: 100}).addTo(map)
-
-            console.log(myPin, myLoc)
-        })
-
-        }else{
+        if(navigator.geolocation){
 
         // get into the locatoin
         navigator.geolocation.getCurrentPosition(pos=>{
@@ -544,9 +573,29 @@ findMe.addEventListener('click', (ev)=>{
     
         })
     
+
+        }else{
+
+            // online
+            
+            console.log('online')
+
+
+                fetch('https://ipapi.co/json/')
+        .then(res=>res.json())
+        .then(data=>{
+            console.log('got online loc;', data)
+            map.flyTo([data.latitude, data.longitude], 16)
+            myPin = L.marker([data.latitude, data.longitude], {icon: sindibad}).addTo(map)
+            myLoc = L.circle([data.latitude, data.longitude], {color: darkerGreenColor, radius: 100}).addTo(map)
+
+            console.log(myPin, myLoc)
+        })
+
+
+
     
         }
-
 
     }else{
         // remove marker and circle, and stop watching 
@@ -574,8 +623,12 @@ findMe.addEventListener('click', (ev)=>{
 
         onAuthStateChanged(bygreenAuth, async (user)=>{
 
-
             document.querySelector('#greenMessage').style.display = 'block'
+
+            // get into client stored location 
+            console.log('client loc is; ',localStorage.getItem('clientLoc'))
+            map.flyTo([localStorage.getItem('clientLoc').split(',')[0], localStorage.getItem('clientLoc').split(',')[1]], 10)
+
 
             console.log('authstatefun', dbUser)
             // side custom 
@@ -739,45 +792,52 @@ findMe.addEventListener('click', (ev)=>{
 
             // method; check if exist
 
-            // const q = query(dbRef, orderByValue(), equalTo(testURL));
-            let q = query(collection(bygreenDb, 'visitors'), where('ip', '==', visitor.ip))
-            const snapshot = await getDocs(q);
-            let found
-            snapshot.forEach(e=>{found = e.data(); found.id = e.id})
+            // // const q = query(dbRef, orderByValue(), equalTo(testURL));
+            // let q = query(collection(bygreenDb, 'visitors'), where('ip', '==', visitor.ip))
+            // const snapshot = await getDocs(q);
+            // let found
+            // snapshot.forEach(e=>{found = e.data(); found.id = e.id})
 
-            console.log(found)
+            // console.log(found)
 
 
-            if (found) {
-            // add to it
+            // if (found) {
+            // // add to it
 
-            console.log('data does exist; Results', found)
-            // let newVisits = found.visits+1
-                updateDoc(doc(bygreenDb, "visitors", found.id), {visits: found.visits+1}).then(()=>console.log('updated the doc'))
+            // console.log('data does exist; Results', found)
+            // // let newVisits = found.visits+1
+            //     updateDoc(doc(bygreenDb, "visitors", found.id), {visits: found.visits+1}).then(()=>console.log('updated the doc'))
 
-            } else {
-                // make new one
-            console.log('Data does not exist')
-            addDoc(collection(bygreenDb, 'visitors'), {ip: visitor.ip, visits: 0}).then(()=>console.log('added the new visitor to the log'))
-            }
-
-            })
-
+            // } else {
+            //     // make new one
+            // console.log('Data does not exist')
+            // addDoc(collection(bygreenDb, 'visitors'), {ip: visitor.ip, visits: 0}).then(()=>console.log('added the new visitor to the log'))
+            // }
 
             // method; make docuement with ip to be the id by set method
 
-            // addDoc(collection(bygreenDb, 'visitors'), {}).then(e=>{
+            // let docRefr = doc(bygreenDb, 'visitors', visitor.ip)
+            // setDoc(docRefr, {visits: 10}, {merge: true}).then(e=>{
             //     // document.querySelector('#greenMessage').textContent = 'sent'
-            //     location.reload()
+            //     console.log('set new visitor', visitor.ip)
+            //     // location.reload()
 
-            //     setTimeout(() => {
-            //         document.querySelector('#greenMessage').style.display = 'none'
-            //     }, 1000);
-
+            // }).catch((err)=>{
+            //     console.log(err)
+            //     // add to this visitor counter 
+            //     // updateDoc(doc(bygreenDb, 'visitors', visitor.ip), {visits: })
             // })
 
+            // method update first if error to set the document 
+            // updateDoc(doc(bygreenDb, 'visitors', visitor.ip), {visits: FieldValue.increment(1)})
+            // .then(()=>{
+            //     console.log("updated the document visitor")
+            // }).catch(err=>{
+            //     console.log('not exist to update; ')
+            // })
 
-            
+            })
+
             // data statics 
             getDocs(collection(bygreenDb, 'pins')).then((data)=>{
         let docs = []
@@ -813,9 +873,6 @@ findMe.addEventListener('click', (ev)=>{
 
         })
 
-
-
-
         //////////////////////////////send data 
 
         //////////collect (get) data 
@@ -836,8 +893,6 @@ findMe.addEventListener('click', (ev)=>{
         //circles
         let start 
         let end 
-
-
 
 
         // make the main route
@@ -908,8 +963,6 @@ findMe.addEventListener('click', (ev)=>{
                     tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: greenPin}).bindPopup(makeLocDiv).addTo(map)
 
 
-
-                    
                 }else{
 
                         // github 
