@@ -526,7 +526,7 @@ findMe.addEventListener('click', (ev)=>{
 
         // get into the locatoin
         navigator.geolocation.getCurrentPosition(pos=>{
-            map.flyTo([pos.coords.latitude, pos.coords.longitude], 16)
+            map.flyTo([pos.coords.latitude, pos.coords.longitude], 12)
         })
     
         watchID = navigator.geolocation.watchPosition((pos)=>{
@@ -539,8 +539,10 @@ findMe.addEventListener('click', (ev)=>{
             myLon = pos.coords.longitude
     
             myPin = L.marker([pos.coords.latitude, pos.coords.longitude], {icon: sindibad}).addTo(map)
-            myLoc = L.circle([pos.coords.latitude, pos.coords.longitude], {color: darkerGreenColor, radius: 100}).addTo(map)
+            myLoc = L.circle([pos.coords.latitude, pos.coords.longitude], {color: darkerBlueColor, radius: 100}).addTo(map)
             
+            localStorage.setItem('clientLoc', [pos.coords.latitude, pos.coords.longitude])
+
             // map.flyTo([pos.coords.latitude, pos.coords.longitude], 16)
     
             // setView([pos.coords.latitude, pos.coords.longitude])
@@ -555,9 +557,11 @@ findMe.addEventListener('click', (ev)=>{
                 .then(res=>res.json())
                 .then(data=>{
                     console.log('got online loc;', data)
-                    map.flyTo([data.latitude, data.longitude], 16)
+                    map.flyTo([data.latitude, data.longitude], 12)
                     myPin = L.marker([data.latitude, data.longitude], {icon: sindibad}).addTo(map)
-                    myLoc = L.circle([data.latitude, data.longitude], {color: darkerGreenColor, radius: 100}).addTo(map)
+                    myLoc = L.circle([data.latitude, data.longitude], {color: darkerBlueColor, radius: 100}).addTo(map)
+
+                    localStorage.setItem('clientLoc', [data.latitude, data.longitude])
         
                     console.log(myPin, myLoc)
                 })
@@ -629,7 +633,7 @@ findMe.addEventListener('click', (ev)=>{
 
             // get into client stored location 
             console.log('client loc is; ',localStorage.getItem('clientLoc'))
-            map.flyTo([localStorage.getItem('clientLoc').split(',')[0], localStorage.getItem('clientLoc').split(',')[1]], 10)
+            map.flyTo([localStorage.getItem('clientLoc').split(',')[0], localStorage.getItem('clientLoc').split(',')[1]], 12)
 
 
             console.log('authstatefun', dbUser)
