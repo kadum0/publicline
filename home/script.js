@@ -429,8 +429,9 @@ selectGovernate.addEventListener('change', (ev)=>{
 
     // the most in numbers; main 
     if(ev.target.value=='baghdad'){
-        map.flyTo([33.314644, 44.420873], 10)
-        localStorage.setItem('clientLoc', [33.314644, 44.420873])
+        console.log("this is baghdad")
+        map.flyTo([33.396600, 44.356579], 10)
+        localStorage.setItem('clientLoc', [33.396600, 44.356579])
     }else if(ev.target.value == 'basra'){
         map.flyTo([30.534238, 47.764500], 10)
         localStorage.setItem('clientLoc', [30.534238, 47.764500])
@@ -516,9 +517,12 @@ findMe.addEventListener('click', (ev)=>{
     if(ev.target.classList.contains('on')){
         // add marker and circle
 
-        console.log("find me ...")
+        console.log("find me ...", navigator.geolocation)
         // internet based; 
+        // no need to check and cant check 
         if(navigator.geolocation){
+
+            console.log("navi, geolo")
 
         // get into the locatoin
         navigator.geolocation.getCurrentPosition(pos=>{
@@ -541,28 +545,37 @@ findMe.addEventListener('click', (ev)=>{
     
             // setView([pos.coords.latitude, pos.coords.longitude])
         }, (err)=>{
-            console.log("not online, no")
-            document.querySelector('#redMessage').textContent = 'connect to internet to enable location detecting'
-            document.querySelector('#redMessage').style.display = 'block'
-            setTimeout(() => {
-                document.querySelector('#redMessage').style.display = 'none'
-            }, 2000);
-
+            console.log("gps not enabled")
             // alert('geolocation is not enabled')
             if(navigator.onLine){
+
+                console.log('online')
+
+                fetch('https://ipapi.co/json/')
+                .then(res=>res.json())
+                .then(data=>{
+                    console.log('got online loc;', data)
+                    map.flyTo([data.latitude, data.longitude], 16)
+                    myPin = L.marker([data.latitude, data.longitude], {icon: sindibad}).addTo(map)
+                    myLoc = L.circle([data.latitude, data.longitude], {color: darkerGreenColor, radius: 100}).addTo(map)
+        
+                    console.log(myPin, myLoc)
+                })
+
+                document.querySelector('#redMessage').textContent = 'enable gps for more accurate results'
+                document.querySelector('#redMessage').style.display = 'block'
+                setTimeout(() => {
+                    document.querySelector('#redMessage').style.display = 'none'
+                }, 2000);
+
         // no permisson case
             }else{
-    
-    
-    
-                document.querySelector('#redMessage').textContent = 'no internet connection'
+                document.querySelector('#redMessage').textContent = 'no gps and no internet connection'
             document.querySelector('#redMessage').style.display = 'block'
             setTimeout(() => {
                 document.querySelector('#redMessage').style.display = 'none'
                 
             }, 3000);
-    
-    
     
         // give the previous saved location
         // if(myLat && myLon){
@@ -576,23 +589,9 @@ findMe.addEventListener('click', (ev)=>{
 
         }else{
 
-            // online
+            // check if online
             
-            console.log('online')
-
-
-                fetch('https://ipapi.co/json/')
-        .then(res=>res.json())
-        .then(data=>{
-            console.log('got online loc;', data)
-            map.flyTo([data.latitude, data.longitude], 16)
-            myPin = L.marker([data.latitude, data.longitude], {icon: sindibad}).addTo(map)
-            myLoc = L.circle([data.latitude, data.longitude], {color: darkerGreenColor, radius: 100}).addTo(map)
-
-            console.log(myPin, myLoc)
-        })
-
-
+// to enable gps for better and more accurate location detecting
 
     
         }
@@ -605,6 +604,9 @@ findMe.addEventListener('click', (ev)=>{
 
     }
 })
+
+
+
 
         /////////////////////////////////get data 
 
