@@ -633,7 +633,8 @@ findMe.addEventListener('click', (ev)=>{
 
             // get into client stored location 
             console.log('client loc is; ',localStorage.getItem('clientLoc'))
-            map.flyTo([localStorage.getItem('clientLoc').split(',')[0], localStorage.getItem('clientLoc').split(',')[1]], 12)
+            
+            localStorage.getItem('clientLoc')?map.flyTo([localStorage.getItem('clientLoc').split(',')[0], localStorage.getItem('clientLoc').split(',')[1]], 12):null
 
 
             console.log('authstatefun', dbUser)

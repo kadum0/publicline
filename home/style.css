@@ -423,8 +423,9 @@ footer{
     align-items: center;
     padding: 1rem;
     border-top: #27f060 2px solid;
-    gap: 1rem;
+    gap: 3rem;
     width: 100%;
+    padding: 3rem;
 }
 
 
@@ -708,7 +709,7 @@ button{
     }
     footer{
         flex-direction: column;
-        gap: .2rem;
+        /* gap: .2rem; */
     }
     .contact, .features, .statics{
         width: 90vw;
