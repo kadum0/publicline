@@ -66,7 +66,7 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
 }).addTo(map);
 
         let bluePin = L.icon({
-            iconUrl: "./imgs/blue-pin-icon.png",
+            iconUrl: "./imgs/blue-stroked-pin-icon.png",
             shadowSize: [50, 64], // size of the shadow
             shadowAnchor: [4, 62], // the same for the shadow
             iconSize: [25, 41],
@@ -76,7 +76,7 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
 
         });
         let greenPin = L.icon({
-            iconUrl: "./imgs/green-pin-icon.png",
+            iconUrl: "./imgs/green-stroked-pin-icon.png",
             shadowSize: [50, 64], // size of the shadow
             shadowAnchor: [4, 62], // the same for the shadow
             iconSize: [25, 41],
@@ -659,8 +659,8 @@ findMe.addEventListener('click', (ev)=>{
         // This is the user's first visit
         console.log("first time to visit the site; then to show instructions")
         document.querySelector('#redArrow').style.display = 'block'
-        document.querySelector('#asideDi').classList.toggle('red')
-        document.querySelector('#asideDi').classList.contains('red')?document.querySelector('aside').style.display = 'flex':document.querySelector('aside').style.display = 'none'
+        // document.querySelector('#asideDi').classList.toggle('red')
+        // document.querySelector('#asideDi').classList.contains('red')?document.querySelector('aside').style.display = 'flex':document.querySelector('aside').style.display = 'none'
 
         setTimeout(() => {
             // document.querySelector("#features").scrollIntoView({
@@ -749,7 +749,7 @@ findMe.addEventListener('click', (ev)=>{
                     }
             })
 
-            getDocs(collection(bygreenDb, 'routes')).then((data)=>{
+            getDocs(collection(bygreenDb, 'newroutes')).then((data)=>{
                 let docs = []
                     data.docs.forEach(doc=>{
                         docs.push({...doc.data(), id: doc.id})
@@ -1055,7 +1055,7 @@ findMe.addEventListener('click', (ev)=>{
             if(e.target.classList.contains('on')){
                 // get current making route; 
                 console.log(currentPath._latlngs[0])
-                start = L.circle(currentPath._latlngs[0], {radius: 600, color: 'red'}).addTo(map)
+                start = L.circle(currentPath._latlngs[0], {radius: 600, color: darkerGreenColor}).addTo(map)
                 // e.target.style.background = '#ff2a2a'
             }else{
                 // start.removeLayer(map)/
@@ -1069,7 +1069,7 @@ findMe.addEventListener('click', (ev)=>{
             if(e.target.classList.contains('on')){
                 // get current making route; 
                 console.log(currentPath._latlngs[currentPath._latlngs.length - 1])
-                end = L.circle(currentPath._latlngs[currentPath._latlngs.length - 1], {radius: 600, color: 'red'}).addTo(map)
+                end = L.circle(currentPath._latlngs[currentPath._latlngs.length - 1], {radius: 600, color: darkerGreenColor}).addTo(map)
                 // e.target.style.background = '#ff2a2a'
             }else{
                 // start.removeLayer(map)/

@@ -502,7 +502,7 @@ document.querySelector("#unconf").addEventListener("click", ()=>{
             document.querySelector('#greenMessage').style.display = 'block'
 
             // add 
-            addDoc(collection(bygreenDb, 'routes'), routeToAdd).then(()=>{
+            addDoc(collection(bygreenDb, 'newroutes'), routeToAdd).then(()=>{
             // delete
             deleteDoc(doc(bygreenDb, 'unroutes', confirmed)).then(()=>console.log('deleted'))
             document.querySelector('#greenMessage').textContent = 'sent'

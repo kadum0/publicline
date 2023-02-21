@@ -53,7 +53,7 @@
             </a>
 
             <button id="asideDi" class="box">
-                <img src="./imgs/general/q2-icon.png" alt="">
+                <img src="./imgs/general/q-icon.png" alt="">
             </button>
 
             <!-- <button class="box" id="translateToEn">en</button> -->
@@ -475,31 +475,6 @@
 
         </div>
 
-        <!-- 
-        <div id="howToUseIt" class="box">
-            <h2>كيفية الاستخدام </h2>
-
-            <div class="box">
-                <img src="">
-                <p>مسارات النقل العام (كيات و
-                    كوسترات)</p>
-            </div>
-            <div class="box">
-                <img src="">
-                <p>اضافة مسار</p>
-            </div>
-            <div class="box">
-                <img src="">
-                <p>تحديد موقع و الحصول على رابط للنشر وال
-                    توجيه الى ذلك الموقع</p>
-            </div>
-            <div class="box">
-                <img src="">
-                <p></p>
-            </div>
-        </div>
-        -->
-
         <div id="shordDescription" class="box">
             <h2 style="font-size: 2rem;">
                 <h2 class="ar" style="font-size: 2rem;">
@@ -715,10 +690,7 @@
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                // navigator.serviceWorker.register('./original-sw.js');
-                // navigator.serviceWorker.register('../original-sw.js');
-                // navigator.serviceWorker.register('./chat-gpt-sw.js');
-                navigator.serviceWorker.register('./chat-gpt-workbox-sw.js');
+                navigator.serviceWorker.register('./sw.js');
             });
         }
     </script>
