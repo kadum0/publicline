@@ -822,23 +822,34 @@ findMe.addEventListener('click', (ev)=>{
             // addDoc(collection(bygreenDb, 'visitors'), {ip: visitor.ip, visits: 0}).then(()=>console.log('added the new visitor to the log'))
             // }
 
-            // method; make docuement with ip to be the id by set method
-
             let docRefr = doc(bygreenDb, 'visitors', visitor.ip)
-            setDoc(docRefr, {visits: 0}, {merge: true}).then(e=>{
-                // document.querySelector('#greenMessage').textContent = 'sent'
-                console.log('set new visitor', visitor.ip)
-                // location.reload()
 
-            }).catch((err)=>{
-                console.log(err)
-                // add to this visitor counter
-                getdoc(docRefr).then(visitorDoc=>updateDoc(docRefr, {visits: visitorDoc.visits+1})) 
-                
-            })
+            ////// method; make docuement with ip to be the id by set method
+            // setDoc(docRefr, {visits: 0}, {merge: true}).then(e=>{
+            //     // document.querySelector('#greenMessage').textContent = 'sent'
+            //     console.log('set new visitor', visitor.ip)
+            //     // location.reload()
+            // }).catch((err)=>{
+            //     // cant be an error that set will always overwrite the current value
+            //     // console.log(err)
+            //     // add to this visitor counter
+            //     // getdoc(docRefr).then(visitorDoc=>updateDoc(docRefr, {visits: visitorDoc.visits+1})) 
+            // })
 
-            // method update first if error to set the document 
-            // updateDoc(doc(bygreenDb, 'visitors', visitor.ip), {visits: FieldValue.increment(1)})
+            ////// method update first if error to set the document 
+            getDoc(docRefr).then(visitorDoc=>{
+                visitorDoc = visitorDoc.data()
+                console.log(visitorDoc.visits)
+                updateDoc(docRefr, {visits:+ visitorDoc.visits+1}).then(()=>{
+                    console.log('exist and updated')
+                }).catch(err=>{
+                    console.log('not exist; then make it')
+                    setDoc(docRefr, {visits: 0}, {merge: true})
+                })
+            }) 
+
+
+            // updateDoc(docRefr, {visits: FieldValue.increment(1)})
             // .then(()=>{
             //     console.log("updated the document visitor")
             // }).catch(err=>{
