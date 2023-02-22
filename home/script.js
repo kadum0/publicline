@@ -69,7 +69,7 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
             iconUrl: "./imgs/blue-stroked-pin-icon.png",
             shadowSize: [50, 64], // size of the shadow
             shadowAnchor: [4, 62], // the same for the shadow
-            iconSize: [25, 41],
+            // iconSize: [25, 41],
             // iconAnchor: [12, 41],
             iconAnchor: [12, 35],
             popupAnchor: [0, -30] 
@@ -79,8 +79,9 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
             iconUrl: "./imgs/green-stroked-pin-icon.png",
             shadowSize: [50, 64], // size of the shadow
             shadowAnchor: [4, 62], // the same for the shadow
-            iconSize: [25, 41],
-            iconAnchor: [12, 41],
+            // iconSize: [25, 41],
+            // iconAnchor: [12, 41],
+            iconAnchor: [12, 35],
             popupAnchor: [0, -30] 
         });
 
@@ -89,7 +90,7 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
             shadowSize: [50, 64], // size of the shadow
             shadowAnchor: [4, 62], // the same for the shadow
             iconSize: [70, 60],
-            iconAnchor: [12, 41],
+            iconAnchor: [12, 35],
             popupAnchor: [0, 0] 
 
         });
@@ -254,7 +255,7 @@ document.querySelector('#asideDi').addEventListener('click', (ev)=>{
     document.querySelector("#addRouteMode").addEventListener("click", (ev)=>{
             ev.target.classList.toggle("on")
             if(ev.target.classList.contains('on')){
-            document.querySelector('#newRouteDetails').style.display='flex'
+            // document.querySelector('#newRouteDetails').style.display='flex'
             ////delete all routes 
             map.removeLayer(hoveredRoute)
             routesObjects.forEach(route=>map.removeLayer(route))
@@ -823,17 +824,18 @@ findMe.addEventListener('click', (ev)=>{
 
             // method; make docuement with ip to be the id by set method
 
-            // let docRefr = doc(bygreenDb, 'visitors', visitor.ip)
-            // setDoc(docRefr, {visits: 10}, {merge: true}).then(e=>{
-            //     // document.querySelector('#greenMessage').textContent = 'sent'
-            //     console.log('set new visitor', visitor.ip)
-            //     // location.reload()
+            let docRefr = doc(bygreenDb, 'visitors', visitor.ip)
+            setDoc(docRefr, {visits: 0}, {merge: true}).then(e=>{
+                // document.querySelector('#greenMessage').textContent = 'sent'
+                console.log('set new visitor', visitor.ip)
+                // location.reload()
 
-            // }).catch((err)=>{
-            //     console.log(err)
-            //     // add to this visitor counter 
-            //     // updateDoc(doc(bygreenDb, 'visitors', visitor.ip), {visits: })
-            // })
+            }).catch((err)=>{
+                console.log(err)
+                // add to this visitor counter
+                getdoc(docRefr).then(visitorDoc=>updateDoc(docRefr, {visits: visitorDoc.visits+1})) 
+                
+            })
 
             // method update first if error to set the document 
             // updateDoc(doc(bygreenDb, 'visitors', visitor.ip), {visits: FieldValue.increment(1)})
