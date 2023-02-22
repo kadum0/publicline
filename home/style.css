@@ -133,6 +133,7 @@ header{
     z-index: 1010;
     height: 7rem;
     width: 7rem;
+    transition: opacity 3s;
 }
 
 

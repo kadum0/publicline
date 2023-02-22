@@ -267,7 +267,7 @@ document.querySelector('#asideDi').addEventListener('click', (ev)=>{
             }else{
                 deployRoutes(routes)
                 // addRouteMode.style.backgroundColor = '#54db7b'
-                document.querySelector('#newRouteDetails').style.display='none'
+                // document.querySelector('#newRouteDetails').style.display='none'
             }
     })
 
@@ -675,7 +675,7 @@ findMe.addEventListener('click', (ev)=>{
             
             // window.scrollTo(0, document.body.scrollHeight);
 
-            document.querySelector('#redArrow').style.display = 'none'
+            document.querySelector('#redArrow').style.opacity = 0
         }, 3000)
 
         localStorage.setItem("firstVisit", false)
@@ -822,7 +822,6 @@ findMe.addEventListener('click', (ev)=>{
             // addDoc(collection(bygreenDb, 'visitors'), {ip: visitor.ip, visits: 0}).then(()=>console.log('added the new visitor to the log'))
             // }
 
-            let docRefr = doc(bygreenDb, 'visitors', visitor.ip)
 
             ////// method; make docuement with ip to be the id by set method
             // setDoc(docRefr, {visits: 0}, {merge: true}).then(e=>{
@@ -836,16 +835,21 @@ findMe.addEventListener('click', (ev)=>{
             //     // getdoc(docRefr).then(visitorDoc=>updateDoc(docRefr, {visits: visitorDoc.visits+1})) 
             // })
 
+            let docRefr = doc(bygreenDb, 'visitors', visitor.ip)
+
             ////// method update first if error to set the document 
             getDoc(docRefr).then(visitorDoc=>{
+                console.log(visitorDoc)
                 visitorDoc = visitorDoc.data()
-                console.log(visitorDoc.visits)
-                updateDoc(docRefr, {visits:+ visitorDoc.visits+1}).then(()=>{
-                    console.log('exist and updated')
-                }).catch(err=>{
+                console.log(visitorDoc)
+                if(visitorDoc){
+                    updateDoc(docRefr, {visits:+ visitorDoc.visits+1}).then(()=>{
+                        console.log('exist and updated')
+                    })
+                }else{
                     console.log('not exist; then make it')
-                    setDoc(docRefr, {visits: 0}, {merge: true})
-                })
+                    setDoc(docRefr, {visits: 1}, {merge: true})
+                }
             }) 
 
 
