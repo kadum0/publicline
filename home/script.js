@@ -31,19 +31,16 @@ const bygreenDb = getFirestore(bygreen)
 const bygreenAuth = getAuth(bygreen)
 const bygreenStorage = getStorage(bygreen)
 
-/////////auth state 
-
 // let greenColor = '#27F060'
+// let redColor = '#ff2a2a'
+// green; #1EF738
+// let blueColor = '#3388FF'
+
 let lightGreen = '#27f060'
 let greenColor = "#68F690"
 let darkerGreenColor = '#21C24F'
-
-// let blueColor = '#3388FF'
 let blueColor = '#198CD4'
 let darkerBlueColor = '#075FDA'
-let redColor = '#ff2a2a'
-// green; #1EF738
-
 
 // map configure
 const map = L.map('map', { zoomControl: false }).setView([33.396600, 44.356579], 10); 
@@ -94,13 +91,10 @@ let authUser ///auth account
 // let type
 let accountsList = []
 
-let tempMarker 
-
-const provider = new GoogleAuthProvider()
-
 
 ////////////////////////////////////////////////getting-sending(auth)
 
+const provider = new GoogleAuthProvider()
 ///////register 
 document.querySelector('#registerBtn').addEventListener('click', (ev)=>{
     // check if valid data
@@ -219,9 +213,6 @@ document.querySelector('#makeProfileBtn').addEventListener('click', async (ev)=>
 })
 
 
-
-
-
 ///////////////////////////////////ui-js; 
 document.querySelector("#miniProfileDi").addEventListener("click", (ev)=>{
     ev.target.classList.toggle('on')
@@ -256,9 +247,11 @@ document.querySelector("#addRouteMode").addEventListener("click", (ev)=>{
                 // addRouteMode.style.backgroundColor = '#54db7b'
                 // document.querySelector('#newRouteDetails').style.display='none'
             }
-    })
+})
 
-
+let myLoc 
+let myPin
+let watchID
 findMe.addEventListener('click', (ev)=>{
     ev.target.classList.toggle('on')
     if(ev.target.classList.contains('on')){
@@ -346,10 +339,91 @@ findMe.addEventListener('click', (ev)=>{
     }
 })
 
+document.querySelector('#translateToEn').addEventListener('click', (ev)=>{
+    ev.target.classList.toggle('on')
+    if(ev.target.classList.contains('on')){
+        document.querySelectorAll('.en').forEach((enElement)=>enElement.style.display='block')
+        document.querySelectorAll('.ar').forEach((arELement)=>arELement.style.display='none')
+        ev.target.textContent = 'ar'
+    }else{
+        document.querySelectorAll('.en').forEach((enElement)=>enElement.style.display='none')
+        document.querySelectorAll('.ar').forEach((arELement)=>arELement.style.display='block')
+        ev.target.textContent = 'en'
+    }
+})
 
-    //////////////////////////////// ui-js-data
+//?
+selectGovernate.addEventListener('change', (ev)=>{
+    console.log('options', ev.target.value)
 
-//leaflet basic map
+    // the most in numbers; main 
+    if(ev.target.value=='baghdad'){
+        console.log("this is baghdad")
+        map.flyTo([33.396600, 44.356579], 10)
+        localStorage.setItem('clientLoc', [33.396600, 44.356579])
+    }else if(ev.target.value == 'basra'){
+        map.flyTo([30.534238, 47.764500], 10)
+        localStorage.setItem('clientLoc', [30.534238, 47.764500])
+    }else if(ev.target.value == 'nineveh'){
+        map.flyTo([36.346197, 43.158618], 10)
+        localStorage.setItem('clientLoc', [36.346197, 43.158618])
+    }else if(ev.target.value == 'sulaymaniyah'){
+        map.flyTo([35.560957, 45.414252], 10)
+        localStorage.setItem('clientLoc', [35.560957, 45.414252])
+    }else if(ev.target.value == 'anbar'){
+        map.flyTo([33.422346, 43.268823], 10)
+        localStorage.setItem('clientLoc', [33.422346, 43.268823])
+    }else if(ev.target.value == 'karbala'){
+        map.flyTo([32.601386, 44.018819], 10)
+        localStorage.setItem('clientLoc', [32.601386, 44.018819])
+    }else if(ev.target.value == 'erbil'){
+        map.flyTo([36.188488, 44.013199], 10)
+        localStorage.setItem('clientLoc', [36.188488, 44.013199])
+    }else if(ev.target.value == 'babil'){
+        map.flyTo([32.471120, 44.426321], 10)
+        localStorage.setItem('clientLoc', [32.471120, 44.426321])
+    }else if(ev.target.value == 'najaf'){
+        map.flyTo([32.001916, 44.331424], 10)
+        localStorage.setItem('clientLoc', [32.001916, 44.331424])
+    }else if(ev.target.value == 'dhi-qar'){
+        map.flyTo([31.040835, 46.249916], 10)
+        localStorage.setItem('clientLoc', [31.040835, 46.249916])
+    }else if(ev.target.value == 'dohuk'){
+        map.flyTo([36.862733, 42.991273], 10)
+        localStorage.setItem('clientLoc', [36.862733, 42.991273])
+    }else if(ev.target.value == 'kirkuk'){
+        map.flyTo([35.470205, 44.390994], 10)
+        localStorage.setItem('clientLoc', [35.470205, 44.390994])
+    }else if(ev.target.value == 'saladin'){
+        map.flyTo([34.596914, 43.676320], 10)
+        localStorage.setItem('clientLoc', [34.596914, 43.676320])
+    }else if(ev.target.value == 'diyala'){
+        map.flyTo([33.741855, 44.613693], 10)
+        localStorage.setItem('clientLoc', [33.741855, 44.613693])
+    }else if(ev.target.value == 'wasit'){
+        map.flyTo([32.516900, 45.816420], 10)
+        localStorage.setItem('clientLoc', [32.516900, 45.816420])
+    }else if(ev.target.value == 'maysan'){
+        map.flyTo([31.838153, 47.144565], 10)
+        localStorage.setItem('clientLoc', [31.838153, 47.144565])
+    }else if(ev.target.value == 'al-qadisiyyah'){
+        map.flyTo([31.987575, 44.917299], 10)
+        localStorage.setItem('clientLoc', [31.987575, 44.917299])
+    }else if(ev.target.value == 'muthanna'){
+        map.flyTo([31.313330, 45.281570], 10)
+        localStorage.setItem('clientLoc', [31.313330, 45.281570])
+    }else if(ev.target.value == 'halabja'){
+        map.flyTo([35.177346, 45.992220], 10)
+        localStorage.setItem('clientLoc', [35.177346, 45.992220])
+    }
+
+    // ev.target.value == 'baghdad'?map.flyTo([33.314644, 44.420873], 10):null
+})
+
+
+/////////////////////////////////////////////ui-js-data
+
+//map zoom
 map.on('zoomend', function () {
     // let currentZoom = map.getZoom();
     console.log('current zoom;',map.getZoom()  , map.getBounds())
@@ -366,9 +440,9 @@ map.on('zoomend', function () {
         route.setStyle({weight: 25})
     }
     })
-});
+})
 
-    // ranking options
+// ranking options
 totalSorting.addEventListener('click', (ev)=>{
     ev.target.classList.toggle('on')
     ev.target.classList.contains('on')?ranking('total', 'ac'):ranking('total', 'de')
@@ -381,6 +455,88 @@ votesSorting.addEventListener('click', (ev)=>{
     ev.target.classList.toggle('on')
     ev.target.classList.contains('on')?ranking('votes', 'ac'):ranking('votes', 'de')
 })
+function ranking(based, order){
+
+    // restructure the accounts array
+//label the current account to be green 
+
+let intendedOrder = []
+let orderedUserElements
+let orderedteamElements
+
+if(based == 'total'){
+    if(order == 'de'){
+        // decending order 
+        intendedOrder = accountsList.sort((a, b) => { return (b.green.length+b.red.length +b.addedRoutes.length + b.votes.length)-(a.green.length +a.red.length+a.addedRoutes.length + a.votes.length)}) 
+    }else{
+        //acending order 
+        intendedOrder = accountsList.sort((a, b) => { return (a.green.length +a.red.length+a.addedRoutes.length + a.votes.length) - (b.green.length+b.red.length +b.addedRoutes.length + b.votes.length)})
+    }
+}else if(based == 'publicline'){
+    if(order == 'de'){
+        intendedOrder = accountsList.sort((a,b)=>{return (b.addedRoutes.length + b.votes.length) - (a.addedRoutes.length + a.votes.length)})
+    }else{
+        intendedOrder = accountsList.sort((a,b)=>{return (a.addedRoutes.length + a.votes.length)- (b.addedRoutes.length + b.votes.length)})
+    }
+
+}else if(based == 'bygreen'){
+    if(order == 'de'){
+        intendedOrder = accountsList.sort((a,b)=>{return (b.red.length + b.green.length) - (a.red.length + a.green.length)})
+    }else{
+        intendedOrder = accountsList.sort((a,b)=>{return (a.red.length + a.green.length)- (b.red.length + b.green.length)})
+    }
+}
+
+// make the dom
+let currentUserName 
+dbUser?currentUserName=dbUser.userName:null
+
+let userCounter= 1
+orderedUserElements = `${intendedOrder.map((account, index)=>{
+    if(account.type == 'user'){return`
+<div class="rankedAccount" ${account.userName == currentUserName?'id="#me" style="background-color: #29D659"':''}>
+
+    <div class="ranking point">${userCounter++}</div>
+    <a href=' https://kadum2.github.io/ivc/profile/${account.userName}' class="account">
+        <img class="accountImg" style="background-image: url('${account.img}');">
+        <h3 class="accountUsername ranked">${account.userName}</h3>
+    </a>
+        
+
+    <div class='points'>
+<div class="publiclineCounter point">${(account.addedRoutes[0]?account.addedRoutes.length:0)+(account.votes[0]?account.votes.length:0)}</div>
+<div class="bygreenCounter point">${(account.red[0]?account.red.length:0)+(account.green[0]?account.green.length:0)}</div>
+<div class="total point">${((account.addedRoutes[0]?account.addedRoutes.length:0)+(account.votes[0]?account.votes.length:0)) + ((account.red[0]?account.red.length:0)+(account.green[0]?account.green.length:0))}</div>
+</div>
+    </div>
+`}
+})}`
+
+
+    let teamCounter = 1
+orderedteamElements = `${intendedOrder.map((account, index)=>{
+    if(account.type == 'team'){return`
+<div class="rankedAccount" ${account.userName == currentUserName?'style="background-color: #29D659"':''}>
+    <div class="ranking point">${teamCounter++}</div>
+    <a href=' https://kadum2.github.io/ivc/profile/${account.userName}' class="account">
+        <img class="accountImg" style="background-image: url('${account.img}');">
+        <h3 class="accountUsername ranked">${account.userName}</h3>
+    </a>
+
+    <div class='points'>
+<div class="publiclineCounter point">${(account.addedRoutes[0]?account.addedRoutes.length:0)+(account.votes[0]?account.votes.length:0)}</div>
+<div class="bygreenCounter point">${(account.red[0]?account.red.length:0)+(account.green[0]?account.green.length:0)}</div>
+<div class="total point">${((account.addedRoutes[0]?account.addedRoutes.length:0)+(account.votes[0]?account.votes.length:0)) + ((account.red[0]?account.red.length:0)+(account.green[0]?account.green.length:0))}</div>
+</div>
+    </div>
+`}
+    })}`
+
+// console.log('intended order',intendedOrder)
+document.querySelector('#usersRanking').innerHTML = orderedUserElements.replaceAll(',', '')
+document.querySelector('#teamsRanking').innerHTML = orderedteamElements.replaceAll(',', '')
+}
+
 
 // display routes buttons
 
@@ -489,95 +645,11 @@ displayConfirmedRoutes.addEventListener('click', (ev)=>{
     }
 })
 
-selectGovernate.addEventListener('change', (ev)=>{
-    console.log('options', ev.target.value)
-
-    // the most in numbers; main 
-    if(ev.target.value=='baghdad'){
-        console.log("this is baghdad")
-        map.flyTo([33.396600, 44.356579], 10)
-        localStorage.setItem('clientLoc', [33.396600, 44.356579])
-    }else if(ev.target.value == 'basra'){
-        map.flyTo([30.534238, 47.764500], 10)
-        localStorage.setItem('clientLoc', [30.534238, 47.764500])
-    }else if(ev.target.value == 'nineveh'){
-        map.flyTo([36.346197, 43.158618], 10)
-        localStorage.setItem('clientLoc', [36.346197, 43.158618])
-    }else if(ev.target.value == 'sulaymaniyah'){
-        map.flyTo([35.560957, 45.414252], 10)
-        localStorage.setItem('clientLoc', [35.560957, 45.414252])
-    }else if(ev.target.value == 'anbar'){
-        map.flyTo([33.422346, 43.268823], 10)
-        localStorage.setItem('clientLoc', [33.422346, 43.268823])
-    }else if(ev.target.value == 'karbala'){
-        map.flyTo([32.601386, 44.018819], 10)
-        localStorage.setItem('clientLoc', [32.601386, 44.018819])
-    }else if(ev.target.value == 'erbil'){
-        map.flyTo([36.188488, 44.013199], 10)
-        localStorage.setItem('clientLoc', [36.188488, 44.013199])
-    }else if(ev.target.value == 'babil'){
-        map.flyTo([32.471120, 44.426321], 10)
-        localStorage.setItem('clientLoc', [32.471120, 44.426321])
-    }else if(ev.target.value == 'najaf'){
-        map.flyTo([32.001916, 44.331424], 10)
-        localStorage.setItem('clientLoc', [32.001916, 44.331424])
-    }else if(ev.target.value == 'dhi-qar'){
-        map.flyTo([31.040835, 46.249916], 10)
-        localStorage.setItem('clientLoc', [31.040835, 46.249916])
-    }else if(ev.target.value == 'dohuk'){
-        map.flyTo([36.862733, 42.991273], 10)
-        localStorage.setItem('clientLoc', [36.862733, 42.991273])
-    }else if(ev.target.value == 'kirkuk'){
-        map.flyTo([35.470205, 44.390994], 10)
-        localStorage.setItem('clientLoc', [35.470205, 44.390994])
-    }else if(ev.target.value == 'saladin'){
-        map.flyTo([34.596914, 43.676320], 10)
-        localStorage.setItem('clientLoc', [34.596914, 43.676320])
-    }else if(ev.target.value == 'diyala'){
-        map.flyTo([33.741855, 44.613693], 10)
-        localStorage.setItem('clientLoc', [33.741855, 44.613693])
-    }else if(ev.target.value == 'wasit'){
-        map.flyTo([32.516900, 45.816420], 10)
-        localStorage.setItem('clientLoc', [32.516900, 45.816420])
-    }else if(ev.target.value == 'maysan'){
-        map.flyTo([31.838153, 47.144565], 10)
-        localStorage.setItem('clientLoc', [31.838153, 47.144565])
-    }else if(ev.target.value == 'al-qadisiyyah'){
-        map.flyTo([31.987575, 44.917299], 10)
-        localStorage.setItem('clientLoc', [31.987575, 44.917299])
-    }else if(ev.target.value == 'muthanna'){
-        map.flyTo([31.313330, 45.281570], 10)
-        localStorage.setItem('clientLoc', [31.313330, 45.281570])
-    }else if(ev.target.value == 'halabja'){
-        map.flyTo([35.177346, 45.992220], 10)
-        localStorage.setItem('clientLoc', [35.177346, 45.992220])
-    }
-
-    // ev.target.value == 'baghdad'?map.flyTo([33.314644, 44.420873], 10):null
-})
-
-document.querySelector('#translateToEn').addEventListener('click', (ev)=>{
-    ev.target.classList.toggle('on')
-    if(ev.target.classList.contains('on')){
-        document.querySelectorAll('.en').forEach((enElement)=>enElement.style.display='block')
-        document.querySelectorAll('.ar').forEach((arELement)=>arELement.style.display='none')
-        ev.target.textContent = 'ar'
-    }else{
-        document.querySelectorAll('.en').forEach((enElement)=>enElement.style.display='none')
-        document.querySelectorAll('.ar').forEach((arELement)=>arELement.style.display='block')
-        ev.target.textContent = 'en'
-    }
-})
 
 
+///////////////////////////////////////getting  
 
-let myLoc 
-let myPin
-
-let watchID
-
-
-        /////////////////////////////////get data 
+        let tempMarker 
 
         let hoveredRoute 
         let hoveredstart
@@ -591,19 +663,14 @@ let watchID
         let uncompletedRoutes
         let confirmedRoutes
 
-
         onAuthStateChanged(bygreenAuth, async (user)=>{
 
             document.querySelector('#greenMessage').style.display = 'block'
 
             // get into client stored location 
-            console.log('client loc is; ',localStorage.getItem('clientLoc'))
-            
             localStorage.getItem('clientLoc')?map.flyTo([localStorage.getItem('clientLoc').split(',')[0], localStorage.getItem('clientLoc').split(',')[1]], 12):null
 
-
-            console.log('authstatefun', dbUser)
-            // side custom 
+            // dynamic routes  
             if(window.location.href.includes('location')){
             console.log('contains temp pin', window.location.href.indexOf('location'), window.location.href.slice(0, window.location.href.indexOf('location')))
 
@@ -619,34 +686,34 @@ let watchID
 
                 }
 
+            // if visiting the website for the first time will get into some instructions
+            if (localStorage.getItem("firstVisit") === null) {
+                // This is the user's first visit
+                console.log("first time to visit the site; then to show instructions")
+                document.querySelector('#redArrow').style.display = 'block'
+                // document.querySelector('#asideDi').classList.toggle('red')
+                // document.querySelector('#asideDi').classList.contains('red')?document.querySelector('aside').style.display = 'flex':document.querySelector('aside').style.display = 'none'
 
-    // if visiting the website for the first time will get into some instructions
-    if (localStorage.getItem("firstVisit") === null) {
-        // This is the user's first visit
-        console.log("first time to visit the site; then to show instructions")
-        document.querySelector('#redArrow').style.display = 'block'
-        // document.querySelector('#asideDi').classList.toggle('red')
-        // document.querySelector('#asideDi').classList.contains('red')?document.querySelector('aside').style.display = 'flex':document.querySelector('aside').style.display = 'none'
+                setTimeout(() => {
+                    // document.querySelector("#features").scrollIntoView({
+                    //     behavior: "auto",
+                    //     block: "center"
+                    // })
 
-        setTimeout(() => {
-            // document.querySelector("#features").scrollIntoView({
-            //     behavior: "auto",
-            //     block: "center"
-            // })
+                    // document.body.scrollIntoView({ behavior: 'smooth', block: 'end'
+                    // });
+                    
+                    // window.scrollTo(0, document.body.scrollHeight);
 
-            // document.body.scrollIntoView({ behavior: 'smooth', block: 'end'
-            // });
-            
-            // window.scrollTo(0, document.body.scrollHeight);
+                    document.querySelector('#redArrow').style.opacity = 0
+                }, 3000)
 
-            document.querySelector('#redArrow').style.opacity = 0
-        }, 3000)
-
-        localStorage.setItem("firstVisit", false)
-    } else {
-        // This is not the user's first visit
-    }
+                localStorage.setItem("firstVisit", false)
+            } else {
+                // This is not the user's first visit
+            }
     
+            // store visit 
             let visitor
             fetch('https://ipapi.co/json')
             .then(response => response.json())
@@ -720,7 +787,6 @@ let watchID
             // })
 
             })
-
 
 
             if(user){
@@ -827,42 +893,221 @@ let watchID
                 // console.log(confirmedRoutes)
                 // console.log('completed routes',completedRoutes)
             })
+
             // data statics 
             getDocs(collection(bygreenDb, 'pins')).then((data)=>{
-        let docs = []
-            data.docs.forEach(doc=>{
-                docs.push({...doc.data(), id: doc.id})
-            })
+                let docs = []
+                    data.docs.forEach(doc=>{
+                        docs.push({...doc.data(), id: doc.id})
+                    })
 
-            let red = 0
-            let green = 0
-            let yellow = 0
-            let redToGreen = 0
+                    let red = 0
+                    let green = 0
+                    let yellow = 0
+                    let redToGreen = 0
 
-            docs.forEach(generalPin=>{
-                generalPin.afterImgs?red++:green++
-                generalPin.next?yellow++:null
-                generalPin.redToGreen?redToGreen++:null
-            })
+                    docs.forEach(generalPin=>{
+                        generalPin.afterImgs?red++:green++
+                        generalPin.next?yellow++:null
+                        generalPin.redToGreen?redToGreen++:null
+                    })
 
-            document.querySelector('#redCounter').textContent = red
-            document.querySelector('#greenCounter').textContent = green
-            document.querySelector('#yellowCounter').textContent = yellow
-            // document.querySelector('#redToGreenCounter').textContent = green
+                    document.querySelector('#redCounter').textContent = red
+                    document.querySelector('#greenCounter').textContent = green
+                    document.querySelector('#yellowCounter').textContent = yellow
+                    // document.querySelector('#redToGreenCounter').textContent = green
             })
 
             getDocs(collection(bygreenDb, 'shop')).then((data)=>{
-    let docs = []
-        data.docs.forEach(doc=>{
-            docs.push({...doc.data(), id: doc.id})
-        })
-        // console.log(docs[0].upvotes.length + docs[0].downvotes)
-        document.querySelector('#shopsCounter').textContent = docs.length
+            let docs = []
+                data.docs.forEach(doc=>{
+                    docs.push({...doc.data(), id: doc.id})
+                })
+                // console.log(docs[0].upvotes.length + docs[0].downvotes)
+                document.querySelector('#shopsCounter').textContent = docs.length
             })
-
         })
 
-        //////////////////////////////send data 
+        function deployRoutes(ev){
+            Object.values(ev).forEach(async e => { 
+    
+                /////content 
+                let voteBtns = document.createElement('div')
+                let routeName = document.createElement('h3')
+                routeName.style.display= 'inline'
+                let nameDiv = document.createElement('div')
+                e.name?routeName.textContent = e.name:routeName.textContent = 'اسم المسار' 
+                let checkImg = document.createElement('img')
+                checkImg.setAttribute('src', './imgs/general/check-icon.png')
+                checkImg.style.height = '1rem'
+    
+                // upvote btn
+                let upvoteBtn = document.createElement("button")
+                upvoteBtn.textContent = 'صحيح'
+                upvoteBtn.classList.add("upvoteBtn")
+                
+                upvoteBtn.addEventListener('click', (ev)=>{
+                    downvoteBtn.classList.contains('voted')?downvoteBtn.classList.remove('voted'):null
+                    ev.target.classList.toggle('voted')
+                    if(ev.target.classList.contains('voted')){
+                        sureBtn.removeAttribute('disabled')
+                    }else{
+                        sureBtn.setAttribute('disabled', true)
+                    }
+    
+                })
+    
+                // downvote btn
+                let downvoteBtn = document.createElement("button")
+                downvoteBtn.textContent = 'خاطئ'
+                downvoteBtn.classList.add("downvoteBtn")
+                // if(currentUser){
+                //     e.downvotes.includes(currentUser)?downvoteBtn.style.border = "2px solid blue":null
+                // }
+    
+                downvoteBtn.addEventListener('click', (ev)=>{
+                    upvoteBtn.classList.contains('voted')?upvoteBtn.classList.remove('voted'):null
+                    ev.target.classList.toggle('voted')
+                    if(ev.target.classList.contains('voted')){
+                        sureBtn.removeAttribute('disabled')
+                    }else{
+                        sureBtn.setAttribute('disabled', true)
+                    }
+                })
+    
+                let sureDiv = document.createElement('div')
+                let sureBtn = document.createElement('button')
+                sureBtn.textContent = 'متأكد'
+                sureBtn.classList.add('sureBtn')
+                sureBtn.setAttribute('disabled', true)
+                sureBtn.addEventListener('click', (ev)=>{
+    
+                    console.log(ev.target,ev.target.parentElement.parentElement,currentRouteId)
+    
+                    // check what button choosed 
+                    if(ev.target.parentElement.parentElement.querySelector('.upvoteBtn').classList.contains('voted')){
+                        updateDoc(doc(bygreenDb, 'routes', currentRouteId), {upvotes: arrayUnion(dbUser.userName)}).then(()=>{
+                            console.log('voted')
+                            updateDoc(doc(bygreenDb, 'users', dbUser.id), {votes: arrayUnion(currentRouteId)})
+                            console.log('record the vote')
+                        })
+                    }else if(ev.target.parentElement.parentElement.querySelector('.downvoteBtn').classList.contains('voted')){
+                        updateDoc(doc(bygreenDb, 'routes', currentRouteId), {downvotes: arrayUnion(dbUser.userName)}).then(()=>console.log('voted'))
+                    }
+    
+                    upvoteBtn.setAttribute('disabled', true)
+                    downvoteBtn.setAttribute('disabled', true)
+                    ev.target.setAttribute('disabled', true)
+                })
+                sureDiv.append(sureBtn)
+    
+                nameDiv.append(routeName)
+                confirmedRoutes.includes(e)?nameDiv.append(checkImg):null
+    
+                /////insert
+                voteBtns.append(nameDiv, upvoteBtn, downvoteBtn, sureDiv)
+                    let routeObject = L.polyline(e.path, {color: confirmedRoutes.includes(e)?lightGreen:greenColor}).bindPopup(voteBtns).addTo(map)
+    
+                    // routeObject.name = e.name
+                    e.start?circlesObjects.push(L.circle(e.path[0],{radius: 300, color: darkerGreenColor, background: darkerGreenColor}).addTo(map)):null
+                    e.end?circlesObjects.push(L.circle(e.path[e.path.length-1],{radius: 300, color:darkerGreenColor, background:darkerGreenColor}).addTo(map)):null 
+                    
+                    routeObject.upvotes = e.upvotes
+                    routeObject.downvotes = e.downvotes
+                    routeObject.id = e.id
+                    routeObject.start = e.start
+                    routeObject.end = e.end
+                    routeObject.confirmed = e.confirmed?true:false
+                    
+                /////content
+                    ////////////if logged then allow to vote; 
+                    routeObject.addEventListener('click', (ev)=>{
+                        console.log('click on route', ev.target)
+    
+                        currentRouteId = e.id
+    
+                        ////////mobile; change color 
+                        routesObjects.forEach(e=>{e.setStyle({color: greenColor, opacity: .6})})
+                        hoveredRoute?map.removeLayer(hoveredRoute):null
+                        hoveredRoute = L.polyline(ev.target._latlngs, {color: blueColor, interactive: false})
+                        hoveredRoute.addTo(map)
+                        hoveredRoute.setStyle({color:blueColor, opacity: 1})
+    
+    
+                        if(dbUser != 'none'){
+                            console.log(dbUser)
+                            if(ev.target.upvotes || ev.target.downvotes){ ///temp
+                                console.log('available votes options')
+                                if(ev.target.upvotes.includes(dbUser.userName)){
+                                    console.log('upvoter; ', ev.target.upvotes, ev.target.upvotes.includes(dbUser.userName))
+                                    ev.target._popup._content.querySelector('.upvoteBtn').style.border = "2px solid blue"
+    
+                                    ev.target._popup._content.querySelector('.upvoteBtn').setAttribute('disabled', true)
+                                    ev.target._popup._content.querySelector('.downvoteBtn').setAttribute('disabled', true)
+                                    // downvoteBtn.setAttribute('disabled', true)
+        
+                                }else if(ev.target.downvotes.includes(dbUser.userName)){
+                                    console.log('downvoter; ',ev.target.downvotes, ev.target.downvotes.includes(dbUser.userName))
+                                    ev.target._popup._content.querySelector('.downvoteBtn').style.border = "2px solid blue"
+    
+                                    ev.target._popup._content.querySelector('.downvoteBtn').setAttribute('disabled', true)
+                                    ev.target._popup._content.querySelector('.upvoteBtn').setAttribute('disabled', true)
+                                }
+                            }else{
+                                console.log('no upvotes option')
+                            }
+    
+                        }else{
+                            // no account
+                                // display; have to login to vote 
+    
+                            ev.target._popup._content.querySelector('.upvoteBtn').setAttribute('disabled', true)
+                                    ev.target._popup._content.querySelector('.downvoteBtn').setAttribute('disabled', true)
+                                    // ev.target._popup._content.append('انشئ حساب للتصويت')
+                        }
+    
+                        e.upvotes?console.log('upvotes', e.upvotes):null
+                        e.downvotes?console.log('downvotes', e.downvotes):null
+                    })
+    
+                    routeObject._popup._content.append('انشئ حساب للتصويت')
+    
+                routesObjects.push(routeObject)
+    
+                routeObject.addEventListener("mouseover", (route)=>{
+    
+                    /// method 1; make route to display over all then to delete
+                    /// it or replace it and to set it interactive false to
+                    /// click over it 
+    
+                        // console.log(route.target)
+                        routesObjects.forEach(e=>{e.setStyle({color: (e.confirmed?lightGreen:greenColor), opacity: .6})})
+    
+                        hoveredRoute?map.removeLayer(hoveredRoute):null
+                        hoveredstart?map.removeLayer(hoveredstart):null
+                        hoveredend?map.removeLayer(hoveredend):null
+    
+    
+                        hoveredRoute = L.polyline(route.target._latlngs, {color:blueColor, opacity: 1,interactive: false}).addTo(map)
+                        // console.log(route.target)
+                        route.target.start?hoveredstart = L.circle(route.target._latlngs[0],{radius:300 ,color:blueColor, opacity: 1,interactive: false}).addTo(map):null
+    
+                        route.target.end?hoveredend = L.circle(route.target._latlngs[route.target._latlngs.length-1], {radius:300, color:blueColor, opacity: 1,interactive: false}).addTo(map):null
+                })
+    
+                if(e.confirmed){
+                    confirmedRoutesObjects.push(routeObject)
+                }else if(e.start && e.end){
+                    completedRoutesObjects.push(routeObject)
+                }else if(!e.start || !e.end){
+                    uncompletedRoutesObjects.push(routeObject)
+                }
+            })
+        }
+
+
+
+///////////////////////////////////////////sending data
 
         //////////collect (get) data 
 
@@ -882,7 +1127,6 @@ let watchID
         //circles
         let start 
         let end 
-
 
         // make the main route
         map.addEventListener('click', function (ev) {
@@ -1128,270 +1372,7 @@ let watchID
             }
     })
 
-
-    ////////////////////////////functions
-
-    function deployRoutes(ev){
-        Object.values(ev).forEach(async e => { 
-
-            /////content 
-            let voteBtns = document.createElement('div')
-            let routeName = document.createElement('h3')
-            routeName.style.display= 'inline'
-            let nameDiv = document.createElement('div')
-            e.name?routeName.textContent = e.name:routeName.textContent = 'اسم المسار' 
-            let checkImg = document.createElement('img')
-            checkImg.setAttribute('src', './imgs/general/check-icon.png')
-            checkImg.style.height = '1rem'
-
-            // upvote btn
-            let upvoteBtn = document.createElement("button")
-            upvoteBtn.textContent = 'صحيح'
-            upvoteBtn.classList.add("upvoteBtn")
-            
-            upvoteBtn.addEventListener('click', (ev)=>{
-                downvoteBtn.classList.contains('voted')?downvoteBtn.classList.remove('voted'):null
-                ev.target.classList.toggle('voted')
-                if(ev.target.classList.contains('voted')){
-                    sureBtn.removeAttribute('disabled')
-                }else{
-                    sureBtn.setAttribute('disabled', true)
-                }
-
-            })
-
-            // downvote btn
-            let downvoteBtn = document.createElement("button")
-            downvoteBtn.textContent = 'خاطئ'
-            downvoteBtn.classList.add("downvoteBtn")
-            // if(currentUser){
-            //     e.downvotes.includes(currentUser)?downvoteBtn.style.border = "2px solid blue":null
-            // }
-
-            downvoteBtn.addEventListener('click', (ev)=>{
-                upvoteBtn.classList.contains('voted')?upvoteBtn.classList.remove('voted'):null
-                ev.target.classList.toggle('voted')
-                if(ev.target.classList.contains('voted')){
-                    sureBtn.removeAttribute('disabled')
-                }else{
-                    sureBtn.setAttribute('disabled', true)
-                }
-            })
-
-            let sureDiv = document.createElement('div')
-            let sureBtn = document.createElement('button')
-            sureBtn.textContent = 'متأكد'
-            sureBtn.classList.add('sureBtn')
-            sureBtn.setAttribute('disabled', true)
-            sureBtn.addEventListener('click', (ev)=>{
-
-                console.log(ev.target,ev.target.parentElement.parentElement,currentRouteId)
-
-                // check what button choosed 
-                if(ev.target.parentElement.parentElement.querySelector('.upvoteBtn').classList.contains('voted')){
-                    updateDoc(doc(bygreenDb, 'routes', currentRouteId), {upvotes: arrayUnion(dbUser.userName)}).then(()=>{
-                        console.log('voted')
-                        updateDoc(doc(bygreenDb, 'users', dbUser.id), {votes: arrayUnion(currentRouteId)})
-                        console.log('record the vote')
-                    })
-                }else if(ev.target.parentElement.parentElement.querySelector('.downvoteBtn').classList.contains('voted')){
-                    updateDoc(doc(bygreenDb, 'routes', currentRouteId), {downvotes: arrayUnion(dbUser.userName)}).then(()=>console.log('voted'))
-                }
-
-                upvoteBtn.setAttribute('disabled', true)
-                downvoteBtn.setAttribute('disabled', true)
-                ev.target.setAttribute('disabled', true)
-            })
-            sureDiv.append(sureBtn)
-
-            nameDiv.append(routeName)
-            confirmedRoutes.includes(e)?nameDiv.append(checkImg):null
-
-            /////insert
-            voteBtns.append(nameDiv, upvoteBtn, downvoteBtn, sureDiv)
-                let routeObject = L.polyline(e.path, {color: confirmedRoutes.includes(e)?lightGreen:greenColor}).bindPopup(voteBtns).addTo(map)
-
-                // routeObject.name = e.name
-                e.start?circlesObjects.push(L.circle(e.path[0],{radius: 300, color: darkerGreenColor, background: darkerGreenColor}).addTo(map)):null
-                e.end?circlesObjects.push(L.circle(e.path[e.path.length-1],{radius: 300, color:darkerGreenColor, background:darkerGreenColor}).addTo(map)):null 
-                
-                routeObject.upvotes = e.upvotes
-                routeObject.downvotes = e.downvotes
-                routeObject.id = e.id
-                routeObject.start = e.start
-                routeObject.end = e.end
-                routeObject.confirmed = e.confirmed?true:false
-                
-            /////content
-                ////////////if logged then allow to vote; 
-                routeObject.addEventListener('click', (ev)=>{
-                    console.log('click on route', ev.target)
-
-                    currentRouteId = e.id
-
-                    ////////mobile; change color 
-                    routesObjects.forEach(e=>{e.setStyle({color: greenColor, opacity: .6})})
-                    hoveredRoute?map.removeLayer(hoveredRoute):null
-                    hoveredRoute = L.polyline(ev.target._latlngs, {color: blueColor, interactive: false})
-                    hoveredRoute.addTo(map)
-                    hoveredRoute.setStyle({color:blueColor, opacity: 1})
-
-
-                    if(dbUser != 'none'){
-                        console.log(dbUser)
-                        if(ev.target.upvotes || ev.target.downvotes){ ///temp
-                            console.log('available votes options')
-                            if(ev.target.upvotes.includes(dbUser.userName)){
-                                console.log('upvoter; ', ev.target.upvotes, ev.target.upvotes.includes(dbUser.userName))
-                                ev.target._popup._content.querySelector('.upvoteBtn').style.border = "2px solid blue"
-
-                                ev.target._popup._content.querySelector('.upvoteBtn').setAttribute('disabled', true)
-                                ev.target._popup._content.querySelector('.downvoteBtn').setAttribute('disabled', true)
-                                // downvoteBtn.setAttribute('disabled', true)
-    
-                            }else if(ev.target.downvotes.includes(dbUser.userName)){
-                                console.log('downvoter; ',ev.target.downvotes, ev.target.downvotes.includes(dbUser.userName))
-                                ev.target._popup._content.querySelector('.downvoteBtn').style.border = "2px solid blue"
-
-                                ev.target._popup._content.querySelector('.downvoteBtn').setAttribute('disabled', true)
-                                ev.target._popup._content.querySelector('.upvoteBtn').setAttribute('disabled', true)
-                            }
-                        }else{
-                            console.log('no upvotes option')
-                        }
-
-                    }else{
-                        // no account
-                            // display; have to login to vote 
-
-                        ev.target._popup._content.querySelector('.upvoteBtn').setAttribute('disabled', true)
-                                ev.target._popup._content.querySelector('.downvoteBtn').setAttribute('disabled', true)
-                                // ev.target._popup._content.append('انشئ حساب للتصويت')
-                    }
-
-                    e.upvotes?console.log('upvotes', e.upvotes):null
-                    e.downvotes?console.log('downvotes', e.downvotes):null
-                })
-
-                routeObject._popup._content.append('انشئ حساب للتصويت')
-
-            routesObjects.push(routeObject)
-
-            routeObject.addEventListener("mouseover", (route)=>{
-
-                /// method 1; make route to display over all then to delete
-                /// it or replace it and to set it interactive false to
-                /// click over it 
-
-                    // console.log(route.target)
-                    routesObjects.forEach(e=>{e.setStyle({color: (e.confirmed?lightGreen:greenColor), opacity: .6})})
-
-                    hoveredRoute?map.removeLayer(hoveredRoute):null
-                    hoveredstart?map.removeLayer(hoveredstart):null
-                    hoveredend?map.removeLayer(hoveredend):null
-
-
-                    hoveredRoute = L.polyline(route.target._latlngs, {color:blueColor, opacity: 1,interactive: false}).addTo(map)
-                    // console.log(route.target)
-                    route.target.start?hoveredstart = L.circle(route.target._latlngs[0],{radius:300 ,color:blueColor, opacity: 1,interactive: false}).addTo(map):null
-
-                    route.target.end?hoveredend = L.circle(route.target._latlngs[route.target._latlngs.length-1], {radius:300, color:blueColor, opacity: 1,interactive: false}).addTo(map):null
-            })
-
-            if(e.confirmed){
-                confirmedRoutesObjects.push(routeObject)
-            }else if(e.start && e.end){
-                completedRoutesObjects.push(routeObject)
-            }else if(!e.start || !e.end){
-                uncompletedRoutesObjects.push(routeObject)
-            }
-        })
-    }
-
-    function ranking(based, order){
-
-    // restructure the accounts array
-//label the current account to be green 
-
-let intendedOrder = []
-let orderedUserElements
-let orderedteamElements
-
-if(based == 'total'){
-    if(order == 'de'){
-        // decending order 
-        intendedOrder = accountsList.sort((a, b) => { return (b.green.length+b.red.length +b.addedRoutes.length + b.votes.length)-(a.green.length +a.red.length+a.addedRoutes.length + a.votes.length)}) 
-    }else{
-        //acending order 
-        intendedOrder = accountsList.sort((a, b) => { return (a.green.length +a.red.length+a.addedRoutes.length + a.votes.length) - (b.green.length+b.red.length +b.addedRoutes.length + b.votes.length)})
-    }
-}else if(based == 'publicline'){
-    if(order == 'de'){
-        intendedOrder = accountsList.sort((a,b)=>{return (b.addedRoutes.length + b.votes.length) - (a.addedRoutes.length + a.votes.length)})
-    }else{
-        intendedOrder = accountsList.sort((a,b)=>{return (a.addedRoutes.length + a.votes.length)- (b.addedRoutes.length + b.votes.length)})
-    }
-
-}else if(based == 'bygreen'){
-    if(order == 'de'){
-        intendedOrder = accountsList.sort((a,b)=>{return (b.red.length + b.green.length) - (a.red.length + a.green.length)})
-    }else{
-        intendedOrder = accountsList.sort((a,b)=>{return (a.red.length + a.green.length)- (b.red.length + b.green.length)})
-    }
-}
-
-// make the dom
-let currentUserName 
-dbUser?currentUserName=dbUser.userName:null
-
-let userCounter= 1
-orderedUserElements = `${intendedOrder.map((account, index)=>{
-    if(account.type == 'user'){return`
-<div class="rankedAccount" ${account.userName == currentUserName?'id="#me" style="background-color: #29D659"':''}>
-
-    <div class="ranking point">${userCounter++}</div>
-    <a href=' https://kadum2.github.io/ivc/profile/${account.userName}' class="account">
-        <img class="accountImg" style="background-image: url('${account.img}');">
-        <h3 class="accountUsername ranked">${account.userName}</h3>
-    </a>
-        
-
-    <div class='points'>
-<div class="publiclineCounter point">${(account.addedRoutes[0]?account.addedRoutes.length:0)+(account.votes[0]?account.votes.length:0)}</div>
-<div class="bygreenCounter point">${(account.red[0]?account.red.length:0)+(account.green[0]?account.green.length:0)}</div>
-<div class="total point">${((account.addedRoutes[0]?account.addedRoutes.length:0)+(account.votes[0]?account.votes.length:0)) + ((account.red[0]?account.red.length:0)+(account.green[0]?account.green.length:0))}</div>
-</div>
-    </div>
-`}
-})}`
-
-
-    let teamCounter = 1
-orderedteamElements = `${intendedOrder.map((account, index)=>{
-    if(account.type == 'team'){return`
-<div class="rankedAccount" ${account.userName == currentUserName?'style="background-color: #29D659"':''}>
-    <div class="ranking point">${teamCounter++}</div>
-    <a href=' https://kadum2.github.io/ivc/profile/${account.userName}' class="account">
-        <img class="accountImg" style="background-image: url('${account.img}');">
-        <h3 class="accountUsername ranked">${account.userName}</h3>
-    </a>
-
-    <div class='points'>
-<div class="publiclineCounter point">${(account.addedRoutes[0]?account.addedRoutes.length:0)+(account.votes[0]?account.votes.length:0)}</div>
-<div class="bygreenCounter point">${(account.red[0]?account.red.length:0)+(account.green[0]?account.green.length:0)}</div>
-<div class="total point">${((account.addedRoutes[0]?account.addedRoutes.length:0)+(account.votes[0]?account.votes.length:0)) + ((account.red[0]?account.red.length:0)+(account.green[0]?account.green.length:0))}</div>
-</div>
-    </div>
-`}
-    })}`
-
-// console.log('intended order',intendedOrder)
-document.querySelector('#usersRanking').innerHTML = orderedUserElements.replaceAll(',', '')
-document.querySelector('#teamsRanking').innerHTML = orderedteamElements.replaceAll(',', '')
-    }
-
         //////////// test code; 
-
     window.onclick = (ev)=>{
             // console.log(ev.target, ev.target.style.zIndex, getComputedStyle(ev.target).zIndex)
             // console.log(routesObjects)
@@ -1412,7 +1393,5 @@ document.querySelector('#teamsRanking').innerHTML = orderedteamElements.replaceA
                 
     //         })
 //})
-
-
 
 
