@@ -2913,6 +2913,7 @@ displayConfirmedRoutes.addEventListener('click', (ev)=>{
             if(currentPath[0] || document.querySelector('#routeName').value){ /////available data to send; 
                 // routeToSend.path = currentPath._latlngs 
                 // document.querySelector('#greenMessage').textContent = 'sending'
+                ev.target.setAttribute('disabled', true)
                 document.querySelector('#greenMessage').style.display = 'block'
                 
                 console.log(currentPath)

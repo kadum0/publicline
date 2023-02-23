@@ -1,6 +1,6 @@
 
+///////////////////////////////initializing
 // firebase 
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.2/firebase-app.js";
 
 import {getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signOut, signInWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/9.9.2/firebase-auth.js"
@@ -25,11 +25,6 @@ import { getFirestore, onSnapshot,
     const bygreenDb = getFirestore(bygreen)
     const bygreenAuth = getAuth(bygreen)
 
-
-    document.querySelector('header').addEventListener('mouseover', (ev)=>{
-        
-    })
-
 const map = L.map('map').setView([33.396600, 44.356579], 10);
 //leaflet basic map
     //////get api key 
@@ -47,15 +42,12 @@ L.Control.geocoder().addTo(map);
 
 // let greenColor = '#27F060'
 let greenColor = "#68F690"
-
 let darkerGreenColor = '#21C24F'
-
 let blueColor = '#3388FF'
 let darkerBlueColor = '#075FDA'
 
 
-
-/////////////////authentication; 
+//////////////////////////////////getting and sending; authentication; 
 
 //////signin
 signinBtn.addEventListener('click', (ev)=>{
@@ -90,8 +82,7 @@ document.querySelector('#halfLoggedSignoutBtn').addEventListener('click', ()=>{
 })
 
 
-
-////////////ui-js 
+/////////////////////////////ui-js 
 document.querySelector("#miniProfileDi").addEventListener("click", (e)=>{
     e.target.classList.toggle('on')
     if(e.target.classList.contains('on')){
@@ -99,8 +90,7 @@ document.querySelector("#miniProfileDi").addEventListener("click", (e)=>{
     }else{
         document.querySelector("#miniProfile").style.display = 'none'
     }
-})
-
+    })
 
 document.querySelector("#unconf").addEventListener("click", ()=>{
         // ev.target.classList.toggle('on')
@@ -111,6 +101,7 @@ document.querySelector("#unconf").addEventListener("click", ()=>{
         document.querySelector("#conpathcards").style.display = "none"
 
     })
+
     document.querySelector("#conf").addEventListener("click", ()=>{
         document.querySelector('#conf').classList.add("on")
         document.querySelector('#unconf').classList.remove("on")
@@ -119,9 +110,8 @@ document.querySelector("#unconf").addEventListener("click", ()=>{
         document.querySelector("#conpathcards").style.display = "block"
 
     })
-    
 
-//////////ui-js-data
+////////////////////ui-js-data
 
 // display confirmed; toggle
 
@@ -157,7 +147,6 @@ document.querySelector("#unconf").addEventListener("click", ()=>{
 
 
     let currentObject
-
 
     let conRoutes
     let unRoutes 

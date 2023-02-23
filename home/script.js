@@ -62,7 +62,7 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
             shadowAnchor: [4, 62], // the same for the shadow
             // iconSize: [25, 41],
             // iconAnchor: [12, 41],
-            iconAnchor: [12, 35],
+            iconAnchor: [12, 30],
             popupAnchor: [0, -30] 
 
         });
@@ -72,7 +72,7 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
             shadowAnchor: [4, 62], // the same for the shadow
             // iconSize: [25, 41],
             // iconAnchor: [12, 41],
-            iconAnchor: [12, 35],
+            iconAnchor: [12, 30],
             popupAnchor: [0, -30] 
         });
         let sindibad = L.icon({
@@ -1324,7 +1324,7 @@ displayConfirmedRoutes.addEventListener('click', (ev)=>{
 
     ////////////////////////sending 
 
-        document.querySelector("#send").addEventListener("click", () => {
+        document.querySelector("#send").addEventListener("click", (ev) => {
 
             // if logged send the username with it; 
             // check if data; may make it only available when data set; 
@@ -1332,7 +1332,9 @@ displayConfirmedRoutes.addEventListener('click', (ev)=>{
             let routeToSend = {}
             if(currentPath[0] || document.querySelector('#routeName').value){ /////available data to send; 
                 // routeToSend.path = currentPath._latlngs 
-                // document.querySelector('#greenMessage').textContent = 'sending'
+                // document.querySelector('#greenMessage').textContent =
+                // 'sending'
+                ev.target.setAttribute('disabled', true)
                 document.querySelector('#greenMessage').style.display = 'block'
                 
                 console.log(currentPath)
