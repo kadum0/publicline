@@ -42,27 +42,21 @@ let darkerGreenColor = '#21C24F'
 let blueColor = '#198CD4'
 let darkerBlueColor = '#075FDA'
 let redColor = '#ff2a2a'
-
 // green; #1EF738
-
-
-// governates coordinates; 
-
-
 
 
 // map configure
 const map = L.map('map', { zoomControl: false }).setView([33.396600, 44.356579], 10); 
 L.Control.geocoder().addTo(map);
 
-let apiKey = 'pk.eyJ1IjoiYWxmcmVkMjAxNiIsImEiOiJja2RoMHkyd2wwdnZjMnJ0MTJwbnVmeng5In0.E4QbAFjiWLY8k3AFhDtErA'
+// let apiKey = 'pk.eyJ1IjoiYWxmcmVkMjAxNiIsImEiOiJja2RoMHkyd2wwdnZjMnJ0MTJwbnVmeng5In0.E4QbAFjiWLY8k3AFhDtErA'
 
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
     maxZoom: 18,
     id: 'mapbox/streets-v11',
     tileSize: 512,
     zoomOffset: -1,
-    accessToken: apiKey
+    accessToken: 'pk.eyJ1IjoiYWxmcmVkMjAxNiIsImEiOiJja2RoMHkyd2wwdnZjMnJ0MTJwbnVmeng5In0.E4QbAFjiWLY8k3AFhDtErA'
 }).addTo(map);
 
         let bluePin = L.icon({
@@ -84,19 +78,15 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
             iconAnchor: [12, 35],
             popupAnchor: [0, -30] 
         });
-
         let sindibad = L.icon({
             iconUrl: "./imgs/sindibad-basic-icon.png",
             shadowSize: [50, 64], // size of the shadow
             shadowAnchor: [4, 62], // the same for the shadow
             iconSize: [70, 60],
-            iconAnchor: [12, 35],
+            iconAnchor: [26, 26],
             popupAnchor: [0, 0] 
 
         });
-
-
-
 
 
 let dbUser ////firestore account 
@@ -109,9 +99,7 @@ let tempMarker
 const provider = new GoogleAuthProvider()
 
 
-////////////////////////////////////////////////ui-js
-
-
+////////////////////////////////////////////////getting-sending(auth)
 
 ///////register 
 document.querySelector('#registerBtn').addEventListener('click', (ev)=>{
@@ -234,7 +222,7 @@ document.querySelector('#makeProfileBtn').addEventListener('click', async (ev)=>
 
 
 
-//////////////////ui-js; 
+///////////////////////////////////ui-js; 
 document.querySelector("#miniProfileDi").addEventListener("click", (ev)=>{
     ev.target.classList.toggle('on')
     if(ev.target.classList.contains('on')){
@@ -249,10 +237,9 @@ document.querySelector('#asideDi').addEventListener('click', (ev)=>{
     ev.target.classList.contains('red')?document.querySelector('aside').style.display = 'flex':document.querySelector('aside').style.display = 'none'
 })
 
+document.querySelector('#makeLocLink').addEventListener('click', (ev)=>{ev.target.classList.toggle('on')})
 
-    document.querySelector('#makeLocLink').addEventListener('click', (ev)=>{ev.target.classList.toggle('on')})
-
-    document.querySelector("#addRouteMode").addEventListener("click", (ev)=>{
+document.querySelector("#addRouteMode").addEventListener("click", (ev)=>{
             ev.target.classList.toggle("on")
             if(ev.target.classList.contains('on')){
             // document.querySelector('#newRouteDetails').style.display='flex'
@@ -272,9 +259,95 @@ document.querySelector('#asideDi').addEventListener('click', (ev)=>{
     })
 
 
+findMe.addEventListener('click', (ev)=>{
+    ev.target.classList.toggle('on')
+    if(ev.target.classList.contains('on')){
+        // add marker and circle
 
-    ///////////////////////// ui-js-data
-    // ranking options
+        console.log("find me ...", navigator.geolocation)
+        // internet based; 
+        // no need to check and cant check 
+
+        // get into the locatoin
+        navigator.geolocation.getCurrentPosition(pos=>{
+            map.flyTo([pos.coords.latitude, pos.coords.longitude], 12)
+        })
+    
+        watchID = navigator.geolocation.watchPosition((pos)=>{
+            console.log('watching; ',pos.coords.latitude, pos.coords.longitude)
+            
+            myPin?map.removeLayer(myPin):null
+            myLoc?map.removeLayer(myLoc):null
+    
+            myPin = L.marker([pos.coords.latitude, pos.coords.longitude], {icon: sindibad}).addTo(map)
+            myLoc = L.circle([pos.coords.latitude, pos.coords.longitude], {color: darkerBlueColor, radius: 100}).addTo(map)
+            
+            localStorage.setItem('clientLoc', [pos.coords.latitude, pos.coords.longitude])
+
+            // map.flyTo([pos.coords.latitude, pos.coords.longitude], 16)
+            // setView([pos.coords.latitude, pos.coords.longitude])
+
+        }, (err)=>{
+            console.log("gps not enabled")
+            document.querySelector('#redMessage').textContent = 'enable gps'
+            document.querySelector('#redMessage').style.display = 'block'
+
+            setTimeout(() => {
+                document.querySelector('#redMessage').style.display = 'none'
+            }, 2000);
+            // document.querySelector('#redMessage').textContent = 'enable gps'
+
+            if(navigator.onLine){
+
+                console.log('online')
+
+                fetch('https://ipapi.co/json/')
+                .then(res=>res.json())
+                .then(data=>{
+                    console.log('got online loc;', data)
+                    map.flyTo([data.latitude, data.longitude], 12)
+                    myPin = L.marker([data.latitude, data.longitude], {icon: sindibad}).addTo(map)
+                    myLoc = L.circle([data.latitude, data.longitude], {color: darkerBlueColor, radius: 100}).addTo(map)
+
+                    localStorage.setItem('clientLoc', [data.latitude, data.longitude])
+        
+                    console.log(myPin, myLoc)
+                })
+
+                document.querySelector('#redMessage').textContent = 'enable gps for more accurate results'
+                document.querySelector('#redMessage').style.display = 'block'
+                setTimeout(() => {
+                    document.querySelector('#redMessage').style.display = 'none'
+                }, 2000);
+
+        // no permisson case
+            }else{
+                document.querySelector('#redMessage').textContent = 'no gps and no internet connection'
+            document.querySelector('#redMessage').style.display = 'block'
+            setTimeout(() => {
+                document.querySelector('#redMessage').style.display = 'none'
+                
+            }, 3000);
+    
+        // give the previous saved location
+        // if(myLat && myLon){
+        //     console.log('geolocation is enabled')
+        //     map.flyTo([myLat, myLon], 16)
+        // }
+            }
+
+    })
+
+    }else{
+        // remove marker and circle, and stop watching 
+        navigator.geolocation.clearWatch(watchID);
+        map.removeLayer(myLoc)
+        map.removeLayer(myPin)
+    }
+})
+
+
+    //////////////////////////////// ui-js-data
 
 //leaflet basic map
 map.on('zoomend', function () {
@@ -295,7 +368,7 @@ map.on('zoomend', function () {
     })
 });
 
-
+    // ranking options
 totalSorting.addEventListener('click', (ev)=>{
     ev.target.classList.toggle('on')
     ev.target.classList.contains('on')?ranking('total', 'ac'):ranking('total', 'de')
@@ -309,9 +382,7 @@ votesSorting.addEventListener('click', (ev)=>{
     ev.target.classList.contains('on')?ranking('votes', 'ac'):ranking('votes', 'de')
 })
 
-
 // display routes buttons
-
 
 displayCompletedRoutes.addEventListener('click', (ev)=>{
     console.log("display completed routes ")
@@ -418,15 +489,8 @@ displayConfirmedRoutes.addEventListener('click', (ev)=>{
     }
 })
 
-
-
 selectGovernate.addEventListener('change', (ev)=>{
     console.log('options', ev.target.value)
-
-    let currentGov
-    function saveGov(coords){
-        localStorage.setItem('clientLoc', coords)
-    }
 
     // the most in numbers; main 
     if(ev.target.value=='baghdad'){
@@ -512,106 +576,6 @@ let myPin
 
 let watchID
 
-findMe.addEventListener('click', (ev)=>{
-
-    ev.target.classList.toggle('on')
-    if(ev.target.classList.contains('on')){
-        // add marker and circle
-
-        console.log("find me ...", navigator.geolocation)
-        // internet based; 
-        // no need to check and cant check 
-        if(navigator.geolocation){
-
-            console.log("navi, geolo")
-
-        // get into the locatoin
-        navigator.geolocation.getCurrentPosition(pos=>{
-            map.flyTo([pos.coords.latitude, pos.coords.longitude], 12)
-        })
-    
-        watchID = navigator.geolocation.watchPosition((pos)=>{
-            console.log('watching; ',pos.coords.latitude, pos.coords.longitude)
-            
-            myPin?map.removeLayer(myPin):null
-            myLoc?map.removeLayer(myLoc):null
-    
-            myLat = pos.coords.latitude
-            myLon = pos.coords.longitude
-    
-            myPin = L.marker([pos.coords.latitude, pos.coords.longitude], {icon: sindibad}).addTo(map)
-            myLoc = L.circle([pos.coords.latitude, pos.coords.longitude], {color: darkerBlueColor, radius: 100}).addTo(map)
-            
-            localStorage.setItem('clientLoc', [pos.coords.latitude, pos.coords.longitude])
-
-            // map.flyTo([pos.coords.latitude, pos.coords.longitude], 16)
-    
-            // setView([pos.coords.latitude, pos.coords.longitude])
-        }, (err)=>{
-            console.log("gps not enabled")
-            // alert('geolocation is not enabled')
-            if(navigator.onLine){
-
-                console.log('online')
-
-                fetch('https://ipapi.co/json/')
-                .then(res=>res.json())
-                .then(data=>{
-                    console.log('got online loc;', data)
-                    map.flyTo([data.latitude, data.longitude], 12)
-                    myPin = L.marker([data.latitude, data.longitude], {icon: sindibad}).addTo(map)
-                    myLoc = L.circle([data.latitude, data.longitude], {color: darkerBlueColor, radius: 100}).addTo(map)
-
-                    localStorage.setItem('clientLoc', [data.latitude, data.longitude])
-        
-                    console.log(myPin, myLoc)
-                })
-
-                document.querySelector('#redMessage').textContent = 'enable gps for more accurate results'
-                document.querySelector('#redMessage').style.display = 'block'
-                setTimeout(() => {
-                    document.querySelector('#redMessage').style.display = 'none'
-                }, 2000);
-
-        // no permisson case
-            }else{
-                document.querySelector('#redMessage').textContent = 'no gps and no internet connection'
-            document.querySelector('#redMessage').style.display = 'block'
-            setTimeout(() => {
-                document.querySelector('#redMessage').style.display = 'none'
-                
-            }, 3000);
-    
-        // give the previous saved location
-        // if(myLat && myLon){
-        //     console.log('geolocation is enabled')
-        //     map.flyTo([myLat, myLon], 16)
-        // }
-            }
-    
-        })
-    
-
-        }else{
-
-            // check if online
-            
-// to enable gps for better and more accurate location detecting
-
-    
-        }
-
-    }else{
-        // remove marker and circle, and stop watching 
-        navigator.geolocation.clearWatch(watchID);
-        map.removeLayer(myLoc)
-        map.removeLayer(myPin)
-
-    }
-})
-
-
-
 
         /////////////////////////////////get data 
 
@@ -682,6 +646,82 @@ findMe.addEventListener('click', (ev)=>{
     } else {
         // This is not the user's first visit
     }
+    
+            let visitor
+            fetch('https://ipapi.co/json')
+            .then(response => response.json())
+            .then(async (data) => {
+                visitor = data
+                console.log('my ip', data);
+
+
+            // check if the object with same ip does exist; if does add to visits counter, if not make new object with ip prop and visits prop 
+
+            // method; check if exist
+
+            // // const q = query(dbRef, orderByValue(), equalTo(testURL));
+            // let q = query(collection(bygreenDb, 'visitors'), where('ip', '==', visitor.ip))
+            // const snapshot = await getDocs(q);
+            // let found
+            // snapshot.forEach(e=>{found = e.data(); found.id = e.id})
+
+            // console.log(found)
+
+
+            // if (found) {
+            // // add to it
+
+            // console.log('data does exist; Results', found)
+            // // let newVisits = found.visits+1
+            //     updateDoc(doc(bygreenDb, "visitors", found.id), {visits: found.visits+1}).then(()=>console.log('updated the doc'))
+
+            // } else {
+            //     // make new one
+            // console.log('Data does not exist')
+            // addDoc(collection(bygreenDb, 'visitors'), {ip: visitor.ip, visits: 0}).then(()=>console.log('added the new visitor to the log'))
+            // }
+
+
+            ////// method; make docuement with ip to be the id by set method
+            // setDoc(docRefr, {visits: 0}, {merge: true}).then(e=>{
+            //     // document.querySelector('#greenMessage').textContent = 'sent'
+            //     console.log('set new visitor', visitor.ip)
+            //     // location.reload()
+            // }).catch((err)=>{
+            //     // cant be an error that set will always overwrite the current value
+            //     // console.log(err)
+            //     // add to this visitor counter
+            //     // getdoc(docRefr).then(visitorDoc=>updateDoc(docRefr, {visits: visitorDoc.visits+1})) 
+            // })
+
+            let docRefr = doc(bygreenDb, 'visitors', visitor.ip)
+
+            ////// method update first if error to set the document 
+            getDoc(docRefr).then(visitorDoc=>{
+                console.log(visitorDoc)
+                visitorDoc = visitorDoc.data()
+                console.log(visitorDoc)
+                if(visitorDoc){
+                    updateDoc(docRefr, {visits:+ visitorDoc.visits+1}).then(()=>{
+                        console.log('exist and updated')
+                    })
+                }else{
+                    console.log('not exist; then make it')
+                    setDoc(docRefr, {visits: 1}, {merge: true})
+                }
+            }) 
+
+
+            // updateDoc(docRefr, {visits: FieldValue.increment(1)})
+            // .then(()=>{
+            //     console.log("updated the document visitor")
+            // }).catch(err=>{
+            //     console.log('not exist to update; ')
+            // })
+
+            })
+
+
 
             if(user){
                 console.log('from auth ', user)
@@ -787,81 +827,6 @@ findMe.addEventListener('click', (ev)=>{
                 // console.log(confirmedRoutes)
                 // console.log('completed routes',completedRoutes)
             })
-
-            let visitor
-            fetch('https://ipapi.co/json')
-            .then(response => response.json())
-            .then(async (data) => {
-                visitor = data
-                console.log('my ip', data);
-
-
-            // check if the object with same ip does exist; if does add to visits counter, if not make new object with ip prop and visits prop 
-
-            // method; check if exist
-
-            // // const q = query(dbRef, orderByValue(), equalTo(testURL));
-            // let q = query(collection(bygreenDb, 'visitors'), where('ip', '==', visitor.ip))
-            // const snapshot = await getDocs(q);
-            // let found
-            // snapshot.forEach(e=>{found = e.data(); found.id = e.id})
-
-            // console.log(found)
-
-
-            // if (found) {
-            // // add to it
-
-            // console.log('data does exist; Results', found)
-            // // let newVisits = found.visits+1
-            //     updateDoc(doc(bygreenDb, "visitors", found.id), {visits: found.visits+1}).then(()=>console.log('updated the doc'))
-
-            // } else {
-            //     // make new one
-            // console.log('Data does not exist')
-            // addDoc(collection(bygreenDb, 'visitors'), {ip: visitor.ip, visits: 0}).then(()=>console.log('added the new visitor to the log'))
-            // }
-
-
-            ////// method; make docuement with ip to be the id by set method
-            // setDoc(docRefr, {visits: 0}, {merge: true}).then(e=>{
-            //     // document.querySelector('#greenMessage').textContent = 'sent'
-            //     console.log('set new visitor', visitor.ip)
-            //     // location.reload()
-            // }).catch((err)=>{
-            //     // cant be an error that set will always overwrite the current value
-            //     // console.log(err)
-            //     // add to this visitor counter
-            //     // getdoc(docRefr).then(visitorDoc=>updateDoc(docRefr, {visits: visitorDoc.visits+1})) 
-            // })
-
-            let docRefr = doc(bygreenDb, 'visitors', visitor.ip)
-
-            ////// method update first if error to set the document 
-            getDoc(docRefr).then(visitorDoc=>{
-                console.log(visitorDoc)
-                visitorDoc = visitorDoc.data()
-                console.log(visitorDoc)
-                if(visitorDoc){
-                    updateDoc(docRefr, {visits:+ visitorDoc.visits+1}).then(()=>{
-                        console.log('exist and updated')
-                    })
-                }else{
-                    console.log('not exist; then make it')
-                    setDoc(docRefr, {visits: 1}, {merge: true})
-                }
-            }) 
-
-
-            // updateDoc(docRefr, {visits: FieldValue.increment(1)})
-            // .then(()=>{
-            //     console.log("updated the document visitor")
-            // }).catch(err=>{
-            //     console.log('not exist to update; ')
-            // })
-
-            })
-
             // data statics 
             getDocs(collection(bygreenDb, 'pins')).then((data)=>{
         let docs = []
