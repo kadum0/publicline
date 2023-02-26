@@ -1187,7 +1187,7 @@ displayConfirmedRoutes.addEventListener('click', (ev)=>{
                     copyBtn.classList.add('box')
                     copyBtn.textContent = 'copy'
 
-            let textToCopy = window.location.href.slice(0, window.location.href.indexOf('location'))+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng+'/'
+            let textToCopy = window.location.href.slice(0, window.location.href.indexOf('location'))+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng
 
             copyBtn.addEventListener("click", ()=>{
                 navigator.clipboard.writeText(textToCopy).then(function() {
@@ -1227,7 +1227,7 @@ displayConfirmedRoutes.addEventListener('click', (ev)=>{
                                     copyBtn.classList.add('box')
                                     copyBtn.textContent = 'copy'
 
-                            let textToCopy = 'https://kadum2.github.io/publicline'+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng+'/'
+                            let textToCopy = 'https://kadum2.github.io/publicline'+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng+
 
                             copyBtn.addEventListener("click", ()=>{
                                 console.log("clicked on copy")
@@ -1259,7 +1259,7 @@ displayConfirmedRoutes.addEventListener('click', (ev)=>{
                                     copyBtn.classList.add('box')
                                     copyBtn.textContent = 'copy'
 
-                            let textToCopy = window.location.hostname+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng+'/'
+                            let textToCopy = window.location.hostname+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng
 
                             copyBtn.addEventListener("click", ()=>{
                                 navigator.clipboard.writeText(textToCopy).then(function() {
