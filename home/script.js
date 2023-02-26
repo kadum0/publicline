@@ -1227,7 +1227,7 @@ displayConfirmedRoutes.addEventListener('click', (ev)=>{
                                     copyBtn.classList.add('box')
                                     copyBtn.textContent = 'copy'
 
-                            let textToCopy = 'https://kadum2.github.io/publicline'+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng+
+                            let textToCopy = 'https://kadum2.github.io/publicline'+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng
 
                             copyBtn.addEventListener("click", ()=>{
                                 console.log("clicked on copy")
