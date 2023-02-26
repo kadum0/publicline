@@ -901,6 +901,8 @@ displayConfirmedRoutes.addEventListener('click', (ev)=>{
                     
                 // console.log(confirmedRoutes)
                 // console.log('completed routes',completedRoutes)
+            }).catch(err=>{
+                console.log('couldnt get routes')
             })
 
             // data statics 
@@ -1333,6 +1335,9 @@ displayConfirmedRoutes.addEventListener('click', (ev)=>{
 
     ////////////////////////sending 
 
+
+    let sendingthankingMessagesList = ["كفو", "ممتاز", "وحش", "تحياتي الك", "بعد قلبي", "حلوة ضلغي"]
+
         document.querySelector("#send").addEventListener("click", (ev) => {
 
             // if logged send the username with it; 
@@ -1344,6 +1349,8 @@ displayConfirmedRoutes.addEventListener('click', (ev)=>{
                 // document.querySelector('#loadingMessage').textContent =
                 // 'sending'
                 ev.target.setAttribute('disabled', true)
+                document.querySelector('#greenMessage').textContent = sendingthankingMessagesList[Math.floor(Math.random() * sendingthankingMessagesList.length)]
+
                 document.querySelector('#greenMessage').style.display = 'block'
                 document.querySelector('#loadingMessage').style.display = 'block'
                 
