@@ -1187,7 +1187,7 @@ displayConfirmedRoutes.addEventListener('click', (ev)=>{
                     copyBtn.classList.add('box')
                     copyBtn.textContent = 'copy'
 
-            let textToCopy = window.location.href.slice(0, window.location.href.indexOf('location'))+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng
+            let textToCopy = window.location.href.slice(0, window.location.href.indexOf('location'))+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng + ''
 
             copyBtn.addEventListener("click", ()=>{
                 navigator.clipboard.writeText(textToCopy).then(function() {
