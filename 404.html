@@ -2434,7 +2434,7 @@ displayConfirmedRoutes.addEventListener('click', (ev)=>{
                     }
             })
 
-            getDocs(collection(bygreenDb, 'newroutes')).then((data)=>{
+            getDocs(collection(bygreenDb, 'routes')).then((data)=>{
                 let docs = []
                     data.docs.forEach(doc=>{
                         docs.push({...doc.data(), id: doc.id})

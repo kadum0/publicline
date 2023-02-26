@@ -149,7 +149,10 @@ main{
 }
 
 #addRouteMode{
-    border: #1F2721 2px solid;
+    /* border: #1F2721 2px solid; */
+    /* background-image: url('./imgs/add-route-icon.png'); */
+    /* background-color:#1a1a1a;  */
+    color:white;
     z-index: 1003;
     /* background: red; */
     /* background-image: url('./imgs/addroute-form.png'); */
@@ -600,7 +603,6 @@ button{
     background-color: #27f060;
     /* background-image: linear-gradient(135deg,  #27f060, #22c751); */
     background-image: linear-gradient(135deg,  #27F060,  #21C24F);
-
     padding: .5rem;
     border-radius: .5rem;
     transition: .1s linear;
@@ -655,7 +657,14 @@ button{
 
 .on{
     background: #1b1b1b;
+    background: #333333;
+    background: #e7e7e7;
+    background: #eeeeee;
+
     color: white;
+    color: #0a0a0a;
+
+    border: #21C24F 2px solid;
 }
 .on:hover{
     background: #333333;
