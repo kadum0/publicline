@@ -103,11 +103,11 @@ document.querySelector('#registerBtn').addEventListener('click', (ev)=>{
     if(ev.target.parentElement.querySelector(".em").value.length > 0 &&ev.target.parentElement.querySelector(".em").value.length < 20 && ev.target.parentElement.querySelector(".pw").value.length > 0){
 
         console.log('make account')
-        document.querySelector('#greenMessage').style.display = 'block'
+        document.querySelector('#loadingMessage').style.display = 'block'
         createUserWithEmailAndPassword(bygreenAuth, ev.target.parentElement.querySelector(".em").value, ev.target.parentElement.querySelector(".pw").value).then(cred=>{
             console.log(cred)
             setTimeout(() => {
-                document.querySelector('#greenMessage').style.display = 'none'
+                document.querySelector('#loadingMessage').style.display = 'none'
             }, 2000);
         }).catch(err=>{
             console.log(err.message)
@@ -134,14 +134,23 @@ document.querySelector('#signinBtn').addEventListener('click', (ev)=>{
 
     // send 
     if(document.querySelector('#signinUsername').value.length > 0 && document.querySelector('#signinPassword').value.length > 0){
-        document.querySelector('#greenMessage').style.display = 'block'
+        document.querySelector('#loadingMessage').style.display = 'block'
         console.log('make account')
         signInWithEmailAndPassword(bygreenAuth, ev.target.parentElement.querySelector(".em").value ,ev.target.parentElement.querySelector(".pw").value).then(()=>{
+            document.querySelectorAll('.notogged').forEach(notlogged=>notlogged.style.display='none')
+            document.querySelectorAll('.halflogged').forEach(halflogged=>halflogged.style.display='none')
+
             setTimeout(() => {
-                document.querySelector('#greenMessage').style.display = 'none'
+                document.querySelector('#loadingMessage').style.display = 'none'
             }, 2000);
-    
-    
+        }).catch(err=>{
+            console.log(err)
+            document.querySelector('#loadingMessage').style.display = 'none'
+            redMessage.textContent = err.message
+            redMessage.style.display = 'block'
+            setTimeout(() => {
+                redMessage.style.display = 'none'
+            }, 2000);
         })
     }else{
 
@@ -665,7 +674,7 @@ displayConfirmedRoutes.addEventListener('click', (ev)=>{
 
         onAuthStateChanged(bygreenAuth, async (user)=>{
 
-            document.querySelector('#greenMessage').style.display = 'block'
+            document.querySelector('#loadingMessage').style.display = 'block'
 
             // get into client stored location 
             localStorage.getItem('clientLoc')?map.flyTo([localStorage.getItem('clientLoc').split(',')[0], localStorage.getItem('clientLoc').split(',')[1]], 12):null
@@ -751,7 +760,7 @@ displayConfirmedRoutes.addEventListener('click', (ev)=>{
 
             ////// method; make docuement with ip to be the id by set method
             // setDoc(docRefr, {visits: 0}, {merge: true}).then(e=>{
-            //     // document.querySelector('#greenMessage').textContent = 'sent'
+            //     // document.querySelector('#loadingMessage').textContent = 'sent'
             //     console.log('set new visitor', visitor.ip)
             //     // location.reload()
             // }).catch((err)=>{
@@ -841,7 +850,7 @@ displayConfirmedRoutes.addEventListener('click', (ev)=>{
             getDocs(collection(bygreenDb, 'users')).then((data)=>{
 
                 setTimeout(() => {
-                    document.querySelector('#greenMessage').style.display = 'none'
+                    document.querySelector('#loadingMessage').style.display = 'none'
                 }, 1000);
 
                 let docs = []
@@ -857,7 +866,7 @@ displayConfirmedRoutes.addEventListener('click', (ev)=>{
                     }
             })
 
-            getDocs(collection(bygreenDb, 'newroutes')).then((data)=>{
+            getDocs(collection(bygreenDb, 'routes')).then((data)=>{
                 let docs = []
                     data.docs.forEach(doc=>{
                         docs.push({...doc.data(), id: doc.id})
@@ -874,7 +883,7 @@ displayConfirmedRoutes.addEventListener('click', (ev)=>{
                     // document.querySelector('#votesCounter').textContent = docs.filter
                     document.querySelector('#votesCounter').innerHTML = votes
     
-                    document.querySelector('#greenMessage').style.display = 'none'
+                    document.querySelector('#loadingMessage').style.display = 'none'
 
                     completedRoutes = routes.filter(route=> route.start && route.end && !route.confirmed)
                     uncompletedRoutes = routes.filter(route=>!route.start || !route.end && !route.confirmed)
@@ -1332,10 +1341,11 @@ displayConfirmedRoutes.addEventListener('click', (ev)=>{
             let routeToSend = {}
             if(currentPath[0] || document.querySelector('#routeName').value){ /////available data to send; 
                 // routeToSend.path = currentPath._latlngs 
-                // document.querySelector('#greenMessage').textContent =
+                // document.querySelector('#loadingMessage').textContent =
                 // 'sending'
                 ev.target.setAttribute('disabled', true)
                 document.querySelector('#greenMessage').style.display = 'block'
+                document.querySelector('#loadingMessage').style.display = 'block'
                 
                 console.log(currentPath)
                 let validRoute = []
@@ -1354,11 +1364,13 @@ displayConfirmedRoutes.addEventListener('click', (ev)=>{
 
                 //////send; 
                 addDoc(collection(bygreenDb, 'unroutes'), routeToSend).then(e=>{
-                    // document.querySelector('#greenMessage').textContent = 'sent'
+                    // document.querySelector('#loadingMessage').textContent =
+                    // 'sent'
+                    
                     location.reload()
 
                     setTimeout(() => {
-                        document.querySelector('#greenMessage').style.display = 'none'
+                        document.querySelector('#loadingMessage').style.display = 'none'
                     }, 1000);
 
                 })

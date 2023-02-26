@@ -349,7 +349,7 @@ document.querySelector("#unconf").addEventListener("click", ()=>{
 
 
                     // confirmed routes
-        await getDocs(collection(bygreenDb, 'routes')).then((data)=>{
+        await getDocs(collection(bygreenDb, 'newroutes')).then((data)=>{
             let docs = []
                 data.docs.forEach(doc=>{
                     docs.push({...doc.data(), id: doc.id})
