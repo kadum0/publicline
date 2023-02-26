@@ -2256,8 +2256,8 @@ displayConfirmedRoutes.addEventListener('click', (ev)=>{
 
             // make the pin
             let currentPin = L.marker({
-        lat: window.location.href.split('/')[window.location.href.split('/').length-2].split(',')[0],
-        lng: window.location.href.split('/')[window.location.href.split('/').length-2].split(',')[1]
+        lat: window.location.href.split('/')[window.location.href.split('/').length-1].split(',')[0],
+        lng: window.location.href.split('/')[window.location.href.split('/').length-1].split(',')[1]
         }, {icon: greenPin}).addTo(map)
 
             // flyto it 
@@ -2271,9 +2271,6 @@ displayConfirmedRoutes.addEventListener('click', (ev)=>{
                 // This is the user's first visit
                 console.log("first time to visit the site; then to show instructions")
                 document.querySelector('#redArrow').style.display = 'block'
-                // document.querySelector('#asideDi').classList.toggle('red')
-                // document.querySelector('#asideDi').classList.contains('red')?document.querySelector('aside').style.display = 'flex':document.querySelector('aside').style.display = 'none'
-
                 setTimeout(() => {
                     // document.querySelector("#features").scrollIntoView({
                     //     behavior: "auto",

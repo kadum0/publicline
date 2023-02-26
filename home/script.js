@@ -685,8 +685,8 @@ displayConfirmedRoutes.addEventListener('click', (ev)=>{
 
             // make the pin
             let currentPin = L.marker({
-        lat: window.location.href.split('/')[window.location.href.split('/').length-2].split(',')[0],
-        lng: window.location.href.split('/')[window.location.href.split('/').length-2].split(',')[1]
+        lat: window.location.href.split('/')[window.location.href.split('/').length-1].split(',')[0],
+        lng: window.location.href.split('/')[window.location.href.split('/').length-1].split(',')[1]
         }, {icon: greenPin}).addTo(map)
 
             // flyto it 
