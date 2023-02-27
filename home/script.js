@@ -694,6 +694,13 @@ displayConfirmedRoutes.addEventListener('click', (ev)=>{
             map.flyTo(currentPin._latlng, 16)
 
                 }
+            // make english route
+            if(window.location.href.includes('en')){
+                document.querySelector('#translateToEn').classList.toggle('on')
+                document.querySelectorAll('.en').forEach((enElement)=>enElement.style.display='block')
+                document.querySelectorAll('.ar').forEach((arELement)=>arELement.style.display='none')
+                ev.target.textContent = 'ar'
+            }
 
             // if visiting the website for the first time will get into some instructions
             if (localStorage.getItem("firstVisit") === null) {
@@ -730,46 +737,6 @@ displayConfirmedRoutes.addEventListener('click', (ev)=>{
                 visitor = data
                 console.log('my ip', data);
 
-
-            // check if the object with same ip does exist; if does add to visits counter, if not make new object with ip prop and visits prop 
-
-            // method; check if exist
-
-            // // const q = query(dbRef, orderByValue(), equalTo(testURL));
-            // let q = query(collection(bygreenDb, 'visitors'), where('ip', '==', visitor.ip))
-            // const snapshot = await getDocs(q);
-            // let found
-            // snapshot.forEach(e=>{found = e.data(); found.id = e.id})
-
-            // console.log(found)
-
-
-            // if (found) {
-            // // add to it
-
-            // console.log('data does exist; Results', found)
-            // // let newVisits = found.visits+1
-            //     updateDoc(doc(bygreenDb, "visitors", found.id), {visits: found.visits+1}).then(()=>console.log('updated the doc'))
-
-            // } else {
-            //     // make new one
-            // console.log('Data does not exist')
-            // addDoc(collection(bygreenDb, 'visitors'), {ip: visitor.ip, visits: 0}).then(()=>console.log('added the new visitor to the log'))
-            // }
-
-
-            ////// method; make docuement with ip to be the id by set method
-            // setDoc(docRefr, {visits: 0}, {merge: true}).then(e=>{
-            //     // document.querySelector('#loadingMessage').textContent = 'sent'
-            //     console.log('set new visitor', visitor.ip)
-            //     // location.reload()
-            // }).catch((err)=>{
-            //     // cant be an error that set will always overwrite the current value
-            //     // console.log(err)
-            //     // add to this visitor counter
-            //     // getdoc(docRefr).then(visitorDoc=>updateDoc(docRefr, {visits: visitorDoc.visits+1})) 
-            // })
-
             let docRefr = doc(bygreenDb, 'visitors', visitor.ip)
 
             ////// method update first if error to set the document 
@@ -787,15 +754,9 @@ displayConfirmedRoutes.addEventListener('click', (ev)=>{
                 }
             }) 
 
-
-            // updateDoc(docRefr, {visits: FieldValue.increment(1)})
-            // .then(()=>{
-            //     console.log("updated the document visitor")
-            // }).catch(err=>{
-            //     console.log('not exist to update; ')
-            // })
-
             })
+            // make english route
+
 
 
             if(user){
