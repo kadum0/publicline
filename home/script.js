@@ -43,8 +43,16 @@ let blueColor = '#198CD4'
 let darkerBlueColor = '#075FDA'
 
 // map configure
-const map = L.map('map', { zoomControl: false }).setView([33.396600, 44.356579], 10); 
+let map 
+if (localStorage.getItem('clientLoc')){
+    console.log('got the client loc', localStorage.getItem('clientLoc'), localStorage.getItem('clientLoc').split(',')[0])
+    map = L.map('map', { zoomControl: false }).setView([localStorage.getItem('clientLoc').split(',')[0], localStorage.getItem('clientLoc').split(',')[1]], 10)
+}else{
+    console.log("there is no client loc value", localStorage.getItem('clientLoc'))
+    map = L.map('map', { zoomControl: false }).setView([33.396600, 44.356579], 10); 
+}
 L.Control.geocoder().addTo(map);
+
 
 // let apiKey = 'pk.eyJ1IjoiYWxmcmVkMjAxNiIsImEiOiJja2RoMHkyd2wwdnZjMnJ0MTJwbnVmeng5In0.E4QbAFjiWLY8k3AFhDtErA'
 
@@ -201,12 +209,7 @@ document.querySelector('#makeProfileBtn').addEventListener('click', async (ev)=>
             name: ev.target.parentElement.querySelector('#name').value,
             bio: ev.target.parentElement.querySelector('#bio').value,
             img: imgUrl,
-            red: [],
-            green: [],
-            yellow:[],
-            addedRoutes: [], 
-            votes: [],
-            type: 'user'
+            team: false
         }).then(()=>{window.location.reload();}) 
         })
     })
@@ -677,8 +680,10 @@ displayConfirmedRoutes.addEventListener('click', (ev)=>{
             document.querySelector('#loadingMessage').style.display = 'block'
 
             // get into client stored location 
-            localStorage.getItem('clientLoc')?map.flyTo([localStorage.getItem('clientLoc').split(',')[0], localStorage.getItem('clientLoc').split(',')[1]], 12):null
+            // localStorage.getItem('clientLoc')?map.flyTo([localStorage.getItem('clientLoc').split(',')[0], localStorage.getItem('clientLoc').split(',')[1]], 12):null
 
+
+            // will work on the error page only
             // dynamic routes  
             if(window.location.href.includes('location')){
             console.log('contains temp pin', window.location.href.indexOf('location'), window.location.href.slice(0, window.location.href.indexOf('location')))

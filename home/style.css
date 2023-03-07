@@ -354,6 +354,8 @@ aside{
     flex-direction: row;
     background: #0a0a0a;
     justify-content: space-between;
+    position: sticky;
+    top: 0;
 }
 .rankingHeader img{
     min-height: 3rem;
@@ -608,7 +610,7 @@ button{
     transition: .1s linear;
     cursor: pointer;
 }
-.bbox{
+.box2{
     /* background-color: #27f060; */
     /* background-image: linear-gradient(135deg,  #27f060, #22c751); */
     /* background-image: linear-gradient(135deg,  #000000,  #161616); */

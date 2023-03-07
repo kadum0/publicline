@@ -2250,7 +2250,17 @@ displayConfirmedRoutes.addEventListener('click', (ev)=>{
             // get into client stored location 
             localStorage.getItem('clientLoc')?map.flyTo([localStorage.getItem('clientLoc').split(',')[0], localStorage.getItem('clientLoc').split(',')[1]], 12):null
 
-            // dynamic routes  
+            // dynamic routes
+            // make english route
+                if(window.location.href.includes('en')){
+                document.querySelector('#translateToEn').classList.toggle('on')
+                document.querySelectorAll('.en').forEach((enElement)=>enElement.style.display='block')
+                document.querySelectorAll('.ar').forEach((arELement)=>arELement.style.display='none')
+                ev.target.textContent = 'ar'
+            }
+
+
+            // share location
             if(window.location.href.includes('location')){
             console.log('contains temp pin', window.location.href.indexOf('location'), window.location.href.slice(0, window.location.href.indexOf('location')))
 
