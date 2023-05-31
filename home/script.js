@@ -509,7 +509,7 @@ orderedUserElements = `${intendedOrder.map((account, index)=>{
 <div class="rankedAccount" ${account.userName == currentUserName?'id="#me" style="background-color: #29D659"':''}>
 
     <div class="ranking point">${userCounter++}</div>
-    <a href=' https://kadum2.github.io/ivc/profile/${account.userName}' class="account">
+    <a href=' https://kadum0.github.io/ivc/profile/${account.userName}' class="account">
         <img class="accountImg" style="background-image: url('${account.img}');">
         <h3 class="accountUsername ranked">${account.userName}</h3>
     </a>
@@ -530,7 +530,7 @@ orderedteamElements = `${intendedOrder.map((account, index)=>{
     if(account.type == 'team'){return`
 <div class="rankedAccount" ${account.userName == currentUserName?'style="background-color: #29D659"':''}>
     <div class="ranking point">${teamCounter++}</div>
-    <a href=' https://kadum2.github.io/ivc/profile/${account.userName}' class="account">
+    <a href=' https://kadum0.github.io/ivc/profile/${account.userName}' class="account">
         <img class="accountImg" style="background-image: url('${account.img}');">
         <h3 class="accountUsername ranked">${account.userName}</h3>
     </a>
@@ -796,7 +796,7 @@ displayConfirmedRoutes.addEventListener('click', (ev)=>{
                     document.querySelector("#currentAccountUsernameMini").textContent = '@'+ dbUser.userName
                     document.querySelector("#currentAccountName").textContent = dbUser.name
                     document.querySelector("#currentAccountBio").textContent = dbUser.bio
-                    document.querySelector("#currentAccountLink").href = `https://kadum2.github.io/ivc/profile/${dbUser.userName}`
+                    document.querySelector("#currentAccountLink").href = `https://kadum0.github.io/ivc/profile/${dbUser.userName}`
         
                 }else{
                     /////half registered; make profile
@@ -1178,22 +1178,22 @@ displayConfirmedRoutes.addEventListener('click', (ev)=>{
                         // github 
                                 if(window.location.href.includes('github')){
 
-                                    // tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: greenPin}).bindPopup(`link; for github <br><a href='https://kadum2.github.io/publicline${'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/'>${'https://kadum2.github.io/publicline/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/</a> <br> something`).addTo(map)
+                                    // tempMarker = L.marker(map.mouseEventToLatLng(ev.originalEvent), {icon: greenPin}).bindPopup(`link; for github <br><a href='https://kadum0.github.io/publicline${'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/'>${'https://kadum0.github.io/publicline/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng}/</a> <br> something`).addTo(map)
 
-                                    // https://kadum2.github.io/publicline
+                                    // https://kadum0.github.io/publicline
 
                                     
                                     let makeLocDiv = document.createElement('div')
 
                                     let linkElement = document.createElement('a')
-                                    linkElement.setAttribute('href', 'https://kadum2.github.io/publicline'+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng)
+                                    linkElement.setAttribute('href', 'https://kadum0.github.io/publicline'+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng)
                                     linkElement.textContent = '...link'
 
                                     let copyBtn = document.createElement('button')
                                     copyBtn.classList.add('box')
                                     copyBtn.textContent = 'copy'
 
-                            let textToCopy = 'https://kadum2.github.io/publicline'+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng
+                            let textToCopy = 'https://kadum0.github.io/publicline'+'/location/'+map.mouseEventToLatLng(ev.originalEvent).lat+','+map.mouseEventToLatLng(ev.originalEvent).lng
 
                             copyBtn.addEventListener("click", ()=>{
                                 console.log("clicked on copy")
